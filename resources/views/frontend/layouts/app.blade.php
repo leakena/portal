@@ -18,11 +18,19 @@
 
         <!-- Check if the language is set to RTL, so apply the RTL layouts -->
         <!-- Otherwise apply the normal LTR layouts -->
+        {{--@langRTL--}}
+            {{--{{ Html::style(getRtlCss(mix('css/frontend.css'))) }}--}}
+        {{--@else--}}
+            {{--{{ Html::style(mix('css/frontend.css')) }}--}}
+        {{--@endif--}}
+
+
         @langRTL
-            {{ Html::style(getRtlCss(mix('css/frontend.css'))) }}
+        {{ Html::style(getRtlCss(mix('css/backend.css'))) }}
         @else
-            {{ Html::style(mix('css/frontend.css')) }}
+        {{ Html::style(mix('css/backend.css')) }}
         @endif
+
 
         @yield('after-styles')
 
@@ -32,6 +40,11 @@
                 'csrfToken' => csrf_token(),
             ]); ?>
         </script>
+        <style>
+            body{
+                background-color: #f1f1f1;
+            }
+        </style>
     </head>
     <body id="app-layout">
         <div id="app">
