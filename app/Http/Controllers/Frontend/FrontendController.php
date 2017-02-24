@@ -19,7 +19,7 @@ class FrontendController extends Controller
      */
     public function index()
     {
-        return view('frontend.portals.index');
+        return 100;
     }
 
     /**
@@ -28,5 +28,10 @@ class FrontendController extends Controller
     public function macros()
     {
         return view('frontend.macros');
+    }
+
+    public function store(){
+
+        dd(request()->all());
     }
 }

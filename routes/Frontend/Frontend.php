@@ -4,7 +4,7 @@
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
  */
-Route::get('/', 'FrontendController@index')->name('index');
+
 Route::get('macros', 'FrontendController@macros')->name('macros');
 
 /*
@@ -27,5 +27,19 @@ Route::group(['middleware' => 'auth'], function () {
          * User Profile Specific
          */
         Route::patch('profile/update', 'ProfileController@update')->name('profile.update');
+
+    });
+
+    Route::group(['namespace' => 'Portal', 'as' => 'portal.'], function () {
+
+        /**
+         *
+         */
+        Route::get('/', 'PortalController@index')->name('home');
+        /*
+         * Portal Controller
+         */
+        Route::post('/posts/store', 'PortalController@store');
+
     });
 });
