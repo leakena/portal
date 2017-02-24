@@ -60,6 +60,17 @@
         <!-- Scripts -->
         @yield('before-scripts')
         {!! Html::script(mix('js/frontend.js')) !!}
+        {!! Html::script('js/vendor/tinymce/js/tinymce/tinymce.min.js') !!}}
+
+        <script type="text/javascript">
+            jQuery(document).ready(function(){
+               tinymce.init({
+                   selector : '#body_post',
+                   menubar:false,
+                   statusbar: false,
+               })
+            });
+        </script>
         @yield('after-scripts')
 
         @include('includes.partials.ga')
