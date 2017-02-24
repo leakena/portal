@@ -3,6 +3,7 @@
 namespace App\Models\Access\User\Traits\Relationship;
 
 use App\Models\Access\User\SocialLogin;
+use App\Models\Portal\Post\Post;
 
 /**
  * Class UserRelationship.
@@ -25,5 +26,9 @@ trait UserRelationship
     public function providers()
     {
         return $this->hasMany(SocialLogin::class);
+    }
+
+    public function posts(){
+        return $this->hasMany(Post::class);
     }
 }
