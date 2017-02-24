@@ -70,7 +70,6 @@ class PortalController extends Controller
         $newPost->create_uid = auth()->id();
 
         if ($newPost->save()) {
-            $posts = Post::latest()->get();
             session()->flash('flash_info', 'Post have been created');
         } else {
             session()->flash('flash_warning', 'Something went wrong');
@@ -79,15 +78,11 @@ class PortalController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+
+    public function show(Post $post)
     {
-        //
+        $post = Post::find($post->id);
+        return view('frontend.portals.show', compact('post'));
     }
 
     /**

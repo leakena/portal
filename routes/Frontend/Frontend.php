@@ -32,14 +32,16 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['namespace' => 'Portal', 'as' => 'portal.'], function () {
 
-        /**
-         *
+        /*
+         * Portal Home
          */
         Route::get('/', 'PortalController@index')->name('home');
         /*
          * Portal Controller
          */
         Route::post('/posts/store', 'PortalController@store');
+
+        Route::get('/posts/show/{post}', 'PortalController@show');
 
     });
 });
