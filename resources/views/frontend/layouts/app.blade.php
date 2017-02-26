@@ -60,7 +60,9 @@
         <!-- Scripts -->
         @yield('before-scripts')
         {!! Html::script(mix('js/frontend.js')) !!}
-        {!! Html::script('js/vendor/tinymce/js/tinymce/tinymce.min.js') !!}}
+        {{-- Sticky js --}}
+        {!! Html::script('js/vendor/jquery.sticky-kit.min.js') !!}
+        {!! Html::script('js/vendor/tinymce/js/tinymce/tinymce.min.js') !!}
 
         <script type="text/javascript">
             jQuery(document).ready(function(){
@@ -68,7 +70,10 @@
                    selector : '#body_post',
                    menubar:false,
                    statusbar: false,
-               })
+               });
+
+               $("#side-left").stick_in_parent();
+               $("#side-right").stick_in_parent();
             });
         </script>
         @yield('after-scripts')

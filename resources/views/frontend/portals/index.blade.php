@@ -1,190 +1,303 @@
 @extends('frontend.layouts.app')
 
 @section('content')
-    <div class="row">
-        <div class="col-xs-12">
-            {{--section content--}}
-            <div class="col-xs-3">
-                <div class="box box-default">
-                    <div class="box-header with-border">
-                        Header
-                    </div>
-                    <div class="box-body">
-                        <ul>
-                            <li>Item</li>
-                            <li>Item</li>
-                            <li>Item</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="box box-default">
-                            <div class="box-header with-border">
-                                <h3 class="box-title">What're you thinking?</h3>
-                            </div>
-                            <div class="box-body">
-                                <form method="POST" action="{{ url('/posts/store') }}" enctype="multipart/form-data"
-                                      files="true" novalidate="novalidate">
-                                    {{ csrf_field() }}
-                                    <div class="form-group">
-                                        <textarea id="body_post" class="form-control" role="8" rows="4" name="body"
-                                                  id="body"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="published">
-                                            <input type="checkbox" name="published" id="published" checked> Published
-                                            now
-                                        </label>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="file" name="file" accept="image/*">
-                                    </div>
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-primary">Publish</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+	<div class="row">
+		{{-- main content --}}
+		<div class="col-xs-8">
+			<div class="row">
+				{{-- Schedule --}}
+				<div class="col-xs-12">
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title">Schedule</h3>
 
-                    @foreach($posts as $post)
+							<div class="box-tools pull-right">
+								<span data-toggle="tooltip" title="3 New Messages" class="badge bg-light-blue">3</span>
+								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+								</button>
+								<button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Contacts" data-widget="chat-pane-toggle">
+									<i class="fa fa-comments"></i></button>
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+							</div>
+						</div>
+						<div class="box-body">
+							<div class="table-responsive">
+								<table class="table table-bordered table-sprite">
+									<tr>
+										<th>Time</th>
+										<th>Mon</th>
+										<th>Tue</th>
+										<th>Wed</th>
+										<th>Thu</th>
+										<th>Fri</th>
+										<th>Sat</th>
+										<th>Sun</th>
+									</tr>
+									<tbody>
+										@for($i=0; $i<10; $i++)
+											<tr>
+												<td>7:00 - 9:00</td>
+												<td  align="right">
+													<strong>PI</strong><br/>
+													CHUN Thavorac<br/>
+													Course
+												</td>
+												<td  align="right">
+													<strong>PI</strong><br/>
+													CHUN Thavorac<br/>
+													Course
+												</td>
+												<td  align="right">
+													<strong>PI</strong><br/>
+													CHUN Thavorac<br/>
+													Course
+												</td>
+												<td  align="right">
+													<strong>PI</strong><br/>
+													CHUN Thavorac<br/>
+													Course
+												</td>
+												<td  align="right">
+													<strong>PI</strong><br/>
+													CHUN Thavorac<br/>
+													Course
+												</td>
+												<td  align="right">
+													<strong>PI</strong><br/>
+													CHUN Thavorac<br/>
+													Course
+												</td>
+												<td  align="right">
+													<strong>PI</strong><br/>
+													CHUN Thavorac<br/>
+													Course
+												</td>
+											</tr>
+										@endfor
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-                        <div class="col-xs-12">
-                            <div class="box box-default">
-                                <div class="box-header with-border">
-                                    <div class="box-tools pull-right">
-                                        <span class="dropdown">
-                                            <span class="btn btn-box-tool dropdown-toggle" type="button"
-                                                  id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
-                                                  aria-expanded="true" data-toggle="tooltip" title=""
-                                                  data-widget="chat-pane-toggle" data-original-title="Setting">
-                                                <i class="fa fa-cog"></i>
-                                            </span>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                <li><a href="/posts/edit/{{ $post->id }}">Edit</a></li>
-                                                <li><a href="/posts/hide/{{ $post->id }}">Hide</a></li>
-                                                <li><a href="/posts/delete/{{ $post->id }}">Delete</a></li>
-                                                <li role="separator" class="divider"></li>
-                                                <li><a href="/posts/report/{{ $post->id }}">Report</a></li>
-                                            </ul>
-                                        </span>
-                                    </div>
-                                    <ul class="media-list">
-                                        <li class="media">
-                                            <div class="media-left">
-                                                <img class="media-object" src="{{ asset('img/icon.png') }}"
-                                                     alt="Profile picture" style="width: 60px; height: 60px;">
-                                            </div><!--media-left-->
+			<div class="row">
+				<div class="col-md-12">
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title">E-Learning Assigment</h3>
 
-                                            <div class="media-body">
-                                                <h4 class="media-heading">
-                                                    HEL Mab<br/>
-                                                    <small>
-                                                        <span class="text-muted">Student I5 - 2016-2017</span><br/>
-                                                        Posted {{ $post->created_at->diffForHumans() }}
-                                                    </small>
-                                                </h4>
-                                            </div><!--media-body-->
-                                        </li><!--media-->
-                                    </ul><!--media-list-->
-                                </div>
-                                <div class="box-body">
-                                    <article>{!! str_limit($post->body, 50) !!} <span><a
+							<div class="box-tools pull-right">
+								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+											class="fa fa-minus"></i>
+								</button>
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i
+											class="fa fa-times"></i></button>
+							</div>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body">
+							<div class="table-responsive">
+								<table class="table no-margin">
+									<thead>
+									<tr>
+										<th>Course Name</th>
+										<th>Start Date</th>
+										<th>Duration</th>
+										<th>Counting</th>
+									</tr>
+									</thead>
+									<tbody>
+									@for($i=0; $i<5; $i++)
+										<tr>
+											<td><a href="pages/examples/invoice.html">Image Processing</a></td>
+											<td>01 Janury 2016</td>
+											<td><span class="label label-info">7 Days</span></td>
+											<td><span class="label label-success">3 days more</span></td>
+										</tr>
+									@endfor
+									</tbody>
+								</table>
+							</div>
+							<!-- /.table-responsive -->
+						</div>
+						<!-- /.box-body -->
+						<div class="box-footer clearfix">
+							{{-- <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a> --}}
+							<a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All
+								Assigments</a>
+						</div>
+						<!-- /.box-footer -->
+					</div>
+				</div>
+			</div>
 
-                                                    href="/posts/show/{{ $post->id }}"> See more</a></span></article>
-                                    <br/>
-                                    <a href="/posts/show/{{ $post->id }}">
-                                        <img src="{{ asset('img/frontend/uploads/images/'.$post->file) }}"
-                                             class="img-responsive"/>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<i class="fa fa-warning"></i>
 
-                    @endforeach
-                </div>
-            </div>
+							<h3 class="box-title">Alerting Message</h3>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body">
+							<div class="alert alert-danger alert-dismissible">
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+								<h4><i class="icon fa fa-ban"></i> Alert!</h4>
+								Danger alert preview. This alert is dismissable. A wonderful serenity has taken
+								possession of my entire
+								soul, like these sweet mornings of spring which I enjoy with my whole heart.
+							</div>
+							<div class="alert alert-info alert-dismissible">
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+								<h4><i class="icon fa fa-info"></i> Alert!</h4>
+								Info alert preview. This alert is dismissable.
+							</div>
+							<div class="alert alert-warning alert-dismissible">
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+								<h4><i class="icon fa fa-warning"></i> Alert!</h4>
+								Warning alert preview. This alert is dismissable.
+							</div>
+							<div class="alert alert-success alert-dismissible">
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+								<h4><i class="icon fa fa-check"></i> Alert!</h4>
+								Success alert preview. This alert is dismissable.
+							</div>
+						</div>
+						<!-- /.box-body -->
+					</div>
+				</div>
+			</div>
+		</div>
 
-            {{--section side bar--}}
-            <div class="col-xs-3">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="box box-default">
-                            <div class="box-header">
+		{{-- side bar --}}
+		<div class="col-md-4" id="side-right">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="box box-primary">
+						<div class="box-body">
+							<ul class="media-list">
+								<li class="media">
+									<div class="media-left">
+										<img class="media-object" src="{{ asset('img/user.jpg') }}"
+											 alt="Profile picture" style="width: 60px; height: 60px;">
+									</div><!--media-left-->
 
-                            </div>
-                            <div class="box-body">
-                                <ul class="media-list">
-                                    <li class="media">
-                                        <div class="media-left">
-                                            <img class="media-object" src="{{ asset('img/icon.png') }}"
-                                                 alt="Profile picture" style="width: 60px; height: 60px;">
-                                        </div><!--media-left-->
+									<div class="media-body">
+										<h4 class="media-heading">
+											{{ $logged_in_user->name }}<br/>
+											<small>
+												{{ $logged_in_user->email }}<br/>
+												Joined {{ $logged_in_user->created_at->format('F jS, Y') }}
+											</small>
+										</h4>
 
-                                        <div class="media-body">
-                                            <h4 class="media-heading">
-                                                {{ $logged_in_user->name }}<br/>
-                                                <small>
-                                                    {{ $logged_in_user->email }}<br/>
-                                                    Joined {{ $logged_in_user->created_at->format('F jS, Y') }}
-                                                </small>
-                                            </h4>
+										{{ link_to_route('frontend.user.account', trans('navs.frontend.user.account'), [], ['class' => 'btn btn-info btn-xs']) }}
 
-                                            {{ link_to_route('frontend.user.account', trans('navs.frontend.user.account'), [], ['class' => 'btn btn-info btn-xs']) }}
+										@permission('view-backend')
+										{{ link_to_route('admin.dashboard', trans('navs.frontend.user.administration'), [], ['class' => 'btn btn-danger btn-xs']) }}
+										@endauth
+									</div><!--media-body-->
+								</li><!--media-->
+							</ul><!--media-list-->
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title">Recently posts</h3>
 
-                                            @permission('view-backend')
-                                            {{ link_to_route('admin.dashboard', trans('navs.frontend.user.administration'), [], ['class' => 'btn btn-danger btn-xs']) }}
-                                            @endauth
-                                        </div><!--media-body-->
-                                    </li><!--media-->
-                                </ul><!--media-list-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="box box-default">
-                            <div class="box-header with-border">
-                                <h4>Sidebar Item</h4>
-                            </div>
-                            <div class="box-body">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non qui facilis deleniti
-                                expedita fuga ipsum numquam aperiam itaque cum maxime.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="box box-default">
-                            <div class="box-header with-border">
-                                <h4>Sidebar Item</h4>
-                            </div>
-                            <div class="box-body">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non qui facilis deleniti
-                                expedita fuga ipsum numquam aperiam itaque cum maxime.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="box box-default">
-                            <div class="box-header with-border">
-                                <h4>Sidebar Item</h4>
-                            </div>
-                            <div class="box-body">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non qui facilis deleniti
-                                expedita fuga ipsum numquam aperiam itaque cum maxime.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><!-- row -->
+							<div class="box-tools pull-right">
+								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+											class="fa fa-minus"></i>
+								</button>
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+								</button>
+							</div>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body">
+							<ul class="products-list product-list-in-box">
+								@foreach($posts as $post)
+									<li class="item">
+										<div class="product-img">
+											<img src="{{ asset('img/frontend/uploads/images/'.$post->file) }}"
+												 alt="Product Image">
+										</div>
+										<div class="product-info">
+											<a href="javascript:void(0)" class="product-title">{{ $post->user->name}}
+												<span class="label label-info pull-right">{{ $post->created_at->diffForHumans() }}</span></a>
+                        <span class="product-description">
+                          {!! str_limit($post->body, 40) !!}
+                        </span>
+										</div>
+									</li>
+								@endforeach
+							</ul>
+						</div>
+						<!-- /.box-body -->
+						<div class="box-footer text-center">
+							<a href="/posts" class="uppercase">View All Posts</a>
+						</div>
+						<!-- /.box-footer -->
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	{{--LMS Integration--}}
+	<div class="row">
+		<div class="col-md-12">
+			<div class="box box-primary">
+				<div class="box-header with-border">
+					<h3 class="box-title">E-Learning Assigment</h3>
+
+					<div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+									class="fa fa-minus"></i>
+						</button>
+						<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+						</button>
+					</div>
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body">
+					<div class="table-responsive">
+						<table class="table no-margin">
+							<thead>
+							<tr>
+								<th>Course Name</th>
+								<th>Start Date</th>
+								<th>Duration</th>
+								<th>Counting</th>
+							</tr>
+							</thead>
+							<tbody>
+							@for($i=0; $i<5; $i++)
+								<tr>
+									<td><a href="pages/examples/invoice.html">Image Processing</a></td>
+									<td>01 Janury 2016</td>
+									<td><span class="label label-info">7 Days</span></td>
+									<td><span class="label label-success">3 days more</span></td>
+								</tr>
+							@endfor
+							</tbody>
+						</table>
+					</div>
+					<!-- /.table-responsive -->
+				</div>
+				<!-- /.box-body -->
+				<div class="box-footer clearfix">
+					{{-- <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a> --}}
+					<a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All
+						Assigments</a>
+				</div>
+				<!-- /.box-footer -->
+			</div>
+		</div>
+	</div>
 @endsection
