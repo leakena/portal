@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     public function user(){
-        return $this->belongsTo(User::class, 'id', 'create_uid');
+        return $this->belongsTo(User::class, 'create_uid');
     }
 }

@@ -35,13 +35,15 @@ Route::group(['middleware' => 'auth'], function () {
         /*
          * Portal Home
          */
-        Route::get('/', 'PortalController@index')->name('home');
+        Route::get('/', 'PortalController@index');
         /*
          * Portal Controller
          */
         Route::post('/posts/store', 'PortalController@store');
 
         Route::get('/posts/show/{post}', 'PortalController@show');
+
+        Route::get('/posts', 'PortalController@post');
 
     });
 });
