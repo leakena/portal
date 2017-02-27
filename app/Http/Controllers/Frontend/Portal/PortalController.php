@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Frontend\Portal;
 
 use App\Models\Portal\Post\Post;
-use Faker\Provider\Image;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
 
@@ -85,15 +85,12 @@ class PortalController extends Controller
 		return view('frontend.portals.show', compact('post'));
 	}
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function edit($id)
+    /**
+     * @param Post $post
+     */
+	public function edit(Post $post)
 	{
-		//
+		return view('frontend.portals.edit')->with('post', $post);
 	}
 
 	/**
@@ -124,8 +121,19 @@ class PortalController extends Controller
 	 */
 	public function post()
 	{
-		$posts = Post::latest()->get();
+		$posts = Post::latest()->paginate(5);
 
 		return view('frontend.portals.blog', compact('posts'));
 	}
+
+
+    /**
+     * @param Post $post
+     * @return \Illuminate\Http\RedirectResponse
+     */
+	public function delete(Post $post){
+        Post::find($post->id)->delete();
+        session()->flash('flash_success', 'Post have been deleted.');
+        return redirect()->back();
+    }
 }
