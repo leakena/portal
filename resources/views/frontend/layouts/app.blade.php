@@ -34,6 +34,8 @@
 
         @yield('after-styles')
 
+        {{ Html::style('css/app.css') }}
+
         <!-- Scripts -->
         <script>
             window.Laravel = <?php echo json_encode([
