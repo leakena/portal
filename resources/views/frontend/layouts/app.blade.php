@@ -33,8 +33,9 @@
 
 
         @yield('after-styles')
-
+        {{ Html::style('css/resumecv.css') }}
         {{ Html::style('css/app.css') }}
+
 
         <!-- Scripts -->
         <script>
