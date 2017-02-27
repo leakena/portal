@@ -4,23 +4,9 @@
 	<div class="row">
 		<div class="col-xs-12">
 			{{--section content--}}
-			<div class="col-xs-3" id="side-left">
-				<div class="box box-default">
-					<div class="box-header with-border">
-						Header
-					</div>
-					<div class="box-body">
-						<ul>
-							<li>Item</li>
-							<li>Item</li>
-							<li>Item</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-6">
+			<div class="col-md-8">
 				<div class="row">
-					<div class="col-xs-12">
+					<div class="col-md-12">
 						<div class="box box-default">
 							<div class="box-header with-border">
 								<div class="box-tools pull-right">
@@ -72,9 +58,9 @@
 			</div>
 
 			{{--section side bar--}}
-			<div class="col-xs-3" id="side-right">
+			<div class="col-md-4" id="side-right">
 				<div class="row">
-					<div class="col-xs-12">
+					<div class="col-md-12">
 						<div class="box box-default">
 							<div class="box-header">
 
@@ -107,7 +93,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-xs-12">
+					<div class="col-md-12">
 						<div class="box box-default">
 							<div class="box-header with-border">
 								<h4>Sidebar Item</h4>
@@ -118,7 +104,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-xs-12">
+					<div class="col-md-12">
 						<div class="box box-default">
 							<div class="box-header with-border">
 								<h4>Sidebar Item</h4>
