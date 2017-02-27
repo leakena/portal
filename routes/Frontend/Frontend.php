@@ -44,6 +44,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/posts/show/{post}', 'PortalController@show');
 
         Route::get('/posts', 'PortalController@post');
+        Route::get('/posts/delete/{post}', 'PortalController@delete');
+        Route::get('/posts/edit/{post}', 'PortalController@edit');
+        Route::get('/posts/update/{post}', 'PortalController@update');
 
     });
 });
