@@ -10,21 +10,25 @@
 						<div class="box box-default">
 							<div class="box-header with-border">
 								<div class="box-tools pull-right">
-                                        <span class="dropdown">
-                                            <span class="btn btn-box-tool dropdown-toggle" type="button"
-												  id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
-												  aria-expanded="true" data-toggle="tooltip" title=""
-												  data-widget="chat-pane-toggle" data-original-title="Setting">
-                                                <i class="fa fa-cog"></i>
-                                            </span>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                <li><a href="/posts/edit/{{ $post->id }}">Edit</a></li>
-                                                <li><a href="/posts/hide/{{ $post->id }}">Hide</a></li>
-                                                <li><a href="/posts/delete/{{ $post->id }}">Delete</a></li>
-                                                <li role="separator" class="divider"></li>
-                                                <li><a href="/posts/report/{{ $post->id }}">Report</a></li>
-                                            </ul>
+									<span class="dropdown">
+                                        <span class="btn btn-box-tool dropdown-toggle" type="button"
+											  id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+											  aria-expanded="true" data-toggle="tooltip" title=""
+											  data-widget="chat-pane-toggle" data-original-title="Setting">
+                                            <i class="fa fa-angle-down"></i>
                                         </span>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+											@if(auth()->id() == $post->user->id)
+												<li><a href="/posts/edit/{{ $post->id }}">Edit</a></li>
+												<li><a href="/posts/hide/{{ $post->id }}">Hide</a></li>
+												<li><a href="/posts/delete/{{ $post->id }}">Delete</a></li>
+												<li role="separator" class="divider"></li>
+												<li><a href="/posts/report/{{ $post->id }}">Report</a></li>
+											@else
+												<li><a href="/posts/report/{{ $post->id }}">Report</a></li>
+											@endif
+										</ul>
+                                    </span>
 								</div>
 								<ul class="media-list">
 									<li class="media">

@@ -71,7 +71,7 @@
                tinymce.init({
                    selector : '#body_post',
                    menubar:false,
-                   statusbar: false,
+                   statusbar: false
                });
 
                $("#side-left").stick_in_parent();

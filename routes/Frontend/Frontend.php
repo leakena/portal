@@ -32,21 +32,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['namespace' => 'Portal', 'as' => 'portal.'], function () {
 
-        /*
-         * Portal Home
-         */
         Route::get('/', 'PortalController@index');
-        /*
-         * Portal Controller
-         */
         Route::post('/posts/store', 'PortalController@store');
-
         Route::get('/posts/show/{post}', 'PortalController@show');
-
-        Route::get('/posts', 'PortalController@post');
+        Route::get('/posts', 'PortalController@post')->name('allPost');
         Route::get('/posts/delete/{post}', 'PortalController@delete');
         Route::get('/posts/edit/{post}', 'PortalController@edit');
-        Route::get('/posts/update/{post}', 'PortalController@update');
+        Route::post('/posts/update/{post}', 'PortalController@update');
 
     });
 });
