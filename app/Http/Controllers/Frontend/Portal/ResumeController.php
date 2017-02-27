@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers\Frontend\Portal;
 
-use Illuminate\Http\Request;
+use App\Models\Portal\Resume\Contact;
+use App\Models\Portal\Resume\Experience;
+use App\Models\Portal\Resume\Project;
+use App\Models\Portal\Resume\Resume;
+use App\Models\Portal\Resume\Skill;
 use App\Http\Controllers\Controller;
 
 class ResumeController extends Controller
@@ -18,57 +22,80 @@ class ResumeController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index_career_profile()
+    public function index()
     {
-        return view('frontend.resumes.career_profile');
+        $resume = Resume::find(auth()->id());
+        return view('frontend.resumes.index', compact('resume'));
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param Resume $resume
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function index_experiences()
-    {
-        return view('frontend.resumes.experiences');
+    public function update_career_profile(Resume $resume){
+        $resume->career_profile     = request('career_profile');
+        $resume->save();
+        return redirect('/');
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function index_project()
-    {
-        return view('frontend.resumes.project');
+    public function store_experience(){
+
+        $newExperience = new Experience();
+        $newExperience->resume_uid = request('resume_uid');
+        $newExperience->position = request('position');
+        $newExperience->company = request('company');
+        $newExperience->description = request('description');
+        $newExperience->start_date =  request('start_date');
+        $newExperience->end_date = request('end_date');
+
+        $newExperience->save();
+
+        return redirect()->back();
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function index_skill()
-    {
-        return view('frontend.resumes.skill');
+    public function store_project(){
+
+        $newProject = new Project();
+
+        $newProject->resume_uid = request('resume_uid');
+        $newProject->name = request('name');
+        $newProject->description = request('description');
+
+        $newProject->save();
+
+        return redirect('/');
+
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function index_contact()
-    {
-        return view('frontend.resumes.contact');
+    public function store_skill(){
+        $newSkill = new Skill();
+
+        $newSkill->resume_uid = request('resume_uid');
+        $newSkill->name = request('name');
+
+        $newSkill->save();
+
+        return redirect('/');
     }
 
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index_interests()
-    {
-        return view('frontend.resumes.interest');
-    }
+    public function store_contact(){
+        $newContact = new Contact();
+        $newContact->resume_uid = request('resume_uid');
+        $newContact->icon = request('icon');
+        $newContact->description = request('description');
 
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index_languages()
-    {
-        return view('frontend.resumes.languages');
+        $newContact->save();
+
+        return redirect('/');
     }
 
     /**

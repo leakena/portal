@@ -7,30 +7,18 @@
             dolor sit amet, consectetur adipiscing elit. Vestibulum et ligula in nunc bibendum
             fringilla a eu lectus.</p>
     </div><!--//intro-->
-    <div class="item">
-        <span class="project-title"><a href="#hook">Velocity</a></span> - <span
-                class="project-tagline">A responsive website template designed to help startups promote, market and sell their products.</span>
 
-    </div><!--//item-->
-    <div class="item">
-							<span class="project-title"><a
-                                        href="http://themes.3rdwavemedia.com/website-templates/responsive-bootstrap-theme-web-development-agencies-devstudio/"
-                                        target="_blank">DevStudio</a></span> -
-        <span class="project-tagline">A responsive website template designed to help web developers/designers market their services. </span>
-    </div><!--//item-->
-    <div class="item">
-							<span class="project-title"><a
-                                        href="http://themes.3rdwavemedia.com/website-templates/responsive-bootstrap-theme-for-startups-tempo/"
-                                        target="_blank">Tempo</a></span> - <span class="project-tagline">A responsive website template designed to help startups promote their products or services and to attract users &amp; investors</span>
-    </div><!--//item-->
-    <div class="item">
-							<span class="project-title"><a
-                                        href="hhttp://themes.3rdwavemedia.com/website-templates/responsive-bootstrap-theme-mobile-apps-atom/"
-                                        target="_blank">Atom</a></span> - <span class="project-tagline">A comprehensive website template solution for startups/developers to market their mobile apps. </span>
-    </div><!--//item-->
-    <div class="item">
-							<span class="project-title"><a
-                                        href="http://themes.3rdwavemedia.com/website-templates/responsive-bootstrap-theme-for-mobile-apps-delta/"
-                                        target="_blank">Delta</a></span> - <span class="project-tagline">A responsive Bootstrap one page theme designed to help app developers promote their mobile apps</span>
-    </div><!--//item-->
+
+    @foreach($resume->projects as $project)
+
+
+        <div class="item">
+            <span class="project-title">
+                <a href="#hook">{{ $project->name }}</a>
+            </span> -
+            <span class="project-tagline">{{ $project->description }}</span>
+        </div><!--//item-->
+
+    @endforeach
+
 </section><!--//section-->

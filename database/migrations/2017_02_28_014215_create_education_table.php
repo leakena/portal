@@ -16,6 +16,10 @@ class CreateEducationTable extends Migration
         Schema::create('education', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('resume_uid')->unsigned();
+            $table->string('major');
+            $table->string('school');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
             $table->timestamps();
 
             $table->foreign('resume_uid')->references('id')->on('resumes')->onDelete('cascade');
