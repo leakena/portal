@@ -3,14 +3,15 @@
 namespace App\Http\Controllers\Frontend\Portal;
 
 use App\Models\Portal\Post\Post;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
 
 class PortalController extends Controller
 {
+    /**
+     * PortalController constructor.
+     */
     public function __construct()
     {
         return $this->middleware('auth');

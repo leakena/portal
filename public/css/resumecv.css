@@ -223,6 +223,7 @@ p {
 
 .main-wrapper .section {
 	margin-bottom: 60px;
+	position: relative !important;
 }
 
 .main-wrapper .experiences-section .item {
@@ -349,3 +350,5 @@ p {
 
 /* Large devices (large desktops, 1200px and up) */
 /* Ex-Large devices (large desktops, 1200px and up) */
+
+

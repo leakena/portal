@@ -4,6 +4,7 @@ namespace App\Models\Access\User\Traits\Relationship;
 
 use App\Models\Access\User\SocialLogin;
 use App\Models\Portal\Post\Post;
+use App\Models\Portal\Resume\Resume;
 
 /**
  * Class UserRelationship.
@@ -28,7 +29,17 @@ trait UserRelationship
         return $this->hasMany(SocialLogin::class);
     }
 
+    /**
+     * @return mixed
+     */
     public function posts(){
         return $this->hasMany(Post::class);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function resume(){
+        return $this->hasOne(Resume::class, 'resume_uid');
     }
 }

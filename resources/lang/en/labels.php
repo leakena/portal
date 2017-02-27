@@ -159,5 +159,14 @@ return [
             ],
         ],
 
+        'resume' => [
+            'career_profile'         => 'Career Profile',
+            'experiences'           => 'Experiences',
+            'projects'              => 'Projects',
+            'skills'                => 'Skills & Proficiency',
+            'languages'             => 'Languages',
+            'interests'             => 'Interests'
+        ],
+
     ],
 ];
