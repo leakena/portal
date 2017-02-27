@@ -38,9 +38,11 @@
     padding-top: 10px;
     text-align: center;
 }
+
 /*end side right*/
 
-.card{
+/*card book*/
+.card {
     width: 100%;
     height: 340px;
     background: #fff;
@@ -48,14 +50,68 @@
     border-top: 3px solid #fff;
     margin-bottom: 20px;
 }
-.card .card-img-top{
+
+.card .card-img-top {
     height: 170px;
     background-position: left top;
 }
-.card .card-title{
+
+.card .card-title {
     border-bottom: 1px solid #f1f1f1;
     padding-bottom: 10px;
 }
-.card .card-block{
+
+.card .card-block {
     padding: 10px;
 }
+
+/*end card book*/
+
+/*post*/
+.post {
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: #fff;
+    position: relative;
+}
+
+.post .thumb {
+    float: left;
+    width: 50%;
+    height: 200px;
+    background-size: cover;
+}
+
+.post img.thumb {
+    width: 100%;
+}
+
+.post .desc {
+    padding-left: 20px !important;
+    float: right;
+    width: 50%;
+}
+
+.post .desc .poster {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 0;
+}
+
+.post .thumb, .post .desc {
+    padding: 5px;
+}
+
+.post .option {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.post .desc .react {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+}
+/*end post*/
