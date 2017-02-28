@@ -41,4 +41,17 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/posts/update/{post}', 'PortalController@update');
 
     });
+
+    Route::group(['namespace' => 'Portal', 'as' => 'resume.'], function () {
+
+        Route::get('/resume/career_profile', 'ResumeController@index_career_profile');
+        Route::get('/resume/experiences', 'ResumeController@index_experiences');
+        Route::get('/resume/project', 'ResumeController@index_project');
+        Route::get('/resume/skill', 'ResumeController@index_skill');
+        Route::get('/resume/contact', 'ResumeController@index_contact');
+        Route::get('/resume/languages', 'ResumeController@index_languages');
+
+        Route::get('/resume/go_back', 'ResumeController@go_back');
+
+    });
 });

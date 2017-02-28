@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateViewsTable extends Migration
+class CreateLanguagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateViewsTable extends Migration
      */
     public function up()
     {
-        Schema::create('views', function (Blueprint $table) {
+        Schema::create('languages', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_uid')->unsigned();
-            $table->integer('post_uid')->unsigned();
+            $table->integer('resume_uid')->unsigned();
+            $table->string('name');
+            $table->string('degree');
             $table->timestamps();
+
+            $table->foreign('resume_uid')->references('id')->on('resumes')->onDelete('cascade');
         });
     }
 
@@ -28,6 +31,6 @@ class CreateViewsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('views');
+        Schema::dropIfExists('languages');
     }
 }
