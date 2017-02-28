@@ -1,10 +1,12 @@
 <div class="interests-container container-block">
     <h2 class="container-block-title section-title">Interests</h2>
-    <ul class="list-unstyled interests-list">
-        @foreach($resume->interests as $interest)
+    @if(isset($resume))
+        <ul class="list-unstyled interests-list">
+            @foreach($resume->interests as $interest)
 
-            <li>{{ $interest->name }}</li>
+                <li>{{ $interest->name }}</li>
 
-        @endforeach
-    </ul>
+            @endforeach
+        </ul>
+    @endif
 </div><!--//interests-->
