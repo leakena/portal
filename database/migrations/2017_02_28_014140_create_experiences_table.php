@@ -19,8 +19,8 @@ class CreateExperiencesTable extends Migration
             $table->string('position');
             $table->string('company');
             $table->text('description');
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
 
             $table->foreign('resume_uid')->references('id')->on('resumes')->onDelete('cascade');

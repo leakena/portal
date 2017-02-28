@@ -35,6 +35,7 @@
         @yield('after-styles')
         {{ Html::style('css/resumecv.css') }}
         {{ Html::style('css/app.css') }}
+        {{ Html::style('css/datepicker.css') }}
 
 
         <!-- Scripts -->
@@ -66,6 +67,7 @@
         {{-- Sticky js --}}
         {!! Html::script('js/vendor/jquery.sticky-kit.min.js') !!}
         {!! Html::script('js/vendor/tinymce/js/tinymce/tinymce.min.js') !!}
+        {!! Html::script('js/bootstrap-datepicker.js') !!}
 
         <script type="text/javascript">
             jQuery(document).ready(function(){
@@ -77,6 +79,8 @@
 
                $("#side-left").stick_in_parent();
                $("#side-right").stick_in_parent();
+               $('#start_date').datepicker();
+               $('#end_date').datepicker();
             });
         </script>
         @yield('after-scripts')

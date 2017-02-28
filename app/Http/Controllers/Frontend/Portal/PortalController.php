@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend\Portal;
 
 use App\Models\Portal\Post\Post;
 use App\Http\Controllers\Controller;
+use App\Models\Portal\Resume\Resume;
 use Illuminate\Support\Facades\Input;
 
 
@@ -24,8 +25,8 @@ class PortalController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest()->limit(4)->get();
-        return view('frontend.portals.index', compact('posts'));
+        $resume = Resume::find(auth()->id());
+        return view('frontend.portals.index', compact('resume'));
     }
 
     /**
