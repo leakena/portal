@@ -68,6 +68,7 @@
         {!! Html::script('js/vendor/jquery.sticky-kit.min.js') !!}
         {!! Html::script('js/vendor/tinymce/js/tinymce/tinymce.min.js') !!}
         {!! Html::script('js/bootstrap-datepicker.js') !!}
+        {!! Html::script('js/app.js') !!}
 
         <script type="text/javascript">
             jQuery(document).ready(function(){
@@ -81,6 +82,8 @@
                $("#side-right").stick_in_parent();
                $('#start_date').datepicker();
                $('#end_date').datepicker();
+               $('#edit_start_date').datepicker();
+               $('#edit_end_date').datepicker();
             });
         </script>
         @yield('after-scripts')

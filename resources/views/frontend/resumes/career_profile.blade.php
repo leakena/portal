@@ -1,20 +1,45 @@
-@extends('frontend.layouts.app')
-
-@section('content')
+<div role="tabpanel" id="career_profile" class="tab-pane mt-30 active">
     <div class="row">
-        {{-- main content --}}
         <div class="col-md-12">
-            <div class="main-wrapper">
-
-                @include('frontend.partials.resumes.summary-section')
-
-                <div class="section-footer">
-                    <div class="btn-group">
-                        <a href="{{ url()->previous() }}" class="btn btn-default pull-left"><i class="fa fa-arrow-left"></i> Back</a>
-                        <a href="/resume/experiences" class="btn btn-primary pull-left">Next <i class="fa fa-arrow-right"></i></a>
-                    </div>
+            @if(!isset($resume  ))
+                <button class="btn btn-primary btn-sm" style="margin-bottom: 10px;" data-toggle="modal" data-target="#addCareerProfile"><i class="fa fa-plus-circle"></i> Add</button>
+            @endif
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="career-profile">
+                        <tr>
+                            <th>Summary Resume</th>
+                            <th>Action</th>
+                        </tr>
+                        <tbody id="listCareerProfile"></tbody>
+                    </table>
                 </div>
-            </div><!--//main-body-->
         </div>
     </div>
-@endsection
+
+    {{--modal--}}
+    <div class="modal fade" id="modal-edit-career-profile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Edit Summary Resume</h4>
+                </div>
+                <form method="POST" action="/resume/update-career-profile" id="update-career-profile">
+                    {{ csrf_field() }}
+                    <input type="hidden" id="resume_uid" name="resume_uid" value="{{ $resume->id }}"/>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="career-profile">Career Profile</label>
+                            <textarea id="content-resume-profile" name="content-resume-profile" class="form-control" rows="4"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

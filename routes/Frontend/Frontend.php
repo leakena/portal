@@ -43,18 +43,27 @@ Route::group(['middleware' => 'auth'], function () {
 	});
 
 	Route::group(['namespace' => 'Portal', 'as' => 'resume.'], function () {
-
+        /***
+         * Resume Index
+         */
 		Route::get('/resume', 'ResumeController@index');
-		Route::post('/resume/career_profile/{resume}', 'ResumeController@update_career_profile');
-		Route::post('/resume/experiences', 'ResumeController@store_experience');
 
-		Route::post('/resume/project', 'ResumeController@store_project');
-		Route::post('/resume/skill', 'ResumeController@store_skill');
-		Route::post('/resume/contact', 'ResumeController@store_contact');
-		Route::post('/resume/career_profile', 'ResumeController@store_career');
-
-
+        /**
+         * Resumes
+         */
+		Route::post('/resume/career_profile', 'ResumeController@store_career_profile');
 		Route::get('/resume/go_back', 'ResumeController@go_back');
+
+		Route::get('/resume/career-profile', 'ResumeController@getCareerProfile');
+        Route::get('/reusme/edit-career-profile', 'ResumeController@editCareerProfile');
+        /**
+         * Experiences
+         */
+        Route::get('/get-experience-content', 'ResumeController@experienceContent')->name('get_experience_content');
+        Route::post('/resume/save-experience', 'ResumeController@saveExperience')->name('save_experience');
+        Route::get('/resume/edit-experience', 'ResumeController@editExperience')->name('edit_experience');
+        Route::post('/resume/update-experience', 'ResumeController@updateExperience')->name('update_experience');
+        Route::post('/resume/remove-experience', 'ResumeController@removeExperience')->name('remove_experience');
 
 	});
 });
