@@ -1,25 +1,23 @@
-jQuery(document).ready(function () {
+jQuery(document).ready(function() {
 
     /**
      * Resume - CRUD Experiences
      */
-    jQuery(document).on('submit', '#save-experience', function (event) {
+    jQuery(document).on('submit', '#save-experience', function(event) {
         event.preventDefault();
         $.ajax({
             type: 'POST',
             url: '/resume/save-experience',
             data: jQuery('#save-experience').serialize(),
-            success: function (experience) {
-
+            success: function(experience) {
                 jQuery('#addExperiences').modal('toggle');
                 renderExperiences(jQuery('#resume_uid').val());
                 jQuery('#save-experience')[0].reset();
-
             }
         });
     });
 
-    jQuery(document).on('click', '#edit', function () {
+    jQuery(document).on('click', '#edit', function() {
 
         jQuery('#experiences').find('.success').removeClass();
         jQuery('#experiences').find('.danger').removeClass();
@@ -34,7 +32,7 @@ jQuery(document).ready(function () {
                 experience_uid: experience_uid,
                 resume_uid: resume_uid
             },
-            success: function (experience) {
+            success: function(experience) {
                 $('#editExperiences').modal('toggle');
                 $('#edit_position').val(experience.data[0].position);
                 $('#edit_company').val(experience.data[0].company);
@@ -47,7 +45,7 @@ jQuery(document).ready(function () {
     });
 
 
-    jQuery(document).on('submit', '#update-experience', function (e) {
+    jQuery(document).on('submit', '#update-experience', function(e) {
         e.preventDefault();
         var experience_uid = $('#experiences').find('.success').children().eq(0).text();
         var resume_uid = $('#experiences').find('.success').children().eq(1).text();
@@ -64,7 +62,7 @@ jQuery(document).ready(function () {
                 edit_start_date: jQuery('#edit_start_date').val(),
                 edit_end_date: jQuery('#edit_end_date').val()
             },
-            success: function (experience) {
+            success: function(experience) {
                 $('#editExperiences').modal('toggle');
                 renderExperiences(resume_uid);
             }
@@ -73,7 +71,7 @@ jQuery(document).ready(function () {
 
     // Delete Experience
 
-    jQuery(document).on('click', '#delete', function () {
+    jQuery(document).on('click', '#delete', function() {
 
         jQuery('#experiences').find('.success').removeClass();
         jQuery('#experiences').find('.danger').removeClass();
@@ -84,38 +82,64 @@ jQuery(document).ready(function () {
 
     });
 
-    $(document).on('submit', '#remove-experience', function (event) {
+    $(document).on('submit', '#remove-experience', function(event) {
         event.preventDefault();
         $.ajax({
             type: 'POST',
             url: '/resume/remove-experience',
             data: $('#remove-experience').serialize(),
-            success: function () {
+            success: function() {
                 $('#deleteExperiences').modal('toggle');
                 renderExperiences($('#remove_resume_uid').val());
             }
         });
     });
 
-    $(document).on('click', '#edit-career-profile', function(){
+    $(document).on('click', '#edit-career-profile', function() {
         $.ajax({
             type: 'GET',
             url: '/reusme/edit-career-profile',
-            data: {resume_uid: $(this).parent().parent().children().eq(0).text()},
-            success:function(resume){
+            data: { resume_uid: $(this).parent().parent().children().eq(0).text() },
+            success: function(resume) {
                 $('#content-resume-profile').val(resume.data[0].career_profile);
-                console.log(resume.data[0].career_profile);
             }
         });
         $('#modal-edit-career-profile').modal('toggle');
     });
 
-    $(document).on('submit', '#update-career-profile', function(){
-
-
+    $(document).on('submit', '#update-career-profile', function(event) {
+        event.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '/resume/update-career-profile',
+            data: {
+                resume_uid: $('#resume_uid').val(),
+                career_profile: $('#content-resume-profile').val()
+            },
+            success: function(careerprofile) {
+                $('#modal-edit-career-profile').modal('toggle');
+                renderCareerProfile();
+            }
+        });
     });
-    
-    $('#experience').on('click', function (event) {
+
+    // End experience
+
+    // Start Project
+
+    $(document).on('submit', '#form-save-project', function(event) {
+        event.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '/resume/projects/save-project',
+            data: $('#form-save-project').serialize(),
+            success: function(project) {
+                $('#modal-save-project').modal('toggle');
+            }
+        });
+    });
+
+    $('#experience').on('click', function(event) {
         event.preventDefault();
         var resume_id = $(this).attr('resume_id');
         renderExperiences(resume_id);
@@ -129,11 +153,11 @@ function renderExperiences(resume_id) {
     $.ajax({
         type: 'GET',
         url: '/get-experience-content',
-        data: {resume_id: resume_id},
+        data: { resume_id: resume_id },
         dataType: 'json',
-        success: function (experience) {
+        success: function(experience) {
             var html = '';
-            $.each(experience.data, function (key, val) {
+            $.each(experience.data, function(key, val) {
                 html += '<tr>'
                 html += '<td class="hidden">' + val.id + '</td>'
                 html += '<td class="hidden">' + val.resume_uid + '</td>'
@@ -153,18 +177,18 @@ function renderExperiences(resume_id) {
     })
 }
 
-function renderCareerProfile(){
+function renderCareerProfile() {
     $.ajax({
         type: 'GET',
         url: '/resume/career-profile',
         data: {
             resume_uid: $('#resume_uid').val()
         },
-        success:function(resume){
+        success: function(resume) {
             var html = '';
             html += '<tr>'
-            html += '<td class="hidden">'+resume.data[0].id+'</td>'
-            html += '<td>'+resume.data[0].career_profile.substring(0, 120)+'</td>'
+            html += '<td class="hidden">' + resume.data[0].id + '</td>'
+            html += '<td>' + resume.data[0].career_profile.substring(0, 120) + '</td>'
             html += '<td><button class="btn btn-info btn-xs" id="edit-career-profile"><i class="fa fa-edit"></i></button>'
             html += '</tr>';
             $('#listCareerProfile').html(html);

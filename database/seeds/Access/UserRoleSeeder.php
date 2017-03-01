@@ -44,6 +44,10 @@ class UserRoleSeeder extends Seeder
         $user_model = new $user_model();
         $user_model::find(5)->attachRole(3);
 
+        $user_model = config('auth.providers.users.model');
+        $user_model = new $user_model();
+        $user_model::find(6)->attachRole(3);
+
         $this->enableForeignKeys();
     }
 }
