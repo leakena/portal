@@ -1,19 +1,33 @@
-@extends('frontend.layouts.app')
+<div role="tabpanel" id="contact" class="tab-pane mt-30">
 
-@section('content')
-    <div class="row">
-        {{-- main content --}}
-        <div class="col-md-12">
-            <div class="main-wrapper">
-                @include('frontend.partials.resumes.contact')
-                <div class="section-footer">
-                    <div class="btn-group">
-                        <a href="{{ url()->previous() }}" class="btn btn-default pull-left"><i class="fa fa-arrow-left"></i> Back</a>
-                        <a href="/resume/languages" class="btn btn-primary pull-left">Next <i class="fa fa-arrow-right"></i></a>
-                    </div>
+    @if(isset($resume))
+        <form method="POST" action="/resume/contact" class="form-horizontal">
+            {{ csrf_field() }}
+
+            <input type="hidden" name="resume_uid" value="{{ $resume->id }}"/>
+
+            <div class="form-group">
+                <label for="name" class="col-md-4 control-label">Icon</label>
+                <div class="col-md-6">
+                    <input type="text" name="icon" class="form-control"/>
                 </div>
-
             </div>
-        </div>
-    </div>
-@endsection
+
+            <div class="form-group">
+                <label for="name" class="col-md-4 control-label">Description</label>
+                <div class="col-md-6">
+                    <input type="text" name="description" id="description"
+                           class="form-control" placeholder="Description">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-6 col-md-offset-4">
+                    <input id="update-profile" type="submit" value="Save"
+                           class="btn btn-primary">
+                </div>
+            </div>
+        </form>
+    @endif
+
+</div>

@@ -29,11 +29,6 @@
 
 					@include('frontend.partials.resumes.skills-section')
 
-					@if(isset($resume))
-						<a href="/resume" class="btn btn-primary pull-right"><i class="fa fa-arrow-right"></i> Update your resume</a>
-					@else
-						<a href="/resume" class="btn btn-primary pull-right"><i class="fa fa-arrow-right"></i> Create your resume</a>
-					@endif
 				</div><!--//main-body-->
 			</div>
 		</div>
