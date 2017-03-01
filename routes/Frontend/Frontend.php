@@ -56,6 +56,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 		Route::get('/resume/career-profile', 'ResumeController@getCareerProfile');
         Route::get('/reusme/edit-career-profile', 'ResumeController@editCareerProfile');
+        Route::post('/resume/update-career-profile', 'ResumeController@updateCareerProfile');
         /**
          * Experiences
          */
@@ -64,6 +65,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/resume/edit-experience', 'ResumeController@editExperience')->name('edit_experience');
         Route::post('/resume/update-experience', 'ResumeController@updateExperience')->name('update_experience');
         Route::post('/resume/remove-experience', 'ResumeController@removeExperience')->name('remove_experience');
+
+        /*
+        *	Project
+        */
+        Route::post('/resume/projects/save-project', 'ResumeController@saveProject');
 
 	});
 });

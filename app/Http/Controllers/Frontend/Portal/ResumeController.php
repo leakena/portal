@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend\Portal;
 
 use App\Models\Portal\Resume\Experience;
 use App\Models\Portal\Resume\Resume;
+use App\Models\Portal\Resume\Project;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -167,5 +168,24 @@ class ResumeController extends Controller
         ])->get()->toArray();
 
         return Response::json(['data'=> $resume, 'status'=>true]);
+    }
+
+    public function updateCareerProfile(){
+        DB::table('resumes')->where('id', request('resume_uid'))->update(['career_profile' => request('career_profile')]);
+        return Response::json(['status' => true]);
+    }
+
+
+    public function saveProject(){
+        // Create a new project
+        $newProject = new Project();
+        // Set value into each field
+        $newProject->resume_uid = request('resume_uid');
+        $newProject->name = request('name');
+        $newProject->description = request('description');
+        // Save new project
+        $newProject->save();
+        // Response back as json format
+        return Response::json(['status'=>true]);
     }
 }
