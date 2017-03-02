@@ -52,14 +52,11 @@ class ResumeController extends Controller
     {
         $newCareerProfile = new Resume();
 
-        $newCareerProfile->career_profile = request('career_profile');
+        $newCareerProfile->career_profile = request('save-career-profile');
         $newCareerProfile->user_uid = auth()->id();
         $newCareerProfile->save();
 
-        return Response::json([
-            'data' => $newCareerProfile,
-            'status' => true
-        ]);
+        return redirect()->back();
     }
 
     /**

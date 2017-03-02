@@ -1,20 +1,4 @@
 jQuery(document).ready(function () {
-    // Save Career Profile
-    $(document).on('submit', '#form-save-career-profile', function (event) {
-        event.preventDefault();
-        $.ajax({
-            type: 'POST',
-            url: '/resume/save-career-profile',
-            data: {
-                career_profile: $('#save-career-profile').val()
-            },
-            success: function () {
-                $('#modal-save-career').modal('toggle');
-                renderCareerProfile();
-            }
-        });
-    });
-
     /**
      * Resume - CRUD Experiences
      */
