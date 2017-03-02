@@ -84,6 +84,11 @@
                $('#end_date').datepicker();
                $('#edit_start_date').datepicker();
                $('#edit_end_date').datepicker();
+               $('#save-start-date-education').datepicker();
+               $('#save-end-date-education').datepicker();
+               $('#update-start-date-education').datepicker();
+               $('#update-end-date-education').datepicker();
+
             });
         </script>
         @yield('after-scripts')
