@@ -29,9 +29,9 @@
                         {{ csrf_field() }}
                         <input type="hidden" name="resume_uid" value="{{ $resume->id }}" id="resume_uid"/>
                         <div class="form-group">
-                            <label for="save-language">Major</label>
+                            <label for="save-language">Language name</label>
                             <input type="text" name="save-language" id="save-language" class="form-control"
-                                   placeholder="Major" value="{{ old('save-language') }}">
+                                   placeholder="Language name" value="{{ old('save-language') }}">
                         </div>
 
                         <div class="form-group">
