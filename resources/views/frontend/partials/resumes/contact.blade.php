@@ -6,7 +6,8 @@
 
                 <li class="email">
                     <i class="fa {{ $contact->icon }}"></i>
-                    <a href="{{ $contact->link }}"> {{ $contact->description }}</a></li>
+                    <a href="{{ $contact->link }}"> {{ $contact->description }}</a>
+                </li>
 
             @endforeach
         </ul>

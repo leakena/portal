@@ -30,7 +30,7 @@ class ResumeController extends Controller
      */
     public function index()
     {
-        $resume = Resume::find(auth()->id());
+        $resume = Resume::where(['user_uid' => auth()->id()])->first();
         return view('frontend.resumes.index', compact('resume'));
     }
 
@@ -55,7 +55,11 @@ class ResumeController extends Controller
         $newCareerProfile->career_profile = request('career_profile');
         $newCareerProfile->user_uid = auth()->id();
         $newCareerProfile->save();
-        return redirect('/');
+
+        return Response::json([
+            'data' => $newCareerProfile,
+            'status' => true
+        ]);
     }
 
     /**

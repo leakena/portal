@@ -5,6 +5,7 @@
 		{{-- main content --}}
 		<div class="col-md-12">
 			<div class="wrapper">
+
 				<div class="sidebar-wrapper">
 
 					@include('frontend.partials.resumes.profile')
