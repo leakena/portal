@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend\Portal;
 
 use App\Models\Access\User\Profile;
 use App\Models\Portal\Post\Post;
+use App\Models\Portal\Post\View;
 use App\Http\Controllers\Controller;
 use App\Models\Portal\Resume\Resume;
 use Illuminate\Support\Facades\Input;
@@ -85,6 +86,9 @@ class PortalController extends Controller
 
     public function show(Post $post)
     {
+        $newView = new View();
+        $newView->post_uid = $post->id;
+        $newView->save();
         $post = Post::find($post->id);
         return view('frontend.portals.show', compact('post'));
     }

@@ -1,14 +1,14 @@
-jQuery(document).ready(function () {
+jQuery(document).ready(function() {
     /**
      * Resume - CRUD Experiences
      */
-    jQuery(document).on('submit', '#save-experience', function (event) {
+    jQuery(document).on('submit', '#save-experience', function(event) {
         event.preventDefault();
         $.ajax({
             type: 'POST',
             url: '/resume/save-experience',
             data: jQuery('#save-experience').serialize(),
-            success: function (experience) {
+            success: function(experience) {
                 jQuery('#addExperiences').modal('toggle');
                 renderExperiences(jQuery('#resume_uid').val());
                 jQuery('#save-experience')[0].reset();
@@ -16,7 +16,7 @@ jQuery(document).ready(function () {
         });
     });
 
-    jQuery(document).on('click', '#edit', function () {
+    jQuery(document).on('click', '#edit', function() {
 
         jQuery('#experiences').find('.success').removeClass();
         jQuery('#experiences').find('.danger').removeClass();
@@ -31,7 +31,7 @@ jQuery(document).ready(function () {
                 experience_uid: experience_uid,
                 resume_uid: resume_uid
             },
-            success: function (experience) {
+            success: function(experience) {
                 $('#editExperiences').modal('toggle');
                 $('#edit_position').val(experience.data[0].position);
                 $('#edit_company').val(experience.data[0].company);
@@ -44,7 +44,7 @@ jQuery(document).ready(function () {
     });
 
 
-    jQuery(document).on('submit', '#update-experience', function (e) {
+    jQuery(document).on('submit', '#update-experience', function(e) {
         e.preventDefault();
         var experience_uid = $('#experiences').find('.success').children().eq(0).text();
         var resume_uid = $('#experiences').find('.success').children().eq(1).text();
@@ -61,7 +61,7 @@ jQuery(document).ready(function () {
                 edit_start_date: jQuery('#edit_start_date').val(),
                 edit_end_date: jQuery('#edit_end_date').val()
             },
-            success: function (experience) {
+            success: function(experience) {
                 $('#editExperiences').modal('toggle');
                 renderExperiences(resume_uid);
             }
@@ -70,7 +70,7 @@ jQuery(document).ready(function () {
 
     // Delete Experience
 
-    jQuery(document).on('click', '#delete', function () {
+    jQuery(document).on('click', '#delete', function() {
 
         jQuery('#experiences').find('.success').removeClass();
         jQuery('#experiences').find('.danger').removeClass();
@@ -81,32 +81,32 @@ jQuery(document).ready(function () {
 
     });
 
-    $(document).on('submit', '#remove-experience', function (event) {
+    $(document).on('submit', '#remove-experience', function(event) {
         event.preventDefault();
         $.ajax({
             type: 'POST',
             url: '/resume/remove-experience',
             data: $('#remove-experience').serialize(),
-            success: function () {
+            success: function() {
                 $('#deleteExperiences').modal('toggle');
                 renderExperiences($('#remove_resume_uid').val());
             }
         });
     });
 
-    $(document).on('click', '#edit-career-profile', function () {
+    $(document).on('click', '#edit-career-profile', function() {
         $.ajax({
             type: 'GET',
             url: '/reusme/edit-career-profile',
-            data: {resume_uid: $(this).parent().parent().children().eq(0).text()},
-            success: function (resume) {
+            data: { resume_uid: $(this).parent().parent().children().eq(0).text() },
+            success: function(resume) {
                 $('#content-resume-profile').val(resume.data[0].career_profile);
             }
         });
         $('#modal-edit-career-profile').modal('toggle');
     });
 
-    $(document).on('submit', '#update-career-profile', function (event) {
+    $(document).on('submit', '#update-career-profile', function(event) {
         event.preventDefault();
         $.ajax({
             type: 'POST',
@@ -115,7 +115,7 @@ jQuery(document).ready(function () {
                 resume_uid: $('#resume_uid').val(),
                 career_profile: $('#content-resume-profile').val()
             },
-            success: function (careerprofile) {
+            success: function(careerprofile) {
                 $('#modal-edit-career-profile').modal('toggle');
                 renderCareerProfile();
             }
@@ -126,14 +126,15 @@ jQuery(document).ready(function () {
 
     // Start Project
 
-    $(document).on('submit', '#form-save-project', function (event) {
+    $(document).on('submit', '#form-save-project', function(event) {
         event.preventDefault();
         $.ajax({
             type: 'POST',
             url: '/resume/projects/save-project',
             data: $('#form-save-project').serialize(),
-            success: function (project) {
+            success: function(project) {
                 $('#modal-save-project').modal('toggle');
+                $('#form-save-project')[0].reset();
                 renderProject();
             }
         });
@@ -141,7 +142,7 @@ jQuery(document).ready(function () {
 
     // Edit project
 
-    $(document).on('click', '#btn-edit-project', function (event) {
+    $(document).on('click', '#btn-edit-project', function(event) {
         event.preventDefault();
         $('#projects').find('.success').removeClass();
         $('#projects').find('.danger').removeClass();
@@ -154,7 +155,7 @@ jQuery(document).ready(function () {
                 project_uid: $(this).parent().parent().children().eq(0).text(),
                 resume_uid: $(this).parent().parent().children().eq(1).text()
             },
-            success: function (project) {
+            success: function(project) {
                 $('#modal-edit-project').modal('toggle');
                 $('#edit-project-name').val(project.data[0].name);
                 $('#edit-project-desc').val(project.data[0].description);
@@ -164,7 +165,7 @@ jQuery(document).ready(function () {
 
     // Update project
 
-    $(document).on('submit', '#modal-edit-project', function (event) {
+    $(document).on('submit', '#modal-edit-project', function(event) {
         event.preventDefault();
 
         $.ajax({
@@ -176,7 +177,7 @@ jQuery(document).ready(function () {
                 project_name: $('#edit-project-name').val(),
                 project_desc: $('#edit-project-desc').val()
             },
-            success: function () {
+            success: function() {
                 $('#modal-edit-project').modal('toggle');
                 renderProject();
             }
@@ -185,7 +186,7 @@ jQuery(document).ready(function () {
 
     //Delete project
 
-    $(document).on('click', '#btn-delete-project', function (event) {
+    $(document).on('click', '#btn-delete-project', function(event) {
         event.preventDefault();
 
         $('#projects').find('.success').removeClass();
@@ -197,7 +198,7 @@ jQuery(document).ready(function () {
     });
 
     // Confirmation delete project
-    $(document).on('submit', '#form-delete-project', function (event) {
+    $(document).on('submit', '#form-delete-project', function(event) {
         event.preventDefault();
 
         $.ajax({
@@ -207,7 +208,7 @@ jQuery(document).ready(function () {
                 project_uid: $('#projects').find('.danger').children().eq(0).text(),
                 resume_uid: $('#projects').find('.danger').children().eq(1).text(),
             },
-            success: function () {
+            success: function() {
                 $('#modal-delete-project').modal('toggle');
                 renderProject();
             }
@@ -218,14 +219,15 @@ jQuery(document).ready(function () {
     //Start skill
     //Save Skill
 
-    $(document).on('submit', '#form-save-skill', function (event) {
+    $(document).on('submit', '#form-save-skill', function(event) {
         event.preventDefault();
         $.ajax({
             type: 'POST',
             url: '/resume/skills/save-skill',
             data: $('#form-save-skill').serialize(),
-            success: function () {
+            success: function() {
                 $('#modal-save-skill').modal('toggle');
+                $('#form-save-skill')[0].reset();
                 renderSkill();
             }
         });
@@ -233,7 +235,7 @@ jQuery(document).ready(function () {
 
 
     // Edit skill
-    $(document).on('click', '#btn-edit-skill', function (event) {
+    $(document).on('click', '#btn-edit-skill', function(event) {
         event.preventDefault();
 
         $('#table-skill').find('.success').removeClass();
@@ -247,7 +249,7 @@ jQuery(document).ready(function () {
                 project_uid: $(this).parent().parent().children().eq(0).text(),
                 resume_uid: $(this).parent().parent().children().eq(1).text()
             },
-            success: function (skill) {
+            success: function(skill) {
                 $('#modal-edit-skill').modal('toggle');
                 $('#edit-skill-name').val(skill.data[0].name);
             }
@@ -255,7 +257,7 @@ jQuery(document).ready(function () {
     });
 
     // Update skill
-    $(document).on('submit', '#form-update-skill', function(event){
+    $(document).on('submit', '#form-update-skill', function(event) {
         event.preventDefault();
         $.ajax({
             type: 'POST',
@@ -265,7 +267,7 @@ jQuery(document).ready(function () {
                 resume_uid: $('#table-skill').find('.success').children().eq(1).text(),
                 name_skill: $('#edit-skill-name').val()
             },
-            success:function(){
+            success: function() {
                 $('#modal-edit-skill').modal('toggle');
                 renderSkill();
             }
@@ -273,7 +275,7 @@ jQuery(document).ready(function () {
     });
 
     // Click delete skill
-    $(document).on('click', '#btn-delete-skill', function (event) {
+    $(document).on('click', '#btn-delete-skill', function(event) {
         event.preventDefault();
 
         $('#table-skill').find('.success').removeClass();
@@ -286,7 +288,7 @@ jQuery(document).ready(function () {
 
 
     // Confirmation delete skill
-    $(document).on('submit', '#form-delete-skill', function (event) {
+    $(document).on('submit', '#form-delete-skill', function(event) {
         event.preventDefault();
 
         $.ajax({
@@ -296,7 +298,7 @@ jQuery(document).ready(function () {
                 skill_uid: $('#table-skill').find('.danger').children().eq(0).text(),
                 resume_uid: $('#table-skill').find('.danger').children().eq(1).text(),
             },
-            success: function () {
+            success: function() {
                 $('#modal-delete-skill').modal('toggle');
                 renderSkill();
             }
@@ -308,7 +310,7 @@ jQuery(document).ready(function () {
 
     //Save a new contact
 
-    $(document).on('submit', '#form-save-contact', function (event) {
+    $(document).on('submit', '#form-save-contact', function(event) {
         event.preventDefault();
         $.ajax({
             type: 'POST',
@@ -318,15 +320,16 @@ jQuery(document).ready(function () {
                 name: $('#save-contact-icon').val(),
                 desc: $('#save-contact-name').val()
             },
-            success: function () {
+            success: function() {
                 $('#modal-save-contact').modal('toggle');
+                $('#form-save-contact')[0].reset();
                 renderContact();
             }
         });
     });
 
     //Edit contact
-    $(document).on('click', '#btn-edit-contact', function (event) {
+    $(document).on('click', '#btn-edit-contact', function(event) {
         event.preventDefault();
 
         $('#table-contact').find('.success').removeClass();
@@ -340,7 +343,7 @@ jQuery(document).ready(function () {
                 project_uid: $(this).parent().parent().children().eq(0).text(),
                 resume_uid: $(this).parent().parent().children().eq(1).text()
             },
-            success: function (contact) {
+            success: function(contact) {
                 $('#modal-edit-contact').modal('toggle');
                 $('#update-contact-icon').val(contact.data[0].icon);
                 $('#update-contact-name').val(contact.data[0].description);
@@ -350,7 +353,7 @@ jQuery(document).ready(function () {
 
     //Update contact
 
-    $(document).on('submit', '#form-update-contact', function(event){
+    $(document).on('submit', '#form-update-contact', function(event) {
         event.preventDefault();
         $.ajax({
             type: 'POST',
@@ -361,7 +364,7 @@ jQuery(document).ready(function () {
                 icon: $('#update-contact-icon').val(),
                 desc: $('#update-contact-name').val(),
             },
-            success:function(){
+            success: function() {
                 $('#modal-edit-contact').modal('toggle');
                 renderContact();
             }
@@ -369,7 +372,7 @@ jQuery(document).ready(function () {
     });
 
     // Click delete contact
-    $(document).on('click', '#btn-delete-contact', function (event) {
+    $(document).on('click', '#btn-delete-contact', function(event) {
         event.preventDefault();
 
         $('#table-contact').find('.success').removeClass();
@@ -381,7 +384,7 @@ jQuery(document).ready(function () {
     });
 
     // Confirmation delete contact
-    $(document).on('submit', '#form-delete-contact', function (event) {
+    $(document).on('submit', '#form-delete-contact', function(event) {
         event.preventDefault();
 
         $.ajax({
@@ -391,7 +394,7 @@ jQuery(document).ready(function () {
                 skill_uid: $('#table-contact').find('.danger').children().eq(0).text(),
                 resume_uid: $('#table-contact').find('.danger').children().eq(1).text(),
             },
-            success: function () {
+            success: function() {
                 $('#modal-delete-contact').modal('toggle');
                 renderContact();
             }
@@ -402,7 +405,7 @@ jQuery(document).ready(function () {
 
     //Start Eduction
     //Save education
-    $(document).on('submit', '#form-save-education', function (event) {
+    $(document).on('submit', '#form-save-education', function(event) {
         event.preventDefault();
         $.ajax({
             type: 'POST',
@@ -414,15 +417,16 @@ jQuery(document).ready(function () {
                 start_date: $('#save-start-date-education').val(),
                 end_date: $('#save-end-date-education').val()
             },
-            success: function () {
+            success: function() {
                 $('#modal-save-education').modal('toggle');
+                $('#form-save-education')[0].reset();
                 renderEducation();
             }
         });
     });
 
     // Edit education
-    $(document).on('click', '#btn-edit-education', function (event) {
+    $(document).on('click', '#btn-edit-education', function(event) {
         event.preventDefault();
 
         $('#table-education').find('.success').removeClass();
@@ -436,7 +440,7 @@ jQuery(document).ready(function () {
                 education_uid: $(this).parent().parent().children().eq(0).text(),
                 resume_uid: $(this).parent().parent().children().eq(1).text()
             },
-            success: function (education) {
+            success: function(education) {
                 $('#modal-edit-education').modal('toggle');
                 $('#update-major').val(education.data[0].major);
                 $('#update-school').val(education.data[0].school);
@@ -448,7 +452,7 @@ jQuery(document).ready(function () {
 
 
     // Update education
-    $(document).on('submit', '#form-update-education', function(event){
+    $(document).on('submit', '#form-update-education', function(event) {
         event.preventDefault();
         $.ajax({
             type: 'POST',
@@ -461,7 +465,7 @@ jQuery(document).ready(function () {
                 start_date: $('#update-start-date-education').val(),
                 end_date: $('#update-end-date-education').val()
             },
-            success:function(){
+            success: function() {
                 $('#modal-edit-education').modal('toggle');
                 renderEducation();
             }
@@ -469,7 +473,7 @@ jQuery(document).ready(function () {
     });
 
     // Click delete education
-    $(document).on('click', '#btn-delete-education', function (event) {
+    $(document).on('click', '#btn-delete-education', function(event) {
         event.preventDefault();
 
         $('#table-education').find('.success').removeClass();
@@ -480,7 +484,7 @@ jQuery(document).ready(function () {
 
     });
     // Confirmation delete skill
-    $(document).on('submit', '#form-delete-education', function (event) {
+    $(document).on('submit', '#form-delete-education', function(event) {
         event.preventDefault();
 
         $.ajax({
@@ -490,7 +494,7 @@ jQuery(document).ready(function () {
                 education_uid: $('#table-education').find('.danger').children().eq(0).text(),
                 resume_uid: $('#table-education').find('.danger').children().eq(1).text(),
             },
-            success: function () {
+            success: function() {
                 $('#modal-delete-education').modal('toggle');
                 $('#form-save-education')[0].reset();
                 renderEducation();
@@ -501,7 +505,7 @@ jQuery(document).ready(function () {
 
     // Start language
     // Save language
-    $(document).on('submit', '#form-save-language', function (event) {
+    $(document).on('submit', '#form-save-language', function(event) {
         event.preventDefault();
         $.ajax({
             type: 'POST',
@@ -511,7 +515,7 @@ jQuery(document).ready(function () {
                 name: $('#save-language').val(),
                 degree: $('#save-degree').val()
             },
-            success: function () {
+            success: function() {
                 $('#modal-save-language').modal('toggle');
                 $('#form-save-language')[0].reset();
                 renderLanguage();
@@ -520,7 +524,7 @@ jQuery(document).ready(function () {
     });
 
     // Edit language
-    $(document).on('click', '#btn-edit-language', function (event) {
+    $(document).on('click', '#btn-edit-language', function(event) {
         event.preventDefault();
 
         $('#table-language').find('.success').removeClass();
@@ -534,7 +538,7 @@ jQuery(document).ready(function () {
                 language_uid: $(this).parent().parent().children().eq(0).text(),
                 resume_uid: $(this).parent().parent().children().eq(1).text()
             },
-            success: function (language) {
+            success: function(language) {
                 $('#modal-edit-language').modal('toggle');
                 $('#update-language').val(language.data[0].name);
                 $('#update-degree').val(language.data[0].degree);
@@ -543,7 +547,7 @@ jQuery(document).ready(function () {
     });
 
     // Update language
-    $(document).on('submit', '#form-update-language', function(event){
+    $(document).on('submit', '#form-update-language', function(event) {
         event.preventDefault();
         $.ajax({
             type: 'POST',
@@ -554,7 +558,7 @@ jQuery(document).ready(function () {
                 name: $('#update-language').val(),
                 degree: $('#update-degree').val()
             },
-            success:function(){
+            success: function() {
                 $('#modal-edit-language').modal('toggle');
                 renderLanguage();
             }
@@ -562,7 +566,7 @@ jQuery(document).ready(function () {
     });
 
     // Click delete language
-    $(document).on('click', '#btn-delete-language', function (event) {
+    $(document).on('click', '#btn-delete-language', function(event) {
         event.preventDefault();
 
         $('#table-language').find('.success').removeClass();
@@ -574,7 +578,7 @@ jQuery(document).ready(function () {
     });
 
     // Confirmation delete language
-    $(document).on('submit', '#form-delete-language', function (event) {
+    $(document).on('submit', '#form-delete-language', function(event) {
         event.preventDefault();
 
         $.ajax({
@@ -584,7 +588,7 @@ jQuery(document).ready(function () {
                 language_uid: $('#table-language').find('.danger').children().eq(0).text(),
                 resume_uid: $('#table-language').find('.danger').children().eq(1).text(),
             },
-            success: function () {
+            success: function() {
                 $('#modal-delete-language').modal('toggle');
                 $('#form-save-language')[0].reset();
                 renderLanguage();
@@ -594,7 +598,7 @@ jQuery(document).ready(function () {
     });
 
     //Start interest
-    $(document).on('submit', '#form-save-interest', function (event) {
+    $(document).on('submit', '#form-save-interest', function(event) {
         event.preventDefault();
         $.ajax({
             type: 'POST',
@@ -603,7 +607,7 @@ jQuery(document).ready(function () {
                 resume_uid: $('#resume_uid').val(),
                 name: $('#save-interest').val()
             },
-            success: function () {
+            success: function() {
                 $('#modal-save-interest').modal('toggle');
                 $('#form-save-interest')[0].reset();
                 renderInterest();
@@ -612,7 +616,7 @@ jQuery(document).ready(function () {
     });
 
     // Edit interest
-    $(document).on('click', '#btn-edit-interest', function (event) {
+    $(document).on('click', '#btn-edit-interest', function(event) {
         event.preventDefault();
 
         $('#table-interest').find('.success').removeClass();
@@ -626,7 +630,7 @@ jQuery(document).ready(function () {
                 interest_uid: $(this).parent().parent().children().eq(0).text(),
                 resume_uid: $(this).parent().parent().children().eq(1).text()
             },
-            success: function (interest) {
+            success: function(interest) {
                 $('#modal-edit-interest').modal('toggle');
                 $('#update-interest').val(interest.data[0].name);
             }
@@ -634,7 +638,7 @@ jQuery(document).ready(function () {
     });
 
     // Update interest
-    $(document).on('submit', '#form-update-interest', function(event){
+    $(document).on('submit', '#form-update-interest', function(event) {
         event.preventDefault();
         $.ajax({
             type: 'POST',
@@ -644,7 +648,7 @@ jQuery(document).ready(function () {
                 resume_uid: $('#table-interest').find('.success').children().eq(1).text(),
                 name: $('#update-interest').val()
             },
-            success:function(){
+            success: function() {
                 $('#modal-edit-interest').modal('toggle');
                 renderInterest();
             }
@@ -652,7 +656,7 @@ jQuery(document).ready(function () {
     });
 
     // Click delete interest
-    $(document).on('click', '#btn-delete-interest', function (event) {
+    $(document).on('click', '#btn-delete-interest', function(event) {
         event.preventDefault();
 
         $('#table-interest').find('.success').removeClass();
@@ -664,7 +668,7 @@ jQuery(document).ready(function () {
     });
 
     // Confirmation delete language
-    $(document).on('submit', '#form-delete-interest', function (event) {
+    $(document).on('submit', '#form-delete-interest', function(event) {
         event.preventDefault();
 
         $.ajax({
@@ -674,7 +678,7 @@ jQuery(document).ready(function () {
                 interest_uid: $('#table-interest').find('.danger').children().eq(0).text(),
                 resume_uid: $('#table-interest').find('.danger').children().eq(1).text(),
             },
-            success: function () {
+            success: function() {
                 $('#modal-delete-interest').modal('toggle');
                 $('#form-save-interest')[0].reset();
                 renderInterest();
@@ -683,7 +687,7 @@ jQuery(document).ready(function () {
 
     });
 
-    $('#experience').on('click', function (event) {
+    $('#experience').on('click', function(event) {
         event.preventDefault();
         var resume_id = $(this).attr('resume_id');
         renderExperiences(resume_id);
@@ -709,11 +713,11 @@ function renderExperiences(resume_id) {
     $.ajax({
         type: 'GET',
         url: '/get-experience-content',
-        data: {resume_id: resume_id},
+        data: { resume_id: resume_id },
         dataType: 'json',
-        success: function (experience) {
+        success: function(experience) {
             var html = '';
-            $.each(experience.data, function (key, val) {
+            $.each(experience.data, function(key, val) {
                 html += '<tr>'
                 html += '<td class="hidden">' + val.id + '</td>'
                 html += '<td class="hidden">' + val.resume_uid + '</td>'
@@ -740,7 +744,7 @@ function renderCareerProfile() {
         data: {
             resume_uid: $('#resume_uid').val()
         },
-        success: function (resume) {
+        success: function(resume) {
             var html = '';
             html += '<tr>'
             html += '<td class="hidden">' + resume.data[0].id + '</td>'
@@ -757,10 +761,10 @@ function renderProject() {
     $.ajax({
         type: 'GET',
         url: '/resume/projects',
-        data: {resume_uid: $('#resume_uid').val()},
-        success: function (projects) {
+        data: { resume_uid: $('#resume_uid').val() },
+        success: function(projects) {
             var html = '';
-            $.each(projects.data, function (key, val) {
+            $.each(projects.data, function(key, val) {
                 html += '<tr>'
                 html += '<td class="hidden">' + val.id + '</td>'
                 html += '<td class="hidden">' + val.resume_uid + '</td>'
@@ -778,14 +782,14 @@ function renderProject() {
 }
 
 
-function renderSkill(){
+function renderSkill() {
     $.ajax({
         type: 'GET',
         url: '/resume/skills',
-        data: {resume_uid: $('#resume_uid').val()},
-        success: function (skills) {
+        data: { resume_uid: $('#resume_uid').val() },
+        success: function(skills) {
             var html = '';
-            $.each(skills.data, function (key, val) {
+            $.each(skills.data, function(key, val) {
                 html += '<tr>'
                 html += '<td class="hidden">' + val.id + '</td>'
                 html += '<td class="hidden">' + val.resume_uid + '</td>'
@@ -801,14 +805,14 @@ function renderSkill(){
     });
 }
 
-function renderContact(){
+function renderContact() {
     $.ajax({
         type: 'GET',
         url: '/resume/contacts',
-        data: {resume_uid: $('#resume_uid').val()},
-        success: function (contacts) {
+        data: { resume_uid: $('#resume_uid').val() },
+        success: function(contacts) {
             var html = '';
-            $.each(contacts.data, function (key, val) {
+            $.each(contacts.data, function(key, val) {
                 html += '<tr>'
                 html += '<td class="hidden">' + val.id + '</td>'
                 html += '<td class="hidden">' + val.resume_uid + '</td>'
@@ -824,21 +828,21 @@ function renderContact(){
     });
 }
 
-function renderEducation(){
+function renderEducation() {
     $.ajax({
         type: 'GET',
         url: '/resume/educations',
-        data: {resume_uid: $('#resume_uid').val()},
-        success: function (educations) {
+        data: { resume_uid: $('#resume_uid').val() },
+        success: function(educations) {
             var html = '';
-            $.each(educations.data, function (key, val) {
+            $.each(educations.data, function(key, val) {
                 html += '<tr>'
                 html += '<td class="hidden">' + val.id + '</td>'
                 html += '<td class="hidden">' + val.resume_uid + '</td>'
                 html += '<td>' + val.major + '</td>'
                 html += '<td>' + val.school + '</td>'
                 html += '<td>' + val.start_date + '</td>'
-                html += '<td>' + val.end_date+ '</td>'
+                html += '<td>' + val.end_date + '</td>'
                 html += '<td>'
                 html += '<button class="btn btn-info btn-xs" id="btn-edit-education"><i class="fa fa-edit"></i></button>'
                 html += ' <button class="btn btn-danger btn-xs" id="btn-delete-education"><i class="fa fa-trash"></i></button>'
@@ -850,14 +854,14 @@ function renderEducation(){
     });
 }
 
-function renderLanguage(){
+function renderLanguage() {
     $.ajax({
         type: 'GET',
         url: '/resume/languages',
-        data: {resume_uid: $('#resume_uid').val()},
-        success: function (languages) {
+        data: { resume_uid: $('#resume_uid').val() },
+        success: function(languages) {
             var html = '';
-            $.each(languages.data, function (key, val) {
+            $.each(languages.data, function(key, val) {
                 html += '<tr>'
                 html += '<td class="hidden">' + val.id + '</td>'
                 html += '<td class="hidden">' + val.resume_uid + '</td>'
@@ -874,14 +878,14 @@ function renderLanguage(){
     });
 }
 
-function renderInterest(){
+function renderInterest() {
     $.ajax({
         type: 'GET',
         url: '/resume/interests',
-        data: {resume_uid: $('#resume_uid').val()},
-        success: function (interests) {
+        data: { resume_uid: $('#resume_uid').val() },
+        success: function(interests) {
             var html = '';
-            $.each(interests.data, function (key, val) {
+            $.each(interests.data, function(key, val) {
                 html += '<tr>'
                 html += '<td class="hidden">' + val.id + '</td>'
                 html += '<td class="hidden">' + val.resume_uid + '</td>'

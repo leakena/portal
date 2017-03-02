@@ -15,14 +15,14 @@ return [
 
     'backend' => [
         'access' => [
-            'title' => 'Access Management',
+            'title' => 'ការគ្រប់គ្រងក្នុងការចូលប្រព័ន្ធ',
 
             'roles' => [
-                'all'        => 'All Roles',
-                'create'     => 'Create Role',
-                'edit'       => 'Edit Role',
-                'management' => 'Role Management',
-                'main'       => 'Roles',
+                'all'        => 'មានសិទ្ធិគ្រប់យ៉ាង',
+                'create'     => 'បង្កើតសិទ្ធិ',
+                'edit'       => 'កែប្រែសិទ្ធិ',
+                'management' => 'ការគ្រប់គ្រងសិទ្ធិ',
+                'main'       => 'សិទ្ធិ',
             ],
 
             'users' => [
@@ -59,20 +59,20 @@ return [
          * Be sure to add the new language in alphabetical order.
          */
         'langs' => [
-            'kh'    => 'Khmer',
+            'kh'    => 'ខ្មែរ',
             'ar'    => 'Arabic',
             'da'    => 'Danish',
-            'de'    => 'German',
+            'de'    => 'អាលឺម៉ង់',
             'el'    => 'Greek',
-            'en'    => 'English',
+            'en'    => 'អង់គ្លេស',
             'es'    => 'Spanish',
-            'fr'    => 'French',
+            'fr'    => 'បារំាង',
             'id'    => 'Indonesian',
-            'it'    => 'Italian',
+            'it'    => 'អ៊ីុតាលី',
             'nl'    => 'Dutch',
             'pt_BR' => 'Brazilian Portuguese',
-            'sv'    => 'Swedish',
-            'th'    => 'Thai',
+            'sv'    => 'ស្វ៊ិល',
+            'th'    => 'ថៃ',
         ],
     ],
 ];
