@@ -48,7 +48,7 @@
                                     <span class="poster">{{ $post->user->name }}</span><br/>
                                     <span class="text-muted">Posted on {{ $post->created_at->diffForHumans() }}</span><br/>
                                     <p>
-                                        {!! str_limit($post->body, 390) !!}
+                                        {!! str_limit($post->body, 270) !!}
                                         <span>
                                             <a href="/posts/show/{{ $post->id }}"> See more</a>
                                         </span>
@@ -57,7 +57,7 @@
                                         <button type="button" class="btn btn-default btn-xs"><i
                                                     class="fa fa-thumbs-o-up"></i> Like
                                         </button>
-                                        45 likes, 2 Views
+                                        45 likes, {{ count($post->views)}} Views
                                     </div>
                                 </div>
                                 <div class="option">
