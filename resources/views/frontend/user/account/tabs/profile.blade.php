@@ -1,7 +1,13 @@
 <table class="table table-striped table-hover">
     <tr>
         <th>{{ trans('labels.frontend.user.profile.avatar') }}</th>
-        <td><img src="{{ $logged_in_user->picture }}" class="user-profile-image" /></td>
+        <td>
+            @if(isset($profile))
+                <img class="profile" src="{{ asset('img/frontend/uploads/profile') }}/{{ $profile->profile }}" alt="" style="with:100px;height:100px;"/>
+            @else
+                <img class="profile" src="{{ asset('img/icon.png') }}" alt="" style="with:100px;height:100px;"/>
+            @endif
+        </td>
     </tr>
     <tr>
         <th>{{ trans('labels.frontend.user.profile.name') }}</th>
@@ -18,5 +24,6 @@
     <tr>
         <th>{{ trans('labels.frontend.user.profile.last_updated') }}</th>
         <td>{{ $logged_in_user->updated_at }} ({{ $logged_in_user->updated_at->diffForHumans() }})</td>
+
     </tr>
 </table>

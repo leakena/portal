@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Frontend\Portal;
 
+use App\Models\Access\User\Profile;
 use App\Models\Portal\Post\Post;
 use App\Http\Controllers\Controller;
 use App\Models\Portal\Resume\Resume;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
 
@@ -26,9 +26,9 @@ class PortalController extends Controller
      */
     public function index()
     {
-
+        $profile = Profile::where(['user_uid' => auth()->id()])->first();
         $resume = Resume::where(['user_uid' => auth()->id()])->first();
-        return view('frontend.portals.index', compact('resume'));
+        return view('frontend.portals.index', compact('resume', 'profile'));
     }
 
     /**
