@@ -2,7 +2,7 @@
     <li role="presentation" class="active" ><a href="#career_profile" aria-controls="career_profile"
                                               role="tab" data-toggle="tab"
                                               aria-expanded="strue">Career Profile</a></li>
-    <li role="presentation" class=""><a href="#experiences" id="experience" resume_id = "{{$resume->id}}" aria-controls="experiences" role="tab"
+    <li role="presentation" class=""><a href="#experiences" id="experience" @if(isset($resume)) resume_id = "{{$resume->id}}" @endif aria-controls="experiences" role="tab"
                                         data-toggle="tab" aria-expanded="false">Experiences</a>
     </li>
     <li role="presentation" class=""><a href="#project" aria-controls="project" role="tab"
