@@ -13,19 +13,22 @@
 
 							@include('frontend.resumes.career_profile')
 
-							@include('frontend.resumes.experiences')
+							@if(isset($resume))
+                                @include('frontend.resumes.experiences')
 
-							@include('frontend.resumes.project')
+                                @include('frontend.resumes.project')
 
-							@include('frontend.resumes.skill')
+                                @include('frontend.resumes.skill')
 
-							@include('frontend.resumes.contact')
+                                @include('frontend.resumes.contact')
 
-							@include('frontend.resumes.education')
+                                @include('frontend.resumes.education')
 
-							@include('frontend.resumes.languages')
+                                @include('frontend.resumes.languages')
 
-							@include('frontend.resumes.interest')
+                                @include('frontend.resumes.interest')
+
+                            @endif
 
 						</div>
 					</div>

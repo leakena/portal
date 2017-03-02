@@ -1,5 +1,5 @@
 jQuery(document).ready(function () {
-
+    // Save Career Profile
     $(document).on('submit', '#form-save-career-profile', function (event) {
         event.preventDefault();
         $.ajax({
