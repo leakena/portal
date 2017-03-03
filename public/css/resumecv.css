@@ -351,4 +351,15 @@ p {
 /* Large devices (large desktops, 1200px and up) */
 /* Ex-Large devices (large desktops, 1200px and up) */
 
+.wrapper.sub-wrapper{
+    background: #FFFFFF !important;
+    margin-top: 10px;
+}
 
+.wrapper.sub-wrapper .main-wrapper{
+    padding-right: 60px !important;
+}
+.wrapper.sub-wrapper .post{
+    border: 1px solid #f1f1f1;
+    border-radius:2px;
+}

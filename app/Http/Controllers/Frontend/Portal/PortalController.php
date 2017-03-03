@@ -29,9 +29,10 @@ class PortalController extends Controller
      */
     public function index()
     {
+        $posts = Post::latest()->limit(3)->get();
         $profile = Profile::where(['user_uid' => auth()->id()])->first();
         $resume = Resume::where(['user_uid' => auth()->id()])->first();
-        return view('frontend.portals.index', compact('resume', 'profile'));
+        return view('frontend.portals.index', compact('resume', 'profile', 'posts'));
     }
 
     /**
