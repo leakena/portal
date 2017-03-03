@@ -46,6 +46,9 @@ return [
         ],
 
         'save' => 'Save',
+        'update'=> 'Update',
+        'delete'=> 'Delete',
         'view' => 'View',
+        'close'=> 'Close'
     ],
 ];

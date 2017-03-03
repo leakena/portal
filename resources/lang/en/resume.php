@@ -14,6 +14,7 @@ return [
         'position'              => 'Position',
         'company'               => 'Company',
         'name'                  => 'Name',
-        'degree'                => 'Degree'
-    ]
+        'degree'                => 'Degree',
+        'interests'             => 'Interests'
+    ],
 ];

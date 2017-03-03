@@ -23,20 +23,20 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Add more career profile</h4>
+                    <h4 class="modal-title" id="myModalLabel">{{ trans('modals.add.add_career_profile') }}</h4>
                 </div>
                 <form method="POST" action="/resume/save-career-profile" id="form-save-career-profile">
                     <div class="modal-body">
                         {{ csrf_field() }}
                         <div class="form-group">
-                            <label for="save-interest">Career Profile</label>
+                            <label for="save-interest">{{ trans('modals.add.career_profile') }}</label>
                             <textarea name="save-career-profile" id="save-career-profile" class="form-control"
-                                   placeholder="Name"></textarea>
+                                   placeholder="{{ trans('modals.add.name') }}"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input id="save" type="submit" value="Save" class="btn btn-primary">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('buttons.general.close') }}</button>
+                        <input id="save" type="submit" value="{{ trans('buttons.general.save') }}" class="btn btn-primary">
                     </div>
                 </form>
             </div>
@@ -49,20 +49,20 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Edit Summary Resume</h4>
+                        <h4 class="modal-title" id="myModalLabel">{{ trans('modals.add.edit_resume') }}</h4>
                     </div>
                     <form method="POST" action="/resume/update-career-profile" id="update-career-profile">
                         {{ csrf_field() }}
                         <input type="hidden" id="resume_uid" name="resume_uid" value="{{ $resume->id }}"/>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="career-profile">Career Profile</label>
+                                <label for="career-profile">{{ trans('modals.add.career_profile') }}</label>
                                 <textarea id="content-resume-profile" name="content-resume-profile" class="form-control" rows="4"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <input type="submit" class="btn btn-primary" value="Update">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('buttons.general.close') }}</button>
+                            <input type="submit" class="btn btn-primary" value="{{ trans('buttons.general.update') }}">
                         </div>
                     </form>
                 </div>

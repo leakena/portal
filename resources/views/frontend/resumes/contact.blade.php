@@ -23,26 +23,26 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                     aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Add a new contact</h4>
+                        <h4 class="modal-title" id="myModalLabel">{{ trans('modals.add.add_contact') }}</h4>
                     </div>
                     <form method="POST" action="/resume/contacts/save-contact" id="form-save-contact">
                         {{ csrf_field() }}
                         <input type="hidden" id="resume_uid" name="resume_uid" value="{{ $resume->id }}">
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="save-contact-icon">ICON</label>
+                                <label for="save-contact-icon">{{ trans('resume.add.icon') }}</label>
                                 <input type="text" id="save-contact-icon" name="save-contact-icon" class="form-control"
-                                       placeholder="Icon Name">
+                                       placeholder="{{ trans('modals.add.icon_name') }}">
                             </div>
                             <div class="form-group">
-                                <label for="save-contact-name">Description</label>
+                                <label for="save-contact-name">{{ trans('resume.resume.description') }}</label>
                                 <input type="text" id="save-contact-name" name="save-contact-name" class="form-control"
                                        placeholder="Skill Name">
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <input type="submit" class="btn btn-primary" value="Save">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('buttons.general.close') }}</button>
+                            <input type="submit" class="btn btn-primary" value="{{ trans('buttons.general.save') }}">
                         </div>
                     </form>
                 </div>
@@ -55,26 +55,26 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                     aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Update the contact</h4>
+                        <h4 class="modal-title" id="myModalLabel">{{ trans('modals.update.update_contact') }}</h4>
                     </div>
                     <form method="POST" action="/resume/contacts/update-contact" id="form-update-contact">
                         <div class="modal-body">
                             {{ csrf_field() }}
                             <input type="hidden" id="resume_uid" name="resume_uid" value="{{ $resume->id }}">
                             <div class="form-group">
-                                <label for="update-contact-icon">ICON</label>
+                                <label for="update-contact-icon">{{ trans('resume.add.icon') }}</label>
                                 <input type="text" id="update-contact-icon" name="update-contact-icon" class="form-control"
-                                       placeholder="Icon Name">
+                                       placeholder="{{ trans('modals.add.icon_name') }}">
                             </div>
                             <div class="form-group">
-                                <label for="update-contact-name">Description</label>
+                                <label for="update-contact-name">{{ trans('resume.resume.description') }}</label>
                                 <input type="text" id="update-contact-name" name="update-contact-name" class="form-control"
-                                       placeholder="Skill Name">
+                                       placeholder="{{ trans('resume.resume.name') }}">
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <input type="submit" class="btn btn-primary" value="Update">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('buttons.general.close') }}</button>
+                            <input type="submit" class="btn btn-primary" value="{{ trans('buttons.general.update') }}">
                         </div>
                     </form>
                 </div>
@@ -87,17 +87,17 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                     aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Delete the skill</h4>
+                        <h4 class="modal-title" id="myModalLabel">{{ trans('modals.delete.delete_contact') }}</h4>
                     </div>
                     <form method="POST" action="/resume/contacts/delete-contact" id="form-delete-contact">
                         {{ csrf_field() }}
                         <input type="hidden" id="resume_uid" name="resume_uid" value="{{ $resume->id }}">
                         <div class="modal-body">
-                            <h5>Do you want to delete the skill?</h5>
+                            <h5>{{ trans('modals.delete.confirm_de_contact') }}</h5>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <input type="submit" class="btn btn-danger" value="Delete">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('buttons.general.close') }}</button>
+                            <input type="submit" class="btn btn-danger" value="{{ trans('buttons.general.delete') }}">
                         </div>
                     </form>
                 </div>

@@ -160,9 +160,9 @@ return [
         ],
 
         'resume' => [
-            'career_profile'         => 'សេចក្តីលំអិត',
+            'career_profile'        => 'សេចក្តីលំអិត',
             'experiences'           => 'បទពិសោធន៍',
-            'projects'              => 'ការងារ',
+            'projects'              => 'គំរោងដែលធ្លាប់ធ្វើ',
             'skills'                => 'ជំនាញ',
             'languages'             => 'ភាសា',
             'interests'             => 'ចំណាប់អារម្មណ៍',

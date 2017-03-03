@@ -24,21 +24,21 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Add more interest</h4>
+                    <h4 class="modal-title" id="myModalLabel">{{ trans('modals.add.add_interest') }}</h4>
                 </div>
                 <form method="POST" action="/resume/save-interest" id="form-save-interest">
                     <div class="modal-body">
                         {{ csrf_field() }}
                         <input type="hidden" name="resume_uid" value="{{ $resume->id }}" id="resume_uid"/>
                         <div class="form-group">
-                            <label for="save-interest">Name</label>
+                            <label for="save-interest">{{ trans('resume.resume.name') }}</label>
                             <input type="text" name="save-interest" id="save-interest" class="form-control"
-                                   placeholder="Name" value="{{ old('save-interest') }}">
+                                   placeholder="{{ trans('resume.resume.name') }}" value="{{ old('save-interest') }}">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input id="save" type="submit" value="Save" class="btn btn-primary">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('buttons.general.close') }}</button>
+                        <input id="save" type="submit" value="{{ trans('buttons.general.save') }}" class="btn btn-primary">
                     </div>
                 </form>
             </div>
@@ -51,21 +51,21 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Update the interest</h4>
+                    <h4 class="modal-title" id="myModalLabel">{{ trans('modals.update.update_interest') }}</h4>
                 </div>
                 <form method="POST" action="/resume/edit-interest" id="form-update-interest">
                     <div class="modal-body">
                         {{ csrf_field() }}
                         <input type="hidden" name="resume_uid" value="{{ $resume->id }}" id="resume_uid"/>
                         <div class="form-group">
-                            <label for="update-interest">Name</label>
+                            <label for="update-interest">{{ trans('resume.resume.name') }}</label>
                             <input type="text" name="update-interest" id="update-interest" class="form-control"
-                                   placeholder="Name" value="{{ old('update-interest') }}">
+                                   placeholder="{{ trans('resume.resume.name') }}" value="{{ old('update-interest') }}">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input id="save" type="submit" value="Update" class="btn btn-info">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('buttons.general.close') }}</button>
+                        <input id="save" type="submit" value="{{ trans('buttons.general.update') }}" class="btn btn-info">
                     </div>
                 </form>
             </div>
@@ -78,17 +78,17 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Delete the interest</h4>
+                    <h4 class="modal-title" id="myModalLabel">{{ trans('modals.delete.delete_interest') }}</h4>
                 </div>
                 <form method="POST" action="/resume/interests/delete-interest" id="form-delete-interest">
                     {{ csrf_field() }}
                     <input type="hidden" id="resume_uid" name="resume_uid" value="{{ $resume->id }}">
                     <div class="modal-body">
-                        <h5>Do you want to delete the interest?</h5>
+                        <h5>{{ trans('modals.delete.confirm_de_interest') }}</h5>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" class="btn btn-danger" value="Delete">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('buttons.general.close') }}</button>
+                        <input type="submit" class="btn btn-danger" value="{{ trans('buttons.general.delete') }}">
                     </div>
                 </form>
             </div>
