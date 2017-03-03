@@ -64,7 +64,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('buttons.general.close') }}</button>
-                        <input type="submit" class="btn btn-primary" value="{{ trans('buttons.general.update') }}">
+                        <input type="submit" class="btn btn-info" value="{{ trans('buttons.general.update') }}">
                     </div>
                 </form>
             </div>

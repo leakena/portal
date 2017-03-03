@@ -136,7 +136,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('buttons.general.close') }}</button>
                         <input type="submit" value="{{ trans('buttons.general.update') }}"
-                               class="btn btn-primary">
+                               class="btn btn-info">
                     </div>
                 </form>
             </div>
