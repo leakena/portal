@@ -1,6 +1,6 @@
 <header class="main-header">
 
-    <a href="{{ route('frontend.index') }}" class="logo">
+    <a href="/" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini">
            {{ substr(app_name(), 0, 1) }}
@@ -73,15 +73,15 @@
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{ access()->user()->picture }}" class="user-image" alt="User Avatar"/>
-                        <span class="hidden-xs">{{ access()->user()->name }}</span>
+                        <img src="{{ asset('img/icon.png') }}" class="user-image" alt="User Avatar"/>
+                        <span class="hidden-xs">Admin</span>
                     </a>
 
                     <ul class="dropdown-menu">
                         <li class="user-header">
-                            <img src="{{ access()->user()->picture }}" class="img-circle" alt="User Avatar" />
+                            <img src="{{ asset('img/icon.png') }}" class="img-circle" alt="User Avatar" />
                             <p>
-                                {{-- access()->user()->name }} - {{ implode(", ", access()->user()->roles->lists('name')->toArray()) --}}
+                                 {{--access()->user()->name }} - {{ implode(", ", access()->user()->roles->lists('name')->toArray())--}}
                                 <small>{{ trans('strings.backend.general.member_since') }} {{ access()->user()->created_at->format("m/d/Y") }}</small>
                             </p>
                         </li>
@@ -100,7 +100,7 @@
 
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="{!! route('frontend.index') !!}" class="btn btn-default btn-flat">
+                                <a href="/" class="btn btn-default btn-flat">
                                     <i class="fa fa-home"></i>
                                     {{ trans('navs.general.home') }}
                                 </a>
