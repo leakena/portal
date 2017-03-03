@@ -52,8 +52,15 @@
 							<div class="box-body">
 								<article>{!! $post->body !!}</article>
 								<br/>
-								<img src="{{ asset('img/frontend/uploads/images/'.$post->file) }}"
-									 class="img-responsive"/>
+
+								{{--@if(str_contains($post->file, '.pdf'))--}}
+									{{--<a href="">--}}
+										{{--<object data="{{ asset('docs') }}/{{ $post->file }}"></object>--}}
+									{{--</a>--}}
+								{{--@else--}}
+									{{--<div class="thumb"--}}
+										 {{--style="background-image: url('{{ asset('img/frontend/uploads/images/'.$post->file) }}')"></div>--}}
+								{{--@endif--}}
 							</div>
 						</div>
 					</div>

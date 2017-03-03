@@ -93,10 +93,10 @@
     width: 50%;
 }
 
-.post .desc .poster {
-    font-size: 18px;
-    font-weight: bold;
-    line-height: 0;
+span.poster {
+    font-size: 18px !important;
+    font-weight: bold !important;
+    line-height: 0 !important;
 }
 
 .post .thumb, .post .desc {
@@ -109,9 +109,21 @@
     right: 5px;
 }
 
-.post .desc .react {
-    position: absolute;
-    bottom: 5px;
-    right: 10px;
+.post-file {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    background: #f1f1f1;
+    margin-bottom: 10px;
 }
+
+ul.item-file {
+    list-style-type: none;
+}
+
+ul.item-file li {
+    display: inline-block;
+}
+
 /*end post*/
