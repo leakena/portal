@@ -14,7 +14,7 @@
                     <div class="company">{{ $experience->company }}</div>
                 </div><!--//meta-->
                 <div class="details">
-                    <p>{{ $experience->description }}</p>
+                    <p class="text-justify">{{ $experience->description }}</p>
                 </div><!--//details-->
             </div><!--//item-->
 

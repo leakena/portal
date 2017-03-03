@@ -4,7 +4,7 @@
 	</h2>
     @if(isset($resume))
 		<div class="summary">
-			<p>{!! $resume->career_profile !!}</p>
+			<p class="text-justify">{!! $resume->career_profile !!}</p>
 		</div><!--//summary-->
     @endif
     @include('frontend.partials.modals.modal')

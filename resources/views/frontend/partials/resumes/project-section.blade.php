@@ -10,7 +10,11 @@
             <span class="project-title">
                 <a href="#hook">{{ $project->name }}</a>
             </span> -
-                <span class="project-tagline">{{ $project->description }}</span>
+                <span class="project-tagline">
+                    <p class="text-justify">
+                        {{ $project->description }}
+                    </p>
+                </span>
             </div><!--//item-->
 
         @endforeach
