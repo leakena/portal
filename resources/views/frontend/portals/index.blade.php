@@ -31,7 +31,19 @@
 					@include('frontend.partials.resumes.skills-section')
 
 				</div><!--//main-body-->
+                <div class="clearfix"></div>
 			</div>
 		</div>
 	</div>
+
+    @include('frontend.partials.portals.timeline')
+
+    @include('frontend.partials.portals.calendar')
+
+    @include('frontend.partials.portals.events')
+
+    @include('frontend.partials.portals.sys-alerts')
+
+    @include('frontend.partials.portals.e-learning-moodle')
+
 @endsection
