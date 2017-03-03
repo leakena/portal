@@ -26,14 +26,14 @@ return [
             ],
 
             'users' => [
-                'all'             => 'All Users',
-                'change-password' => 'Change Password',
-                'create'          => 'Create User',
-                'deactivated'     => 'Deactivated Users',
-                'deleted'         => 'Deleted Users',
-                'edit'            => 'Edit User',
-                'main'            => 'Users',
-                'view'            => 'View User',
+                'all'             => 'អ្នកប្រើប្រាស់ទាំងអស់',
+                'change-password' => 'ផ្លាស់ប្តូរលេខសំងាត់',
+                'create'          => 'បង្កើតគណនេយ្យ',
+                'deactivated'     => 'ផ្អាកការប្រើប្រាស់​ គណនេយ្យ',
+                'deleted'         => 'លុបគណនេយ្យ',
+                'edit'            => 'កែប្រែគណនេយ្យ',
+                'main'            => 'គណនេយ្យ',
+                'view'            => 'បង្ហាញគណនេយ្យ',
             ],
         ],
 
@@ -44,14 +44,14 @@ return [
         ],
 
         'sidebar' => [
-            'dashboard' => 'Dashboard',
-            'general'   => 'General',
-            'system'    => 'System',
+            'dashboard' => 'ផ្ទាំងគ្រប់គ្រង',
+            'general'   => 'ទូទៅ',
+            'system'    => 'ប្រព័ន្ធ',
         ],
     ],
 
     'language-picker' => [
-        'language' => 'Language',
+        'language' => 'ភាសា',
         /*
          * Add the new language to this array.
          * The key should have the same language code as the folder name.
@@ -60,17 +60,17 @@ return [
          */
         'langs' => [
             'kh'    => 'ខ្មែរ',
-            'ar'    => 'Arabic',
-            'da'    => 'Danish',
+            'ar'    => 'អារ៉ាប់',
+            'da'    => 'ដាណឺម៉ាក',
             'de'    => 'អាលឺម៉ង់',
-            'el'    => 'Greek',
+            'el'    => 'ក្រិច',
             'en'    => 'អង់គ្លេស',
-            'es'    => 'Spanish',
-            'fr'    => 'បារំាង',
-            'id'    => 'Indonesian',
-            'it'    => 'អ៊ីុតាលី',
-            'nl'    => 'Dutch',
-            'pt_BR' => 'Brazilian Portuguese',
+            'es'    => 'អេស្ប៉ាញ',
+            'fr'    => 'បារាំង',
+            'id'    => 'ឥណ្ឌូនេស៊ី',
+            'it'    => 'អ៊ីតាលី',
+            'nl'    => 'ហូឡង់',
+            'pt_BR' => 'ប្រេស៊ីល ព័រទុយហ្គាល់',
             'sv'    => 'ស្វ៊ិល',
             'th'    => 'ថៃ',
         ],

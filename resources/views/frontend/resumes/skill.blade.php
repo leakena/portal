@@ -3,12 +3,12 @@
     @if(isset($resume))
         <div class="row">
             <div class="col-md-12">
-                <button class="btn btn-primary btn-sm" style="margin-bottom: 10px;" data-toggle="modal" data-target="#modal-save-skill"><i class="fa fa-plus-circle"></i> Add</button>
+                <button class="btn btn-primary btn-sm" style="margin-bottom: 10px;" data-toggle="modal" data-target="#modal-save-skill"><i class="fa fa-plus-circle"></i> {{ trans('labels.frontend.button.add') }}</button>
                 <div class="table-responsive">
                     <table class="table table-bordered" id="table-skill">
                         <tr>
-                            <th>Name</th>
-                            <th>Action</th>
+                            <th>{{ trans('resume.resume.name') }}</th>
+                            <th>{{ trans('resume.resume.action') }}</th>
                         </tr>
                         <tbody id="listSkills"></tbody>
                     </table>

@@ -30,6 +30,10 @@ return [
             'change_password' => 'Change Password',
             'my_information'  => 'My Information',
             'profile'         => 'Profile',
+            'resume'          => 'My Resume'
         ],
+        'nav' => [
+            'brand'             => 'Portal'
+        ]
     ],
 ];

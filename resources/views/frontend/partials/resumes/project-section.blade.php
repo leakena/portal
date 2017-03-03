@@ -1,6 +1,6 @@
 <section class="section projects-section">
     <h2 class="section-title">
-        <i class="fa fa-archive"></i>Projects
+        <i class="fa fa-archive"></i>{{ trans('labels.frontend.resume.projects') }}
     </h2>
 
     @if(isset($resume))

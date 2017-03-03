@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="/" class="navbar-brand">{{ app_name() }}</a>
+            <a href="/" class="navbar-brand">{{ trans('navs.frontend.nav.brand') }}</a>
         </div><!--navbar-header-->
 
         <div class="collapse navbar-collapse" id="frontend-navbar-collapse">
@@ -38,7 +38,7 @@
                                 <li>{{ link_to_route('admin.dashboard', trans('navs.frontend.user.administration')) }}</li>
                             @endauth
 
-                            <li><a href="/resume">My Resume</a></li>
+                            <li><a href="/resume">{{ trans('navs.frontend.user.resume') }}</a></li>
                             <li>{{ link_to_route('frontend.user.account', trans('navs.frontend.user.account')) }}</li>
                             <li>{{ link_to_route('frontend.auth.logout', trans('navs.general.logout')) }}</li>
                         </ul>
