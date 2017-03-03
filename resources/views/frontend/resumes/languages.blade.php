@@ -22,31 +22,31 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Add more language</h4>
+                    <h4 class="modal-title" id="myModalLabel">{{ trans('modals.add.add_language') }}</h4>
                 </div>
                 <form method="POST" action="/resume/save-language" id="form-save-language">
                     <div class="modal-body">
                         {{ csrf_field() }}
                         <input type="hidden" name="resume_uid" value="{{ $resume->id }}" id="resume_uid"/>
                         <div class="form-group">
-                            <label for="save-language">Language name</label>
+                            <label for="save-language">{{ trans('modals.add.language_name') }}</label>
                             <input type="text" name="save-language" id="save-language" class="form-control"
                                    placeholder="Language name" value="{{ old('save-language') }}">
                         </div>
 
                         <div class="form-group">
-                            <label for="save-degree">Degree</label>
+                            <label for="save-degree">{{ trans('resume.resume.degree') }}</label>
                             <select name="save-degree" class="form-control" id="save-degree">
-                                <option name="Medium">Medium</option>
-                                <option name="Good">Good</option>
-                                <option name="Excellent">Excellent</option>
+                                <option name="Medium">{{ trans('modals.option.degree_me') }}</option>
+                                <option name="Good">{{ trans('modals.option.degree_good') }}</option>
+                                <option name="Excellent">{{ trans('modals.option.degree_excellent') }}</option>
                             </select>
                         </div>
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input id="save" type="submit" value="Save" class="btn btn-primary">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('buttons.general.close') }}</button>
+                        <input id="save" type="submit" value="{{ trans('buttons.general.save') }}" class="btn btn-primary">
                     </div>
                 </form>
             </div>
@@ -59,31 +59,31 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Update the language</h4>
+                    <h4 class="modal-title" id="myModalLabel">{{ trans('modals.update.update_language') }}</h4>
                 </div>
                 <form method="POST" action="/resume/edit-language" id="form-update-language">
                     <div class="modal-body">
                         {{ csrf_field() }}
                         <input type="hidden" name="resume_uid" value="{{ $resume->id }}" id="resume_uid"/>
                         <div class="form-group">
-                            <label for="update-language">Major</label>
+                            <label for="update-language">{{ trans('resume.resume.major') }}</label>
                             <input type="text" name="update-language" id="update-language" class="form-control"
-                                   placeholder="Major" value="{{ old('save-language') }}">
+                                   placeholder="{{ trans('resume.resume.major') }}" value="{{ old('save-language') }}">
                         </div>
 
                         <div class="form-group">
-                            <label for="update-degree">Degree</label>
+                            <label for="update-degree">{{ trans('resume.resume.degree') }}</label>
                             <select name="update-degree" class="form-control" id="update-degree">
-                                <option name="Medium">Medium</option>
-                                <option name="Good">Good</option>
-                                <option name="Excellent">Excellent</option>
+                                <option name="Medium">{{ trans('modals.option.degree_me') }}</option>
+                                <option name="Good">{{ trans('modals.option.degree_good') }}</option>
+                                <option name="Excellent">{{ trans('modals.option.degree_excellent') }}</option>
                             </select>
                         </div>
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input id="save" type="submit" value="Update" class="btn btn-info">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('buttons.general.close') }}</button>
+                        <input id="save" type="submit" value="{{ trans('buttons.general.update') }}" class="btn btn-info">
                     </div>
                 </form>
             </div>
@@ -96,17 +96,17 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Delete the language</h4>
+                    <h4 class="modal-title" id="myModalLabel">{{ trans('modals.delete.delete_language') }}</h4>
                 </div>
                 <form method="POST" action="/resume/languages/delete-language" id="form-delete-language">
                     {{ csrf_field() }}
                     <input type="hidden" id="resume_uid" name="resume_uid" value="{{ $resume->id }}">
                     <div class="modal-body">
-                        <h5>Do you want to delete the language?</h5>
+                        <h5>{{ trans('modals.delete.confirm_de_language') }}</h5>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" class="btn btn-danger" value="Delete">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('buttons.general.close') }}</button>
+                        <input type="submit" class="btn btn-danger" value="{{ trans('buttons.general.delete') }}">
                     </div>
                 </form>
             </div>

@@ -45,7 +45,10 @@ return [
             'view'   => 'View',
         ],
 
-        'save' => 'Save',
-        'view' => 'View',
+        'save' => 'រក្សាទុក',
+        'update'=> 'កែប្រែ',
+        'delete'=> 'លុប',
+        'view' => 'មើល',
+        'close'=> 'បិទ'
     ],
 ];
