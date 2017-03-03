@@ -7,7 +7,9 @@ use App\Models\Portal\Post\Post;
 use App\Models\Portal\Post\View;
 use App\Http\Controllers\Controller;
 use App\Models\Portal\Resume\Resume;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
 
 
 class PortalController extends Controller
@@ -48,8 +50,7 @@ class PortalController extends Controller
     public function store()
     {
         $this->validate(request(), [
-            'body' => 'required',
-            'file' => 'required'
+            'body' => 'required'
         ]);
 
         $newPost = new Post();
@@ -61,7 +62,13 @@ class PortalController extends Controller
             $filename = Input::file('file');
             $change = $filename->getClientOriginalExtension();
             $newfilename = auth()->id() . str_random(10) . '.';
-            $filename->move('img/frontend/uploads/images', "{$newfilename}" . $change);
+
+            if (Input::file('file')->getMimeType() == 'image/jpeg') {
+                $filename->move('img/frontend/uploads/images', "{$newfilename}" . $change);
+            } else {
+                $filename->move('docs', "{$newfilename}" . $change);
+            }
+
             $newPost->file = $newfilename . $change;
 
         }
@@ -159,7 +166,10 @@ class PortalController extends Controller
      */
     public function delete(Post $post)
     {
-        unlink(public_path('img/frontend/uploads/images/' . $post->file));
+        if(str_contains($post->file, '.pdf'))
+            unlink(public_path('docs/' . $post->file));
+        else
+            unlink(public_path('img/frontend/uploads/images/' . $post->file));
         Post::find($post->id)->delete();
         session()->flash('flash_success', 'Post have been deleted.');
         return redirect()->back();
