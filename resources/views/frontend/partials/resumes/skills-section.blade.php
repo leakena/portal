@@ -1,6 +1,6 @@
 <section class="skills-section section">
     <h2 class="section-title">
-        <i class="fa fa-rocket"></i>Skills &amp; Proficiency
+        <i class="fa fa-rocket"></i> {{ trans('labels.frontend.resume.skills') }}
     </h2>
     @if(isset($resume))
 		<div class="skillset">

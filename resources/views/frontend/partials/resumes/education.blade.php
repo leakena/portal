@@ -1,5 +1,5 @@
 <div class="education-container container-block">
-    <h2 class="container-block-title section-title">Education</h2>
+    <h2 class="container-block-title section-title">{{ trans('labels.frontend.resume.education') }}</h2>
 
     @if(isset($resume))
         @foreach($resume->educations as $education)

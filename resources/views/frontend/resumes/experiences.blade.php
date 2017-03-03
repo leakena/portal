@@ -3,17 +3,17 @@
         <div class="row">
             <div class="col-md-12">
                 <button class="btn btn-primary btn-sm" style="margin-bottom: 10px;" data-toggle="modal"
-                        data-target="#addExperiences"><i class="fa fa-plus-circle"></i> Add
+                        data-target="#addExperiences"><i class="fa fa-plus-circle"></i> {{ trans('labels.frontend.button.add') }}
                 </button>
                 <div class="table-responsive">
                     <table class="table table-bordered" id="experiences">
                         <tr>
-                            <th>Position</th>
-                            <th>Company</th>
-                            <th>Description</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Action</th>
+                            <th>{{ trans('resume.resume.position') }}</th>
+                            <th>{{ trans('resume.resume.company') }}</th>
+                            <th>{{ trans('resume.resume.description') }}</th>
+                            <th>{{ trans('resume.resume.start_date') }}</th>
+                            <th>{{ trans('resume.resume.end_date') }}</th>
+                            <th>{{ trans('resume.resume.action') }}</th>
                         </tr>
                         <tbody id="listExperiences"></tbody>
                     </table>

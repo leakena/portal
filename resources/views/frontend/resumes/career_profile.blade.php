@@ -2,13 +2,13 @@
     <div class="row">
         <div class="col-md-12">
             @if(!isset($resume))
-                <button class="btn btn-primary btn-sm" style="margin-bottom: 10px;" data-toggle="modal" data-target="#modal-save-career"><i class="fa fa-plus-circle"></i> Add</button>
+                <button class="btn btn-primary btn-sm" style="margin-bottom: 10px;" data-toggle="modal" data-target="#modal-save-career"><i class="fa fa-plus-circle"></i> {{ trans('labels.frontend.button.add') }}</button>
             @endif
                 <div class="table-responsive">
                     <table class="table table-bordered" id="career-profile">
                         <tr>
-                            <th>Summary Resume</th>
-                            <th>Action</th>
+                            <th>{{ trans('resume.resume.summary_resume') }}</th>
+                            <th>{{ trans('resume.resume.action') }}</th>
                         </tr>
                         <tbody id="listCareerProfile"></tbody>
                     </table>

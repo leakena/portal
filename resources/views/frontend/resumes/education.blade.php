@@ -3,15 +3,15 @@
     @if(isset($resume))
         <div class="row">
             <div class="col-md-12">
-                <button class="btn btn-primary btn-sm" style="margin-bottom: 10px;" data-toggle="modal" data-target="#modal-save-education"><i class="fa fa-plus-circle"></i> Add</button>
+                <button class="btn btn-primary btn-sm" style="margin-bottom: 10px;" data-toggle="modal" data-target="#modal-save-education"><i class="fa fa-plus-circle"></i> {{ trans('labels.frontend.button.add') }}</button>
                 <div class="table-responsive">
                     <table class="table table-bordered" id="table-education">
                         <tr>
-                            <th>Major</th>
-                            <th>School</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Action</th>
+                            <th>{{ trans('resume.resume.major') }}</th>
+                            <th>{{ trans('resume.resume.school') }}</th>
+                            <th>{{ trans('resume.resume.start_date') }}</th>
+                            <th>{{ trans('resume.resume.end_date') }}</th>
+                            <th>{{ trans('resume.resume.action') }}</th>
                         </tr>
                         <tbody id="listEducations"></tbody>
                     </table>

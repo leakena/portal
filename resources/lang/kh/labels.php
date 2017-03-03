@@ -82,13 +82,13 @@ return [
 
                     'content' => [
                         'overview' => [
-                            'avatar'       => 'Avatar',
-                            'confirmed'    => 'Confirmed',
-                            'created_at'   => 'Created At',
-                            'deleted_at'   => 'Deleted At',
-                            'email'        => 'E-mail',
-                            'last_updated' => 'Last Updated',
-                            'name'         => 'Name',
+                            'avatar'       => 'រូបតំណាង',
+                            'confirmed'    => 'ព្រមទទួល',
+                            'created_at'   => 'កាលបរិច្ឆេតការបង្កើត',
+                            'deleted_at'   => 'កាលបរិច្ឆេតការលុប',
+                            'email'        => 'អុីម៉ែល',
+                            'last_updated' => 'កំណែចុងក្រោយ',
+                            'name'         => 'ឈ្មោះ',
                             'status'       => 'Status',
                         ],
                     ],
@@ -102,19 +102,19 @@ return [
     'frontend' => [
 
         'auth' => [
-            'login_box_title'    => 'Login',
-            'login_button'       => 'Login',
-            'login_with'         => 'Login with :social_media',
-            'register_box_title' => 'Register',
-            'register_button'    => 'Register',
-            'remember_me'        => 'Remember Me',
+            'login_box_title'    => 'ចូលប្រព័ន្ធ',
+            'login_button'       => 'ចូលប្រព័ន្ធ',
+            'login_with'         => 'ចូលប្រព័ន្ធ ជាមួយ :បណ្តាញទំនាក់ទំនងសង្គម',
+            'register_box_title' => 'ចុះឈ្មោះ',
+            'register_button'    => 'ចុះឈ្មោះ',
+            'remember_me'        => 'ចងចាំខ្ញុំ',
         ],
 
         'passwords' => [
-            'forgot_password'                 => 'Forgot Your Password?',
-            'reset_password_box_title'        => 'Reset Password',
-            'reset_password_button'           => 'Reset Password',
-            'send_password_reset_link_button' => 'Send Password Reset Link',
+            'forgot_password'                 => 'ភ្លេចលេខសំងាត់របស់អ្នក?',
+            'reset_password_box_title'        => 'ដាក់លេខសំងាត់ថ្មី',
+            'reset_password_button'           => 'ដាក់លេខសំងាត់ថ្ម',
+            'send_password_reset_link_button' => 'តំណរភ្ជាប់សំរាប់ប្តូរលេខសំងាត់ថ្មី',
         ],
 
         'macros' => [
@@ -145,34 +145,34 @@ return [
 
         'user' => [
             'passwords' => [
-                'change' => 'Change Password',
+                'change' => 'ផ្លាស់ប្តូរលេខសំងាត់',
             ],
 
             'profile' => [
-                'avatar'             => 'Avatar',
-                'created_at'         => 'Created At',
-                'edit_information'   => 'Edit Information',
-                'email'              => 'E-mail',
-                'last_updated'       => 'Last Updated',
-                'name'               => 'Name',
-                'update_information' => 'Update Information',
-                'upload_profile'     => 'Choose your profile'
+                'avatar'             => 'រូបតំណាង',
+                'created_at'         => 'កាលបរិច្ឆេតការបង្កើត',
+                'edit_information'   => 'កែរប្រែព​ត៌​មាន',
+                'email'              => 'អុីម៉ែល',
+                'last_updated'       => 'កំណែចុងក្រោយ',
+                'name'               => 'ឈ្មោះ',
+                'update_information' => 'កែរប្រែព​ត៌​មាន',
             ],
         ],
-        
 
         'resume' => [
-            'career_profile'         => 'Career Profile',
-            'experiences'           => 'Experiences',
-            'projects'              => 'Projects',
-            'skills'                => 'Skills & Proficiency',
-            'languages'             => 'Languages',
-            'interests'             => 'Interests',
-            'contact'               => 'contact',
-            'education'             => 'education'
+            'career_profile'         => 'សេចក្តីលំអិត',
+            'experiences'           => 'បទពិសោធន៍',
+            'projects'              => 'ការងារ',
+            'skills'                => 'ជំនាញ',
+            'languages'             => 'ភាសា',
+            'interests'             => 'ចំណាប់អារម្មណ៍',
+            'contact'               => 'ទំនាក់ទំនង',
+            'education'             => 'ការអប់រំ',
+            'languages'             => 'ភាសា'
         ],
+
         'button' => [
-            'add'   => 'Add'
+            'add'   => 'បន្ថែម'
         ],
 
     ],

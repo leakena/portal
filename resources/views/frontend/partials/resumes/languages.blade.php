@@ -1,5 +1,5 @@
 <div class="languages-container container-block">
-    <h2 class="container-block-title section-title">Languages</h2>
+    <h2 class="container-block-title section-title">{{ trans('labels.frontend.resume.languages') }}</h2>
     @if(isset($resume))
         <ul class="list-unstyled interests-list">
 
