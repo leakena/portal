@@ -37,23 +37,23 @@ return [
 
     'delete' => [
         'delete_contact'        => 'លុបទំនាក់ទំនង',
-        'confirm_de_contact'    => 'តើអ្នកពិតជាចង់លុបទំនាក់ទំនង',
+        'confirm_de_contact'    => 'តើអ្នកពិតជាចង់លុបទំនាក់ទំនងមែនទេ?',
         'delete_education'      => 'លុបការអប់រំ',
-        'confirm_de_education'  => 'តើអ្នកពិតជាចង់លុបការអប់រំ?',
+        'confirm_de_education'  => 'តើអ្នកពិតជាចង់លុបការអប់រំមែនទេ?',
         'delete_experience'     => 'លុបបទពិសោធន៍',
-        'confirm_de_experience' => 'តើអ្នកពិតជាចង់លុបDo you want to delete the experience?',
-        'delete_interest'       => 'លុបចំណាប់អារម្មណ៦',
-        'confirm_de_interest'   => 'តើអ្នកពិតជាចង់លុបDo you want to delete the interest?',
+        'confirm_de_experience' => 'តើអ្នកពិតជាចង់លុបបទពិសោធន៍មែនទេ?',
+        'delete_interest'       => 'លុបចំណាប់អារម្មណ៍',
+        'confirm_de_interest'   => 'តើអ្នកពិតជាចង់លុបចំណាប់អារម្មណ៍មែនទេ?',
         'delete_language'       => 'លុបភាសា',
-        'confirm_de_language'   => 'តើអ្នកពិតជាចង់លុបDo you want to delete the language?',
+        'confirm_de_language'   => 'តើអ្នកពិតជាចង់លុបភាសាមែនទេ?',
         'delete_project'        => 'លុបគំរោងដែលធ្លាប់ធ្វើ',
-        'confirm_de_project'    => 'តើអ្នកពិតជាចង់លុបDo you want to delete the project?',
+        'confirm_de_project'    => 'តើអ្នកពិតជាចង់លុបគំរោងដែលធ្លាប់ធ្វើមែនទេ?',
         'delete_skill'          => 'លុបជំនាញ',
-        'confirm_de_skill'      => 'តើអ្នកពិតជាចង់លុបDo you want to delete the skill?',
+        'confirm_de_skill'      => 'តើអ្នកពិតជាចង់លុបជំនាញមែនទេ?',
     ],
     'option' => [
-        'degree_me'             => 'Medium',
-        'degree_good'           => 'Good',
-        'degree_excellent'      => 'Excellent'
+        'degree_me'             => 'មធ្យម',
+        'degree_good'           => 'ល្អ',
+        'degree_excellent'      => 'ល្អណាស់'
     ]
 ];
