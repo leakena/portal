@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\Access\Access;
+use App\Utils\Http\ApiRequest\IManager;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -35,6 +36,7 @@ class AccessServiceProvider extends ServiceProvider
     {
         $this->registerAccess();
         $this->registerFacade();
+        $this->registerBinding();
     }
 
     /**
@@ -60,6 +62,23 @@ class AccessServiceProvider extends ServiceProvider
             $loader = \Illuminate\Foundation\AliasLoader::getInstance();
             $loader->alias('Access', \App\Services\Access\Facades\Access::class);
         });
+
+
+
+    }
+
+    public function registerBinding() {
+
+        $this->app->bind(
+            \App\Utils\Http\ApiRequest\IManager::class,
+            \App\Utils\Http\ApiRequest\Manager::class
+        );
+
+        $this->app->bind(
+            \App\Utils\Http\ApiUrl\IUrlManager::class,
+            \App\Utils\Http\ApiUrl\UrlManager::class
+        );
+
     }
 
     /**
