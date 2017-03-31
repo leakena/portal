@@ -7,9 +7,11 @@ use App\Models\Portal\Post\Post;
 use App\Models\Portal\Post\View;
 use App\Http\Controllers\Controller;
 use App\Models\Portal\Resume\Resume;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
+use App\Repositories\Backend\User\UserContract;
 
 
 class PortalController extends Controller
@@ -17,9 +19,16 @@ class PortalController extends Controller
     /**
      * PortalController constructor.
      */
-    public function __construct()
+
+    protected $studentPrefix;
+    protected $controller;
+    protected $users;
+    public function __construct( Controller $cont, UserContract $userRepo)
     {
-        return $this->middleware('auth');
+        $this->middleware('auth');
+        $this->studentPrefix = '/api/student';
+        $this->controller = $cont;
+        $this->users = $userRepo;
     }
 
     /**
@@ -29,10 +38,45 @@ class PortalController extends Controller
      */
     public function index()
     {
+        /*$input = [
+            'name' => 'LEROY',
+            'email' => 'leroy@gmail.com',
+            'password' => 'testing'
+        ];*/
+
+//        $this->users->create($input);
+
         $posts = Post::latest()->limit(3)->get();
         $profile = Profile::where(['user_uid' => auth()->id()])->first();
         $resume = Resume::where(['user_uid' => auth()->id()])->first();
-        return view('frontend.portals.index', compact('resume', 'profile', 'posts'));
+
+
+//        $studentData = $this->controller->getElementByApi($this->studentPrefix.'/annual-object', ['student_id_card','academic_year_id'], ['e20150547', 2017], []);
+//
+//        dd($studentData);
+
+        //$studentData = $this->controller->getElementByApi($this->studentPrefix.'/data', [], [], []);
+
+
+
+        //dd($studentData);
+
+        //$index =0;
+//        for ($i=801; $i<=1200; $i++){
+//
+//            $this->users->create($studentData[$i]);
+//
+//        }
+
+
+
+
+        $studentData = $this->controller->getElementByApi($this->studentPrefix.'/score', ['student_annual_id', 'semester_id'], [20486, null], []);
+
+        $studentData = $studentData['data'];
+
+
+        return view('frontend.portals.index', compact('resume', 'profile', 'posts', 'studentData'));
     }
 
     /**

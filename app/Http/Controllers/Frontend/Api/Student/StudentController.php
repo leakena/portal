@@ -20,9 +20,10 @@ class StudentController extends Controller
 
     public function score() {
 
-        $studentData = $this->apiRequestManager->getElementsFromApi($this->prefix.'/score', ['student_annual_id', 'semester_id'], [20486, 1]);
+        $studentData = $this->apiRequestManager->getElementsFromApi($this->prefix.'/score', ['student_annual_id', 'semester_id'], [20486, null]);
 
-        dd($studentData);
+        $studentData = $studentData['data'];
+        return view('frontend.partials.portals.score', compact('studentData'));
 
     }
 }

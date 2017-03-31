@@ -64,8 +64,6 @@ class UrlManager implements IUrlManager
 
         return $paramsToAttach;
     }
-
-
     public function getApiBaseUrl() {
         return  $this->targetServerUrl;
     }

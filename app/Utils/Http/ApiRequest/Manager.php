@@ -24,6 +24,7 @@ class Manager implements IManager
     public function getApiRequestResult($url, $methodType, array $params = array(), array $elements = array(), array $attributes = array(), $where) {
 
         $client = $this->getClientRequest();
+
         $res = $client->request(strtoupper($methodType), $this->urlManager->getCompleteUrl($url, $elements, $attributes, $where), ['form_params' => $params]);
 
         /*$res = (string)$res->getBody();

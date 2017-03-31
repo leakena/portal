@@ -159,14 +159,7 @@ class ResumeController extends Controller
      */
     public function getCareerProfile()
     {
-        $resume = DB::table('resumes')
-            ->where([
-                ['id', '=', request('resume_uid')]
-            ])->get()->toArray();
-        return Response::json([
-            'data' => $resume,
-            'status' => true
-        ]);
+        return view('frontend.resumes.career_profile');
     }
 
     /**

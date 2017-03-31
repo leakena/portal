@@ -18,5 +18,12 @@ class Controller extends BaseController
         $this->apiRequestManager = $apiRequestManager;
     }
 
+    public function getElementByApi($endUrl, $elements , $attributes , $where) {
+
+        return $this->apiRequestManager->getElementsFromApi($endUrl, $elements , $attributes , $where);
+
+
+    }
+
 
 }

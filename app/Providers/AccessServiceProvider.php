@@ -79,6 +79,11 @@ class AccessServiceProvider extends ServiceProvider
             \App\Utils\Http\ApiUrl\UrlManager::class
         );
 
+        $this->app->bind(
+            \App\Repositories\Backend\User\UserContract::class,
+            \App\Repositories\Backend\User\EloquentUserRepository::class
+        );
+
     }
 
     /**

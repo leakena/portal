@@ -51,7 +51,7 @@ Route::group(['middleware' => 'auth'], function () {
         /**
          * Resumes
          */
-        Route::post('/resume/save-career-profile', 'ResumeController@saveCareerProfile');
+        Route::post('/resume/save-career-profile', 'ResumeController@saveCareerProfile')->name('resumes.career-profile');
         Route::get('/resume/go_back', 'ResumeController@go_back');
         Route::get('/resume/career-profile', 'ResumeController@getCareerProfile');
         Route::get('/reusme/edit-career-profile', 'ResumeController@editCareerProfile');
