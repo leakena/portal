@@ -8,7 +8,12 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <img src="images/img.jpg" alt="">John Doe
+                        @if(isset($profile))
+                            <img src="{{ asset('img/frontend/uploads/profile') }}/{{ $profile->profile }}" alt="" />
+                        @else
+                            <img src="{{ asset('img/icon.png') }}" alt="" />
+                        @endif
+                            {{ $logged_in_user->name }}
                         <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">

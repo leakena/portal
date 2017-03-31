@@ -55,14 +55,14 @@ class PortalController extends Controller
 //
 //        dd($studentData);
 
-        //$studentData = $this->controller->getElementByApi($this->studentPrefix.'/data', [], [], []);
-
-
-
-        //dd($studentData);
-
-        //$index =0;
-//        for ($i=801; $i<=1200; $i++){
+//        $studentData = $this->controller->getElementByApi($this->studentPrefix.'/data', [], [], []);
+//
+//
+//
+//        //dd($studentData);
+//
+//        //$index =0;
+//        for ($i=0; $i<=400; $i++){
 //
 //            $this->users->create($studentData[$i]);
 //

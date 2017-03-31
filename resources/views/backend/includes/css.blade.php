@@ -4,7 +4,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Gentelella Alela! | </title>
+<title>Portal </title>
 
 <!-- Bootstrap -->
 <link href="{{ url('js/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">

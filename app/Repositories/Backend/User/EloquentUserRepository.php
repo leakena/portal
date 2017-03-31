@@ -19,12 +19,12 @@ class EloquentUserRepository implements UserContract
         $newUser->name = $input['name_latin'];
         $newUser->email = $input['id_card'];
 
-        $date = explode(" ",$input['dob']);
-        $dob = explode("-",$date[0]);
-        $password ='';
-        $password = $password.$dob[0].$dob[1].$dob[2];
+//        $date = explode(" ",$input['dob']);
+//        $dob = explode("-",$date[0]);
+//        $password ='';
+//        $password = $password.$dob[0].$dob[1].$dob[2];
 
-        $newUser->password = bcrypt($password);
+        $newUser->password = bcrypt(123);
         if($newUser->save()) {
             return true;
         }

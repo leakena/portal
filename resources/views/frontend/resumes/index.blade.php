@@ -1,4 +1,4 @@
-@extends('backend.layouts.web')
+@extends('backend.layouts.resume')
 
 
 @section('content')

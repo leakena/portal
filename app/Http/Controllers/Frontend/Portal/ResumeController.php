@@ -34,6 +34,10 @@ class ResumeController extends Controller
         return view('frontend.resumes.index', compact('resume'));
     }
 
+    public function userInfo(){
+        return view('frontend.resumes.userInfo');
+    }
+
     /**
      * @param Resume $resume
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
@@ -78,6 +82,11 @@ class ResumeController extends Controller
             'data' => $experiences,
             'status' => true
         ]);
+    }
+
+    public function experience()
+    {
+        return view('frontend.resumes.experiences');
     }
 
     /**
@@ -289,6 +298,11 @@ class ResumeController extends Controller
         ]);
     }
 
+    public function skill(){
+
+        return view('frontend.resumes.skill');
+    }
+
     /**
      * @return mixed
      */
@@ -448,6 +462,12 @@ class ResumeController extends Controller
         ]);
     }
 
+    public function education(){
+
+        return view('frontend.resumes.education');
+    }
+
+
     /**
      * @return mixed
      */
@@ -529,6 +549,11 @@ class ResumeController extends Controller
         ]);
     }
 
+    public function language(){
+
+        return view('frontend.resumes.languages');
+    }
+
     /**
      * @return mixed
      */
@@ -608,6 +633,11 @@ class ResumeController extends Controller
         ]);
     }
 
+    public function interest()
+    {
+        return view('frontend.resumes.interest');
+    }
+
     /**
      * @return mixed
      */
@@ -654,5 +684,9 @@ class ResumeController extends Controller
                 'name' => request('name')
             ]);
         return Response::json(['status' => true]);
+    }
+
+    public function reference(){
+        return view('frontend.resumes.reference');
     }
 }
