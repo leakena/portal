@@ -71,12 +71,12 @@ class PortalController extends Controller
 
 
 
-        $studentData = $this->controller->getElementByApi($this->studentPrefix.'/score', ['student_annual_id', 'semester_id'], [20486, null], []);
+        //$studentData = $this->controller->getElementByApi($this->studentPrefix.'/score', ['student_annual_id', 'semester_id'], [20486, null], []);
 
-        $studentData = $studentData['data'];
+        //$studentData = $studentData['data'];
 
 
-        return view('frontend.portals.index', compact('resume', 'profile', 'posts', 'studentData'));
+        return view('frontend.portals.index', compact('resume', 'profile', 'posts'));
     }
 
     /**

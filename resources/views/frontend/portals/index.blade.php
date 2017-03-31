@@ -2,9 +2,7 @@
 
 @section('content')
 
-
 	@include('frontend.partials.portals.score')
-
     @include('frontend.partials.portals.timeline')
 
     @include('frontend.partials.portals.calendar')
