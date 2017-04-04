@@ -46,6 +46,7 @@ class PortalController extends Controller
 
 //        $this->users->create($input);
 
+//        hello thei
         $posts = Post::latest()->limit(3)->get();
         $profile = Profile::where(['user_uid' => auth()->id()])->first();
         $resume = Resume::where(['user_uid' => auth()->id()])->first();
