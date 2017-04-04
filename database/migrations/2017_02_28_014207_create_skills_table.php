@@ -22,7 +22,6 @@ class CreateSkillsTable extends Migration
             $table->foreign('resume_uid')->references('id')->on('resumes')->onDelete('cascade');
         });
     }
-
     /**
      * Reverse the migrations.
      *
