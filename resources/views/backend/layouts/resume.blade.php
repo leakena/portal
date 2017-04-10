@@ -48,5 +48,7 @@
     </div>
 </div>
     @include('backend.includes.partials.js')
+
+    @yield('js')
 </body>
 </html>
