@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend\Portal;
 
+use App\Helpers\Auth\Auth;
 use App\Models\Portal\Resume\Contact;
 use App\Models\Portal\Resume\Education;
 use App\Models\Portal\Resume\Experience;
@@ -31,11 +32,11 @@ class ResumeController extends Controller
     public function index()
     {
         $resume = Resume::where(['user_uid' => auth()->id()])->first();
-        return view('frontend.resumes.index', compact('resume'));
+        return view('backend.resumes.index', compact('resume'));
     }
 
     public function userInfo(){
-        return view('frontend.resumes.userInfo');
+        return view('backend.resumes.userInfo.userInfo');
     }
 
     /**
@@ -54,13 +55,36 @@ class ResumeController extends Controller
      */
     public function saveCareerProfile()
     {
-        $newCareerProfile = new Resume();
 
-        $newCareerProfile->career_profile = request('save-career-profile');
-        $newCareerProfile->user_uid = auth()->id();
-        $newCareerProfile->save();
 
-        return redirect()->back();
+
+        $userResume = $this->getUserResume(auth()->id());
+
+
+        if($userResume) {
+            /*--update cv--*/
+
+
+        } else {
+            /*--create cv---*/
+
+
+            $newCareerProfile = new Resume();
+            $newCareerProfile->career_profile = request('description');
+            $newCareerProfile->user_uid = auth()->id();
+
+            if($newCareerProfile->save()) {
+                return view('backend.resumes.career_profile.partial.career_profile', compact('newCareerProfile'));
+            }
+
+        }
+
+
+
+    }
+
+    private function getUserResume($userId) {
+        return Resume::where('user_uid', $userId)->first();
     }
 
     /**
@@ -86,7 +110,7 @@ class ResumeController extends Controller
 
     public function experience()
     {
-        return view('frontend.resumes.experiences');
+        return view('backend.resumes.experience.experiences');
     }
 
     /**
@@ -168,7 +192,10 @@ class ResumeController extends Controller
      */
     public function getCareerProfile()
     {
-        return view('frontend.resumes.career_profile');
+        $newCareerProfile = Resume::where('user_uid', auth()->user()->id)->first();
+        return view('backend.resumes.career_profile.career_profile', compact('newCareerProfile'));
+
+
     }
 
     /**
@@ -300,7 +327,7 @@ class ResumeController extends Controller
 
     public function skill(){
 
-        return view('frontend.resumes.skill');
+        return view('backend.resumes.skill.skill');
     }
 
     /**
@@ -464,7 +491,7 @@ class ResumeController extends Controller
 
     public function education(){
 
-        return view('frontend.resumes.education');
+        return view('backend.resumes.education.education');
     }
 
 
@@ -551,7 +578,7 @@ class ResumeController extends Controller
 
     public function language(){
 
-        return view('frontend.resumes.languages');
+        return view('backend.resumes.language.languages');
     }
 
     /**
@@ -635,7 +662,7 @@ class ResumeController extends Controller
 
     public function interest()
     {
-        return view('frontend.resumes.interest');
+        return view('backend.resumes.interest.interest');
     }
 
     /**
@@ -687,6 +714,6 @@ class ResumeController extends Controller
     }
 
     public function reference(){
-        return view('frontend.resumes.reference');
+        return view('backend.resumes.reference.reference');
     }
 }
