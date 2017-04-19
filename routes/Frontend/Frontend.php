@@ -65,6 +65,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/reusme/edit-career-profile', 'ResumeController@editCareerProfile');
         Route::post('/resume/update-career-profile', 'ResumeController@updateCareerProfile');
 
+
+        Route::get('/resume/user-resume', 'ResumeController@getResumeByAjax')->name('user_resume');//get user resume by ajax function
+
         /**
          * Experiences
          */

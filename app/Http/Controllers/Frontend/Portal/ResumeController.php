@@ -52,7 +52,8 @@ class ResumeController extends Controller
     }
 
 
-    public function storeUserInfo(Request $request) {
+    public function storeUserInfo(Request $request)
+    {
 
 
         if(isset($request->resume_uid)) {
@@ -73,10 +74,9 @@ class ResumeController extends Controller
                 /*---create personal-info--*/
 
                 $create = $this->personalInfos->create($request->all());
-                if($create) {
-                    return redirect()->back()->with(['status'=>'Information Created!']);
+                if ($create) {
+                    return redirect()->back()->with(['status' => 'Information Created!']);
                 }
-
             }
 
         } else {
@@ -95,10 +95,8 @@ class ResumeController extends Controller
             }
 
         }
-
-
-
     }
+
 
     /**
      * @param Resume $resume
@@ -112,19 +110,22 @@ class ResumeController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function saveCareerProfile()
     {
 
 
-
         $userResume = $this->getUserResume(auth()->id());
 
 
-        if($userResume) {
+        if ($userResume) {
             /*--update cv--*/
 
+            DB::table('resumes')->where('id', request('resume_uid'))->update(['career_profile' => request('description')]);
+            $newCareerProfile = DB::table('resumes')->where('id', request('resume_uid'))->first();
+
+            return view('backend.resumes.career_profile.career_profile', compact('newCareerProfile'));
 
         } else {
             /*--create cv---*/
@@ -134,19 +135,46 @@ class ResumeController extends Controller
             $newCareerProfile->career_profile = request('description');
             $newCareerProfile->user_uid = auth()->id();
 
-            if($newCareerProfile->save()) {
-                return view('backend.resumes.career_profile.partial.career_profile', compact('newCareerProfile'));
+            if ($newCareerProfile->save()) {
+                return view('backend.resumes.career_profile.career_profile', compact('newCareerProfile'));
             }
 
         }
 
-
-
     }
 
-    private function getUserResume($userId) {
+    /**
+     * @param $userId
+     * @return mixed
+     */
+    private function getUserResume($userId)
+    {
         return Resume::where('user_uid', $userId)->first();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCareerProfile()
+    {
+        $newCareerProfile = Resume::where('user_uid', auth()->user()->id)->first();
+        return view('backend.resumes.career_profile.career_profile', compact('newCareerProfile'));
+
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function editCareerProfile()
+    {
+        $resume = DB::table('resumes')->where([
+            ['id', '=', request('resume_uid')]
+        ])->get()->toArray();
+
+        return Response::json(['data' => $resume, 'status' => true]);
+    }
+
 
     /**
      * @return \Illuminate\Http\RedirectResponse
@@ -169,6 +197,9 @@ class ResumeController extends Controller
         ]);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function experience()
     {
         return view('backend.resumes.experience.experiences');
@@ -246,38 +277,6 @@ class ResumeController extends Controller
         return Response::json([
             'status' => true
         ]);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCareerProfile()
-    {
-        $newCareerProfile = Resume::where('user_uid', auth()->user()->id)->first();
-        return view('backend.resumes.career_profile.career_profile', compact('newCareerProfile'));
-
-
-    }
-
-    /**
-     * @return mixed
-     */
-    public function editCareerProfile()
-    {
-        $resume = DB::table('resumes')->where([
-            ['id', '=', request('resume_uid')]
-        ])->get()->toArray();
-
-        return Response::json(['data' => $resume, 'status' => true]);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function updateCareerProfile()
-    {
-        DB::table('resumes')->where('id', request('resume_uid'))->update(['career_profile' => request('career_profile')]);
-        return Response::json(['status' => true]);
     }
 
     /**
@@ -386,7 +385,11 @@ class ResumeController extends Controller
         ]);
     }
 
-    public function skill(){
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function skill()
+    {
 
         return view('backend.resumes.skill.skill');
     }
@@ -550,7 +553,8 @@ class ResumeController extends Controller
         ]);
     }
 
-    public function education(){
+    public function education()
+    {
 
         return view('backend.resumes.education.education');
     }
@@ -637,7 +641,11 @@ class ResumeController extends Controller
         ]);
     }
 
-    public function language(){
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function language()
+    {
 
         return view('backend.resumes.language.languages');
     }
@@ -721,6 +729,9 @@ class ResumeController extends Controller
         ]);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function interest()
     {
         return view('backend.resumes.interest.interest');
@@ -774,7 +785,24 @@ class ResumeController extends Controller
         return Response::json(['status' => true]);
     }
 
-    public function reference(){
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function reference()
+    {
         return view('backend.resumes.reference.reference');
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function getResumeByAjax(Request $request)
+    {
+
+        $resume = Resume::where('id', $request->resume_id)->first();
+
+        return Response::json(['status' => true, 'resume' => $resume]);
+
     }
 }
