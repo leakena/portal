@@ -38,6 +38,7 @@ class EloquentPersonalInfoRepository implements PersonalInfoContract
         }
     }
 
+    /*new--*/
     public function update($id, $input){
 
     }
