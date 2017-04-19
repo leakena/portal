@@ -53,6 +53,8 @@ Route::group(['middleware' => 'auth'], function () {
          * User Information
          */
         Route::get('/resume/user-info', 'ResumeController@userInfo')->name('user_info');
+        Route::post('/resume/store-user-info', 'ResumeController@storeUserInfo')->name('store_user_info');
+
 
         /**
          * Resumes

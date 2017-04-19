@@ -19,13 +19,20 @@
                         </div>
                         <div class="x_content">
                             <br />
-                            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+
+                            {!! Form::open(['route' => 'frontend.resume.store_user_info', 'class' => 'form-horizontal create_user_info', 'role' => 'form', 'method' => 'post', 'id' => 'create-user-info']) !!}
+
+                                @if(isset($userResume))
+                                    <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
+                                @endif
 
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+
+                                        <input type="text" id="name" name="name" required="required" class="form-control col-md-7 col-xs-12" value="{{isset($personalInfo)?$personalInfo->name:''}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -33,7 +40,7 @@
 
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <select name="save-degree" class="form-control col-md-7 col-xs-12" id="save-degree">
+                                        <select name="status" class="form-control col-md-7 col-xs-12" id="status">
                                             <option name="Medium">Single</option>
                                             <option name="Good">Married</option>
                                             <option name="Excellent">Divorced</option>
@@ -57,35 +64,35 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Date Of Birth <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                                        <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" name="dob" value="{{isset($personalInfo)?$personalInfo->dob:''}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="birth-place">Place of birth <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="birth-place" name="birth-place" required="required" class="form-control col-md-7 col-xs-12">
+                                        <input type="text" id="birth-place" name="birth-place" required="required" class="form-control col-md-7 col-xs-12" value="{{isset($personalInfo)?$personalInfo->birthPlace:''}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">E-mail <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="email" name="email" required="required" class="form-control col-md-7 col-xs-12">
+                                        <input type="text" id="email" name="email" required="required" class="form-control col-md-7 col-xs-12" value="{{isset($personalInfo)?$personalInfo->email:''}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phone">Phone <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="phone" name="phone" required="required" class="form-control col-md-7 col-xs-12">
+                                        <input type="text" id="phone" name="phone" required="required" class="form-control col-md-7 col-xs-12" value="{{isset($personalInfo)?$personalInfo->phone:''}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="address">Adress <span class="required">*</span>
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="address">Address <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="adress" name="adress" required="required" class="form-control col-md-7 col-xs-12">
+                                        <input type="text" id="address" name="address" required="required" class="form-control col-md-7 col-xs-12" value="{{isset($personalInfo)?$personalInfo->address:''}}">
                                     </div>
                                 </div>
                                 <div class="ln_solid"></div>
@@ -96,8 +103,7 @@
                                         <button type="submit" class="btn btn-success">Submit</button>
                                     </div>
                                 </div>
-
-                            </form>
+                            {!! Form::close() !!}
                         </div>
                     </div>
                 </div>
@@ -105,4 +111,27 @@
         </div>
     </div>
 
+@endsection
+
+@section('js')
+    <script>
+
+
+        @if(isset($personalInfo))
+        var material_status = '{{$personalInfo->status}}'
+
+        @else
+        var material_status = ''
+        @endif
+
+
+        $('select[name=status] option').each(function (key, value) {
+            var status = $(this).val();
+            if(status == material_status) {
+                $(this).prop('selected', true);
+
+            }
+        })
+
+    </script>
 @endsection
