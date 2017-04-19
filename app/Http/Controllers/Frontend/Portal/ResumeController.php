@@ -15,15 +15,19 @@ use App\Models\Portal\Resume\Skill;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
-
+use App\Repositories\Backend\PersonalInfo\PersonalInfoContract;
 class ResumeController extends Controller
 {
     /**
      * ResumeController constructor.
      */
-    public function __construct()
+
+    protected $personalInfos;
+    public function __construct(PersonalInfoContract $personalIfoRepo)
     {
-        return $this->middleware('auth');
+
+        $this->personalInfos = $personalIfoRepo;
+//        $this->middleware('auth');
     }
 
     /**
@@ -36,7 +40,38 @@ class ResumeController extends Controller
     }
 
     public function userInfo(){
-        return view('backend.resumes.userInfo.userInfo');
+
+        $userResume = Resume::where('user_uid', auth()->id())->first();
+
+        if($userResume) {
+            $personalInfo = DB::table('personal_infos')->where('resume_uid', $userResume->id)->first();
+        } else {
+            $personalInfo= null;
+        }
+        return view('backend.resumes.userInfo.userInfo', compact('userResume', 'personalInfo'));
+    }
+
+
+    public function storeUserInfo(Request $request) {
+
+
+        if(isset($request->resume_uid)) {
+
+            /*--there is a resume id so we need to create user information --*/
+            $create = $this->personalInfos->create($request->all());
+            if($create) {
+                return redirect()->back()->with(['status'=>'Information Created!']);
+            }
+        } else {
+
+            dd($request->all());
+
+            /*--if the request has no resume id then we have to create Resume first */
+
+        }
+
+
+
     }
 
     /**
