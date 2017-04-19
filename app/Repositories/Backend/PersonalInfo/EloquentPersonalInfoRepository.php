@@ -16,6 +16,16 @@ use Carbon\Carbon;
 class EloquentPersonalInfoRepository implements PersonalInfoContract
 {
 
+
+    public function findOrThrowException($id)
+    {
+        if (! is_null(PersonalInfo::find($id))) {
+            return PersonalInfo::find($id);
+        }
+
+        throw new GeneralException('Not Found');
+    }
+
     public function create($input) {
 
 
@@ -40,6 +50,24 @@ class EloquentPersonalInfoRepository implements PersonalInfoContract
 
     /*new-- how to solve --------this */
     public function update($id, $input){
+
+        $personalInfo = $this->findOrThrowException($id);
+
+        $personalInfo->name = $input['name'];
+        $personalInfo->email = $input['email'];
+        $personalInfo->status = $input['status'];
+        $personalInfo->gender = $input['gender'];
+        $personalInfo->resume_uid = $input['resume_uid'];
+        $personalInfo->dob = $input['dob'];
+        $personalInfo->birthPlace = $input['birth-place'];
+        $personalInfo->phone=$input['phone'];
+        $personalInfo->address=$input['address'];
+        $personalInfo->profile = isset($input['profile'])?$input['profile']:null;
+        $personalInfo->updated_at = Carbon::now();
+
+        if($personalInfo->save()) {
+            return true;
+        }
 
     }
 

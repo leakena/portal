@@ -11,6 +11,9 @@ interface PersonalInfoContract
      * @param $input
      * @return mixed
      */
+
+
+    public function findOrThrowException($id);
     public function create($input);
     public function update($id, $input);
     public function destroy($id);

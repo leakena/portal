@@ -15,6 +15,11 @@ class Resume extends Model
         return $this->hasOne(User::class, 'user_uid');
     }
 
+
+    public function personalInfo()
+    {
+        return $this->hasOne(PersonalInfo::class, 'resume_uid');
+    }
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

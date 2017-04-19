@@ -56,17 +56,43 @@ class ResumeController extends Controller
 
 
         if(isset($request->resume_uid)) {
-
             /*--there is a resume id so we need to create user information --*/
-            $create = $this->personalInfos->create($request->all());
-            if($create) {
-                return redirect()->back()->with(['status'=>'Information Created!']);
+
+            $resume = Resume::where('id', $request->resume_uid)->first();
+
+            /*---check if personal-info hase already created ---*/
+            if(count($resume->personalInfo)) {
+                /*--update personal info --*/
+
+                $update = $this->personalInfos->update($resume->personalInfo->id, $request->all());
+
+                if($update) {
+                    return redirect()->back()->with(['status'=>'Information Updated!']);
+                }
+            } else {
+                /*---create personal-info--*/
+
+                $create = $this->personalInfos->create($request->all());
+                if($create) {
+                    return redirect()->back()->with(['status'=>'Information Created!']);
+                }
+
             }
+
         } else {
-
-            dd($request->all());
-
             /*--if the request has no resume id then we have to create Resume first */
+            $resume = new Resume();
+            $resume->career_profile = null;
+            $resume->user_uid = auth()->id();
+            if($resume->save()) {
+                /*---create personal information ---*/
+
+                $create = $this->personalInfos->create($request->all());
+                if($create) {
+                    return redirect()->back()->with(['status'=>'Information Created!']);
+                }
+
+            }
 
         }
 
