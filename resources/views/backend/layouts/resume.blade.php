@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
     @include('backend.includes.css')
+    @yield('after-style-end')
 </head>
 
 <body class="nav-md">
@@ -47,6 +48,7 @@
         <!-- /footer content -->
     </div>
 </div>
+
     @include('backend.includes.partials.js')
 
     @yield('js')

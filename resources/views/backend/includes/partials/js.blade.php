@@ -37,3 +37,4 @@
 
 <!-- Custom Theme Scripts -->
 <script src="{{ url('css/build/js/custom.min.js') }}"></script>
+<script src="{{ url('bower_components/bootstrap-sweetalert/dist/sweetalert.js') }}"> </script>

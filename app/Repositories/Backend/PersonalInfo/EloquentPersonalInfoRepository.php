@@ -37,7 +37,7 @@ class EloquentPersonalInfoRepository implements PersonalInfoContract
         $personalInfo->gender = $input['gender'];
         $personalInfo->resume_uid = $input['resume_uid'];
         $personalInfo->dob = $input['dob'];
-        $personalInfo->birthPlace = $input['birth-place'];
+        $personalInfo->birth_place = $input['birth_place'];
         $personalInfo->phone=$input['phone'];
         $personalInfo->address=$input['address'];
         $personalInfo->profile = isset($input['profile'])?$input['profile']:null;
@@ -59,7 +59,7 @@ class EloquentPersonalInfoRepository implements PersonalInfoContract
         $personalInfo->gender = $input['gender'];
         $personalInfo->resume_uid = $input['resume_uid'];
         $personalInfo->dob = $input['dob'];
-        $personalInfo->birthPlace = $input['birth-place'];
+        $personalInfo->birth_place = $input['birth_place'];
         $personalInfo->phone=$input['phone'];
         $personalInfo->address=$input['address'];
         $personalInfo->profile = isset($input['profile'])?$input['profile']:null;
