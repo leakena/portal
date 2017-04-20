@@ -202,26 +202,51 @@ class ResumeController extends Controller
      */
     public function experience()
     {
-        return view('backend.resumes.experience.experiences');
+        $userResume = $this->getUserResume(auth()->id());
+        $experiences = DB::table('experiences')->where('resume_uid', $userResume->id)->get()->toArray();
+
+        return view('backend.resumes.experience.experiences', compact('experiences'));
     }
 
     /**
      * @return mixed
      */
-    public function saveExperience()
+    public function saveExperience(Request $request)
     {
-        $newExperience = new Experience();
-        $newExperience->resume_uid = request('resume_uid');
-        $newExperience->position = request('position');
-        $newExperience->company = request('company');
-        $newExperience->description = request('description');
-        $newExperience->start_date = request('start_date');
-        $newExperience->end_date = request('end_date');
+        $userResume = $this->getUserResume(auth()->id());
+        if(isset($request->experience_id)){
 
-        $newExperience->save();
-        return Response::json([
-            'status' => true
-        ]);
+            /*--update experience--*/
+
+            DB::table('experiences')
+                ->where([
+                    ['id', '=', request('experience_id')],
+                    ['resume_uid', '=', $userResume->id]
+                ])
+                ->update([
+                    'position' => request('position'),
+                    'company' => request('company'),
+                    'description' => request('description'),
+                    'start_date' => request('start_date'),
+                    'end_date' => request('end_date')
+                ]);
+            return redirect()->route('frontend.resume.get_experience');
+        } else{
+
+            /*--create experience--*/
+
+            $newExperience = new Experience();
+            $newExperience->resume_uid = $userResume->id;
+            $newExperience->position = request('position');
+            $newExperience->company = request('company');
+            $newExperience->description = request('description');
+            $newExperience->start_date = request('start_date');
+            $newExperience->end_date = request('end_date');
+
+            $newExperience->save();
+            return redirect()->route('frontend.resume.get_experience');
+        }
+
     }
 
     /**
@@ -267,16 +292,16 @@ class ResumeController extends Controller
     /**
      * @return mixed
      */
-    public function removeExperience()
+    public function removeExperience($expId)
     {
 
-        $exp = DB::table('experiences')->where([
-            ['id', '=', request('remove_experience_id')],
-            ['resume_uid', '=', request('remove_resume_uid')]
-        ])->delete();
-        return Response::json([
-            'status' => true
-        ]);
+        $experience = Experience::where('id', $expId)->delete();
+
+        if($experience) {
+            return Response::json(['status' => true, 'message' => 'Deleted!']);
+        } else {
+            return Response::json(['status' => false, 'message' => 'Not Deleted!']);
+        }
     }
 
     /**
@@ -523,21 +548,44 @@ class ResumeController extends Controller
     /**
      * @return mixed
      */
-    public function saveEducation()
+    public function saveEducation(Request $request)
     {
+        $userResume = $this->getUserResume(auth()->id());
 
-        // Create a new education
-        $newEducation = new Education();
-        // Set value into each field
-        $newEducation->resume_uid = request('resume_uid');
-        $newEducation->major = request('major');
-        $newEducation->school = request('school');
-        $newEducation->start_date = request('start_date');
-        $newEducation->end_date = request('end_date');
-        // Save new education
-        $newEducation->save();
-        // Response back as json format
-        return Response::json(['status' => true]);
+        if(isset($request->education_id)){
+
+            /*-- Update Education --*/
+            DB::table('education')
+                ->where([
+                    ['id', '=', request('education_id')],
+                    ['resume_uid', '=', $userResume->id]
+                ])
+                ->update([
+                    'major' => request('major'),
+                    'school' => request('school'),
+                    'start_date' => request('start_date'),
+                    'end_date' => request('end_date')
+                ]);
+            return redirect()->route('frontend.resume.get_education');
+        }else{
+
+            /*-- Create a new education---*/
+
+            $newEducation = new Education();
+
+            // Set value into each field
+            $newEducation->resume_uid = $userResume->id;
+            $newEducation->major = request('major');
+            $newEducation->school = request('school');
+            $newEducation->start_date = request('start_date');
+            $newEducation->end_date = request('end_date');
+            // Save new education
+            $newEducation->save();
+
+            return redirect()->route('frontend.resume.get_education');
+        }
+
+
 
     }
 
@@ -555,23 +603,24 @@ class ResumeController extends Controller
 
     public function education()
     {
-
-        return view('backend.resumes.education.education');
+        $userResume = $this->getUserResume(auth()->id());
+        $educations = DB::table('education')->where('resume_uid', $userResume->id)->get()->toArray();
+        return view('backend.resumes.education.education', compact('educations'));
     }
 
 
     /**
      * @return mixed
      */
-    public function deleteEducation()
+    public function deleteEducation($eduId)
     {
-        DB::table('education')
-            ->where([
-                ['id', '=', request('education_uid')],
-                ['resume_uid', '=', request('resume_uid')]
-            ])->delete();
+        $education = Education::where('id', $eduId)->delete();
 
-        return Response::json(['status' => true]);
+        if($education) {
+            return Response::json(['status' => true, 'message' => 'Deleted!']);
+        } else {
+            return Response::json(['status' => false, 'message' => 'Not Deleted!']);
+        }
     }
 
     /**

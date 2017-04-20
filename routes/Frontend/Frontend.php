@@ -76,7 +76,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/resume/save-experience', 'ResumeController@saveExperience')->name('save_experience');
         Route::get('/resume/edit-experience', 'ResumeController@editExperience')->name('edit_experience');
         Route::post('/resume/update-experience', 'ResumeController@updateExperience')->name('update_experience');
-        Route::post('/resume/remove-experience', 'ResumeController@removeExperience')->name('remove_experience');
+        Route::post('/resume/{id}/remove-experience', 'ResumeController@removeExperience')->name('remove_experience');
 
         /*
         *	Project
@@ -114,7 +114,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/resume/educations/save-education', 'ResumeController@saveEducation');
         Route::get('/resume/educations/edit-education', 'ResumeController@editEducation');
         Route::post('/resume/educations/update-education', 'ResumeController@updateEducation');
-        Route::post('/resume/educations/delete-education', 'ResumeController@deleteEducation');
+        Route::post('/resume/educations/{id}/delete-education', 'ResumeController@deleteEducation')->name('remove_education');
 
         /**
          * Language
