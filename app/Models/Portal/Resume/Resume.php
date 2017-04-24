@@ -57,7 +57,7 @@ class Resume extends Model
      */
     public function languages()
     {
-        return $this->hasMany(Language::class, 'resume_uid');
+        return $this->belongsToMany(Language::class, 'language_resume', 'resume_uid');
     }
 
     /**

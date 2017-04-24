@@ -5,7 +5,7 @@
     <div role="main">
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
-                @if(isset($educations))
+                @if(count($educations) >0)
                     @foreach($educations as $education)
                         <div class="x_panel">
                             <div class="x_title">
@@ -19,7 +19,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="btn_delete_exp" href="{{ route('frontend.resume.remove_education', $education->id )}}">
+                                        <a class="btn_delete_edu" href="{{ route('frontend.resume.remove_education', $education->id )}}">
                                             <i class="fa fa-trash" aria-hidden="true" style="color: red" ></i>
                                         </a>
                                     </li>
@@ -48,6 +48,16 @@
                                     </div>
 
                                     <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label class="control-label" for="address">Adress <span class="required">*</span>
+                                            </label>
+                                            <textarea type="text" id="address" name="address" required="required" class="form-control col-md-7 col-xs-12">{{ $education->address }}
+
+                                            </textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
                                         <div class="form-group col-md-6">
                                             <label class="control-label" for="start_date">Start Date <span class="required">*</span>
                                             </label>
@@ -64,6 +74,23 @@
                                         </div>
                                     </div>
 
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label">Degree</label>
+                                            <select name="degree" class="form-control single">
+
+                                                @foreach( $degrees as $degree )
+                                                    @if($degree->id == $education->degree->id)
+                                                        <option selected value="{{ $degree->id }}">{{ $degree->name }}</option>
+                                                    @else
+                                                        <option value="{{ $degree->id }}">{{ $degree->name }}</option>
+                                                    @endif
+
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
                                     <div class="ln_solid"></div>
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-11">
@@ -75,6 +102,22 @@
                             </div>
                         </div>
                     @endforeach
+
+                @else
+
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <button id="add" type="button" class="btn btn-primary btn-sm pull-left add_new" data-toggle="modal"
+                                    data-target="#add-career-profile"> <i class="fa fa-plus" style="font-size: 14pt; color: #00a7d0">  </i>
+                            </button>
+
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <h5>There is no education, Click on button add to add education</h5>
+                        </div>
+                    </div>
+
                 @endif
 
             </div>
@@ -115,6 +158,17 @@
                             </div>
 
                             <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Degree</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <select name="degree" class="form-control single">
+                                        @foreach( $degrees as $degree )
+                                            <option name="degree_id" value="{{ $degree->id }}">{{ $degree->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Start Date <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
@@ -123,6 +177,20 @@
                                            placeholder="{{ trans('resume.resume.start_date') }}" value="{{ old('start_date') }}">
                                 </div>
                             </div>
+
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="address">Adress <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <textarea type="text" id="address" name="address" required="required" class="form-control col-md-7 col-xs-12">
+
+                                                </textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">End Date <span class="required">*</span>
                                 </label>
@@ -132,6 +200,9 @@
                                            placeholder="{{ trans('resume.resume.end_date') }}" value="{{ old('start_date') }}">
                                 </div>
                             </div>
+
+
+
                             <div class="ln_solid"></div>
                             <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
@@ -152,14 +223,16 @@
 
 @section('js')
     <script>
+
         $(".add_education").hide();
+
         $(document).on('click', "#add", function(){
             $(".add_education").toggle();
         });
         $('.add_new').hide();
         $('.add_new').first().show();
 
-        $(document).on('click', '.btn_delete_exp', function(event)  {
+        $(document).on('click', '.btn_delete_edu', function(event)  {
             event.preventDefault();
             var var_url = $(this).attr('href');
 

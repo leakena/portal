@@ -95,7 +95,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/resume/skills/save-skill', 'ResumeController@saveSkill');
         Route::get('/resume/skills/edit-skill', 'ResumeController@editSkill');
         Route::post('/resume/skills/update-skill', 'ResumeController@updateSkill');
-        Route::post('/resume/skills/delete-skill', 'ResumeController@deleteSkill');
+        Route::post('/resume/skills/{id}/delete-skill', 'ResumeController@deleteSkill')->name('remove_skill');
 
         /**
          * Contact
@@ -124,7 +124,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/resume/languages/save-language', 'ResumeController@saveLanguage');
         Route::get('/resume/languages/edit-language', 'ResumeController@editLanguage');
         Route::post('/resume/languages/update-language', 'ResumeController@updateLanguage');
-        Route::post('/resume/languages/delete-language', 'ResumeController@deleteLanguage');
+        Route::post('/resume/languages/{id}/delete-language', 'ResumeController@deleteLanguage')->name('remove_language');
 
         /**
          * Interest
@@ -134,11 +134,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/resume/interests/save-interest', 'ResumeController@saveInterest');
         Route::get('/resume/interests/edit-interest', 'ResumeController@editInterest');
         Route::post('/resume/interests/update-interest', 'ResumeController@updateInterest');
-        Route::post('/resume/interests/delete-interest', 'ResumeController@deleteInterest');
+        Route::post('/resume/interests/{id}/delete-interest', 'ResumeController@deleteInterest')->name('remove_interest');
 
         /**
          * Reference
          */
         Route::get('/resume/reference', 'ResumeController@reference')->name('get_reference');
+        Route::post('/resume/reference/save-reference', 'ResumeController@saveReference');
+        Route::post('/resume/reference/{id}/delete-reference', 'ResumeController@deleteReference')->name('remove_reference');
     });
 });
