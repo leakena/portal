@@ -96,8 +96,6 @@ class ResumeController extends Controller
 
         }
 
-
-
     }
 
     /**
