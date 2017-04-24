@@ -52,7 +52,8 @@ class ResumeController extends Controller
     }
 
 
-    public function storeUserInfo(Request $request) {
+    public function storeUserInfo(Request $request)
+    {
 
 
         if(isset($request->resume_uid)) {
@@ -73,10 +74,9 @@ class ResumeController extends Controller
                 /*---create personal-info--*/
 
                 $create = $this->personalInfos->create($request->all());
-                if($create) {
-                    return redirect()->back()->with(['status'=>'Information Created!']);
+                if ($create) {
+                    return redirect()->back()->with(['status' => 'Information Created!']);
                 }
-
             }
 
         } else {
@@ -95,8 +95,8 @@ class ResumeController extends Controller
             }
 
         }
-
     }
+
 
     /**
      * @param Resume $resume
@@ -110,19 +110,22 @@ class ResumeController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function saveCareerProfile()
     {
 
 
-
         $userResume = $this->getUserResume(auth()->id());
 
 
-        if($userResume) {
+        if ($userResume) {
             /*--update cv--*/
 
+            DB::table('resumes')->where('id', request('resume_uid'))->update(['career_profile' => request('description')]);
+            $newCareerProfile = DB::table('resumes')->where('id', request('resume_uid'))->first();
+
+            return view('backend.resumes.career_profile.career_profile', compact('newCareerProfile'));
 
         } else {
             /*--create cv---*/
@@ -132,19 +135,46 @@ class ResumeController extends Controller
             $newCareerProfile->career_profile = request('description');
             $newCareerProfile->user_uid = auth()->id();
 
-            if($newCareerProfile->save()) {
-                return view('backend.resumes.career_profile.partial.career_profile', compact('newCareerProfile'));
+            if ($newCareerProfile->save()) {
+                return view('backend.resumes.career_profile.career_profile', compact('newCareerProfile'));
             }
 
         }
 
-
-
     }
 
-    private function getUserResume($userId) {
+    /**
+     * @param $userId
+     * @return mixed
+     */
+    private function getUserResume($userId)
+    {
         return Resume::where('user_uid', $userId)->first();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCareerProfile()
+    {
+        $newCareerProfile = Resume::where('user_uid', auth()->user()->id)->first();
+        return view('backend.resumes.career_profile.career_profile', compact('newCareerProfile'));
+
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function editCareerProfile()
+    {
+        $resume = DB::table('resumes')->where([
+            ['id', '=', request('resume_uid')]
+        ])->get()->toArray();
+
+        return Response::json(['data' => $resume, 'status' => true]);
+    }
+
 
     /**
      * @return \Illuminate\Http\RedirectResponse
@@ -167,28 +197,56 @@ class ResumeController extends Controller
         ]);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function experience()
     {
-        return view('backend.resumes.experience.experiences');
+        $userResume = $this->getUserResume(auth()->id());
+        $experiences = DB::table('experiences')->where('resume_uid', $userResume->id)->get()->toArray();
+
+        return view('backend.resumes.experience.experiences', compact('experiences'));
     }
 
     /**
      * @return mixed
      */
-    public function saveExperience()
+    public function saveExperience(Request $request)
     {
-        $newExperience = new Experience();
-        $newExperience->resume_uid = request('resume_uid');
-        $newExperience->position = request('position');
-        $newExperience->company = request('company');
-        $newExperience->description = request('description');
-        $newExperience->start_date = request('start_date');
-        $newExperience->end_date = request('end_date');
+        $userResume = $this->getUserResume(auth()->id());
+        if(isset($request->experience_id)){
 
-        $newExperience->save();
-        return Response::json([
-            'status' => true
-        ]);
+            /*--update experience--*/
+
+            DB::table('experiences')
+                ->where([
+                    ['id', '=', request('experience_id')],
+                    ['resume_uid', '=', $userResume->id]
+                ])
+                ->update([
+                    'position' => request('position'),
+                    'company' => request('company'),
+                    'description' => request('description'),
+                    'start_date' => request('start_date'),
+                    'end_date' => request('end_date')
+                ]);
+            return redirect()->route('frontend.resume.get_experience');
+        } else{
+
+            /*--create experience--*/
+
+            $newExperience = new Experience();
+            $newExperience->resume_uid = $userResume->id;
+            $newExperience->position = request('position');
+            $newExperience->company = request('company');
+            $newExperience->description = request('description');
+            $newExperience->start_date = request('start_date');
+            $newExperience->end_date = request('end_date');
+
+            $newExperience->save();
+            return redirect()->route('frontend.resume.get_experience');
+        }
+
     }
 
     /**
@@ -234,48 +292,16 @@ class ResumeController extends Controller
     /**
      * @return mixed
      */
-    public function removeExperience()
+    public function removeExperience($expId)
     {
 
-        $exp = DB::table('experiences')->where([
-            ['id', '=', request('remove_experience_id')],
-            ['resume_uid', '=', request('remove_resume_uid')]
-        ])->delete();
-        return Response::json([
-            'status' => true
-        ]);
-    }
+        $experience = Experience::where('id', $expId)->delete();
 
-    /**
-     * @return mixed
-     */
-    public function getCareerProfile()
-    {
-        $newCareerProfile = Resume::where('user_uid', auth()->user()->id)->first();
-        return view('backend.resumes.career_profile.career_profile', compact('newCareerProfile'));
-
-
-    }
-
-    /**
-     * @return mixed
-     */
-    public function editCareerProfile()
-    {
-        $resume = DB::table('resumes')->where([
-            ['id', '=', request('resume_uid')]
-        ])->get()->toArray();
-
-        return Response::json(['data' => $resume, 'status' => true]);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function updateCareerProfile()
-    {
-        DB::table('resumes')->where('id', request('resume_uid'))->update(['career_profile' => request('career_profile')]);
-        return Response::json(['status' => true]);
+        if($experience) {
+            return Response::json(['status' => true, 'message' => 'Deleted!']);
+        } else {
+            return Response::json(['status' => false, 'message' => 'Not Deleted!']);
+        }
     }
 
     /**
@@ -384,7 +410,11 @@ class ResumeController extends Controller
         ]);
     }
 
-    public function skill(){
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function skill()
+    {
 
         return view('backend.resumes.skill.skill');
     }
@@ -518,21 +548,44 @@ class ResumeController extends Controller
     /**
      * @return mixed
      */
-    public function saveEducation()
+    public function saveEducation(Request $request)
     {
+        $userResume = $this->getUserResume(auth()->id());
 
-        // Create a new education
-        $newEducation = new Education();
-        // Set value into each field
-        $newEducation->resume_uid = request('resume_uid');
-        $newEducation->major = request('major');
-        $newEducation->school = request('school');
-        $newEducation->start_date = request('start_date');
-        $newEducation->end_date = request('end_date');
-        // Save new education
-        $newEducation->save();
-        // Response back as json format
-        return Response::json(['status' => true]);
+        if(isset($request->education_id)){
+
+            /*-- Update Education --*/
+            DB::table('education')
+                ->where([
+                    ['id', '=', request('education_id')],
+                    ['resume_uid', '=', $userResume->id]
+                ])
+                ->update([
+                    'major' => request('major'),
+                    'school' => request('school'),
+                    'start_date' => request('start_date'),
+                    'end_date' => request('end_date')
+                ]);
+            return redirect()->route('frontend.resume.get_education');
+        }else{
+
+            /*-- Create a new education---*/
+
+            $newEducation = new Education();
+
+            // Set value into each field
+            $newEducation->resume_uid = $userResume->id;
+            $newEducation->major = request('major');
+            $newEducation->school = request('school');
+            $newEducation->start_date = request('start_date');
+            $newEducation->end_date = request('end_date');
+            // Save new education
+            $newEducation->save();
+
+            return redirect()->route('frontend.resume.get_education');
+        }
+
+
 
     }
 
@@ -548,24 +601,26 @@ class ResumeController extends Controller
         ]);
     }
 
-    public function education(){
-
-        return view('backend.resumes.education.education');
+    public function education()
+    {
+        $userResume = $this->getUserResume(auth()->id());
+        $educations = DB::table('education')->where('resume_uid', $userResume->id)->get()->toArray();
+        return view('backend.resumes.education.education', compact('educations'));
     }
 
 
     /**
      * @return mixed
      */
-    public function deleteEducation()
+    public function deleteEducation($eduId)
     {
-        DB::table('education')
-            ->where([
-                ['id', '=', request('education_uid')],
-                ['resume_uid', '=', request('resume_uid')]
-            ])->delete();
+        $education = Education::where('id', $eduId)->delete();
 
-        return Response::json(['status' => true]);
+        if($education) {
+            return Response::json(['status' => true, 'message' => 'Deleted!']);
+        } else {
+            return Response::json(['status' => false, 'message' => 'Not Deleted!']);
+        }
     }
 
     /**
@@ -635,7 +690,11 @@ class ResumeController extends Controller
         ]);
     }
 
-    public function language(){
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function language()
+    {
 
         return view('backend.resumes.language.languages');
     }
@@ -719,6 +778,9 @@ class ResumeController extends Controller
         ]);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function interest()
     {
         return view('backend.resumes.interest.interest');
@@ -772,7 +834,24 @@ class ResumeController extends Controller
         return Response::json(['status' => true]);
     }
 
-    public function reference(){
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function reference()
+    {
         return view('backend.resumes.reference.reference');
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function getResumeByAjax(Request $request)
+    {
+
+        $resume = Resume::where('id', $request->resume_id)->first();
+
+        return Response::json(['status' => true, 'resume' => $resume]);
+
     }
 }

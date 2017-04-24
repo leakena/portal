@@ -71,7 +71,7 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="birth-place">Place of birth <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="birth-place" name="birth-place" required="required" class="form-control col-md-7 col-xs-12" value="{{isset($personalInfo)?$personalInfo->birthPlace:''}}">
+                                        <input type="text" id="birth-place" name="birth_place" required="required" class="form-control col-md-7 col-xs-12" value="{{isset($personalInfo)?$personalInfo->birth_place:''}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
