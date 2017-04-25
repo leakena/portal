@@ -158,6 +158,10 @@
                               class="form-horizontal form-label-left">
                             {{ csrf_field() }}
 
+                            @if(isset($userResume))
+                                <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
+                            @endif
+
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="company">Company <span
                                             class="required">*</span>

@@ -104,12 +104,18 @@
             @else
                 setLabelButton('Add Career Profile');
                  $(".add_new").hide();
+                 $(document).on('click', "#add", function () {
+                     $('.add_new').toggle();
+                 });
 
             @endif
 
         @else
             setLabelButton('Add Career Profile');
             $(".add_new").hide();
+            $(document).on('click', "#add", function () {
+                $('.add_new').toggle();
+            });
         @endif
 
 

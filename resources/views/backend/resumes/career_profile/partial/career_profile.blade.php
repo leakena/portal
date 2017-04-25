@@ -19,25 +19,24 @@
                         <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 
                             @if(isset($newCareerProfile))
+                                @if($newCareerProfile->career_profile)
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Description
+                                            <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            {{ $newCareerProfile->career_profile }}
+                                            <input type="hidden" name="career_profile"
+                                                   value="{{$newCareerProfile->career_profile }}">
 
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Description
-                                        <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        {{ $newCareerProfile->career_profile }}
-                                        <input type="hidden" name="career_profile"
-                                               value="{{$newCareerProfile->career_profile }}">
 
-
+                                        </div>
                                     </div>
-                                </div>
+                                @else
+                                    Please add your career profile
+                                @endif
                             @else
-
-                                {{--<div class="alert-info">
-                                    Please Create Your First Carree Profile
-                                </div>--}}
-
+                                Please add your career profile
                             @endif
 
 

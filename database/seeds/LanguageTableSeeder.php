@@ -43,6 +43,26 @@ class LanguageTableSeeder extends Seeder
             ],
         ];
 
+        $degree = [
+            [
+                'name' => 'Master',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+            [
+                'name' => 'Bachelor',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+            [
+                'name' => 'High school graduated',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+
+        ];
+
         DB::table('languages')->insert($languages);
+        DB::table('degrees')->insert($degree);
     }
 }

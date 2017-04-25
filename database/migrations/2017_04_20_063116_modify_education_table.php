@@ -31,7 +31,7 @@ class ModifyEducationTable extends Migration
         });
     }
 
-    /**
+    /**s
      * Reverse the migrations.
      *
      * @return void

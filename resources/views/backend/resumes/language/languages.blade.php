@@ -17,11 +17,14 @@
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </li>
-                                    <li>
-                                        <a class="btn_delete_language" href="{{ route('frontend.resume.remove_language', $selectedLanguage->language_resume_id) }}">
-                                            <i class="fa fa-trash" aria-hidden="true" style="color: red" ></i>
-                                        </a>
-                                    </li>
+                                    @if($selectedLanguage->proficiency != 'Mother tongue')
+                                        <li>
+                                            <a class="btn_delete_language" href="{{ route('frontend.resume.remove_language', $selectedLanguage->language_resume_id) }}">
+                                                <i class="fa fa-trash" aria-hidden="true" style="color: red" ></i>
+                                            </a>
+                                        </li>
+                                    @endif
+
                                 </ul>
                                 <div class="clearfix"></div>
                             </div>
@@ -134,6 +137,9 @@
                                         <form action="/resume/languages/save-language" method="POST" id="demo-form2"
                                               data-parsley-validate class="form-horizontal form-label-left">
                                             {{ csrf_field() }}
+                                            @if(isset($userResume))
+                                                <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
+                                            @endif
 
                                             <div class="form-group">
                                                 <div class="col-md-6 col-sm-6 col-xs-12" style="color: orange">
@@ -195,20 +201,25 @@
                               data-parsley-validate class="form-horizontal form-label-left">
                             {{ csrf_field() }}
 
+                            @if(isset($userResume))
+                                <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
+                            @endif
+
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
                                             class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <select name="language_id" class="form-control">
+                                        @if(isset($userResume))
+                                            @foreach($languages as $language)
 
-                                        @foreach($languages as $language)
+                                                @if(!in_array($language->id, $selectedLanguages->pluck('language_id')->toArray()))
+                                                    <option value="{{$language->id}}">{{$language->name}}</option>
+                                                @endif
 
-                                            @if(!in_array($language->id, $selectedLanguages->pluck('language_id')->toArray()))
-                                                <option value="{{$language->id}}">{{$language->name}}</option>
-                                            @endif
-
-                                        @endforeach
+                                            @endforeach
+                                        @endif
 
                                     </select>
 

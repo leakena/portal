@@ -128,7 +128,7 @@ class ResumeController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function saveCareerProfile()
+    public function saveCareerProfile(Request $request)
     {
 
 
@@ -146,9 +146,8 @@ class ResumeController extends Controller
         } else {
             /*--create cv---*/
 
-
             $newCareerProfile = new Resume();
-            $newCareerProfile->career_profile = request('description');
+            $newCareerProfile->career_profile = $request->description;
             $newCareerProfile->user_uid = auth()->id();
 
             if ($newCareerProfile->save()) {
@@ -174,6 +173,7 @@ class ResumeController extends Controller
     public function getCareerProfile()
     {
         $newCareerProfile = Resume::where('user_uid', auth()->user()->id)->first();
+
         return view('backend.resumes.career_profile.career_profile', compact('newCareerProfile'));
 
 
@@ -219,9 +219,13 @@ class ResumeController extends Controller
     public function experience()
     {
         $userResume = $this->getUserResume(auth()->id());
-        $experiences = DB::table('experiences')->where('resume_uid', $userResume->id)->get()->toArray();
+        if ($userResume) {
+            $experiences = DB::table('experiences')->where('resume_uid', $userResume->id)->get();
+        } else {
+            $experiences = null;
+        }
 
-        return view('backend.resumes.experience.experiences', compact('experiences'));
+        return view('backend.resumes.experience.experiences', compact('userResume', 'experiences'));
     }
 
     /**
@@ -229,41 +233,72 @@ class ResumeController extends Controller
      */
     public function saveExperience(Request $request)
     {
-        $userResume = $this->getUserResume(auth()->id());
-        if (isset($request->experience_id)) {
 
-            /*--update experience--*/
+        if (isset($request->resume_uid)){
 
-            DB::table('experiences')
-                ->where([
-                    ['id', '=', request('experience_id')],
-                    ['resume_uid', '=', $userResume->id]
-                ])
-                ->update([
-                    'position' => request('position'),
-                    'company' => request('company'),
-                    'description' => request('description'),
-                    'address' => request('address'),
-                    'start_date' => request('start_date'),
-                    'end_date' => request('end_date')
-                ]);
-            return redirect()->route('frontend.resume.get_experience');
-        } else {
+            $userResume = $this->getUserResume(auth()->id());
 
-            /*--create experience--*/
+            /*-- This user already has a resume id so can create or update experience--*/
 
-            $newExperience = new Experience();
-            $newExperience->resume_uid = $userResume->id;
-            $newExperience->position = request('position');
-            $newExperience->company = request('company');
-            $newExperience->description = request('description');
-            $newExperience->address = request('address');
-            $newExperience->start_date = request('start_date');
-            $newExperience->end_date = request('end_date');
+            if (isset($request->experience_id)) {
 
-            $newExperience->save();
-            return redirect()->route('frontend.resume.get_experience');
+                /*--update experience--*/
+
+                DB::table('experiences')
+                    ->where([
+                        ['id', '=', request('experience_id')],
+                        ['resume_uid', '=', $userResume->id]
+                    ])
+                    ->update([
+                        'position' => request('position'),
+                        'company' => request('company'),
+                        'description' => request('description'),
+                        'address' => request('address'),
+                        'start_date' => request('start_date'),
+                        'end_date' => request('end_date')
+                    ]);
+                return redirect()->route('frontend.resume.get_experience');
+            } else {
+
+                /*--create experience--*/
+
+                $newExperience = new Experience();
+                $newExperience->resume_uid = $userResume->id;
+                $newExperience->position = $request->position;
+                $newExperience->company = $request->company;
+                $newExperience->description = $request->description;
+                $newExperience->address = $request->address;
+                $newExperience->start_date = $request->start_date;
+                $newExperience->end_date = $request->end_date;
+
+                $newExperience->save();
+                return redirect()->route('frontend.resume.get_experience');
+            }
+
+        }else{
+
+            /*-- This user has no resume id so need to create resume first--*/
+            $resume = new Resume();
+            $resume->career_profile = null;
+            $resume->user_uid = auth()->id();
+            if ($resume->save()) {
+                /*--- create experience ---*/
+
+                $newExperience = new Experience();
+                $newExperience->resume_uid = $resume->id;
+                $newExperience->position = $request->position;
+                $newExperience->company = $request->company;
+                $newExperience->description = $request->description;
+                $newExperience->address = $request->address;
+                $newExperience->start_date = $request->start_date;
+                $newExperience->end_date = $request->end_date;
+
+                $newExperience->save();
+                return redirect()->route('frontend.resume.get_experience');
+
+            }
         }
+
 
     }
 
@@ -405,32 +440,60 @@ class ResumeController extends Controller
      */
     public function saveSkill(Request $request)
     {
-        $userResume = $this->getUserResume(auth()->id());
-        if($request->skill_id){
-            /*--Update Skill--*/
-            DB::table('skills')
-                ->where([
-                    ['id', '=', request('skill_id')],
-                    ['resume_uid', '=', $userResume->id]
-                ])
-                ->update([
-                    'name' => request('name'),
-                    'description' => request('description')
-                ]);
-            return redirect()->route('frontend.resume.get_skill');
+        if (isset($request->resume_uid)){
+
+            $userResume = $this->getUserResume(auth()->id());
+
+            /*-- This user already has a resume id so can create or update skill--*/
+
+            if($request->skill_id){
+                /*--Update Skill--*/
+                DB::table('skills')
+                    ->where([
+                        ['id', '=', request('skill_id')],
+                        ['resume_uid', '=', $userResume->id]
+                    ])
+                    ->update([
+                        'name' => request('name'),
+                        'description' => request('description')
+                    ]);
+                return redirect()->route('frontend.resume.get_skill');
+            }else{
+
+                // Create a new skill
+                $newSkill = new Skill();
+                // Set value into each field
+                $newSkill->resume_uid = $userResume->id;
+                $newSkill->name = request('name');
+                $newSkill->description = request('description');
+                // Save new skill
+                if($newSkill->save()){
+                    return redirect()->route('frontend.resume.get_skill');
+                }
+            }
+
         }else{
 
-            // Create a new skill
-            $newSkill = new Skill();
-            // Set value into each field
-            $newSkill->resume_uid = $userResume->id;
-            $newSkill->name = request('name');
-            $newSkill->description = request('description');
-            // Save new skill
-            $newSkill->save();
-            // Response back as json format
-            return redirect()->route('frontend.resume.get_skill');
+            /*-- This user has no resume id so need to create resume first--*/
+            $resume = new Resume();
+            $resume->career_profile = null;
+            $resume->user_uid = auth()->id();
+            if ($resume->save()) {
+                /*--- create experience ---*/
+
+                $newSkill = new Skill();
+                // Set value into each field
+                $newSkill->resume_uid = $resume->id;
+                $newSkill->name = request('name');
+                $newSkill->description = request('description');
+                // Save new skill
+                if($newSkill->save()){
+                    return redirect()->route('frontend.resume.get_skill');
+                }
+
+            }
         }
+
 
     }
 
@@ -452,8 +515,13 @@ class ResumeController extends Controller
     public function skill()
     {
         $userResume = $this->getUserResume(auth()->id());
-        $skills = Skill::where('resume_uid', $userResume->id)->get();
-        return view('backend.resumes.skill.skill', compact('skills'));
+        if ($userResume) {
+            $skills = Skill::where('resume_uid', $userResume->id)->get();
+        } else {
+            $skills = null;
+        }
+
+        return view('backend.resumes.skill.skill', compact('userResume', 'skills'));
     }
 
     /**
@@ -587,44 +655,77 @@ class ResumeController extends Controller
      */
     public function saveEducation(Request $request)
     {
-        $userResume = $this->getUserResume(auth()->id());
 
-        if (isset($request->education_id)) {
+        if (isset($request->resume_uid)){
 
-            /*-- Update Education --*/
-            DB::table('education')
-                ->where([
-                    ['id', '=', request('education_id')],
-                    ['resume_uid', '=', $userResume->id]
-                ])
-                ->update([
-                    'major' => request('major'),
-                    'school' => request('school'),
-                    'degree_id' => request('degree'),
-                    'start_date' => request('start_date'),
-                    'end_date' => request('end_date')
-                ]);
-            return redirect()->route('frontend.resume.get_education');
-        } else {
+            $userResume = $this->getUserResume(auth()->id());
 
-            /*-- Create a new education---*/
+            /*-- This user already has a resume id so can create or update education--*/
 
-            $newEducation = new Education();
+            if (isset($request->education_id)) {
 
-            // Set value into each field
-            $newEducation->resume_uid = $userResume->id;
-            $newEducation->major = request('major');
-            $newEducation->school = request('school');
-            $newEducation->degree_id = request('degree');
-            $newEducation->start_date = request('start_date');
-            $newEducation->end_date = request('end_date');
-            $newEducation->address = request('address');
-            // Save new education
-            $newEducation->save();
+                /*-- Update Education --*/
 
-            return redirect()->route('frontend.resume.get_education');
+                DB::table('education')
+                    ->where([
+                        ['id', '=', request('education_id')],
+                        ['resume_uid', '=', $userResume->id]
+                    ])
+                    ->update([
+                        'major' => $request->major,
+                        'school' => $request->school,
+                        'degree_id' => $request->degree,
+                        'address' => $request->address,
+                        'start_date' => $request->start_date,
+                        'end_date' => $request->end_date
+                    ]);
+                return redirect()->route('frontend.resume.get_education');
+            } else {
+
+                /*-- Create a new education---*/
+
+                $newEducation = new Education();
+
+                // Set value into each field
+                $newEducation->resume_uid = $userResume->id;
+                $newEducation->major = $request->major;
+                $newEducation->school = $request->school;
+                $newEducation->degree_id = $request->degree;
+                $newEducation->address = $request->address;
+                $newEducation->start_date = $request->start_date;
+                $newEducation->end_date = $request->end_date;
+                // Save new education
+                if($newEducation->save()){
+
+                    return redirect()->route('frontend.resume.get_education');
+                }
+
+
+            }
+
+        }else{
+
+            /*-- This user has no resume id so need to create resume first--*/
+            $resume = new Resume();
+            $resume->career_profile = null;
+            $resume->user_uid = auth()->id();
+            if ($resume->save()) {
+                /*--- create experience ---*/
+                $newEducation = new Education();
+                $newEducation->resume_uid = $resume->id;
+                $newEducation->major = $request->major;
+                $newEducation->school = $request->school;
+                $newEducation->degree_id = $request->degree;
+                $newEducation->start_date = $request->start_date;
+                $newEducation->end_date = $request->end_date;
+                // Save new education
+                if($newEducation->save()){
+
+                    return redirect()->route('frontend.resume.get_education');
+                }
+
+            }
         }
-
 
     }
 
@@ -643,9 +744,14 @@ class ResumeController extends Controller
     public function education()
     {
         $userResume = $this->getUserResume(auth()->id());
-        $educations = Education::where('resume_uid', $userResume->id)->get();
+        if ($userResume) {
+            $educations = Education::where('resume_uid', $userResume->id)->get();
+        } else {
+            $educations = null;
+        }
+
         $degrees = Degree::all();
-        return view('backend.resumes.education.education', compact('educations', 'degrees'));
+        return view('backend.resumes.education.education', compact('educations', 'degrees', 'userResume'));
     }
 
 
@@ -705,48 +811,80 @@ class ResumeController extends Controller
      */
     public function saveLanguage(Request $request)
     {
-        $userResume = $this->getUserResume(auth()->id());
 
-        if(isset($request->id)){
-            /*-- Update language --*/
+        if (isset($request->resume_uid)){
+
+            $userResume = $this->getUserResume(auth()->id());
+
+            /*-- This user already has a resume id so can create or update language--*/
+
+            if(isset($request->id)){
+                /*-- Update language --*/
 
 
-            DB::table('language_resume')
-                ->where([
-                    ['id', '=', $request->id],
-                    ['resume_uid', '=', $userResume->id]
-                ])
-                ->update([
-                    'language_id' => request('language_id'),
-                    'proficiency' => request('proficiency')
-                ]);
+                DB::table('language_resume')
+                    ->where([
+                        ['id', '=', $request->id],
+                        ['resume_uid', '=', $userResume->id]
+                    ])
+                    ->update([
+                        'language_id' => $request->language_id,
+                        'proficiency' => $request->proficiency
+                    ]);
 
-            return redirect()->route('frontend.resume.get_language');
+                return redirect()->route('frontend.resume.get_language');
+
+            }else{
+
+                // Create a new language
+                $newLanguage = new LanguageResume();
+                // Set value into each field
+
+
+                $newLanguage->resume_uid = $userResume->id;
+                $newLanguage->language_id = $request->language_id;
+                if($newLanguage->proficiency = $request->proficiency == null){
+                    $newLanguage->proficiency = 'Mother tongue';
+                    $newLanguage->is_mother_tongue = true;
+                }else{
+                    $newLanguage->proficiency = $request->proficiency;
+                    $newLanguage->is_mother_tongue = false;
+                }
+
+                // Save new language
+                if($newLanguage->save()){
+                    return redirect()->route('frontend.resume.get_language');
+                }
+            }
 
         }else{
 
-            // Create a new language
-            $newLanguage = new LanguageResume();
-            // Set value into each field
+            /*-- This user has no resume id so need to create resume first--*/
+            $resume = new Resume();
+            $resume->career_profile = null;
+            $resume->user_uid = auth()->id();
+            if ($resume->save()) {
+                /*--- create language ---*/
+                $newLanguage = new LanguageResume();
 
+                // Set value into each field
+                $newLanguage->resume_uid = $resume->id;
+                $newLanguage->language_id = $request->language_id;
+                if($newLanguage->proficiency = $request->proficiency == null){
+                    $newLanguage->proficiency = 'Mother tongue';
+                    $newLanguage->is_mother_tongue = true;
+                }else{
+                    $newLanguage->proficiency = $request->proficiency;
+                    $newLanguage->is_mother_tongue = false;
+                }
 
-            $newLanguage->resume_uid = $userResume->id;
-            $newLanguage->language_id = request('language_id');
-            if($newLanguage->proficiency = request('proficiency') == null){
-                $newLanguage->proficiency = 'Mother tongue';
-                $newLanguage->is_mother_tongue = true;
-            }else{
-                $newLanguage->proficiency = request('proficiency');
-                $newLanguage->is_mother_tongue = false;
+                // Save new language
+                if($newLanguage->save()){
+                    return redirect()->route('frontend.resume.get_language');
+                }
+
             }
-
-            // Save new language
-            $newLanguage->save();
         }
-
-
-
-        return redirect()->route('frontend.resume.get_language');
 
     }
 
@@ -769,15 +907,18 @@ class ResumeController extends Controller
     {
 
         $userResume = $this->getUserResume(auth()->id());
-
         $languages = Language::all();
+        if ($userResume) {
+//            $selectedLanguages = LanguageResume::where('resume_uid', $userResume->id)->get();
+            $selectedLanguages = $userResume->languages()->select('language_resume.proficiency', 'language_resume.id as language_resume_id', 'languages.name', 'languages.id as language_id', 'language_resume.is_mother_tongue')
+                ->orderBy('language_resume_id')
+                ->get();
+        } else {
+            $selectedLanguages = null;
+        }
 
-        $selectedLanguages = $userResume->languages()->select('language_resume.proficiency', 'language_resume.id as language_resume_id', 'languages.name', 'languages.id as language_id', 'language_resume.is_mother_tongue')
-            ->orderBy('language_resume_id')
-            ->get();
 
-
-        return view('backend.resumes.language.languages', compact('languages', 'selectedLanguages'));
+        return view('backend.resumes.language.languages', compact('userResume', 'languages', 'selectedLanguages'));
     }
 
     /**
@@ -835,34 +976,60 @@ class ResumeController extends Controller
     public function saveInterest(Request $request)
     {
 
-        $userResume = $this->getUserResume(auth()->id());
+        if (isset($request->resume_uid)){
 
-        if(isset($request->interest_id)){
+            $userResume = $this->getUserResume(auth()->id());
 
-            /*-- Update Interest --*/
+            /*-- This user already has a resume id so can create or update interest--*/
 
-            DB::table('interests')
-                ->where([
-                    ['id', '=', request('interest_id')],
-                    ['resume_uid', '=', $userResume->id]
-                ])
-                ->update([
-                    'name' => request('name'),
-                    'description' => request('description')
-                ]);
-            return redirect()->route('frontend.resume.get_interest');
+            if(isset($request->interest_id)){
+
+                /*-- Update Interest --*/
+
+                DB::table('interests')
+                    ->where([
+                        ['id', '=', request('interest_id')],
+                        ['resume_uid', '=', $userResume->id]
+                    ])
+                    ->update([
+                        'name' => request('name'),
+                        'description' => request('description')
+                    ]);
+                return redirect()->route('frontend.resume.get_interest');
+            }else{
+
+                // Create a new interest
+                $newInterest = new Interest();
+                // Set value into each field
+                $newInterest->resume_uid = $userResume->id;
+                $newInterest->name = $request->name;
+                $newInterest->description = $request->description;
+                // Save new education
+                if($newInterest->save()){
+                    return redirect()->route('frontend.resume.get_interest');
+                }
+            }
+
+        }else{
+
+            /*-- This user has no resume id so need to create resume first--*/
+            $resume = new Resume();
+            $resume->career_profile = null;
+            $resume->user_uid = auth()->id();
+            if ($resume->save()) {
+                // Create a new interest
+                $newInterest = new Interest();
+                // Set value into each field
+                $newInterest->resume_uid = $resume->id;
+                $newInterest->name = $request->name;
+                $newInterest->description = $request->description;
+                // Save new education
+                if($newInterest->save()){
+                    return redirect()->route('frontend.resume.get_interest');
+                }
+
+            }
         }
-
-        // Create a new interest
-        $newInterest = new Interest();
-        // Set value into each field
-        $newInterest->resume_uid = $userResume->id;
-        $newInterest->name = request('name');
-        $newInterest->description = request('description');
-        // Save new education
-        $newInterest->save();
-        // Response back as json format
-        return redirect()->route('frontend.resume.get_interest');
 
     }
 
@@ -884,8 +1051,13 @@ class ResumeController extends Controller
     public function interest()
     {
         $userResume = $this->getUserResume(auth()->id());
-        $interests = DB::table('interests')->where('resume_uid', $userResume->id)->get();
-        return view('backend.resumes.interest.interest', compact('interests'));
+        if ($userResume) {
+            $interests = Interest::where('resume_uid', $userResume->id)->get();
+        } else {
+            $interests = null;
+        }
+
+        return view('backend.resumes.interest.interest', compact('userResume','interests'));
     }
 
     /**
@@ -942,9 +1114,13 @@ class ResumeController extends Controller
     public function reference()
     {
         $userResume = $this->getUserResume(auth()->id());
-        $references = DB::table('references')->where('resume_uid', $userResume->id)->get();
+        if ($userResume) {
+            $references = DB::table('references')->where('resume_uid', $userResume->id)->get();
+        } else {
+            $references = null;
+        }
 
-        return view('backend.resumes.reference.reference', compact('references'));
+        return view('backend.resumes.reference.reference', compact('userResume', 'references'));
     }
 
     /**
@@ -952,43 +1128,74 @@ class ResumeController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function saveReference(Request $request){
-        $userResume = $this->getUserResume(auth()->id());
 
-        if(isset($request->reference_id)){
-            /*-- Update reference --*/
+        if (isset($request->resume_uid)){
 
-            DB::table('references')
-                ->where([
-                    ['id', '=', request('reference_id')],
-                    ['resume_uid', '=', $userResume->id]
-                ])
-                ->update([
-                    'name' => request('name'),
-                    'position' => request('position'),
-                    'phone' => request('phone'),
-                    'email' => request('email')
-                ]);
-            return redirect()->route('frontend.resume.get_reference');
+            $userResume = $this->getUserResume(auth()->id());
+
+            /*-- This user already has a resume id so can create or update reference--*/
+
+            if(isset($request->reference_id)){
+                /*-- Update reference --*/
+
+                DB::table('references')
+                    ->where([
+                        ['id', '=', $request->reference_id],
+                        ['resume_uid', '=', $userResume->id]
+                    ])
+                    ->update([
+                        'name' => $request->name,
+                        'position' => $request->position,
+                        'phone' => $request->phone,
+                        'email' => $request->email
+                    ]);
+                return redirect()->route('frontend.resume.get_reference');
+            }else{
+
+                /*-- Create new reference --*/
+                $newReference = new Reference();
+                // Set value into each field
+                $newReference->resume_uid = $userResume->id;
+                $newReference->name = $request->name;
+                $newReference->position = $request->position;
+                $newReference->phone = $request->phone;
+                $newReference->email = $request->email;
+                // Save new reference
+
+                if($newReference->save()){
+                    return redirect()->route('frontend.resume.get_reference');
+                }
+
+            }
+
         }else{
 
-            /*-- Create new reference --*/
-            $newReference = new Reference();
-            // Set value into each field
-            $newReference->resume_uid = $userResume->id;
-            $newReference->name = request('name');
-            $newReference->position = request('position');
-            $newReference->phone = request('phone');
-            $newReference->email = request('email');
-            // Save new education
+            /*-- This user has no resume id so need to create resume first--*/
+            $resume = new Resume();
+            $resume->career_profile = null;
+            $resume->user_uid = auth()->id();
+            if ($resume->save()) {
+                /*-- Create new reference --*/
+                $newReference = new Reference();
+                // Set value into each field
+                $newReference->resume_uid = $resume->id;
+                $newReference->name = $request->name;
+                $newReference->position = $request->position;
+                $newReference->phone = $request->phone;
+                $newReference->email = $request->email;
+                // Save new reference
 
-            $newReference->save();
-            // Response back as json format
-            return redirect()->route('frontend.resume.get_reference');
+                if($newReference->save()){
+                    return redirect()->route('frontend.resume.get_reference');
+                }
+
+            }
         }
+
 
     }
 
-    /**q        q   qq  q
+    /**
      * @param $refId
      * @return mixed
      */

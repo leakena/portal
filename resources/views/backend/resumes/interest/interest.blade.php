@@ -59,6 +59,21 @@
                             </div>
                         </div>
                     @endforeach
+                @else
+
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <button id="add" type="button" class="btn btn-primary btn-sm pull-left add_new" data-toggle="modal"
+                                    data-target="#add-career-profile"> <i class="fa fa-plus" style="font-size: 14pt; color: #00a7d0">  </i>
+                            </button>
+
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <h5>There is no interest, Click on button add to add interest</h5>
+                        </div>
+                    </div>
+
                 @endif
 
             </div>
@@ -82,6 +97,10 @@
                         <br />
                         <form action="/resume/interests/save-interest" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                             {{ csrf_field() }}
+
+                            @if(isset($userResume))
+                                <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
+                            @endif
 
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span>

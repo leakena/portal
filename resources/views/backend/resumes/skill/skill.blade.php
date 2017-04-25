@@ -96,6 +96,10 @@
                         <form action="/resume/skills/save-skill" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                             {{ csrf_field() }}
 
+                            @if(isset($userResume))
+                                <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
+                            @endif
+
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span>
                                 </label>
