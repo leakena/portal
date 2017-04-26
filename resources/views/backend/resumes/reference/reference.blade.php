@@ -1,4 +1,38 @@
 @extends('backend.layouts.resume')
+@section('after-style-end')
+    {{--<link rel="stylesheet" href="{{url('css/normalize.css')}}">--}}
+
+    {{--<link rel="stylesheet" href="{{url('css/phantomjs.css')}}">--}}
+    <style type="text/css">
+        /* #liveModal #liveModalIframe {
+             width: 100%;
+             border: none;
+             margin-bottom: -5px;
+         }*/
+
+        #creatorContent {
+            width: 100%;
+            min-height: 100%;
+            padding-left: 0px;
+        }
+
+        #creatorContent .page:first-of-type {
+            margin-top: 10px;
+        }
+
+        #creatorContent .page {
+            margin-top: 10px;
+            background-color: transparent;
+            box-shadow: none;
+            width: 85rem;
+        }
+
+        #creatorContent .page:first-of-type {
+            margin-top: 0px !important;
+        }
+
+    </style>
+@endsection
 
 @section('content')
     <div role="main">
@@ -9,11 +43,11 @@
                     @foreach( $references as $reference )
                         <div class="x_panel">
                             <div class="x_title">
-                                <button id="add" type="button" class="btn btn-primary btn-sm pull-left add_new"
-                                        data-toggle="modal"
-                                        data-target="#add-career-profile"><i class="fa fa-plus"
+                                <button id="add" type="button" class="btn btn-primary btn-sm pull-left add_new"><i class="fa fa-plus"
                                                                              style="font-size: 14pt; color: #00a7d0"> </i>
                                 </button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Large modal</button>
+
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </li>
@@ -159,6 +193,8 @@
         </div>
     </div>
 
+    @include('backend.resumes.includes.modal.preview')
+
 @endsection
 
 @section('js')
@@ -209,7 +245,6 @@
                         swal("Cancelled", "Your experience is safe :)", "error");
                     }
                 });
-
         })
     </script>
 @endsection

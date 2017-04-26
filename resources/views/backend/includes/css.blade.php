@@ -32,5 +32,6 @@
 <link href="{{ url('vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
 
 <!-- Custom Theme Style -->
+<link rel="stylesheet" href="{{url('css/creator.css')}}">
 <link href="{{ url('css/build/css/custom.min.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="{{url('bower_components/bootstrap-sweetalert/dist/sweetalert.css')}}">
