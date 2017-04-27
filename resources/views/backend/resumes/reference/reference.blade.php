@@ -1,38 +1,4 @@
 @extends('backend.layouts.resume')
-@section('after-style-end')
-    {{--<link rel="stylesheet" href="{{url('css/normalize.css')}}">--}}
-
-    {{--<link rel="stylesheet" href="{{url('css/phantomjs.css')}}">--}}
-    <style type="text/css">
-        /* #liveModal #liveModalIframe {
-             width: 100%;
-             border: none;
-             margin-bottom: -5px;
-         }*/
-
-        #creatorContent {
-            width: 100%;
-            min-height: 100%;
-            padding-left: 0px;
-        }
-
-        #creatorContent .page:first-of-type {
-            margin-top: 10px;
-        }
-
-        #creatorContent .page {
-            margin-top: 10px;
-            background-color: transparent;
-            box-shadow: none;
-            width: 85rem;
-        }
-
-        #creatorContent .page:first-of-type {
-            margin-top: 0px !important;
-        }
-
-    </style>
-@endsection
 
 @section('content')
     <div role="main">
@@ -46,7 +12,11 @@
                                 <button id="add" type="button" class="btn btn-primary btn-sm pull-left add_new"><i class="fa fa-plus"
                                                                              style="font-size: 14pt; color: #00a7d0"> </i>
                                 </button>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Large modal</button>
+                                @if(isset($userResume))
+                                    <button type="button" class="btn btn-warning preview" data-toggle="modal" data-target=".bs-example-modal-lg">
+                                        <i class="fa fa-eye" aria-hidden="true"></i> Preview
+                                    </button>
+                                @endif
 
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -63,6 +33,7 @@
                                 <br />
                                 <form action="/resume/reference/save-reference" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                                     {{ csrf_field() }}
+                                    <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
                                     <input class="hidden" name="reference_id" value="{{ $reference->id }}">
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span>
@@ -93,14 +64,10 @@
                                             <input type="email" id="description" name="email" required="required" class="form-control col-md-7 col-xs-12" value="{{ $reference->email }}">
                                         </div>
                                     </div>
-
-
                                     <div class="ln_solid"></div>
                                     <div class="form-group">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                            <button class="btn btn-primary" type="button">Cancel</button>
-                                            <button class="btn btn-primary" type="reset">Reset</button>
-                                            <button type="submit" class="btn btn-success">Submit</button>
+                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-8">
+                                            <button type="submit" class="btn btn-info">Update</button>
                                         </div>
                                     </div>
 
@@ -114,6 +81,10 @@
                             <button id="add" type="button" class="btn btn-primary btn-sm pull-left add_new" data-toggle="modal"
                                     data-target="#add-career-profile"> <i class="fa fa-plus" style="font-size: 14pt; color: #00a7d0">  </i>
                             </button>
+
+                            @if(isset($userResume))
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Large modal</button>
+                            @endif
 
                             <div class="clearfix"></div>
                         </div>
@@ -182,7 +153,7 @@
                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                     <button class="btn btn-primary" type="button">Cancel</button>
                                     <button class="btn btn-primary" type="reset">Reset</button>
-                                    <button type="submit" class="btn btn-success">Submit</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
 
@@ -206,6 +177,9 @@
 
         $('.add_new').hide();
         $('.add_new').first().show();
+
+        $('.preview').hide();
+        $('.preview').first().show();
 
         $(document).on('click', '.btn_delete_reference', function(event)  {
             event.preventDefault();

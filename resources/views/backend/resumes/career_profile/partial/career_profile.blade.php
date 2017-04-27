@@ -8,6 +8,11 @@
                         <button id="add" type="button" class="btn btn-primary btn-sm pull-left" data-toggle="modal"
                                 data-target="#add-career-profile">Add Career Profile
                         </button>
+                        @if(isset($newCareerProfile))
+                            <button type="button" class="btn btn-warning preview" data-toggle="modal" data-target=".bs-example-modal-lg">
+                                <i class="fa fa-eye" aria-hidden="true"></i> Preview
+                            </button>
+                        @endif
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
@@ -38,8 +43,6 @@
                             @else
                                 Please add your career profile
                             @endif
-
-
                         </form>
                     </div>
                 </div>

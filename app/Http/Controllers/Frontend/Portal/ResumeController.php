@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend\Portal;
 
 use App\Http\Controllers\Controller;
+use App\Models\Portal\Resume\Gender;
 use App\Models\Portal\Resume\LanguageResume;
 use App\Models\Portal\Resume\Contact;
 use App\Models\Portal\Resume\Degree;
@@ -10,6 +11,7 @@ use App\Models\Portal\Resume\Education;
 use App\Models\Portal\Resume\Experience;
 use App\Models\Portal\Resume\Interest;
 use App\Models\Portal\Resume\Language;
+use App\Models\Portal\Resume\MaritalStatus;
 use App\Models\Portal\Resume\Project;
 use App\Models\Portal\Resume\Reference;
 use App\Models\Portal\Resume\Resume;
@@ -18,6 +20,7 @@ use App\Repositories\Backend\PersonalInfo\PersonalInfoContract;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Input;
 
 class ResumeController extends Controller
 {
@@ -53,13 +56,15 @@ class ResumeController extends Controller
     {
 
         $userResume = Resume::where('user_uid', auth()->id())->first();
+        $marital_statuses = MaritalStatus::all();
+        $genders = Gender::all();
 
         if ($userResume) {
             $personalInfo = DB::table('personal_infos')->where('resume_uid', $userResume->id)->first();
         } else {
             $personalInfo = null;
         }
-        return view('backend.resumes.userInfo.userInfo', compact('userResume', 'personalInfo'));
+        return view('backend.resumes.userInfo.userInfo', compact('userResume', 'personalInfo', 'marital_statuses', 'genders'));
     }
 
     /**
@@ -70,8 +75,6 @@ class ResumeController extends Controller
      */
     public function storeUserInfo(Request $request)
     {
-
-
         if (isset($request->resume_uid)) {
             /*--there is a resume id so we need to create user information --*/
 
@@ -80,7 +83,6 @@ class ResumeController extends Controller
             /*---check if personal-info hase already created ---*/
             if (count($resume->personalInfo)) {
                 /*--update personal info --*/
-
                 $update = $this->personalInfos->update($resume->personalInfo->id, $request->all());
 
                 if ($update) {
@@ -95,14 +97,15 @@ class ResumeController extends Controller
                 }
             }
 
-        } else {
+        }
+        else {
             /*--if the request has no resume id then we have to create Resume first */
             $resume = new Resume();
             $resume->career_profile = null;
             $resume->user_uid = auth()->id();
+
             if ($resume->save()) {
                 /*---create personal information ---*/
-
                 $create = $this->personalInfos->create($request->all());
                 if ($create) {
                     return redirect()->back()->with(['status' => 'Information Created!']);
@@ -716,6 +719,7 @@ class ResumeController extends Controller
                 $newEducation->major = $request->major;
                 $newEducation->school = $request->school;
                 $newEducation->degree_id = $request->degree;
+                $newEducation->address = $request->address;
                 $newEducation->start_date = $request->start_date;
                 $newEducation->end_date = $request->end_date;
                 // Save new education
@@ -818,9 +822,8 @@ class ResumeController extends Controller
 
             /*-- This user already has a resume id so can create or update language--*/
 
-            if(isset($request->id)){
+            if(isset($request->language_resume_id)){
                 /*-- Update language --*/
-
 
                 DB::table('language_resume')
                     ->where([
@@ -832,6 +835,7 @@ class ResumeController extends Controller
                         'proficiency' => $request->proficiency
                     ]);
 
+
                 return redirect()->route('frontend.resume.get_language');
 
             }else{
@@ -840,14 +844,12 @@ class ResumeController extends Controller
                 $newLanguage = new LanguageResume();
                 // Set value into each field
 
-
                 $newLanguage->resume_uid = $userResume->id;
                 $newLanguage->language_id = $request->language_id;
-                if($newLanguage->proficiency = $request->proficiency == null){
-                    $newLanguage->proficiency = 'Mother tongue';
+                $newLanguage->proficiency = $request->proficiency;
+                if($newLanguage->proficiency == 'Mother Tongue'){
                     $newLanguage->is_mother_tongue = true;
                 }else{
-                    $newLanguage->proficiency = $request->proficiency;
                     $newLanguage->is_mother_tongue = false;
                 }
 
@@ -916,6 +918,7 @@ class ResumeController extends Controller
         } else {
             $selectedLanguages = null;
         }
+
 
 
         return view('backend.resumes.language.languages', compact('userResume', 'languages', 'selectedLanguages'));
@@ -1113,7 +1116,8 @@ class ResumeController extends Controller
      */
     public function reference()
     {
-        $userResume = $this->getUserResume(auth()->id());
+        $userResume = Resume::where('user_uid', auth()->id())->first();
+
         if ($userResume) {
             $references = DB::table('references')->where('resume_uid', $userResume->id)->get();
         } else {

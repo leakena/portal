@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Frontend\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Frontend\User\UpdateProfileRequest;
 use App\Models\Access\User\Profile;
 use App\Models\Access\User\User;
 use App\Repositories\Frontend\Access\User\UserRepository;
@@ -30,9 +29,9 @@ class ProfileController extends Controller
     }
 
     /**
-     * @param UpdateProfileRequest $request
-     *
      * @return mixed
+     * @internal param UpdateProfileRequest $request
+     *
      */
     public function update()
     {

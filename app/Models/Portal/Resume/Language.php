@@ -12,7 +12,7 @@ class Language extends Model
 
 
 
-    public function resume()
+    public function resumes()
     {
         return $this->belongsToMany(Resume::class, 'language_resume', 'language_id', 'resume_uid');
     }

@@ -10,7 +10,11 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2> Personal Information </h2>
+                            @if(isset($userResume))
+                                <button type="button" class="btn btn-warning preview" data-toggle="modal" data-target=".bs-example-modal-lg">
+                                    <i class="fa fa-eye" aria-hidden="true"></i> Preview
+                                </button>
+                            @endif
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -18,91 +22,136 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <br />
+                            {!! Form::open(['enctype'=> 'multipart/form-data', 'files' => true, 'route' => 'frontend.resume.store_user_info', 'class' => 'form-horizontal create_user_info', 'role' => 'form', 'method' => 'post', 'id' => 'create-user-info']) !!}
+                            <div class="row">
+                                <div class="col-md-8">
 
+                                    @if(isset($userResume))
+                                        <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
+                                    @endif
 
-                            {!! Form::open(['route' => 'frontend.resume.store_user_info', 'class' => 'form-horizontal create_user_info', 'role' => 'form', 'method' => 'post', 'id' => 'create-user-info']) !!}
-
-                                @if(isset($userResume))
-                                    <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
-                                @endif
-
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-
-                                        <input type="text" id="name" name="name" required="required" class="form-control col-md-7 col-xs-12" value="{{isset($personalInfo)?$personalInfo->name:''}}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="marital-status">Marital Status <span class="required">*</span>
-
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <select name="status" class="form-control col-md-7 col-xs-12" id="status">
-                                            <option name="Medium">Single</option>
-                                            <option name="Good">Married</option>
-                                            <option name="Excellent">Divorced</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <div id="gender" class="btn-group" data-toggle="buttons">
-                                            <label class="btn btn-default">
-                                                <input type="radio" name="gender" value="male">  Male
-                                            </label>
-                                            <label class="btn btn-default">
-                                                <input type="radio" name="gender" value="female"> Female
-                                            </label>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
+                                                    class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text"
+                                                   id="name" name="name" required="required"
+                                                   class="form-control col-md-7 col-xs-12"
+                                                   value="{{isset($personalInfo)?$personalInfo->name:''}}">
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="marital-status">Marital
+                                            Status <span class="required">*</span>
+
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <select name="status_id" class="form-control col-md-7 col-xs-12" id="status">
+                                                @foreach( $marital_statuses as $marital_status)
+                                                    <option value="{{ $marital_status->id }}">{{ $marital_status->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <div id="gender" class="btn-group" data-toggle="buttons">
+                                                @foreach( $genders as $gender )
+                                                    @if($personalInfo)
+                                                        <label class="gender btn btn-default @if($gender->id == $personalInfo->gender_id) active focus @endif ">
+                                                            <input type="radio" name="gender_id"
+                                                                   @if($gender->id == $personalInfo->gender_id) checked
+                                                                   @endif  value="{{ $gender->id }}"> {{ $gender->name }}
+                                                        </label>
+                                                    @else
+                                                        <label class="gender btn btn-default">
+                                                            <input type="radio" name="gender_id"
+                                                                   value="{{ $gender->id }}"> {{ $gender->name }}
+                                                        </label>
+                                                    @endif
+
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Date Of Birth <span
+                                                    class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <div class="input-group">
+                                                <input id="birthday" class="date-picker form-control col-md-7 col-xs-12"
+                                                       required="required" type="text" name="dob"
+                                                       value="{{isset($personalInfo)?$personalInfo->dob:''}}" readonly>
+                                                <span class="input-group-addon">
+                                                <i class="fa fa-calendar-o"></i>
+                                            </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="birth-place">Place of
+                                            birth <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="birth-place" name="birth_place" required="required"
+                                                   class="form-control col-md-7 col-xs-12"
+                                                   value="{{isset($personalInfo)?$personalInfo->birth_place:''}}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">E-mail <span
+                                                    class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="email" name="email" required="required"
+                                                   class="form-control col-md-7 col-xs-12"
+                                                   value="{{isset($personalInfo)?$personalInfo->email:''}}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phone">Phone <span
+                                                    class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="phone" name="phone" required="required"
+                                                   class="form-control col-md-7 col-xs-12 "
+                                                   value="{{isset($personalInfo)?$personalInfo->phone:''}}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="address">Address <span
+                                                    class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="address" name="address" required="required"
+                                                   class="form-control col-md-7 col-xs-12"
+                                                   value="{{isset($personalInfo)?$personalInfo->address:''}}">
+                                        </div>
+                                    </div>
+                                    <div class="ln_solid"></div>
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-7">
+                                            <button class="btn btn-default" type="reset">Reset</button>
+                                            <button type="submit" class="btn btn-info">Update</button>
+                                        </div>
+                                    </div>
+
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Date Of Birth <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" name="dob" value="{{isset($personalInfo)?$personalInfo->dob:''}}">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div class="image-frame" style="width: 300px;height: 300px; border: 2px solid #f1f1f1; padding: 5px; box-sizing: border-box;">
+                                            @if(isset($personalInfo->profile))
+                                                <img class="profile" src="{{ asset('img/frontend/uploads/profile_cv') }}/{{ $personalInfo->profile }}" alt="" style="width:100%;height:286px;"/>
+                                            @endif
+                                        </div>
+                                        <label class="control-label">Chose your profile</label>
+                                        <input type="file" name="profile" accept="image/*">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="birth-place">Place of birth <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="birth-place" name="birth_place" required="required" class="form-control col-md-7 col-xs-12" value="{{isset($personalInfo)?$personalInfo->birth_place:''}}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">E-mail <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="email" name="email" required="required" class="form-control col-md-7 col-xs-12" value="{{isset($personalInfo)?$personalInfo->email:''}}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phone">Phone <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="phone" name="phone" required="required" class="form-control col-md-7 col-xs-12" value="{{isset($personalInfo)?$personalInfo->phone:''}}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="address">Address <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" id="address" name="address" required="required" class="form-control col-md-7 col-xs-12" value="{{isset($personalInfo)?$personalInfo->address:''}}">
-                                    </div>
-                                </div>
-                                <div class="ln_solid"></div>
-                                <div class="form-group">
-                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                        <button class="btn btn-primary" type="button">Cancel</button>
-                                        <button class="btn btn-primary" type="reset">Reset</button>
-                                        <button type="submit" class="btn btn-success">Submit</button>
-                                    </div>
-                                </div>
+                            </div>
                             {!! Form::close() !!}
                         </div>
                     </div>
@@ -117,21 +166,34 @@
     <script>
 
 
-        @if(isset($personalInfo))
-        var material_status = '{{$personalInfo->status}}'
+                @if(isset($personalInfo))
+        var material_status = '{{$personalInfo->status_id}}'
+        var genders = '{{ $personalInfo->gender_id }}'
 
-        @else
+                @else
         var material_status = ''
         @endif
 
+        $(document).on('click', '.gender', function () {
+            $('#gender').find('.focus').removeClass('focus');
+            $('#gender').find('.active .focus').removeClass('active focus');
+            $(this).addClass('active focus');
 
-        $('select[name=status] option').each(function (key, value) {
+        });
+
+        $('select[name=status_id] option').each(function (key, value) {
             var status = $(this).val();
-            if(status == material_status) {
+            if (status == material_status) {
                 $(this).prop('selected', true);
 
             }
+        });
+
+
+        $('#birthday').datepicker({
+            format: 'yyyy-mm-d'
         })
+
 
     </script>
 @endsection

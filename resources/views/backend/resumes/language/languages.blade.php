@@ -14,10 +14,15 @@
                                         data-target="#add-career-profile"><i class="fa fa-plus"
                                                                              style="font-size: 14pt; color: #00a7d0"> </i>
                                 </button>
+                                @if(isset($userResume))
+                                    <button type="button" class="btn btn-warning preview" data-toggle="modal" data-target=".bs-example-modal-lg">
+                                        <i class="fa fa-eye" aria-hidden="true"></i> Preview
+                                    </button>
+                                @endif
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </li>
-                                    @if($selectedLanguage->proficiency != 'Mother tongue')
+                                    @if($selectedLanguage->proficiency != 'Mother Tongue')
                                         <li>
                                             <a class="btn_delete_language" href="{{ route('frontend.resume.remove_language', $selectedLanguage->language_resume_id) }}">
                                                 <i class="fa fa-trash" aria-hidden="true" style="color: red" ></i>
@@ -33,7 +38,11 @@
                                 <form action="/resume/languages/save-language" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                                     {{ csrf_field() }}
 
-                                    @if( $selectedLanguage->proficiency == 'Mother tongue')
+                                    <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
+                                    <input class="hidden" name="language_resume_id" value="{{ $selectedLanguage->language_resume_id }}">
+
+
+                                    @if( $selectedLanguage->proficiency == 'Mother Tongue')
                                         <input name="id" class="hidden" value="{{ $selectedLanguage->language_resume_id }}">
                                         <div class="form-group">
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
@@ -61,7 +70,8 @@
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12"
                                                    for="name">Proficiency</label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <input disabled name="proficiency" type="text" id="name" required="required"
+                                                    <input type="hidden" name="proficiency" value="Mother Tongue">
+                                                    <input disabled type="text" id="name" required="required"
                                                            class="form-control col-md-7 col-xs-12"
                                                            value="{{ $selectedLanguage->proficiency }}">
 
@@ -109,7 +119,7 @@
                                     <div class="ln_solid"></div>
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-8">
-                                            <button type="submit" class="btn btn-success">Submit</button>
+                                            <button type="submit" class="btn btn-info">Update</button>
                                         </div>
                                     </div>
 
@@ -151,11 +161,22 @@
                                                     <span class="required">*</span>
                                                 </label>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <select name="language_id" class="form-control single">
+                                                    <select name="id" class="form-control single">
                                                         @foreach( $languages as $language)
                                                             <option value="{{ $language->id }}">{{$language->name}}</option>
                                                         @endforeach
                                                     </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                                                       for="name">Proficiency</label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <input type="hidden" name="proficiency" value="Mother Tongue">
+                                                    <input type="text" id="name" required="required"
+                                                           class="form-control col-md-7 col-xs-12"
+                                                           disabled
+                                                           value="Mother tongue">
                                                 </div>
                                             </div>
 
@@ -165,7 +186,7 @@
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                                     <button class="btn btn-primary" type="button">Cancel</button>
                                                     <button class="btn btn-primary" type="reset">Reset</button>
-                                                    <button type="submit" class="btn btn-success">Submit</button>
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
                                                 </div>
                                             </div>
 
@@ -252,6 +273,8 @@
             </div>
         </div>
     </div>
+    {{--modal--}}
+    @include('backend.resumes.includes.modal.preview')
 
 @endsection
 
@@ -264,6 +287,9 @@
 
         $('.add_new').hide();
         $('.add_new').first().show();
+
+        $('.preview').hide();
+        $('.preview').first().show();
 
         $(document).on('click', '.btn_delete_language', function(event)  {
             event.preventDefault();

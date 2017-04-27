@@ -12,6 +12,11 @@
                                 <button id="add" type="button" class="btn btn-primary btn-sm pull-left add_new" data-toggle="modal"
                                         data-target="#add-career-profile"> <i class="fa fa-plus" style="font-size: 14pt; color: #00a7d0">  </i>
                                 </button>
+                                @if(isset($userResume))
+                                    <button type="button" class="btn btn-warning preview" data-toggle="modal" data-target=".bs-example-modal-lg">
+                                        <i class="fa fa-eye" aria-hidden="true"></i> Preview
+                                    </button>
+                                @endif
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </li>
@@ -28,7 +33,7 @@
                                 <br />
                                 <form action="/resume/skills/save-skill" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                                     {{ csrf_field() }}
-
+                                    <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
                                     <input name="skill_id" type="hidden" value="{{ $skill->id }}">
 
                                     <div class="form-group">
@@ -50,7 +55,7 @@
                                     <div class="ln_solid"></div>
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-8">
-                                            <button type="submit" class="btn btn-success">Submit</button>
+                                            <button type="submit" class="btn btn-info">Update</button>
                                         </div>
                                     </div>
 
@@ -135,6 +140,9 @@
         </div>
     </div>
 
+    {{--modal--}}
+    @include('backend.resumes.includes.modal.preview')
+
 @endsection
 
 @section('js')
@@ -145,6 +153,9 @@
         })
         $('.add_new').hide();
         $('.add_new').first().show();
+
+        $('.preview').hide();
+        $('.preview').first().show();
 
         $(document).on('click', '.btn_delete_skill', function(event)  {
             event.preventDefault();
