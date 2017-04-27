@@ -38,10 +38,9 @@
 
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
-                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                        <button class="btn btn-primary" type="button">Cancel</button>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-7">
                                         <button class="btn btn-primary" type="reset">Reset</button>
-                                        <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+                                        <button type="submit" class="btn btn-info" id="submit">Update</button>
                                     </div>
                                 </div>
 
@@ -53,9 +52,7 @@
         </div>
     </div>
 
-    <div class="my_career_profile">
-        {{--@include('backend.resumes.career_profile.edit')--}}
-    </div>
+    @include('backend.resumes.includes.modal.preview')
 
 @endsection
 
@@ -104,12 +101,18 @@
             @else
                 setLabelButton('Add Career Profile');
                  $(".add_new").hide();
+                 $(document).on('click', "#add", function () {
+                     $('.add_new').toggle();
+                 });
 
             @endif
 
         @else
             setLabelButton('Add Career Profile');
             $(".add_new").hide();
+            $(document).on('click', "#add", function () {
+                $('.add_new').toggle();
+            });
         @endif
 
 

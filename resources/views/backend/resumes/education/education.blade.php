@@ -1,5 +1,9 @@
 @extends('backend.layouts.resume')
 
+@section('after-style-end')
+    <link rel="stylesheet" href="{{ asset('css/backend/resume/resume.css') }}"/>
+@endsection
+
 @section('content')
 
     <div role="main">
@@ -12,6 +16,11 @@
                                 <button id="add" type="button" class="btn btn-primary btn-sm pull-left add_new" data-toggle="modal"
                                         data-target="#add-career-profile"> <i class="fa fa-plus" style="font-size: 14pt; color: #00a7d0">  </i>
                                 </button>
+                                @if(isset($userResume))
+                                    <button type="button" class="btn btn-warning preview" data-toggle="modal" data-target=".bs-example-modal-lg">
+                                        <i class="fa fa-eye" aria-hidden="true"></i> Preview
+                                    </button>
+                                @endif
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li>
                                         <a class="collapse-link">
@@ -31,7 +40,7 @@
                                 <form action="/resume/educations/save-education" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 
                                     {{ csrf_field() }}
-
+                                    <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
                                     <input name="education_id" type="hidden" value="{{ $education->id }}">
 
                                     <div class="row">
@@ -61,16 +70,26 @@
                                         <div class="form-group col-md-6">
                                             <label class="control-label" for="start_date">Start Date <span class="required">*</span>
                                             </label>
-                                            <input type="text" data-date-format="yyyy-mm-dd" id="start_date"
-                                                   name="start_date" class="form-control"
-                                                   value="{{ $education->start_date }}">
+                                            <div class="input-group">
+                                                <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
+                                                       name="start_date" class="date-picker form-control start_date"
+                                                       value="{{ $education->start_date }}" readonly>
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar-o"></i>
+                                                </span>
+                                            </div>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="control-label" for="end_date"> End Date <span class="required">*</span>
                                             </label>
-                                            <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
-                                                   name="end_date" class="form-control"
-                                                   value="{{ $education->end_date }}">
+                                            <div class="input-group">
+                                                <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
+                                                       name="end_date" class="date-picker form-control end_date"
+                                                       value="{{ $education->end_date }}" readonly>
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar-o"></i>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -94,7 +113,7 @@
                                     <div class="ln_solid"></div>
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-11">
-                                            <button type="submit" class="btn btn-success">Submit</button>
+                                            <button type="submit" class="btn btn-info">Update</button>
                                         </div>
                                     </div>
 
@@ -141,6 +160,9 @@
                         <form action="/resume/educations/save-education" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 
                             {{ csrf_field() }}
+                            @if(isset($userResume))
+                                <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
+                            @endif
 
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="school">School <span class="required">*</span>
@@ -172,9 +194,31 @@
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Start Date <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" data-date-format="yyyy-mm-dd" id="start_date"
-                                           name="start_date" class="form-control"
-                                           placeholder="{{ trans('resume.resume.start_date') }}" value="{{ old('start_date') }}">
+                                    <div class="input-group">
+                                        <input type="text" data-date-format="yyyy-mm-dd" id="start_date"
+                                               name="start_date" class="date-picker start_date form-control"
+                                               placeholder="{{ trans('resume.resume.start_date') }}" value="{{ old('start_date') }}" readonly>
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar-o"></i>
+                                        </span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">End Date <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="input-group">
+                                        <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
+                                               name="end_date" class="date-picker end_date form-control"
+                                               placeholder="{{ trans('resume.resume.end_date') }}" value="{{ old('end_date') }}" readonly>
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar-o"></i>
+                                        </span>
+                                    </div>
+
                                 </div>
                             </div>
 
@@ -190,25 +234,12 @@
                                 </div>
                             </div>
 
-
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">End Date <span class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
-                                           name="end_date" class="form-control"
-                                           placeholder="{{ trans('resume.resume.end_date') }}" value="{{ old('start_date') }}">
-                                </div>
-                            </div>
-
-
-
                             <div class="ln_solid"></div>
                             <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                     <button class="btn btn-primary" type="button">Cancel</button>
                                     <button class="btn btn-primary" type="reset">Reset</button>
-                                    <button type="submit" class="btn btn-success">Submit</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
 
@@ -218,6 +249,8 @@
             </div>
         </div>
     </div>
+
+    @include('backend.resumes.includes.modal.preview')
 
 @endsection
 
@@ -231,6 +264,8 @@
         });
         $('.add_new').hide();
         $('.add_new').first().show();
+        $('.preview').hide();
+        $('.preview').first().show();
 
         $(document).on('click', '.btn_delete_edu', function(event)  {
             event.preventDefault();
@@ -271,6 +306,13 @@
                     }
                 });
 
+        })
+
+        $('.start_date').datepicker({
+            format:'yyyy-mm-d'
+        })
+        $('.end_date').datepicker({
+            format:'yyyy-mm-d'
         })
     </script>
 @endsection

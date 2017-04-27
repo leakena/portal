@@ -1,16 +1,7 @@
 @extends('backend.layouts.resume')
 
 @section('after-style-end')
-
-    <style>
-        .x_panel, .x_title {
-            margin-bottom: 0px !important;
-        }
-
-        h2 {
-            margin-top: 30px !important;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/backend/resume/resume.css') }}"/>
 @endsection
 
 @section('content')
@@ -19,6 +10,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 @if(count($experiences)>0)
                     @foreach($experiences as $experience)
+
                         <div class="x_panel">
                             <div class="x_title">
                                 <button id="add" type="button" class="btn btn-primary btn-sm pull-left add_new"
@@ -26,6 +18,11 @@
                                         data-target="#add-career-profile"><i class="fa fa-plus"
                                                                              style="font-size: 14pt; color: #00a7d0"> </i>
                                 </button>
+                                @if(isset($userResume))
+                                    <button type="button" class="btn btn-warning preview" data-toggle="modal" data-target=".bs-example-modal-lg">
+                                        <i class="fa fa-eye" aria-hidden="true"></i> Preview
+                                    </button>
+                                @endif
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li>
                                         <a class="collapse-link">
@@ -47,7 +44,7 @@
                                 <form action="/resume/save-experience" method="POST" id="demo-form2"
                                       data-parsley-validate class="form-horizontal form-label-left">
                                     {{ csrf_field() }}
-
+                                    <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
                                     <input type="hidden" name="experience_id" value="{{ $experience->id }}">
 
                                     <div class="row">
@@ -83,16 +80,27 @@
                                         <div class="form-group col-md-6">
                                             <label class="control-label">Start Date <span class="required">*</span>
                                             </label>
-                                            <input type="text" data-date-format="yyyy-mm-dd" id="start_date"
-                                                   name="start_date" class="form-control"
-                                                   value="{{ $experience->start_date }}">
+                                            <div class="input-group">
+                                                <input type="text" data-date-format="yyyy-mm-dd" id="start_date"
+                                                       name="start_date" class="date-picker form-control start_date"
+                                                       value="{{ $experience->start_date }}" readonly>
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar-o"></i>
+                                                </span>
+                                            </div>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="control-label">End Date <span class="required">*</span>
                                             </label>
-                                            <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
-                                                   name="end_date" class="form-control"
-                                                   value="{{ $experience->end_date }}">
+                                            <div class="input-group">
+                                                <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
+                                                       name="end_date" class="date-picker form-control end_date"
+                                                       value="{{ $experience->end_date }}" readonly>
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar-o"></i>
+                                                </span>
+                                            </div>
+
                                         </div>
                                     </div>
 
@@ -110,7 +118,7 @@
                                     <div class="ln_solid"></div>
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-11">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="submit" class="btn btn-info">Update </button>
                                         </div>
                                     </div>
 
@@ -158,6 +166,10 @@
                               class="form-horizontal form-label-left">
                             {{ csrf_field() }}
 
+                            @if(isset($userResume))
+                                <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
+                            @endif
+
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="company">Company <span
                                             class="required">*</span>
@@ -198,14 +210,20 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Start Date <span
+                                <label class="start_date control-label col-md-3 col-sm-3 col-xs-12">Start Date <span
                                             class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" data-date-format="yyyy-mm-dd" id="start_date"
-                                           name="start_date" class="form-control"
-                                           placeholder="{{ trans('resume.resume.start_date') }}"
-                                           value="{{ old('start_date') }}">
+                                    <div class="input-group">
+                                        <input type="text" data-date-format="yyyy-mm-dd" id="start_date"
+                                               name="start_date" class="date-picker form-control start_date"
+                                               placeholder="{{ trans('resume.resume.start_date') }}"
+                                               value="{{ old('start_date') }}" readonly>
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar-o"></i>
+                                        </span>
+
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -213,10 +231,15 @@
                                             class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
-                                           name="end_date" class="form-control"
-                                           placeholder="{{ trans('resume.resume.end_date') }}"
-                                           value="{{ old('start_date') }}">
+                                    <div class="input-group">
+                                        <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
+                                               name="end_date" class="date-picker end_date form-control"
+                                               placeholder="{{ trans('resume.resume.end_date') }}"
+                                               value="{{ old('end_date') }}" readonly>
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar-o"></i>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="ln_solid"></div>
@@ -235,6 +258,8 @@
         </div>
     </div>
 
+    @include('backend.resumes.includes.modal.preview')
+
 @endsection
 
 @section('js')
@@ -248,6 +273,8 @@
         $('.add_new').hide();
         $('.add_new').first().show();
 
+        $('.preview').hide();
+        $('.preview').first().show();
 
         $(document).on('click', '.btn_delete_exp', function (event) {
             event.preventDefault();
@@ -287,7 +314,13 @@
                         swal("Cancelled", "Your experience is safe :)", "error");
                     }
                 });
+        })
 
+        $('.start_date').datepicker({
+            format:'yyyy-mm-d'
+        })
+        $('.end_date').datepicker({
+            format:'yyyy-mm-d'
         })
 
 

@@ -72,7 +72,7 @@ Route::group(['middleware' => 'auth'], function () {
          * Experiences
          */
         Route::get('/get-experience-content', 'ResumeController@experienceContent')->name('get_experience_content');
-        Route::get('/get-experience', 'ResumeController@experience')->name('get_experience');
+        Route::get('/resume/get-experience', 'ResumeController@experience')->name('get_experience');
         Route::post('/resume/save-experience', 'ResumeController@saveExperience')->name('save_experience');
         Route::get('/resume/edit-experience', 'ResumeController@editExperience')->name('edit_experience');
         Route::post('/resume/update-experience', 'ResumeController@updateExperience')->name('update_experience');
