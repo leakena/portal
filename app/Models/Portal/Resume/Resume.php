@@ -12,7 +12,7 @@ class Resume extends Model
      */
     public function user()
     {
-        return $this->hasOne(User::class, 'user_uid');
+        return $this->belongsTo(User::class, 'user_uid');
     }
 
 
@@ -57,7 +57,7 @@ class Resume extends Model
      */
     public function languages()
     {
-        return $this->hasMany(Language::class, 'resume_uid');
+        return $this->belongsToMany(Language::class, 'language_resume', 'resume_uid')->withPivot('proficiency');
     }
 
     /**
@@ -74,5 +74,13 @@ class Resume extends Model
     public function interests()
     {
         return $this->hasMany(Interest::class, 'resume_uid');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function references()
+    {
+        return $this->hasMany(Reference::class, 'resume_uid');
     }
 }
