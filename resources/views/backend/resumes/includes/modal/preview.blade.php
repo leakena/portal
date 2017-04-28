@@ -39,7 +39,8 @@
                 @if(isset($resume))
                     <div class="page fFamilyTxtArimo pagePaddingTop30 pagePaddingRight30 pagePaddingBottom30 pagePaddingLeft30 secSpace20 colSpace20 dateLinesDouble dateSeparatorDash dateStickSeparatorFrom"
                          data-id="4532edc4-2904-4db2-a7f2-eb312e40e2f4" data-user-id="319124" data-template-id="575"
-                         data-language="en_EN" data-type="cv" data-name="My resume 1" data-photo="322" data-first-name="RIN"
+                         data-language="en_EN" data-type="cv" data-name="My resume 1" data-photo="322"
+                         data-first-name="RIN"
                          data-last-name="Vannat">
                         <div class="row firstRow lastRow" style="height: 1400px;">
                             <div class="col secTitMarginBottom10 secAccIcoCircle colSpecialLineOn colSpecialBorderPrimoOn dateLayoutColAll dateLinesDouble dateSeparatorDash dateStickSeparatorFrom colorTxtMediumBlack3 colorNameMediumSilver2 colorLastNameMediumSilver2 colorPositionMediumSilver2 colorImgBrdMediumSilver2 colorImgBgMediumSilver2 colorSecTitMediumSilver2 colorSecTitBgLightGrey3 colorSecTitBrdLightSilver3 colorSecLineLightSilver3 colorSecPointMediumSilver2 colorSecPointShadowMediumSilver1 colorEntTitMediumBlack3 colorEntSubMediumBlack3 colorEntBoldMediumBlack3 colorEntIcoWhite3 colorEntIcoBgMediumSilver3 colorIcoWhite3 colorIcoBgMediumSilver3 colorRatOnMediumSilver3 colorRatOffLightSilver3 colorRatAddMediumSilver3 colorBgLightGrey3 colorBgHfLightGrey3 colorDateMediumBlack3 colorDateBgMediumSilver2 firstCol"
@@ -59,13 +60,16 @@
 
                                 @if($experiences = $resume->experiences)
                                     <div class="section sectionType6 sectionExperience secSpecialLineFirst">
-                                        <h3 class="title"><span class="ico"></span><span class="txt">Experience</span></h3>
+                                        <h3 class="title"><span class="ico"></span><span class="txt">Experience</span>
+                                        </h3>
                                         <div class="entryContainer">
                                             @foreach($experiences as $experience)
-                                                <div class="entry" data-date-from-year="" data-date-from-month="" data-date-to-year=""
+                                                <div class="entry" data-date-from-year="" data-date-from-month=""
+                                                     data-date-to-year=""
                                                      data-date-to-month="" style="min-height: 50px;">
                                                     <div class="pointer" style="top: 1.1rem; left: -38px;"></div>
-                                                    <div class="dates"><span class="dateFrom">{{ $experience->start_date }}</span>
+                                                    <div class="dates"><span
+                                                                class="dateFrom">{{ $experience->start_date }}</span>
                                                         <span class="dateSeparator"></span>
                                                         <span class="dateTo">{{ $experience->end_date }}</span>
                                                     </div>
@@ -84,13 +88,16 @@
 
                                 @if($educations = $resume->educations)
                                     <div class="section sectionType5 sectionEducation">
-                                        <h3 class="title"><span class="ico"></span><span class="txt">Education</span></h3>
+                                        <h3 class="title"><span class="ico"></span><span class="txt">Education</span>
+                                        </h3>
                                         <div class="entryContainer">
                                             @foreach( $educations as $education )
-                                                <div class="entry" data-date-from-year="" data-date-from-month="" data-date-to-year=""
+                                                <div class="entry" data-date-from-year="" data-date-from-month=""
+                                                     data-date-to-year=""
                                                      data-date-to-month="" style="min-height: 50px;">
                                                     <div class="pointer" style="top: 1.1rem; left: -38px;"></div>
-                                                    <div class="dates"><span class="dateFrom">{{ $education->start_date }}</span>
+                                                    <div class="dates"><span
+                                                                class="dateFrom">{{ $education->start_date }}</span>
                                                         <span class="dateSeparator"></span>
                                                         <span class="dateTo">{{ $education->end_date }}</span>
                                                     </div>
@@ -108,7 +115,8 @@
 
                                 @if($references = $resume->references)
                                     <div class="section sectionType10 sectionReferences">
-                                        <h3 class="title"><span class="ico"></span><span class="txt">References</span></h3>
+                                        <h3 class="title"><span class="ico"></span><span class="txt">References</span>
+                                        </h3>
                                         @foreach($references as $reference)
                                             <div class="entryContainer content">
                                                 <div class="entry">
@@ -130,15 +138,19 @@
                                 <div class="section sectionType3 sectionPhoto">
                                     <div class="entry">
                                         <figure>
-                                            <img src="#"
-                                                 alt="">
+                                            @if(isset($resume->personalInfo->profile))
+                                                <img class="profile"
+                                                     src="{{ asset('img/frontend/uploads/profile_cv') }}/{{ $resume->personalInfo->profile }}"
+                                                     alt="" style="width:100%;height:286px;"/>
+                                            @endif
                                         </figure>
                                     </div>
                                 </div>
 
                                 @if($resume->career_profile)
                                     <div class="section sectionType4 sectionSummary">
-                                        <h3 class="title"><span class="ico"></span><span class="txt">Career Profile</span></h3>
+                                        <h3 class="title"><span class="ico"></span><span
+                                                    class="txt">Career Profile</span></h3>
                                         <div class="entryContainer content">
                                             <div class="entry">
                                                 <div class="pointer"></div>
@@ -152,7 +164,8 @@
 
                                 @if($personal = $resume->personalInfo)
                                     <div class="section sectionType2 sectionPersonal">
-                                        <h3 class="title"><span class="ico"></span><span class="txt">Personal Info</span></h3>
+                                        <h3 class="title"><span class="ico"></span><span
+                                                    class="txt">Personal Info</span></h3>
                                         <div class="entryContainer content">
                                             <div class="entry personalAddress" data-order="1">
                                                 <div class="pointer"></div>
@@ -173,12 +186,14 @@
                                                 <div class="ico"></div>
                                                 <h4>E-mail</h4>
                                                 <div class="text">
-                                                    <a href="mailto:vannat.rin@gmail.com" rel="nofollow" target="_blank">
+                                                    <a href="mailto:vannat.rin@gmail.com" rel="nofollow"
+                                                       target="_blank">
                                                         {{ $personal->email }}
                                                     </a>
                                                 </div>
                                             </div>
-                                            <div class="entry dateBirth personalBirthday" data-birth-day="" data-birth-month=""
+                                            <div class="entry dateBirth personalBirthday" data-birth-day=""
+                                                 data-birth-month=""
                                                  data-birth-year="" data-order="5">
                                                 <div class="pointer"></div>
                                                 <div class="ico"></div>
@@ -195,7 +210,8 @@
                                 @if( $languages = $resume->languages)
 
                                     <div class="section sectionType7 sectionLanguages ratingCircle ratingTwoLines">
-                                        <h3 class="title"><span class="ico"></span><span class="txt">Languages</span></h3>
+                                        <h3 class="title"><span class="ico"></span><span class="txt">Languages</span>
+                                        </h3>
                                         @foreach($languages as $language)
                                             <div class="entryContainer content">
                                                 <div class="entry existingEntry">
@@ -223,7 +239,8 @@
 
                                 @if( $interests = $resume->interests)
                                     <div class="section sectionType7 sectionSkills ratingCircle ratingTwoLines">
-                                        <h3 class="title"><span class="ico"></span><span class="txt">Interest</span></h3>
+                                        <h3 class="title"><span class="ico"></span><span class="txt">Interest</span>
+                                        </h3>
                                         @foreach($interests as $interest)
                                             <div class="entryContainer content">
                                                 <div class="entry existingEntry">
@@ -240,7 +257,6 @@
 
                             </div>
                         </div>
-
 
 
                     </div>
@@ -261,7 +277,7 @@
                         </div>
                 </div>--}}
 
-                    {{--end new page --}}
+                {{--end new page --}}
             </div>
         </div>
     </div>

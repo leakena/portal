@@ -160,6 +160,9 @@
         </div>
     </div>
 
+    {{--modal preview cv--}}
+    @include('backend.resumes.includes.modal.preview')
+
 @endsection
 
 @section('js')
