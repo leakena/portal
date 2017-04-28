@@ -30,7 +30,7 @@ class ResumeController extends Controller
      * ResumeController constructor.
      */
     protected $personalInfos;
-    use TraitCareerProfile;
+
     /**
      * ResumeController constructor.
      * @param PersonalInfoContract $personalIfoRepo
@@ -177,7 +177,6 @@ class ResumeController extends Controller
         $newCareerProfile = Resume::where('user_uid', auth()->user()->id)->first();
 
         return view('backend.resumes.career_profile.career_profile', compact('newCareerProfile'));
-
 
     }
 
