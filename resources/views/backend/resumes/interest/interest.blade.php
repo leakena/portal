@@ -71,6 +71,11 @@
                             <button id="add" type="button" class="btn btn-primary btn-sm pull-left add_new" data-toggle="modal"
                                     data-target="#add-career-profile"> <i class="fa fa-plus" style="font-size: 14pt; color: #00a7d0">  </i>
                             </button>
+                            @if(isset($userResume))
+                                <button type="button" class="btn btn-warning preview" data-toggle="modal" data-target=".bs-example-modal-lg">
+                                    <i class="fa fa-eye" aria-hidden="true"></i> Preview
+                                </button>
+                            @endif
 
                             <div class="clearfix"></div>
                         </div>

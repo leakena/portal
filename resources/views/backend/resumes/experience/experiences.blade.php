@@ -1,8 +1,6 @@
 @extends('backend.layouts.resume')
 
-@section('after-style-end')
-    <link rel="stylesheet" href="{{ asset('css/backend/resume/resume.css') }}"/>
-@endsection
+<link rel="stylesheet" href="{{ asset('css/backend/resume/resume.css') }}"/>
 
 @section('content')
     <div role="main">
@@ -136,6 +134,11 @@
                                     data-target="#add-career-profile"><i class="fa fa-plus"
                                                                          style="font-size: 14pt; color: #00a7d0"> </i>
                             </button>
+                            @if(isset($userResume))
+                                <button type="button" class="btn btn-warning preview" data-toggle="modal" data-target=".bs-example-modal-lg">
+                                    <i class="fa fa-eye" aria-hidden="true"></i> Preview
+                                </button>
+                            @endif
 
                             <div class="clearfix"></div>
                         </div>
@@ -170,78 +173,70 @@
                                 <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
                             @endif
 
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="company">Company <span
-                                            class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" name="company" id="Company" required="required"
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="control-label" for="position">Position <span class="required">*</span>
+                                    </label>
+                                    <input type="text" id="company" name="company" required="required"
                                            class="form-control col-md-7 col-xs-12">
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="position">Position <span
-                                            class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group col-md-6">
+                                    <label class="control-label" for="company">Company <span
+                                                class="required">*</span>
+                                    </label>
                                     <input type="text" id="position" name="position" required="required"
                                            class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Address <span
-                                            class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <textarea type="text" id="address" name="address" required="required"
-                                              class="form-control col-md-7 col-xs-12">
-
-                                                </textarea>
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label class="control-label" for="description">Address <span
+                                                class="required">*</span>
+                                    </label>
+                                    <textarea type="text" id="description" name="address" required="required"
+                                              class="form-control">
+                                            </textarea>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Description
-                                    <span class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="description" name="description" required="required"
-                                           class="form-control col-md-7 col-xs-12">
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label class="control-label" for="description">Description <span
+                                                class="required">*</span>
+                                    </label>
+                                    <textarea type="text" id="description" name="description"
+                                              required="required" class="form-control">
+                                            </textarea>
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label class="start_date control-label col-md-3 col-sm-3 col-xs-12">Start Date <span
-                                            class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="control-label">Start Date <span class="required">*</span>
+                                    </label>
                                     <div class="input-group">
                                         <input type="text" data-date-format="yyyy-mm-dd" id="start_date"
                                                name="start_date" class="date-picker form-control start_date"
-                                               placeholder="{{ trans('resume.resume.start_date') }}"
-                                               value="{{ old('start_date') }}" readonly>
+                                               readonly>
                                         <span class="input-group-addon">
-                                            <i class="fa fa-calendar-o"></i>
-                                        </span>
-
+                                                    <i class="fa fa-calendar-o"></i>
+                                                </span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">End Date <span
-                                            class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group col-md-6">
+                                    <label class="control-label">End Date <span class="required">*</span>
+                                    </label>
                                     <div class="input-group">
                                         <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
-                                               name="end_date" class="date-picker end_date form-control"
-                                               placeholder="{{ trans('resume.resume.end_date') }}"
-                                               value="{{ old('end_date') }}" readonly>
+                                               name="end_date" class="date-picker form-control end_date"
+                                               readonly>
                                         <span class="input-group-addon">
-                                            <i class="fa fa-calendar-o"></i>
-                                        </span>
+                                                    <i class="fa fa-calendar-o"></i>
+                                                </span>
                                     </div>
+
                                 </div>
                             </div>
+
                             <div class="ln_solid"></div>
                             <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-6">

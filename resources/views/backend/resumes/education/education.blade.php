@@ -1,8 +1,7 @@
 @extends('backend.layouts.resume')
 
-@section('after-style-end')
     <link rel="stylesheet" href="{{ asset('css/backend/resume/resume.css') }}"/>
-@endsection
+
 
 @section('content')
 
@@ -57,6 +56,23 @@
                                     </div>
 
                                     <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label">Degree</label>
+                                            <select name="degree" class="form-control single">
+
+                                                @foreach( $degrees as $degree )
+                                                    @if($degree->id == $education->degree->id)
+                                                        <option selected value="{{ $degree->id }}">{{ $degree->name }}</option>
+                                                    @else
+                                                        <option value="{{ $degree->id }}">{{ $degree->name }}</option>
+                                                    @endif
+
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
                                         <div class="form-group col-md-12">
                                             <label class="control-label" for="address">Adress <span class="required">*</span>
                                             </label>
@@ -93,23 +109,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label class="control-label">Degree</label>
-                                            <select name="degree" class="form-control single">
-
-                                                @foreach( $degrees as $degree )
-                                                    @if($degree->id == $education->degree->id)
-                                                        <option selected value="{{ $degree->id }}">{{ $degree->name }}</option>
-                                                    @else
-                                                        <option value="{{ $degree->id }}">{{ $degree->name }}</option>
-                                                    @endif
-
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-
                                     <div class="ln_solid"></div>
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-11">
@@ -129,6 +128,11 @@
                             <button id="add" type="button" class="btn btn-primary btn-sm pull-left add_new" data-toggle="modal"
                                     data-target="#add-career-profile"> <i class="fa fa-plus" style="font-size: 14pt; color: #00a7d0">  </i>
                             </button>
+                            @if(isset($userResume))
+                                <button type="button" class="btn btn-warning preview" data-toggle="modal" data-target=".bs-example-modal-lg">
+                                    <i class="fa fa-eye" aria-hidden="true"></i> Preview
+                                </button>
+                            @endif
 
                             <div class="clearfix"></div>
                         </div>
@@ -164,24 +168,22 @@
                                 <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
                             @endif
 
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="school">School <span class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="control-label" for="school">School <span class="required">*</span>
+                                    </label>
                                     <input name="school" type="text" id="school" required="required" class="form-control col-md-7 col-xs-12">
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="major">Major <span class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group col-md-6">
+                                    <label class="control-label" for="major">Major <span class="required">*</span>
+                                    </label>
                                     <input type="text" id="major" name="major" required="required" class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Degree</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="control-label">Degree</label>
                                     <select name="degree" class="form-control single">
                                         @foreach( $degrees as $degree )
                                             <option name="degree_id" value="{{ $degree->id }}">{{ $degree->name }}</option>
@@ -190,46 +192,39 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Start Date <span class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <div class="input-group">
-                                        <input type="text" data-date-format="yyyy-mm-dd" id="start_date"
-                                               name="start_date" class="date-picker start_date form-control"
-                                               placeholder="{{ trans('resume.resume.start_date') }}" value="{{ old('start_date') }}" readonly>
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-calendar-o"></i>
-                                        </span>
-                                    </div>
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label class="control-label" for="address">Adress <span class="required">*</span>
+                                    </label>
+                                    <textarea type="text" id="address" name="address" required="required" class="form-control col-md-7 col-xs-12">
 
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">End Date <span class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <div class="input-group">
-                                        <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
-                                               name="end_date" class="date-picker end_date form-control"
-                                               placeholder="{{ trans('resume.resume.end_date') }}" value="{{ old('end_date') }}" readonly>
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-calendar-o"></i>
-                                        </span>
-                                    </div>
-
+                                            </textarea>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="address">Adress <span class="required">*</span>
+                                <div class="form-group col-md-6">
+                                    <label class="control-label" for="start_date">Start Date <span class="required">*</span>
                                     </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <textarea type="text" id="address" name="address" required="required" class="form-control col-md-7 col-xs-12">
-
-                                                </textarea>
+                                    <div class="input-group">
+                                        <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
+                                               name="start_date" class="date-picker form-control start_date"
+                                               readonly>
+                                        <span class="input-group-addon">
+                                                    <i class="fa fa-calendar-o"></i>
+                                                </span>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="control-label" for="end_date"> End Date <span class="required">*</span>
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
+                                               name="end_date" class="date-picker form-control end_date"
+                                               readonly>
+                                        <span class="input-group-addon">
+                                                    <i class="fa fa-calendar-o"></i>
+                                                </span>
                                     </div>
                                 </div>
                             </div>

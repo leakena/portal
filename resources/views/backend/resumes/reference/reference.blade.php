@@ -83,7 +83,9 @@
                             </button>
 
                             @if(isset($userResume))
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Large modal</button>
+                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bs-example-modal-lg">
+                                    <i class="fa fa-eye" aria-hidden="true"></i> Preview
+                                </button>
                             @endif
 
                             <div class="clearfix"></div>
