@@ -84,6 +84,14 @@ class AccessServiceProvider extends ServiceProvider
             \App\Repositories\Backend\User\EloquentUserRepository::class
         );
 
+
+
+        $this->app->bind(
+            \App\Repositories\Backend\PersonalInfo\PersonalInfoContract::class,
+            \App\Repositories\Backend\PersonalInfo\EloquentPersonalInfoRepository::class
+        );
+
+
     }
 
     /**

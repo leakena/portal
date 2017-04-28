@@ -40,6 +40,6 @@ trait UserRelationship
      * @return mixed
      */
     public function resume(){
-        return $this->hasOne(Resume::class, 'resume_uid');
+        return $this->belongsTo(Resume::class, 'user_uid');
     }
 }

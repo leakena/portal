@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Portal\Resume\Resume;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -49,6 +51,31 @@ class AppServiceProvider extends ServiceProvider
         // Set the default string length for Laravel5.4
         // https://laravel-news.com/laravel-5-4-key-too-long-error
         Schema::defaultStringLength(191);
+
+        /*
+         *
+         */
+        view()->composer('backend.resumes.includes.modal.preview', function ($view){
+            $resume = Resume::where('user_uid', auth()->user()->id)->first();
+            if($resume) {
+                $name = $resume->user->name;
+                $abr_name= "";
+                $explode = explode(' ', $name);
+                foreach ($explode as $str) {
+                    $abr_name .= $str[0];
+                }
+            } else {
+                $abr_name= '';
+            }
+
+
+            $view->with([
+
+                    'resume' => $resume,
+                    'abr_name' => $abr_name
+//                    'languages' => $resume->language()->select('language_resume.proficiency', 'languages.name', 'languages.id as language_id')->get(),
+                ]);
+        });
     }
 
     /**

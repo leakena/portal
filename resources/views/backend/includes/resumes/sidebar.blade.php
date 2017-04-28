@@ -3,10 +3,10 @@
         <h3>General</h3>
         <ul class="nav side-menu">
             <li>
-                <a href="{{ route('frontend.resume.user_info') }}"><i class="fa fa-address-card"></i> Career Profile </a>
+                <a href="{{ route('frontend.resume.user_info') }}"><i class="fa fa-user-circle-o"></i> Personal Information </a>
             </li>
             <li>
-                <a href="{{ route('frontend.resume.career_profile') }}"><i class="fa fa-user-circle-o"></i> Personal Information </a>
+                <a href="{{ route('frontend.resume.career_profile') }}"><i class="fa fa-address-card"></i> Career Profile </a>
             </li>
             <li>
                 <a href="{{ route('frontend.resume.get_experience') }}"><i class="fa fa-briefcase"></i> Experiences </a>

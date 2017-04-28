@@ -22,7 +22,6 @@ class Controller extends BaseController
 
         return $this->apiRequestManager->getElementsFromApi($endUrl, $elements , $attributes , $where);
 
-
     }
 
 
