@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use App\Repositories\Backend\PersonalInfo\PersonalInfoContract;
+use App\HelperTrait\TraitCareerProfile;
 class ResumeController extends Controller
 {
     /**
@@ -23,6 +24,7 @@ class ResumeController extends Controller
      */
 
     protected $personalInfos;
+    use TraitCareerProfile;
     public function __construct(PersonalInfoContract $personalIfoRepo)
     {
 
@@ -114,42 +116,7 @@ class ResumeController extends Controller
      */
     public function saveCareerProfile()
     {
-
-
-        $userResume = $this->getUserResume(auth()->id());
-
-
-        if ($userResume) {
-            /*--update cv--*/
-
-            DB::table('resumes')->where('id', request('resume_uid'))->update(['career_profile' => request('description')]);
-            $newCareerProfile = DB::table('resumes')->where('id', request('resume_uid'))->first();
-
-            return view('backend.resumes.career_profile.career_profile', compact('newCareerProfile'));
-
-        } else {
-            /*--create cv---*/
-
-
-            $newCareerProfile = new Resume();
-            $newCareerProfile->career_profile = request('description');
-            $newCareerProfile->user_uid = auth()->id();
-
-            if ($newCareerProfile->save()) {
-                return view('backend.resumes.career_profile.career_profile', compact('newCareerProfile'));
-            }
-
-        }
-
-    }
-
-    /**
-     * @param $userId
-     * @return mixed
-     */
-    private function getUserResume($userId)
-    {
-        return Resume::where('user_uid', $userId)->first();
+        $this->storeCareerProfile(request('description'), request('resume_uid'));/*---Trait---*/
     }
 
     /**
