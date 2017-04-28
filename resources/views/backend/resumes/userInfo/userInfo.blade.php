@@ -135,7 +135,12 @@
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-7">
                                             <button class="btn btn-default" type="reset">Reset</button>
-                                            <button type="submit" class="btn btn-info">Update</button>
+                                            @if(isset($personalInfo))
+                                                <button type="submit" class="btn btn-info">Update</button>
+                                            @else
+                                                <button type="submit" class="btn btn-info">Submit</button>
+                                            @endif
+
                                         </div>
                                     </div>
 

@@ -28,14 +28,17 @@ class ResumeController extends Controller
      * ResumeController constructor.
      */
     protected $personalInfos;
+    protected $prefix;
+    protected $controllers;
 
     /**
      * ResumeController constructor.
      * @param PersonalInfoContract $personalIfoRepo
      */
-    public function __construct(PersonalInfoContract $personalIfoRepo)
+    public function __construct(PersonalInfoContract $personalIfoRepo, Controller $cont)
     {
-
+        $this->controllers = $cont;
+        $this->prefix = '/api/student';
         $this->personalInfos = $personalIfoRepo;
 //        $this->middleware('auth');
     }
@@ -45,6 +48,12 @@ class ResumeController extends Controller
      */
     public function index()
     {
+
+//        $studnentData = $this->controllers->getElementByApi($this->prefix.'/program', ['student_id_card'], ['e20120175'] ,[]);
+//
+//        dd($studnentData);
+
+
         $resume = Resume::where(['user_uid' => auth()->id()])->first();
         return view('backend.resumes.index', compact('resume'));
     }
