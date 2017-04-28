@@ -57,9 +57,22 @@ class AppServiceProvider extends ServiceProvider
          */
         view()->composer('backend.resumes.includes.modal.preview', function ($view){
             $resume = Resume::where('user_uid', auth()->user()->id)->first();
+            if($resume) {
+                $name = $resume->user->name;
+                $abr_name= "";
+                $explode = explode(' ', $name);
+                foreach ($explode as $str) {
+                    $abr_name .= $str[0];
+                }
+            } else {
+                $abr_name= '';
+            }
+
+
             $view->with([
 
                     'resume' => $resume,
+                    'abr_name' => $abr_name
 //                    'languages' => $resume->language()->select('language_resume.proficiency', 'languages.name', 'languages.id as language_id')->get(),
                 ]);
         });

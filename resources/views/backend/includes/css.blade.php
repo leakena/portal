@@ -34,4 +34,4 @@
 <link rel="stylesheet" href="{{url('css/creator.css')}}">
 <link href="{{ url('css/build/css/custom.min.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="{{url('bower_components/bootstrap-sweetalert/dist/sweetalert.css')}}">
-<link rel="stylesheet" href="{{ url('vendors/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css') }}">
+<link rel="stylesheet" href="{{ url('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css') }}">

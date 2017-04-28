@@ -19,7 +19,7 @@ class UrlManager implements IUrlManager
 
     public function __construct() {
         $this->endApiUrl = str_replace(url('/'), '', url('api'));
-        $this->targetServerUrl = 'http://192.168.43.168:8000/';//'http://192.168.51.89';//'http://192.168.105.106:8000';
+        $this->targetServerUrl = 'http://192.168.51.89';//'http://192.168.51.89';//'http://192.168.105.106:8000';
 
     }
 
