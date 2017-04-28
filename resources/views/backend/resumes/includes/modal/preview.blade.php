@@ -48,7 +48,7 @@
                                 <div class="section sectionType1 sectionBasic secType1AccCircle secSpecialLineOff fStyleH1Bold fStyleH1LastBold">
                                     <div class="entry">
                                         <div class="secType1Acc">
-                                            <div class="secType1AccInitials">rv</div>
+                                            <div class="secType1AccInitials">{{$abr_name}}</div>
                                         </div>
                                         <div class="secType1Container">
                                             <h1>
