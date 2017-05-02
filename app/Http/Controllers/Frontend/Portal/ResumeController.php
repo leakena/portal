@@ -71,14 +71,13 @@ class ResumeController extends Controller
 
         $userResume = Resume::where('user_uid', auth()->id())->first();
         $marital_statuses = MaritalStatus::all();
-        $genders = Gender::all();
 
         if ($userResume) {
             $personalInfo = DB::table('personal_infos')->where('resume_uid', $userResume->id)->first();
         } else {
             $personalInfo = null;
         }
-        return view('backend.resumes.userInfo.userInfo', compact('userResume', 'personalInfo', 'marital_statuses', 'genders', 'student'));
+        return view('backend.resumes.userInfo.userInfo', compact('userResume', 'personalInfo', 'marital_statuses', 'student'));
     }
 
     /**
