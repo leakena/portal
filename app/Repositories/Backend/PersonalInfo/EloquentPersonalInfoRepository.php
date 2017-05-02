@@ -8,6 +8,7 @@ use App\Models\Portal\Resume\PersonalInfo;
 use App\Models\Portal\Resume\Resume;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class EloquentPersonalInfoRepository.
@@ -36,20 +37,20 @@ class EloquentPersonalInfoRepository implements PersonalInfoContract
     {
         $personalInfo = new PersonalInfo();
 
-        $personalInfo->name = $input['name'];
-        $personalInfo->email = $input['email'];
+        $personalInfo->name = isset($input['name'])?$input['name']:null;
+        $personalInfo->email = isset($input['email'])?$input['email']:null;
         $personalInfo->status_id = $input['status_id'];
-        $personalInfo->gender_id = $input['gender_id'];
+        $personalInfo->gender_id = isset($input['gender_id'])?$input['gender_id']:null;
         if (!isset($input['resume_uid'])) {
             $resume = Resume::where('user_uid', auth()->user()->id)->first();
             $personalInfo->resume_uid = $resume->id;
         } else {
             $personalInfo->resume_uid = $input['resume_uid'];
         }
-        $personalInfo->dob = $input['dob'];
-        $personalInfo->birth_place = $input['birth_place'];
-        $personalInfo->phone = $input['phone'];
-        $personalInfo->address = $input['address'];
+        $personalInfo->dob = isset($input['dob'])?$input['dob']:null;
+        $personalInfo->birth_place = isset($input['birth_place'])?$input['birth_place']:null;
+        $personalInfo->phone = isset($input['phone'])?$input['phone']:null;
+        $personalInfo->address = isset($input['address'])?$input['address']:null;
         $personalInfo->profile = isset($input['profile']) ? $input['profile'] : null;
         $personalInfo->created_at = Carbon::now();
 
@@ -78,21 +79,34 @@ class EloquentPersonalInfoRepository implements PersonalInfoContract
     {
         $personalInfo = $this->findOrThrowException($id);
 
-        $personalInfo->name = $input['name'];
-        $personalInfo->email = $input['email'];
-        $personalInfo->status_id = $input['status_id'];
-        $personalInfo->gender_id = $input['gender_id'];
+        $personalInfo->name = isset($input['name'])?$input['name']:null;
+        $personalInfo->email = isset($input['email'])?$input['email']:null;
+        $personalInfo->status_id = isset($input['status_id'])?$input['status_id']:null;
+        $personalInfo->gender_id = isset($input['gender_id'])?$input['gender_id']:null;
         $personalInfo->resume_uid = $input['resume_uid'];
-        $personalInfo->dob = $input['dob'];
-        $personalInfo->birth_place = $input['birth_place'];
-        $personalInfo->phone = $input['phone'];
-        $personalInfo->address = $input['address'];
+        $personalInfo->dob = isset($input['dob'])?$input['dob']:null;
+        $personalInfo->birth_place = isset($input['birth_place'])?$input['birth_place']:null;
+        $personalInfo->phone = isset($input['phone'])?$input['phone']:null;
+        $personalInfo->address = isset($input['address'])?$input['address']:null;
         $personalInfo->updated_at = Carbon::now();
 
         if (isset($input['profile'])) {
             if ($personalInfo->profile) {
+
                 $old_profile = $personalInfo->profile;
-                if (unlink('img/frontend/uploads/profile_cv/' . $old_profile)) {
+
+                if(file_exists('img/frontend/uploads/profile_cv/' . $old_profile)) {
+                    if (unlink('img/frontend/uploads/profile_cv/' . $old_profile)) {
+                        if (Input::file()) {
+                            $filename = $input['profile'];
+                            $change = $filename->getClientOriginalExtension();
+                            $newfilename = auth()->id() . Carbon::now()->getTimestamp() . '.';
+                            $filename->move('img/frontend/uploads/profile_cv', "{$newfilename}" . $change);
+                            $personalInfo->profile = $newfilename . $change;
+                        }
+                    }
+
+                } else {
                     if (Input::file()) {
                         $filename = $input['profile'];
                         $change = $filename->getClientOriginalExtension();
@@ -101,6 +115,9 @@ class EloquentPersonalInfoRepository implements PersonalInfoContract
                         $personalInfo->profile = $newfilename . $change;
                     }
                 }
+
+
+
 
             } else {
                 if (Input::file()) {

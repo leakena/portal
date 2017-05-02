@@ -38,7 +38,7 @@
                                             <input type="text"
                                                    id="name" name="name" required="required"
                                                    class="form-control col-md-7 col-xs-12"
-                                                   value="{{isset($personalInfo)?$personalInfo->name:''}}">
+                                                   value="{{isset($student)?$student['name_latin']:''}}" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -59,16 +59,16 @@
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <div id="gender" class="btn-group" data-toggle="buttons">
                                                 @foreach( $genders as $gender )
-                                                    @if($personalInfo)
-                                                        <label class="gender btn btn-default @if($gender->id == $personalInfo->gender_id) active focus @endif ">
+                                                    @if($student)
+                                                        <label class="gender btn btn-default {{($gender->name == $student['name_en'])?'active forcus':''}} ">
                                                             <input type="radio" name="gender_id"
-                                                                   @if($gender->id == $personalInfo->gender_id) checked
-                                                                   @endif  value="{{ $gender->id }}"> {{ $gender->name }}
+                                                                   @if($gender->name == $student['name_en']) checked
+                                                                   @endif  value="{{ $gender->id }}" disabled> {{ $gender->name }}
                                                         </label>
                                                     @else
                                                         <label class="gender btn btn-default">
                                                             <input type="radio" name="gender_id"
-                                                                   value="{{ $gender->id }}"> {{ $gender->name }}
+                                                                   value="{{ $gender->id }}" disabled> {{ $gender->name }}
                                                         </label>
                                                     @endif
 
@@ -84,7 +84,7 @@
                                             <div class="input-group">
                                                 <input id="birthday" class="date-picker form-control col-md-7 col-xs-12"
                                                        required="required" type="text" name="dob"
-                                                       value="{{isset($personalInfo)?$personalInfo->dob:''}}" readonly>
+                                                       value="{{isset($student)?$student['dob']:''}}" readonly>
                                                 <span class="input-group-addon">
                                                 <i class="fa fa-calendar-o"></i>
                                             </span>
@@ -108,7 +108,7 @@
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input type="text" id="email" name="email" required="required"
                                                    class="form-control col-md-7 col-xs-12"
-                                                   value="{{isset($personalInfo)?$personalInfo->email:''}}">
+                                                   value="{{isset($student)?$student['email']:''}}">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -128,7 +128,7 @@
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input type="text" id="address" name="address" required="required"
                                                    class="form-control col-md-7 col-xs-12"
-                                                   value="{{isset($personalInfo)?$personalInfo->address:''}}">
+                                                   value="{{isset($personalInfo)?$personalInfo->address:$student['address']}}">
                                         </div>
                                     </div>
                                     <div class="ln_solid"></div>
@@ -183,11 +183,17 @@
         @endif
 
         $(document).on('click', '.gender', function () {
-            $('#gender').find('.focus').removeClass('focus');
+           /* $('#gender').find('.focus').removeClass('focus');
             $('#gender').find('.active .focus').removeClass('active focus');
-            $(this).addClass('active focus');
+            $(this).addClass('active focus');*/
+
+
 
         });
+
+        $('label.gender').on('click', function (e) {
+            $(this).prop('disabled', true);
+        })
 
         $('select[name=status_id] option').each(function (key, value) {
             var status = $(this).val();
@@ -198,9 +204,9 @@
         });
 
 
-        $('#birthday').datepicker({
+       /* $('#birthday').datepicker({
             format: 'yyyy-mm-d'
-        })
+        })*/
 
 
     </script>
