@@ -88,7 +88,7 @@
         </div>
     </div>
 
-    <div role="main" class="add_skill">
+    <div role="main" class="add_skill" style="display: none">
         <div class="clearfix"></div>
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
