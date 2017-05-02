@@ -38,6 +38,14 @@ class PortalController extends Controller
      */
     public function index()
     {
+
+        $user =auth()->user();
+
+        /*$studentApi = $this->controller->getElementByApi($this->studentPrefix.'/annual-object', ['student_id_card'], [$user->email], []);
+
+        dd($studentApi);*/
+
+
         /*$input = [
             'name' => 'LEROY',
             'email' => 'leroy@gmail.com',

@@ -23,22 +23,24 @@
                         </div>
                         <div class="x_content">
                             <br />
-                            <form id="career-profile" data-parsley-validate class="form-horizontal form-label-left">
+                            <form action="/resume/save-career-profile" method="POST" id="career-profile" data-parsley-validate class="form-horizontal form-label-left">
+
+                                {{ csrf_field() }}
 
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Description <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <input name="description" type="text" id="description" required="required" class="form-control col-md-7 col-xs-12">
+                                        <input type="hidden" name="resume_uid" value="{{isset($newCareerProfile)?$newCareerProfile->id:''}}">
                                     </div>
                                 </div>
 
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
-                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                        <button class="btn btn-primary" type="button">Cancel</button>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-7">
                                         <button class="btn btn-primary" type="reset">Reset</button>
-                                        <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+                                        <button type="submit" class="btn btn-info" id="submit">Update</button>
                                     </div>
                                 </div>
 
@@ -50,50 +52,67 @@
         </div>
     </div>
 
+    @include('backend.resumes.includes.modal.preview')
+
 @endsection
 
 @section('js')
     <script>
-        $(document).ready(function () {
 
-            $(".add_new").hide();
-
-            $(document).on('click', "#add", function () {
-                $(".add_new").show();
-            });
-
-            $('#career-profile').on("submit", function (e) {
-                e.preventDefault();
-
-                $.ajax({
-                    type: 'POST',
-                    url: '/resume/save-career-profile',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        'description': $('#description').val()
-                    },
-                    dataType:'html',
-                    success: function (response) {
-                       $('div.my_career_profile').html(response);
-                        setLabelButton('Update Career Profile');
-                        $(".add_new").hide();
-                    }
-                });
-            });
-
-        });
 
         @if(isset($newCareerProfile))
             @if($newCareerProfile->career_profile)
 
                 setLabelButton('Update Career Profile');
+                $(".add_new").hide();
+
+                    $(document).on('click', "#add", function () {
+
+                        var resume_id = '{{$newCareerProfile->id}}';
+
+                        $.ajax({
+                            url:'{{route('frontend.resume.user_resume')}}',
+                            method:'GET',
+                            data:{
+                                resume_id:resume_id
+                            },
+                            dataType:'json',
+                            success:function (response) {
+
+                                console.log(response);
+                                $('input[name=description]').val(response.resume.career_profile);
+
+                                $(".add_new").show();
+
+                            }
+                        })
+
+
+
+//                        var career_profile = $('input[name=career_profile]').val();
+//                        $('input[name=description]').val(career_profile);
+//
+//                        $(".add_new").show();
+
+                    });
+
+
+
             @else
                 setLabelButton('Add Career Profile');
+                 $(".add_new").hide();
+                 $(document).on('click', "#add", function () {
+                     $('.add_new').toggle();
+                 });
 
             @endif
 
         @else
-                setLabelButton('Add Career Profile');
+            setLabelButton('Add Career Profile');
+            $(".add_new").hide();
+            $(document).on('click', "#add", function () {
+                $('.add_new').toggle();
+            });
         @endif
 
 

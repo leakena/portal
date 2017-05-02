@@ -33,7 +33,8 @@
 <script src="{{ url('vendors/jqvmap/examples/js/jquery.vmap.sampledata.js') }}"></script>
 <!-- bootstrap-daterangepicker -->
 <script src="{{ url('vendors/moment/min/moment.min.js') }}"></script>
-<script src="{{ url('vendors/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+<script src="{{ url('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
 
 <!-- Custom Theme Scripts -->
 <script src="{{ url('css/build/js/custom.min.js') }}"></script>
+<script src="{{ url('bower_components/bootstrap-sweetalert/dist/sweetalert.js') }}"> </script>

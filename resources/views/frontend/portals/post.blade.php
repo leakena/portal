@@ -16,25 +16,25 @@
                 45 likes, {{ count($post->views)}} Views
             </div>
             <div class="option">
-                                        <span class="dropdown">
-                                            <span class="btn btn-box-tool dropdown-toggle" type="button"
-                                                  id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
-                                                  aria-expanded="true" data-toggle="tooltip" title=""
-                                                  data-widget="chat-pane-toggle" data-original-title="Setting">
-                                                <i class="fa fa-angle-down"></i>
-                                            </span>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                @if(auth()->id() == $post->user->id)
-                                                    <li><a href="/posts/edit/{{ $post->id }}">Edit</a></li>
-                                                    <li><a href="/posts/hide/{{ $post->id }}">Hide</a></li>
-                                                    <li><a href="/posts/delete/{{ $post->id }}">Delete</a></li>
-                                                    <li role="separator" class="divider"></li>
-                                                    <li><a href="/posts/report/{{ $post->id }}">Report</a></li>
-                                                @else
-                                                    <li><a href="/posts/report/{{ $post->id }}">Report</a></li>
-                                                @endif
-                                            </ul>
-                                        </span>
+                <span class="dropdown">
+                    <span class="btn btn-box-tool dropdown-toggle" type="button"
+                          id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+                          aria-expanded="true" data-toggle="tooltip" title=""
+                          data-widget="chat-pane-toggle" data-original-title="Setting">
+                        <i class="fa fa-angle-down"></i>
+                    </span>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        @if(auth()->id() == $post->user->id)
+                            <li><a href="/posts/edit/{{ $post->id }}">Edit</a></li>
+                            <li><a href="/posts/hide/{{ $post->id }}">Hide</a></li>
+                            <li><a href="/posts/delete/{{ $post->id }}">Delete</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/posts/report/{{ $post->id }}">Report</a></li>
+                        @else
+                            <li><a href="/posts/report/{{ $post->id }}">Report</a></li>
+                        @endif
+                    </ul>
+                </span>
             </div>
         </div>
     @else
@@ -58,9 +58,11 @@
                                 <a href="{{ asset('docs') }}/{{ $post->file }}" target="_blank">
                                     <button class="btn btn-default btn-xs">Preview</button>
                                 </a>
-                                <a href="{{ asset('docs') }}/{{ $post->file }}" download="{{ $post->file }}"><button class="btn btn-default btn-xs">
+                                <a href="{{ asset('docs') }}/{{ $post->file }}" download="{{ $post->file }}">
+                                    <button class="btn btn-default btn-xs">
                                         Download
-                                    </button></a>
+                                    </button>
+                                </a>
                             </div>
                         </li>
                     </ul>
@@ -73,32 +75,33 @@
                 </div>
 
                 <div class="option">
-                                            <span class="dropdown">
-                                                <span class="btn btn-box-tool dropdown-toggle" type="button"
-                                                      id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
-                                                      aria-expanded="true" data-toggle="tooltip" title=""
-                                                      data-widget="chat-pane-toggle" data-original-title="Setting">
-                                                    <i class="fa fa-angle-down"></i>
-                                                </span>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                    @if(auth()->id() == $post->user->id)
-                                                        <li><a href="/posts/edit/{{ $post->id }}">Edit</a></li>
-                                                        <li><a href="/posts/hide/{{ $post->id }}">Hide</a></li>
-                                                        <li><a href="/posts/delete/{{ $post->id }}">Delete</a></li>
-                                                        <li role="separator" class="divider"></li>
-                                                        <li><a href="/posts/report/{{ $post->id }}">Report</a></li>
-                                                    @else
-                                                        <li><a href="/posts/report/{{ $post->id }}">Report</a></li>
-                                                    @endif
-                                                </ul>
-                                            </span>
+                    <span class="dropdown">
+                        <span class="btn btn-box-tool dropdown-toggle" type="button"
+                              id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+                              aria-expanded="true" data-toggle="tooltip" title=""
+                              data-widget="chat-pane-toggle" data-original-title="Setting">
+                            <i class="fa fa-angle-down"></i>
+                        </span>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            @if(auth()->id() == $post->user->id)
+                                <li><a href="/posts/edit/{{ $post->id }}">Edit</a></li>
+                                <li><a href="/posts/hide/{{ $post->id }}">Hide</a></li>
+                                <li><a href="/posts/delete/{{ $post->id }}">Delete</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="/posts/report/{{ $post->id }}">Report</a></li>
+                            @else
+                                <li><a href="/posts/report/{{ $post->id }}">Report</a></li>
+                            @endif
+                        </ul>
+                    </span>
                 </div>
             </div>
 
         @else
             <div class="post">
                 <a href="/posts/show/{{ $post->id }}">
-                    <div class="thumb" style="background-image: url('{{ asset('img/frontend/uploads/images/'.$post->file) }}')"></div>
+                    <div class="thumb"
+                         style="background-image: url('{{ asset('img/frontend/uploads/images/'.$post->file) }}')"></div>
                 </a>
                 <div class="desc">
                     <span class="poster">{{ $post->user->name }}</span><br/>
