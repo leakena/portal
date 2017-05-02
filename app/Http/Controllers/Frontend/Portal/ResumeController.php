@@ -902,22 +902,13 @@ class ResumeController extends Controller
     /**
      * @return mixed
      */
-    public function languageContent(Request $request)
+    public function languageContent()
     {
-        $userResume = $this->getUserResume(auth()->id());
-        $selectedLanguages = $userResume->languages()->select('languages.id as language_id')
-            ->get();
-        $flag = true;
-        foreach ($selectedLanguages as $language){
-            if($language->language_id == $request->selectLanguage){
-                $flag = true;
-                break;
-            }else{
-                $flag = false;
-            }
-        }
-
-        return Response::json(['status' => $flag]);
+        $languages = DB::table('languages')->where(['resume_uid' => request('resume_uid')])->get()->toArray();
+        return Response::json([
+            'data' => $languages,
+            'status' => true
+        ]);
     }
 
     /**

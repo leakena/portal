@@ -99,7 +99,7 @@
         </div>
     </div>
 
-    <div role="main" class="add_reference" style="display: none">
+    <div role="main" class="add_reference">
         <div class="clearfix"></div>
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
