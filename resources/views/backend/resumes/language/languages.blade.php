@@ -165,7 +165,7 @@
                                                     <span class="required">*</span>
                                                 </label>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <select name="id" class="form-control single">
+                                                    <select name="language_id" class="form-control single">
                                                         @foreach( $languages as $language)
                                                             <option value="{{ $language->id }}">{{$language->name}}</option>
                                                         @endforeach

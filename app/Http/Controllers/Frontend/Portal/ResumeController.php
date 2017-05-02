@@ -20,7 +20,9 @@ use App\Repositories\Backend\PersonalInfo\PersonalInfoContract;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
+use App\HelperTrait\TraitCareerProfile;
 use Illuminate\Support\Facades\Input;
+use App\Utils\Http\Facades\ApiRequestManager;
 
 class ResumeController extends Controller
 {
@@ -29,15 +31,15 @@ class ResumeController extends Controller
      */
     protected $personalInfos;
     protected $prefix;
-    protected $controllers;
+    protected $requestManager;
 
     /**
      * ResumeController constructor.
      * @param PersonalInfoContract $personalIfoRepo
      */
-    public function __construct(PersonalInfoContract $personalIfoRepo, Controller $cont)
+    public function __construct(PersonalInfoContract $personalIfoRepo, ApiRequestManager $apiRequestManager)
     {
-        $this->controllers = $cont;
+        $this->requestManager = $apiRequestManager;
         $this->prefix = '/api/student';
         $this->personalInfos = $personalIfoRepo;
 //        $this->middleware('auth');
@@ -64,6 +66,9 @@ class ResumeController extends Controller
     public function userInfo()
     {
 
+        $user = auth()->user();
+        $student = $this->requestManager->getElementsFromApi($this->prefix.'/prop', ['student_id_card'], [$user->email], []);
+
         $userResume = Resume::where('user_uid', auth()->id())->first();
         $marital_statuses = MaritalStatus::all();
         $genders = Gender::all();
@@ -73,7 +78,7 @@ class ResumeController extends Controller
         } else {
             $personalInfo = null;
         }
-        return view('backend.resumes.userInfo.userInfo', compact('userResume', 'personalInfo', 'marital_statuses', 'genders'));
+        return view('backend.resumes.userInfo.userInfo', compact('userResume', 'personalInfo', 'marital_statuses', 'genders', 'student'));
     }
 
     /**
@@ -142,10 +147,7 @@ class ResumeController extends Controller
      */
     public function saveCareerProfile(Request $request)
     {
-
-
         $userResume = $this->getUserResume(auth()->id());
-
 
         if ($userResume) {
             /*--update cv--*/
@@ -187,7 +189,6 @@ class ResumeController extends Controller
         $newCareerProfile = Resume::where('user_uid', auth()->user()->id)->first();
 
         return view('backend.resumes.career_profile.career_profile', compact('newCareerProfile'));
-
 
     }
 
@@ -733,13 +734,10 @@ class ResumeController extends Controller
                 $newEducation->end_date = $request->end_date;
                 // Save new education
                 if($newEducation->save()){
-
                     return redirect()->route('frontend.resume.get_education');
                 }
-
             }
         }
-
     }
 
     /**
@@ -843,8 +841,6 @@ class ResumeController extends Controller
                         'language_id' => $request->language_id,
                         'proficiency' => $request->proficiency
                     ]);
-
-
                 return redirect()->route('frontend.resume.get_language');
 
             }else{
@@ -852,7 +848,6 @@ class ResumeController extends Controller
                 // Create a new language
                 $newLanguage = new LanguageResume();
                 // Set value into each field
-
                 $newLanguage->resume_uid = $userResume->id;
                 $newLanguage->language_id = $request->language_id;
                 $newLanguage->proficiency = $request->proficiency;
@@ -869,7 +864,6 @@ class ResumeController extends Controller
             }
 
         }else{
-
             /*-- This user has no resume id so need to create resume first--*/
             $resume = new Resume();
             $resume->career_profile = null;
@@ -893,10 +887,8 @@ class ResumeController extends Controller
                 if($newLanguage->save()){
                     return redirect()->route('frontend.resume.get_language');
                 }
-
             }
         }
-
     }
 
     /**
