@@ -7,7 +7,7 @@
         @include('backend.resumes.career_profile.partial.career_profile')
     </div>
 
-    <div role="main" class="add_new">
+    <div role="main" class="add_new" style="display: none">
         <div class="">
             <div class="clearfix"></div>
             <div class="row">
@@ -40,7 +40,11 @@
                                 <div class="form-group">
                                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-7">
                                         <button class="btn btn-primary" type="reset">Reset</button>
-                                        <button type="submit" class="btn btn-info" id="submit">Update</button>
+                                        @if(isset($newCareerProfile->career_profile))
+                                            <button type="submit" class="btn btn-info" id="submit">Update</button>
+                                        @else
+                                            <button type="submit" class="btn btn-info" id="submit">Submit</button>
+                                        @endif
                                     </div>
                                 </div>
 

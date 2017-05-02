@@ -54,7 +54,7 @@
                                                     @foreach( $languages as $language)
 
                                                         @if( $language->id == $selectedLanguage->language_id)
-                                                            <option selected value="{{ $language->id }}">{{ $language->name }}</option>
+                                                            <option selected value="{{ $language->id }}" class="old_value">{{ $language->name }}</option>
                                                         @else
                                                             <option value="{{ $language->id }}">{{ $language->name }}</option>
                                                         @endif
@@ -90,7 +90,7 @@
                                                     @foreach( $languages as $language)
 
                                                         @if( $language->id == $selectedLanguage->language_id)
-                                                            <option selected value="{{ $language->id }}">{{ $language->name }}</option>
+                                                            <option selected value="{{ $language->id }}" class="old_value">{{ $language->name }}</option>
                                                         @else
                                                             <option value="{{ $language->id }}">{{ $language->name }}</option>
                                                         @endif
@@ -165,7 +165,7 @@
                                                     <span class="required">*</span>
                                                 </label>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <select name="id" class="form-control single">
+                                                    <select name="language_id" class="form-control single">
                                                         @foreach( $languages as $language)
                                                             <option value="{{ $language->id }}">{{$language->name}}</option>
                                                         @endforeach
@@ -207,7 +207,7 @@
         </div>
     </div>
 
-    <div role="main" class="add_language">
+    <div role="main" class="add_language" style="display: none">
         <div class="clearfix"></div>
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -333,8 +333,41 @@
                         swal("Cancelled", "Your experience is safe :)", "error");
                     }
                 });
-
-        })
+        });
+//        $(document).on('change', 'select[name="language_id"]', function () {
+//            event.preventDefault();
+//            var dom = $(this);
+//            dom.find('.old_value').removeAttr('selected');
+//            dom.find('.test').removeClass('test');
+//            $('select[name="language_id"] option:selected').addClass('test');
+//            var selectLanguage = dom.find('.test').val();
+//            var old_selectLanguage = $(this).find('.old_value').val();
+//
+//            console.log(old_selectLanguage+''+selectLanguage);
+//
+//            if(selectLanguage != old_selectLanguage)
+//            {
+//                $.ajax({
+//                    url: '/resume/languages',
+//                    data: {
+//                        'selectLanguage' : selectLanguage
+//                    },
+//                    dataType: 'JSON',
+//                    success: function (result) {
+//                        if(result.status == true ){
+//                            swal({
+//                                title: "Please choose another language!",
+//                                text: "Your choosen languge already have in your language list!",
+//                                type: "warning"
+//                            });
+//                            dom.find('.test').removeClass('test');
+//                            dom.find('.old_value').attr('selected', 'selected').addClass('test');
+//                        }
+//                    }
+//
+//                });
+//            }
+//        })
     </script>
 
 @endsection
