@@ -15,6 +15,7 @@
                                     <i class="fa fa-eye" aria-hidden="true"></i> Preview
                                 </button>
                             @endif
+
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -40,7 +41,11 @@
                                                    class="form-control col-md-7 col-xs-12"
                                                    value="{{isset($student)?$student['name_latin']:''}}" readonly>
                                         </div>
+                                            <i class="fa fa-info-circle fa-lg information_name" aria-hidden="true" style="color: #00a7d0"></i>
+
+
                                     </div>
+
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="marital-status">Marital
                                             Status <span class="required">*</span>
@@ -58,12 +63,13 @@
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <div id="gender" class="btn-group" data-toggle="buttons">
-                                                @foreach( $genders as $gender )
+
                                                     @if($student)
-                                                        <label class="gender btn btn-default {{($gender->name == $student['name_en'])?'active forcus':''}} ">
+
+                                                        <label class="gender btn btn-default {{($student['name_en'])?'active forcus':''}} ">
                                                             <input type="radio" name="gender_id"
-                                                                   @if($gender->name == $student['name_en']) checked
-                                                                   @endif  value="{{ $gender->id }}" disabled> {{ $gender->name }}
+                                                                   @if($student['name_en']) checked> {{ $student['name_en'] }}
+                                                                   @endif
                                                         </label>
                                                     @else
                                                         <label class="gender btn btn-default">
@@ -72,9 +78,9 @@
                                                         </label>
                                                     @endif
 
-                                                @endforeach
                                             </div>
                                         </div>
+                                        <i class="fa fa-info-circle fa-lg information_gender" aria-hidden="true" style="color: #00a7d0"></i>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Date Of Birth <span
@@ -100,6 +106,7 @@
                                                    class="form-control col-md-7 col-xs-12"
                                                    value="{{isset($personalInfo)?$personalInfo->birth_place:''}}">
                                         </div>
+                                        <i class="fa fa-info-circle fa-lg information_birth_place" aria-hidden="true" style="color: #00a7d0"></i>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">E-mail <span
@@ -108,7 +115,7 @@
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input type="text" id="email" name="email" required="required"
                                                    class="form-control col-md-7 col-xs-12"
-                                                   value="{{isset($student)?$student['email']:''}}">
+                                                   value="{{isset($personalInfo)?$personalInfo->email:''}}">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -147,9 +154,9 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <div class="image-frame" style="width: 300px;height: 300px; border: 2px solid #f1f1f1; padding: 5px; box-sizing: border-box;">
+                                        <div class="image-frame" style="width: 163px;height: 213px; border: 2px solid #f1f1f1; padding: 5px; box-sizing: border-box;">
                                             @if(isset($personalInfo->profile))
-                                                <img class="profile" src="{{ asset('img/frontend/uploads/profile_cv') }}/{{ $personalInfo->profile }}" alt="" style="width:100%;height:286px;"/>
+                                                <img class="profile" src="{{ asset('img/backend/resume/profile') }}/{{ $personalInfo->profile }}" alt=""/>
                                             @endif
                                         </div>
                                         <label class="control-label">Chose your profile</label>
@@ -173,13 +180,10 @@
 @section('js')
     <script>
 
-
-                @if(isset($personalInfo))
-        var material_status = '{{$personalInfo->status_id}}'
-        var genders = '{{ $personalInfo->gender_id }}'
-
-                @else
-        var material_status = ''
+        @if(isset($personalInfo))
+            var material_status = '{{$personalInfo->status_id}}'
+        @else
+            var material_status = ''
         @endif
 
         $(document).on('click', '.gender', function () {
@@ -202,6 +206,36 @@
 
             }
         });
+
+        $(document).on('click', '.information_name', function (event) {
+            event.preventDefault();
+            swal({
+                title: "You cannot edit name",
+                text: "If you want to edit, please go to BE!",
+                type: "info"
+            });
+
+        } );
+
+        $(document).on('click', '.information_gender', function (event) {
+            event.preventDefault();
+            swal({
+                title: "You cannot edit gender",
+                text: "If you want to edit, please go to BE!",
+                type: "info"
+            });
+
+        } );
+
+        $(document).on('click', '.information_birth_place', function (event) {
+            event.preventDefault();
+            swal({
+                title: "You cannot edit place of birth",
+                text: "If you want to edit, please go to BE!",
+                type: "info"
+            });
+
+        } );
 
 
        /* $('#birthday').datepicker({

@@ -140,8 +140,8 @@
                                         <figure>
                                             @if(isset($resume->personalInfo->profile))
                                                 <img class="profile"
-                                                     src="{{ asset('img/frontend/uploads/profile_cv') }}/{{ $resume->personalInfo->profile }}"
-                                                     alt="" style="width:100%;height:286px;"/>
+                                                     src="{{ asset('img/backend/resume/profile') }}/{{ $resume->personalInfo->profile }}"
+                                                     alt="" style="width:150px;height:200px;"/>
                                             @endif
                                         </figure>
                                     </div>

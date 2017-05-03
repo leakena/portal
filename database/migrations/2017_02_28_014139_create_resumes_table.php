@@ -16,7 +16,7 @@ class CreateResumesTable extends Migration
         Schema::create('resumes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_uid')->unsigned();
-            $table->text('career_profile');
+            $table->text('career_profile')->nullable();
             $table->timestamps();
 
             $table->foreign('user_uid')->references('id')->on('users')->onDelete('cascade');

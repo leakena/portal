@@ -12,19 +12,6 @@ class PersonalInfoTableSeeder extends Seeder
      */
     public function run()
     {
-        $genders = [
-            [
-                'name' => 'Female',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-            [
-                'name' => 'Male',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ]
-
-        ];
         $statuses = [
             [
                 'name' => 'Single',
@@ -43,7 +30,6 @@ class PersonalInfoTableSeeder extends Seeder
             ]
         ];
 
-        DB::table('genders')->insert($genders);
         DB::table('marital_statuses')->insert($statuses);
     }
 }

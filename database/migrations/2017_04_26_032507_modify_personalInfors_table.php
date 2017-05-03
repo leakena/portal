@@ -18,12 +18,6 @@ class ModifyPersonalInforsTable extends Migration
             $table->dropColumn('gender');
             $table->renameColumn('birthPlace', 'birth_place');
 
-            $table->integer('gender_id')->unsigned();
-
-            $table->foreign('gender_id')
-                ->references('id')
-                ->on('genders')
-                ->onDelete('CASCADE');
         });
     }
 
