@@ -76,8 +76,8 @@
                                                     <div class="content">
                                                         <h5 class="title">{{ $experience->position }}</h5>
                                                         <h6 class="subtitle">{{ $experience->company }}</h6>
-                                                        <h6 class="address">{{ $experience->address }}</h6>
-                                                        <div class="text desc">{{ $experience->description }}</div>
+                                                        <h6 class="address">{!! $experience->address !!}</h6>
+                                                        <div class="text desc">{!! $experience->description !!}  </div>
                                                     </div>
                                                 </div>
                                             @endforeach
@@ -105,7 +105,7 @@
                                                         <h5 class="title">{{ $education->major }}</h5>
                                                         <h6 class="major">{{ $education->degree->name }}</h6>
                                                         <h6 class="school">{{ $education->school }}</h6>
-                                                        <h6 class="address">{{ $education->address }}</h6>
+                                                        <h6 class="address">{!! $education->address !!}</h6>
                                                     </div>
                                                 </div>
                                             @endforeach
@@ -155,7 +155,7 @@
                                             <div class="entry">
                                                 <div class="pointer"></div>
                                                 <div class="text desc">
-                                                    <p>{{ $resume->career_profile }}</p>
+                                                    <p>{!! $resume->career_profile !!}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -230,7 +230,7 @@
                                             <div class="entryContainer content">
                                                 <div class="entry existingEntry">
                                                     <h4 class="name">{{ $skill->name }}</h4>
-                                                    <div class="text descRating">{{ $skill->description }}</div>
+                                                    <div class="text descRating">{!! $skill->description !!}</div>
                                                 </div>
                                             </div>
                                         @endforeach
@@ -245,7 +245,7 @@
                                             <div class="entryContainer content">
                                                 <div class="entry existingEntry">
                                                     <h4 class="name">{{ $interest->name }}</h4>
-                                                    <div class="text descRating">{{ $interest->description }}</div>
+                                                    <div class="text descRating">{!! $interest->description !!}</div>
                                                 </div>
                                             </div>
                                         @endforeach

@@ -187,9 +187,7 @@
 
                                             <div class="ln_solid"></div>
                                             <div class="form-group">
-                                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                                    <button class="btn btn-primary" type="button">Cancel</button>
-                                                    <button class="btn btn-primary" type="reset">Reset</button>
+                                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-8">
                                                     <button type="submit" class="btn btn-primary">Submit</button>
                                                 </div>
                                             </div>
@@ -264,10 +262,9 @@
 
                             <div class="ln_solid"></div>
                             <div class="form-group">
-                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                    <button class="btn btn-primary" type="button">Cancel</button>
-                                    <button class="btn btn-primary" type="reset">Reset</button>
-                                    <button type="submit" class="btn btn-success">Submit</button>
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-7">
+                                    <button class="btn btn-default" type="reset">Reset</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
 
