@@ -15,6 +15,7 @@
                                     <i class="fa fa-eye" aria-hidden="true"></i> Preview
                                 </button>
                             @endif
+
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -40,7 +41,11 @@
                                                    class="form-control col-md-7 col-xs-12"
                                                    value="{{isset($student)?$student['name_latin']:''}}" readonly>
                                         </div>
+                                            <i class="fa fa-info-circle fa-lg information_name" aria-hidden="true" style="color: #00a7d0"></i>
+
+
                                     </div>
+
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="marital-status">Marital
                                             Status <span class="required">*</span>
@@ -75,6 +80,7 @@
 
                                             </div>
                                         </div>
+                                        <i class="fa fa-info-circle fa-lg information_gender" aria-hidden="true" style="color: #00a7d0"></i>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Date Of Birth <span
@@ -100,6 +106,7 @@
                                                    class="form-control col-md-7 col-xs-12"
                                                    value="{{isset($personalInfo)?$personalInfo->birth_place:''}}">
                                         </div>
+                                        <i class="fa fa-info-circle fa-lg information_birth_place" aria-hidden="true" style="color: #00a7d0"></i>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">E-mail <span
@@ -173,12 +180,10 @@
 @section('js')
     <script>
 
-
-                @if(isset($personalInfo))
-        var material_status = '{{$personalInfo->status_id}}'
-
-                @else
-        var material_status = ''
+        @if(isset($personalInfo))
+            var material_status = '{{$personalInfo->status_id}}'
+        @else
+            var material_status = ''
         @endif
 
         $(document).on('click', '.gender', function () {
@@ -201,6 +206,36 @@
 
             }
         });
+
+        $(document).on('click', '.information_name', function (event) {
+            event.preventDefault();
+            swal({
+                title: "You cannot edit name",
+                text: "If you want to edit, please go to BE!",
+                type: "info"
+            });
+
+        } );
+
+        $(document).on('click', '.information_gender', function (event) {
+            event.preventDefault();
+            swal({
+                title: "You cannot edit gender",
+                text: "If you want to edit, please go to BE!",
+                type: "info"
+            });
+
+        } );
+
+        $(document).on('click', '.information_birth_place', function (event) {
+            event.preventDefault();
+            swal({
+                title: "You cannot edit place of birth",
+                text: "If you want to edit, please go to BE!",
+                type: "info"
+            });
+
+        } );
 
 
        /* $('#birthday').datepicker({
