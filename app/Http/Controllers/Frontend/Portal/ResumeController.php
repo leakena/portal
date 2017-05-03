@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Frontend\Portal;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Backend\Resume\CareerProfile\StoreCareerProfileRequest;
+use App\Http\Requests\Backend\Resume\PersonalInfo\StorePersonalInfoRequest;
 use App\Models\Portal\Resume\Gender;
 use App\Models\Portal\Resume\LanguageResume;
 use App\Models\Portal\Resume\Contact;
@@ -86,7 +88,7 @@ class ResumeController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function storeUserInfo(Request $request)
+    public function storeUserInfo(StorePersonalInfoRequest $request)
     {
         if (isset($request->resume_uid)) {
             /*--there is a resume id so we need to create user information --*/
@@ -144,7 +146,7 @@ class ResumeController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function saveCareerProfile(Request $request)
+    public function saveCareerProfile(StoreCareerProfileRequest $request)
     {
         $userResume = $this->getUserResume(auth()->id());
 

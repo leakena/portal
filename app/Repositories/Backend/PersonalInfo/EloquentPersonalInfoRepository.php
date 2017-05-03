@@ -9,7 +9,9 @@ use App\Models\Portal\Resume\Resume;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
+//use Intervention\Image\Facades\Image;
+
+use Intervention\Image\ImageManagerStatic as Image;
 
 /**
  * Class EloquentPersonalInfoRepository.
@@ -58,7 +60,6 @@ class EloquentPersonalInfoRepository implements PersonalInfoContract
         if (Input::file()) {
 
             $image = $input['profile'];
-
             $newfilename = auth()->id() . Carbon::now()->getTimestamp();
             $filename  = $newfilename . '.' . $image->getClientOriginalExtension();
             $path = public_path('img/backend/resume/profile/' . $filename);
@@ -105,24 +106,22 @@ class EloquentPersonalInfoRepository implements PersonalInfoContract
         $personalInfo->updated_at = Carbon::now();
 
         if (isset($input['profile'])) {
+
             if ($personalInfo->profile) {
 
-
                 $old_profile = $personalInfo->profile;
-
                 if(file_exists('img/backend/resume/profile/' . $old_profile)) {
-
                     if (unlink('img/backend/resume/profile/' . $old_profile)) {
                         if (Input::file()) {
+
                             $image = $input['profile'];
                             $newfilename = auth()->id() . Carbon::now()->getTimestamp();
                             $filename  = $newfilename . '.' . $image->getClientOriginalExtension();
                             $path = public_path('img/backend/resume/profile/' . $filename);
-                            Image::make($image->getRealPath())->resize(150, 200)->save($path);
+                            Image::make($image->getRealPath())->resize(180, 200)->save($path);
                             $personalInfo->profile = $filename;
                         }
                     }
-
                 } else {
                     if (Input::file()) {
                         $image = $input['profile'];
@@ -133,10 +132,6 @@ class EloquentPersonalInfoRepository implements PersonalInfoContract
                         $personalInfo->profile = $filename;
                     }
                 }
-
-
-
-
             } else {
                 if (Input::file()) {
                     $image = $input['profile'];
