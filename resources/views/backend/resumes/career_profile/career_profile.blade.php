@@ -3,9 +3,12 @@
 
 @section('content')
 
+
     <div class="my_career_profile">
         @include('backend.resumes.career_profile.partial.career_profile')
     </div>
+
+
 
     <div role="main" class="add_new">
         <div class="">
@@ -119,5 +122,12 @@
         function setLabelButton(label) {
             $('#add').text(label)
         }
+
+        setTimeout(function(){
+            if($('.error_message_alert').is(':visible')) {
+                $('.error_message_alert').fadeOut();
+            }
+
+        }, 3000);
     </script>
 @endsection

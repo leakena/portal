@@ -2,6 +2,15 @@
     <div class="">
         <div class="clearfix"></div>
         <div class="row">
+            @if (count($errors) > 0)
+                <div class="alert alert-danger error_message_alert">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
