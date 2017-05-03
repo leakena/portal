@@ -92,14 +92,12 @@ class EloquentPersonalInfoRepository implements PersonalInfoContract
 
         if (isset($input['profile'])) {
             if ($personalInfo->profile) {
-
                 $old_profile = $personalInfo->profile;
-
                 if(file_exists('img/frontend/uploads/profile_cv/' . $old_profile)) {
                     if (unlink('img/frontend/uploads/profile_cv/' . $old_profile)) {
                         if (Input::file()) {
                             $filename = $input['profile'];
-                            $change = $filename->getClientOriginalExtension();
+                                $change = $filename->getClientOriginalExtension();
                             $newfilename = auth()->id() . Carbon::now()->getTimestamp() . '.';
                             $filename->move('img/frontend/uploads/profile_cv', "{$newfilename}" . $change);
                             $personalInfo->profile = $newfilename . $change;
