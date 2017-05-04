@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Backend\Resume\CareerProfile;
+namespace App\Http\Requests\Backend\Resume\Education;
 
 use App\Http\Requests\ApiRequest;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class StoreCareerProfileRequest extends ApiRequest
+class StoreEducation extends ApiRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,8 +15,6 @@ class StoreCareerProfileRequest extends ApiRequest
      */
     public function authorize()
     {
-
-
         return $this->studentAccess(Auth::user()->email);
     }
 
@@ -27,8 +26,13 @@ class StoreCareerProfileRequest extends ApiRequest
     public function rules()
     {
         return [
-            'resume_uid' => 'required',
-            'description' => 'required|max:200'
+            'resume_uid'    => 'required',
+            'school'        => 'required',
+            'major'         => 'required',
+            'degree'        => 'required',
+            'start_date'    => 'required',
+            'is_present'    => 'required',
+            'end_date'      => 'required',
         ];
     }
 }

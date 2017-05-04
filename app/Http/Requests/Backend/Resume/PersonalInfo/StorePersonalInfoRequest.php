@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\Backend\Resume\PersonalInfo;
 
+use App\Http\Requests\ApiRequest;
 use \Illuminate\Support\Facades\Auth;
-use Illuminate\Foundation\Http\FormRequest;
 
-class StorePersonalInfoRequest extends FormRequest
+class StorePersonalInfoRequest extends ApiRequest
 {
 
     /**
@@ -15,7 +15,8 @@ class StorePersonalInfoRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->studentAccess(Auth::user()->email);
+
+       return  $this->studentAccess(Auth::user()->email);
     }
 
     /**
@@ -26,14 +27,16 @@ class StorePersonalInfoRequest extends FormRequest
     public function rules()
     {
         return [
+
             'resume_uid' => 'required',
             'name' => 'required|max:255',
             'status_id' => 'max:255',
             'dob'   => 'required',
             'birth_place' => 'required',
             'email'     => 'required|email',
-            'phone'     => 'required|integer',
+            'phone'     => 'required',
             'address'  => 'required'
+
         ];
     }
 }

@@ -4,6 +4,15 @@
     <div role="main">
         <div class="clearfix"></div>
         <div class="row">
+            @if (count($errors) > 0)
+                <div class="alert alert-danger error_message_alert">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="col-md-12 col-sm-12 col-xs-12">
                 @if(count($skills)>0)
                     @foreach($skills as $skill)
@@ -40,7 +49,7 @@
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input name="name" value="{{ $skill->name }}" type="text" id="name" required="required" class="form-control col-md-7 col-xs-12">
+                                            <input name="name" value="{{ $skill->name }}" type="text" id="name" class="form-control col-md-7 col-xs-12">
                                         </div>
                                     </div>
 
@@ -48,7 +57,7 @@
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Description <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <textarea type="text" id="description" name="description" required="required" class="form-control col-md-7 col-xs-12">{!! $skill->description !!}
+                                            <textarea type="text" id="description" name="description" class="form-control col-md-7 col-xs-12">{!! $skill->description !!}
 
                                             </textarea>
 
@@ -117,7 +126,7 @@
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input name="name" type="text" id="name" required="required" class="form-control col-md-7 col-xs-12">
+                                    <input name="name" type="text" id="name" class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
 
@@ -125,7 +134,7 @@
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Description <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <textarea type="text" id="description" name="description" required="required" class="form-control col-md-7 col-xs-12">
+                                    <textarea type="text" id="description" name="description" class="form-control col-md-7 col-xs-12">
 
                                             </textarea>
 
@@ -203,6 +212,13 @@
                     }
                 });
 
-        })
+        });
+
+        setTimeout(function(){
+            if($('.error_message_alert').is(':visible')) {
+                $('.error_message_alert').fadeOut();
+            }
+
+        }, 3000);
     </script>
 @endsection

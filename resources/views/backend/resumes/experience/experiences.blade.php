@@ -62,6 +62,15 @@
 @section('content')
     <div role="main">
         <div class="row">
+            @if (count($errors) > 0)
+                <div class="alert alert-danger error_message_alert">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="col-md-12 col-sm-12 col-xs-12">
                 @if(count($experiences)>0)
                     @foreach($experiences as $experience)
@@ -151,7 +160,7 @@
                                                 <div class="input-group">
                                                     <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
                                                            name="end_date" class="date-picker form-control update_end_date"
-                                                           value="{{ $experience->end_date }}" readonly>
+                                                           value="Present" readonly>
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar-o"></i>
                                                     </span>
@@ -429,7 +438,7 @@
         $('.slider_update').on('change', function() {
             if($(this).is(':checked')) {
 
-                $(this).parent('label').parent('div').parent('div').siblings('div.find_end_date').find('input[name=end_date]').val('').datepicker('destroy');
+                $(this).parent('label').parent('div').parent('div').siblings('div.find_end_date').find('input[name=end_date]').val('Present').datepicker('destroy');
                 $(this).parent('label').parent('div').siblings('input[name=is_present]').val('1');
 
             } else {
@@ -437,11 +446,20 @@
                 $(this).parent('label').parent('div').parent('div').siblings('div.find_end_date').find('input[name=end_date]').datepicker({
                     format:'yyyy-mm-d'
                 });
+                $(this).parent('label').parent('div').parent('div').siblings('div.find_end_date').find('input[name=end_date]').val('');
                 $(this).parent('label').parent('div').siblings('input[name=is_present]').val('0');
+
 
             }
 
         });
+
+        setTimeout(function(){
+            if($('.error_message_alert').is(':visible')) {
+                $('.error_message_alert').fadeOut();
+            }
+
+        }, 3000);
 
     </script>
 
