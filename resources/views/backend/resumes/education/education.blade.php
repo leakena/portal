@@ -1,6 +1,63 @@
 @extends('backend.layouts.resume')
 
     <link rel="stylesheet" href="{{ asset('css/backend/resume/resume.css') }}"/>
+    <style>
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 55px;
+        height: 28px;
+    }
+
+    .switch input {display:none;}
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 20px;
+        width: 20px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+</style>
 
 
 @section('content')
@@ -83,7 +140,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-5">
                                             <label class="control-label" for="start_date">Start Date <span class="required">*</span>
                                             </label>
                                             <div class="input-group">
@@ -95,18 +152,58 @@
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label class="control-label" for="end_date"> End Date <span class="required">*</span>
-                                            </label>
-                                            <div class="input-group">
-                                                <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
-                                                       name="end_date" class="date-picker form-control end_date"
-                                                       value="{{ $education->end_date }}" readonly>
-                                                <span class="input-group-addon">
+                                        @if($education->is_present == true)
+                                            <div class="form-group col-md-5 find_end_date">
+                                                <label class="control-label" for="end_date"> End Date <span class="required">*</span>
+                                                </label>
+                                                <div class="input-group">
+                                                    <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
+                                                           name="end_date" class="date-picker form-control"
+                                                           value="{{ $education->end_date }}" readonly>
+                                                    <span class="input-group-addon">
                                                     <i class="fa fa-calendar-o"></i>
                                                 </span>
+                                                </div>
                                             </div>
-                                        </div>
+
+                                            <div class="form-group col-md-2">
+                                                <input type="hidden" name="is_present" value="{{ $education->is_present }}">
+                                                <label class="control-label">Till today
+                                                </label>
+                                                <div class="input-group">
+                                                    <label class="switch">
+                                                        <input checked type="checkbox" class="slider_update">
+                                                        <div class="slider round" ></div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class="form-group col-md-5 find_end_date">
+                                                <label class="control-label" for="end_date"> End Date <span class="required">*</span>
+                                                </label>
+                                                <div class="input-group">
+                                                    <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
+                                                           name="end_date" class="date-picker form-control end_date"
+                                                           value="{{ $education->end_date }}" readonly>
+                                                    <span class="input-group-addon">
+                                                    <i class="fa fa-calendar-o"></i>
+                                                </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-2">
+                                                <input type="hidden" name="is_present" value="{{ $education->is_present }}">
+                                                <label class="control-label">Till today
+                                                </label>
+                                                <div class="input-group">
+                                                    <label class="switch">
+                                                        <input type="checkbox" class="slider_update">
+                                                        <div class="slider round" ></div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        @endif
+
                                     </div>
 
                                     <div class="ln_solid"></div>
@@ -203,7 +300,7 @@
                             </div>
 
                             <div class="row">
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-5">
                                     <label class="control-label" for="start_date">Start Date <span class="required">*</span>
                                     </label>
                                     <div class="input-group">
@@ -215,7 +312,7 @@
                                                 </span>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-5 find_end_date">
                                     <label class="control-label" for="end_date"> End Date <span class="required">*</span>
                                     </label>
                                     <div class="input-group">
@@ -225,6 +322,18 @@
                                         <span class="input-group-addon">
                                                     <i class="fa fa-calendar-o"></i>
                                                 </span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <input type="hidden" name="is_present" value="{{ $education->is_present }}">
+                                    <label class="control-label">Till today
+                                    </label>
+                                    <div class="input-group">
+                                        <label class="switch">
+                                            <input type="checkbox" class="slider_update">
+                                            <div class="slider round" ></div>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -309,5 +418,22 @@
         $('.end_date').datepicker({
             format:'yyyy-mm-d'
         })
+
+        $('.slider_update').on('change', function() {
+            if($(this).is(':checked')) {
+
+                $(this).parent('label').parent('div').parent('div').siblings('div.find_end_date').find('input[name=end_date]').val('').datepicker('destroy');
+                $(this).parent('label').parent('div').siblings('input[name=is_present]').val('1');
+
+            } else {
+
+                $(this).parent('label').parent('div').parent('div').siblings('div.find_end_date').find('input[name=end_date]').datepicker({
+                    format:'yyyy-mm-d'
+                });
+                $(this).parent('label').parent('div').siblings('input[name=is_present]').val('0');
+
+            }
+
+        });
     </script>
 @endsection

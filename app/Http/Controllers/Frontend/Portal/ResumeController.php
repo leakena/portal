@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Response;
 use App\HelperTrait\TraitCareerProfile;
 use Illuminate\Support\Facades\Input;
 use App\Utils\Http\Facades\ApiRequestManager;
+use phpDocumentor\Reflection\Types\Null_;
 
 class ResumeController extends Controller
 {
@@ -268,6 +269,7 @@ class ResumeController extends Controller
                         'company' => request('company'),
                         'description' => request('description'),
                         'address' => request('address'),
+                        'is_present' => request('is_present'),
                         'start_date' => request('start_date'),
                         'end_date' => request('end_date')
                     ]);
@@ -283,10 +285,13 @@ class ResumeController extends Controller
                 $newExperience->description = $request->description;
                 $newExperience->address = $request->address;
                 $newExperience->start_date = $request->start_date;
+                $newExperience->is_present = $request->is_present;
                 $newExperience->end_date = $request->end_date;
 
-                $newExperience->save();
-                return redirect()->route('frontend.resume.get_experience');
+                if($newExperience->save()){
+                    return redirect()->route('frontend.resume.get_experience');
+                }
+
             }
 
         }else{
@@ -304,6 +309,7 @@ class ResumeController extends Controller
                 $newExperience->company = $request->company;
                 $newExperience->description = $request->description;
                 $newExperience->address = $request->address;
+                $newExperience->is_present = $request->is_present;
                 $newExperience->start_date = $request->start_date;
                 $newExperience->end_date = $request->end_date;
 
@@ -690,6 +696,7 @@ class ResumeController extends Controller
                         'school' => $request->school,
                         'degree_id' => $request->degree,
                         'address' => $request->address,
+                        'is_present' => $request->is_present,
                         'start_date' => $request->start_date,
                         'end_date' => $request->end_date
                     ]);
@@ -706,6 +713,7 @@ class ResumeController extends Controller
                 $newEducation->school = $request->school;
                 $newEducation->degree_id = $request->degree;
                 $newEducation->address = $request->address;
+                $newEducation->is_present = $request->is_present;
                 $newEducation->start_date = $request->start_date;
                 $newEducation->end_date = $request->end_date;
                 // Save new education
@@ -731,6 +739,7 @@ class ResumeController extends Controller
                 $newEducation->school = $request->school;
                 $newEducation->degree_id = $request->degree;
                 $newEducation->address = $request->address;
+                $newEducation->is_present = $request->is_present;
                 $newEducation->start_date = $request->start_date;
                 $newEducation->end_date = $request->end_date;
                 // Save new education

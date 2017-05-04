@@ -38,4 +38,14 @@
 
 <!-- Custom Theme Scripts -->
 <script src="{{ url('css/build/js/custom.min.js') }}"></script>
+<script src="{{ url('js/vendor/tinymce/js/tinymce/tinymce.min.js') }}"></script>
 <script src="{{ url('bower_components/bootstrap-sweetalert/dist/sweetalert.js') }}"> </script>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        tinymce.init({
+            selector: 'textarea',
+            menubar: false,
+            statusbar: false
+        });
+    });
+</script>

@@ -34,7 +34,9 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Description <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input name="description" type="text" id="description" required="required" class="form-control col-md-7 col-xs-12">
+                                        <textarea type="text" id="description" name="description" required="required"
+                                                  class="form-control">{{isset($newCareerProfile)?$newCareerProfile->career_profile:''}}
+                                            </textarea>
                                         <input type="hidden" name="resume_uid" value="{{isset($newCareerProfile)?$newCareerProfile->id:''}}">
                                     </div>
                                 </div>

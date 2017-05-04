@@ -96,6 +96,7 @@
                                             </span>
                                             </div>
                                         </div>
+                                        <i class="fa fa-info-circle fa-lg information_birth_place" aria-hidden="true" style="color: #00a7d0"></i>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="birth-place">Place of
@@ -106,7 +107,6 @@
                                                    class="form-control col-md-7 col-xs-12"
                                                    value="{{isset($personalInfo)?$personalInfo->birth_place:''}}">
                                         </div>
-                                        <i class="fa fa-info-circle fa-lg information_birth_place" aria-hidden="true" style="color: #00a7d0"></i>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">E-mail <span
@@ -211,7 +211,7 @@
             event.preventDefault();
             swal({
                 title: "You cannot edit name",
-                text: "If you want to edit, please go to BE!",
+                text: "If you want to edit, please go to administration office!",
                 type: "info"
             });
 
@@ -221,7 +221,7 @@
             event.preventDefault();
             swal({
                 title: "You cannot edit gender",
-                text: "If you want to edit, please go to BE!",
+                text: "If you want to edit, please go to administration office!",
                 type: "info"
             });
 
@@ -230,8 +230,8 @@
         $(document).on('click', '.information_birth_place', function (event) {
             event.preventDefault();
             swal({
-                title: "You cannot edit place of birth",
-                text: "If you want to edit, please go to BE!",
+                title: "You cannot edit date of birth",
+                text: "If you want to edit, please go to administration office!",
                 type: "info"
             });
 
