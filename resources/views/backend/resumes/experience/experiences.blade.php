@@ -132,7 +132,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-5">
                                             <label class="control-label">Start Date <span class="required">*</span>
                                             </label>
                                             <div class="input-group">
@@ -144,19 +144,57 @@
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label class="control-label">End Date <span class="required">*</span>
-                                            </label>
-                                            <div class="input-group">
-                                                <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
-                                                       name="end_date" class="date-picker form-control end_date"
-                                                       value="{{ $experience->end_date }}" readonly>
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-calendar-o"></i>
-                                                </span>
-                                            </div>
+                                        @if($experience->is_present == true)
+                                            <div class="form-group col-md-5 find_end_date">
+                                                <label class="control-label">End Date <span class="required">*</span>
+                                                </label>
+                                                <div class="input-group">
+                                                    <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
+                                                           name="end_date" class="date-picker form-control update_end_date"
+                                                           value="{{ $experience->end_date }}" readonly>
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-calendar-o"></i>
+                                                    </span>
+                                                </div>
 
-                                        </div>
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <input type="hidden" name="is_present" value="{{ $experience->is_present }}">
+                                                <label class="control-label">Till today
+                                                </label>
+                                                <div class="input-group">
+                                                    <label class="switch">
+                                                        <input checked type="checkbox" class="slider_update">
+                                                        <div class="slider round" ></div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class="form-group col-md-5 find_end_date">
+                                                <label class="control-label">End Date <span class="required">*</span>
+                                                </label>
+                                                <div class="input-group">
+                                                    <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
+                                                           name="end_date" class="date-picker end_date form-control update_end_date"
+                                                           value="{{ $experience->end_date }}" readonly>
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-calendar-o"></i>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <input type="hidden" name="is_present" value="{{ $experience->is_present }}">
+                                                <label class="control-label">Till today
+                                                </label>
+                                                <div class="input-group">
+                                                    <label class="switch">
+                                                        <input type="checkbox" class="slider_update">
+                                                        <div class="slider round" ></div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        @endif
                                     </div>
 
                                     <div class="row">
@@ -279,12 +317,12 @@
                                                 </span>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-5">
+                                <div class="form-group col-md-5 find_end_date">
                                     <label class="control-label">End Date <span class="required">*</span>
                                     </label>
                                     <div class="input-group">
                                         <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
-                                               name="end_date" class="date-picker form-control end_date add_end_date"
+                                               name="end_date" class="date-picker form-control end_date"
                                                readonly>
                                         <span class="input-group-addon">
                                                     <i class="fa fa-calendar-o"></i>
@@ -293,11 +331,12 @@
 
                                 </div>
                                 <div class="form-group col-md-2">
+                                    <input type="hidden" class="is_present" name="is_present" value="">
                                     <label class="control-label">Till today
                                     </label>
                                     <div class="input-group">
                                         <label class="switch">
-                                            <input type="checkbox" id="slider">
+                                            <input type="checkbox" class="slider_update">
                                             <div class="slider round" ></div>
                                         </label>
                                     </div>
@@ -386,19 +425,23 @@
             format:'yyyy-mm-d'
         });
 
-        $('#slider').on('change', function() {
+
+        $('.slider_update').on('change', function() {
             if($(this).is(':checked')) {
-                $('.add_end_date').datepicker("destroy");
-                $('.add_end_date').val('---------------------------- Present ----------------------------')
+
+                $(this).parent('label').parent('div').parent('div').siblings('div.find_end_date').find('input[name=end_date]').val('').datepicker('destroy');
+                $(this).parent('label').parent('div').siblings('input[name=is_present]').val('1');
+
             } else {
-                $('.add_end_date').datepicker({
+
+                $(this).parent('label').parent('div').parent('div').siblings('div.find_end_date').find('input[name=end_date]').datepicker({
                     format:'yyyy-mm-d'
                 });
-                $('.add_end_date').val('');
+                $(this).parent('label').parent('div').siblings('input[name=is_present]').val('0');
+
             }
 
-        })
-
+        });
 
     </script>
 

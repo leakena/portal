@@ -71,7 +71,11 @@
                                                     <div class="dates"><span
                                                                 class="dateFrom">{{ $experience->start_date }}</span>
                                                         <span class="dateSeparator"></span>
-                                                        <span class="dateTo">{{ $experience->end_date }}</span>
+                                                        @if($experience->is_present == true)
+                                                            <span class="dateTo">Present</span>
+                                                        @else
+                                                            <span class="dateTo">{{ $experience->end_date }}</span>
+                                                        @endif
                                                     </div>
                                                     <div class="content">
                                                         <h5 class="title">{{ $experience->position }}</h5>
@@ -99,7 +103,12 @@
                                                     <div class="dates"><span
                                                                 class="dateFrom">{{ $education->start_date }}</span>
                                                         <span class="dateSeparator"></span>
-                                                        <span class="dateTo">{{ $education->end_date }}</span>
+                                                        @if($education->is_present == true)
+                                                            <span class="dateTo">Present</span>
+                                                        @else
+                                                            <span class="dateTo">{{ $education->end_date }}</span>
+                                                        @endif
+
                                                     </div>
                                                     <div class="content">
                                                         <h5 class="title">{{ $education->major }}</h5>
