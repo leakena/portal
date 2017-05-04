@@ -6,7 +6,7 @@
     @yield('after-style-end')
 </head>
 
-<body class="nav-md">
+<body class="nav-md" style="overflow-x: hidden !important;">
 <div class="container body">
     <div class="main_container">
         <div class="col-md-3 left_col">

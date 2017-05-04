@@ -4,28 +4,31 @@ namespace App\Http\Controllers\Frontend\Portal;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Resume\CareerProfile\StoreCareerProfileRequest;
+use App\Http\Requests\Backend\Resume\Education\StoreEducation;
+use App\Http\Requests\Backend\Resume\Experience\StoreExperience;
+use App\Http\Requests\Backend\Resume\Interest\StoreInterest;
+use App\Http\Requests\Backend\Resume\Language\StoreLanguage;
 use App\Http\Requests\Backend\Resume\PersonalInfo\StorePersonalInfoRequest;
-use App\Models\Portal\Resume\Gender;
-use App\Models\Portal\Resume\LanguageResume;
+use App\Http\Requests\Backend\Resume\Reference\StoreReference;
+use App\Http\Requests\Backend\Resume\Skill\StoreSkill;
 use App\Models\Portal\Resume\Contact;
 use App\Models\Portal\Resume\Degree;
 use App\Models\Portal\Resume\Education;
 use App\Models\Portal\Resume\Experience;
 use App\Models\Portal\Resume\Interest;
 use App\Models\Portal\Resume\Language;
+use App\Models\Portal\Resume\LanguageResume;
 use App\Models\Portal\Resume\MaritalStatus;
 use App\Models\Portal\Resume\Project;
 use App\Models\Portal\Resume\Reference;
 use App\Models\Portal\Resume\Resume;
 use App\Models\Portal\Resume\Skill;
 use App\Repositories\Backend\PersonalInfo\PersonalInfoContract;
+use App\Utils\Http\Facades\ApiRequestManager;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
-use App\HelperTrait\TraitCareerProfile;
-use Illuminate\Support\Facades\Input;
-use App\Utils\Http\Facades\ApiRequestManager;
-use phpDocumentor\Reflection\Types\Null_;
 
 class ResumeController extends Controller
 {
@@ -70,7 +73,7 @@ class ResumeController extends Controller
     {
 
         $user = auth()->user();
-        $student = $this->requestManager->getElementsFromApi($this->prefix.'/prop', ['student_id_card'], [$user->email], []);
+        $student = $this->requestManager->getElementsFromApi($this->prefix . '/prop', ['student_id_card'], [$user->email], []);
 
         $userResume = Resume::where('user_uid', auth()->id())->first();
         $marital_statuses = MaritalStatus::all();
@@ -84,13 +87,12 @@ class ResumeController extends Controller
     }
 
     /**
-     * Find.......
-     *
-     * @param Request $request
+     * @param StorePersonalInfoRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function storeUserInfo(StorePersonalInfoRequest $request)
     {
+
         if (isset($request->resume_uid)) {
             /*--there is a resume id so we need to create user information --*/
 
@@ -113,8 +115,7 @@ class ResumeController extends Controller
                 }
             }
 
-        }
-        else {
+        } else {
             /*--if the request has no resume id then we have to create Resume first */
             $resume = new Resume();
             $resume->career_profile = null;
@@ -246,10 +247,10 @@ class ResumeController extends Controller
     /**
      * @return mixed
      */
-    public function saveExperience(Request $request)
+    public function saveExperience(StoreExperience $request)
     {
 
-        if (isset($request->resume_uid)){
+        if (isset($request->resume_uid)) {
 
             $userResume = $this->getUserResume(auth()->id());
 
@@ -258,6 +259,12 @@ class ResumeController extends Controller
             if (isset($request->experience_id)) {
 
                 /*--update experience--*/
+
+                if($request->is_present == true){
+                    $end_date = Carbon::now();
+                }else{
+                    $end_date = $request->end_date;
+                }
 
                 DB::table('experiences')
                     ->where([
@@ -271,7 +278,7 @@ class ResumeController extends Controller
                         'address' => request('address'),
                         'is_present' => request('is_present'),
                         'start_date' => request('start_date'),
-                        'end_date' => request('end_date')
+                        'end_date' => $end_date
                     ]);
                 return redirect()->route('frontend.resume.get_experience');
             } else {
@@ -286,15 +293,19 @@ class ResumeController extends Controller
                 $newExperience->address = $request->address;
                 $newExperience->start_date = $request->start_date;
                 $newExperience->is_present = $request->is_present;
-                $newExperience->end_date = $request->end_date;
+                if($request->is_present == true){
+                    $newExperience->end_date = Carbon::now();
+                }else{
+                    $newExperience->end_date = $request->end_date;
+                }
 
-                if($newExperience->save()){
+                if ($newExperience->save()) {
                     return redirect()->route('frontend.resume.get_experience');
                 }
 
             }
 
-        }else{
+        } else {
 
             /*-- This user has no resume id so need to create resume first--*/
             $resume = new Resume();
@@ -311,7 +322,11 @@ class ResumeController extends Controller
                 $newExperience->address = $request->address;
                 $newExperience->is_present = $request->is_present;
                 $newExperience->start_date = $request->start_date;
-                $newExperience->end_date = $request->end_date;
+                if($request->is_present == true){
+                    $newExperience->end_date = Carbon::now();
+                }else{
+                    $newExperience->end_date = $request->end_date;
+                }
 
                 $newExperience->save();
                 return redirect()->route('frontend.resume.get_experience');
@@ -458,15 +473,15 @@ class ResumeController extends Controller
     /**
      * @return mixed
      */
-    public function saveSkill(Request $request)
+    public function saveSkill(StoreSkill $request)
     {
-        if (isset($request->resume_uid)){
+        if (isset($request->resume_uid)) {
 
             $userResume = $this->getUserResume(auth()->id());
 
             /*-- This user already has a resume id so can create or update skill--*/
 
-            if($request->skill_id){
+            if ($request->skill_id) {
                 /*--Update Skill--*/
                 DB::table('skills')
                     ->where([
@@ -478,7 +493,7 @@ class ResumeController extends Controller
                         'description' => request('description')
                     ]);
                 return redirect()->route('frontend.resume.get_skill');
-            }else{
+            } else {
 
                 // Create a new skill
                 $newSkill = new Skill();
@@ -487,12 +502,12 @@ class ResumeController extends Controller
                 $newSkill->name = request('name');
                 $newSkill->description = request('description');
                 // Save new skill
-                if($newSkill->save()){
+                if ($newSkill->save()) {
                     return redirect()->route('frontend.resume.get_skill');
                 }
             }
 
-        }else{
+        } else {
 
             /*-- This user has no resume id so need to create resume first--*/
             $resume = new Resume();
@@ -507,7 +522,7 @@ class ResumeController extends Controller
                 $newSkill->name = request('name');
                 $newSkill->description = request('description');
                 // Save new skill
-                if($newSkill->save()){
+                if ($newSkill->save()) {
                     return redirect()->route('frontend.resume.get_skill');
                 }
 
@@ -673,10 +688,10 @@ class ResumeController extends Controller
     /**
      * @return mixed
      */
-    public function saveEducation(Request $request)
+    public function saveEducation(StoreEducation $request)
     {
 
-        if (isset($request->resume_uid)){
+        if (isset($request->resume_uid)) {
 
             $userResume = $this->getUserResume(auth()->id());
 
@@ -685,6 +700,12 @@ class ResumeController extends Controller
             if (isset($request->education_id)) {
 
                 /*-- Update Education --*/
+
+                if($request->is_present == true){
+                    $end_date = Carbon::now();
+                }else{
+                    $end_date = $request->end_date;
+                }
 
                 DB::table('education')
                     ->where([
@@ -698,7 +719,7 @@ class ResumeController extends Controller
                         'address' => $request->address,
                         'is_present' => $request->is_present,
                         'start_date' => $request->start_date,
-                        'end_date' => $request->end_date
+                        'end_date' => $end_date
                     ]);
                 return redirect()->route('frontend.resume.get_education');
             } else {
@@ -715,9 +736,14 @@ class ResumeController extends Controller
                 $newEducation->address = $request->address;
                 $newEducation->is_present = $request->is_present;
                 $newEducation->start_date = $request->start_date;
-                $newEducation->end_date = $request->end_date;
+                if($request->is_present == true){
+                    $newEducation->end_date = Carbon::now();
+                }else{
+                    $newEducation->end_date = $request->end_date;
+                }
+
                 // Save new education
-                if($newEducation->save()){
+                if ($newEducation->save()) {
 
                     return redirect()->route('frontend.resume.get_education');
                 }
@@ -725,7 +751,7 @@ class ResumeController extends Controller
 
             }
 
-        }else{
+        } else {
 
             /*-- This user has no resume id so need to create resume first--*/
             $resume = new Resume();
@@ -741,9 +767,13 @@ class ResumeController extends Controller
                 $newEducation->address = $request->address;
                 $newEducation->is_present = $request->is_present;
                 $newEducation->start_date = $request->start_date;
-                $newEducation->end_date = $request->end_date;
+                if($request->is_present == true){
+                    $newEducation->end_date = Carbon::now();
+                }else{
+                    $newEducation->end_date = $request->end_date;
+                }
                 // Save new education
-                if($newEducation->save()){
+                if ($newEducation->save()) {
                     return redirect()->route('frontend.resume.get_education');
                 }
             }
@@ -830,16 +860,16 @@ class ResumeController extends Controller
     /**
      * @return mixed
      */
-    public function saveLanguage(Request $request)
+    public function saveLanguage(StoreLanguage $request)
     {
 
-        if (isset($request->resume_uid)){
+        if (isset($request->resume_uid)) {
 
             $userResume = $this->getUserResume(auth()->id());
 
             /*-- This user already has a resume id so can create or update language--*/
 
-            if(isset($request->language_resume_id)){
+            if (isset($request->language_resume_id)) {
                 /*-- Update language --*/
 
                 DB::table('language_resume')
@@ -853,7 +883,7 @@ class ResumeController extends Controller
                     ]);
                 return redirect()->route('frontend.resume.get_language');
 
-            }else{
+            } else {
 
                 // Create a new language
                 $newLanguage = new LanguageResume();
@@ -861,19 +891,19 @@ class ResumeController extends Controller
                 $newLanguage->resume_uid = $userResume->id;
                 $newLanguage->language_id = $request->language_id;
                 $newLanguage->proficiency = $request->proficiency;
-                if($newLanguage->proficiency == 'Mother Tongue'){
+                if ($newLanguage->proficiency == 'Mother Tongue') {
                     $newLanguage->is_mother_tongue = true;
-                }else{
+                } else {
                     $newLanguage->is_mother_tongue = false;
                 }
 
                 // Save new language
-                if($newLanguage->save()){
+                if ($newLanguage->save()) {
                     return redirect()->route('frontend.resume.get_language');
                 }
             }
 
-        }else{
+        } else {
             /*-- This user has no resume id so need to create resume first--*/
             $resume = new Resume();
             $resume->career_profile = null;
@@ -885,16 +915,16 @@ class ResumeController extends Controller
                 // Set value into each field
                 $newLanguage->resume_uid = $resume->id;
                 $newLanguage->language_id = $request->language_id;
-                if($newLanguage->proficiency = $request->proficiency == null){
+                if ($newLanguage->proficiency = $request->proficiency == null) {
                     $newLanguage->proficiency = 'Mother tongue';
                     $newLanguage->is_mother_tongue = true;
-                }else{
+                } else {
                     $newLanguage->proficiency = $request->proficiency;
                     $newLanguage->is_mother_tongue = false;
                 }
 
                 // Save new language
-                if($newLanguage->save()){
+                if ($newLanguage->save()) {
                     return redirect()->route('frontend.resume.get_language');
                 }
             }
@@ -929,7 +959,6 @@ class ResumeController extends Controller
         } else {
             $selectedLanguages = null;
         }
-
 
 
         return view('backend.resumes.language.languages', compact('userResume', 'languages', 'selectedLanguages'));
@@ -987,16 +1016,16 @@ class ResumeController extends Controller
     /**
      * @return mixed
      */
-    public function saveInterest(Request $request)
+    public function saveInterest(StoreInterest $request)
     {
 
-        if (isset($request->resume_uid)){
+        if (isset($request->resume_uid)) {
 
             $userResume = $this->getUserResume(auth()->id());
 
             /*-- This user already has a resume id so can create or update interest--*/
 
-            if(isset($request->interest_id)){
+            if (isset($request->interest_id)) {
 
                 /*-- Update Interest --*/
 
@@ -1010,7 +1039,7 @@ class ResumeController extends Controller
                         'description' => request('description')
                     ]);
                 return redirect()->route('frontend.resume.get_interest');
-            }else{
+            } else {
 
                 // Create a new interest
                 $newInterest = new Interest();
@@ -1019,12 +1048,12 @@ class ResumeController extends Controller
                 $newInterest->name = $request->name;
                 $newInterest->description = $request->description;
                 // Save new education
-                if($newInterest->save()){
+                if ($newInterest->save()) {
                     return redirect()->route('frontend.resume.get_interest');
                 }
             }
 
-        }else{
+        } else {
 
             /*-- This user has no resume id so need to create resume first--*/
             $resume = new Resume();
@@ -1038,7 +1067,7 @@ class ResumeController extends Controller
                 $newInterest->name = $request->name;
                 $newInterest->description = $request->description;
                 // Save new education
-                if($newInterest->save()){
+                if ($newInterest->save()) {
                     return redirect()->route('frontend.resume.get_interest');
                 }
 
@@ -1071,7 +1100,7 @@ class ResumeController extends Controller
             $interests = null;
         }
 
-        return view('backend.resumes.interest.interest', compact('userResume','interests'));
+        return view('backend.resumes.interest.interest', compact('userResume', 'interests'));
     }
 
     /**
@@ -1139,18 +1168,19 @@ class ResumeController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param StoreReference $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function saveReference(Request $request){
+    public function saveReference(StoreReference $request)
+    {
 
-        if (isset($request->resume_uid)){
+        if (isset($request->resume_uid)) {
 
             $userResume = $this->getUserResume(auth()->id());
 
             /*-- This user already has a resume id so can create or update reference--*/
 
-            if(isset($request->reference_id)){
+            if (isset($request->reference_id)) {
                 /*-- Update reference --*/
 
                 DB::table('references')
@@ -1165,7 +1195,7 @@ class ResumeController extends Controller
                         'email' => $request->email
                     ]);
                 return redirect()->route('frontend.resume.get_reference');
-            }else{
+            } else {
 
                 /*-- Create new reference --*/
                 $newReference = new Reference();
@@ -1177,13 +1207,13 @@ class ResumeController extends Controller
                 $newReference->email = $request->email;
                 // Save new reference
 
-                if($newReference->save()){
+                if ($newReference->save()) {
                     return redirect()->route('frontend.resume.get_reference');
                 }
 
             }
 
-        }else{
+        } else {
 
             /*-- This user has no resume id so need to create resume first--*/
             $resume = new Resume();
@@ -1200,7 +1230,7 @@ class ResumeController extends Controller
                 $newReference->email = $request->email;
                 // Save new reference
 
-                if($newReference->save()){
+                if ($newReference->save()) {
                     return redirect()->route('frontend.resume.get_reference');
                 }
 
@@ -1214,7 +1244,8 @@ class ResumeController extends Controller
      * @param $refId
      * @return mixed
      */
-    public function deleteReference($refId){
+    public function deleteReference($refId)
+    {
         $interest = Reference::where('id', $refId)->delete();
 
         if ($interest) {

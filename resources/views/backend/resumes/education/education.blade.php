@@ -64,6 +64,15 @@
 
     <div role="main">
         <div class="row">
+            @if (count($errors) > 0)
+                <div class="alert alert-danger error_message_alert">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="col-md-12 col-sm-12 col-xs-12">
                 @if(count($educations) >0)
                     @foreach($educations as $education)
@@ -103,12 +112,12 @@
                                         <div class="form-group col-md-6">
                                             <label class="control-label" for="school">School <span class="required">*</span>
                                             </label>
-                                            <input name="school" type="text" id="school" required="required" class="form-control col-md-7 col-xs-12" value="{{ $education->school }}">
+                                            <input name="school" type="text" id="school" class="form-control col-md-7 col-xs-12" value="{{ $education->school }}">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label class="control-label" for="major">Major <span class="required">*</span>
                                             </label>
-                                            <input type="text" id="major" name="major" required="required" class="form-control col-md-7 col-xs-12" value="{{ $education->major }}">
+                                            <input type="text" id="major" name="major" class="form-control col-md-7 col-xs-12" value="{{ $education->major }}">
                                         </div>
                                     </div>
 
@@ -133,7 +142,7 @@
                                         <div class="form-group col-md-12">
                                             <label class="control-label" for="address">Adress <span class="required">*</span>
                                             </label>
-                                            <textarea type="text" id="address" name="address" required="required" class="form-control col-md-7 col-xs-12">{{ $education->address }}
+                                            <textarea type="text" id="address" name="address" class="form-control col-md-7 col-xs-12">{{ $education->address }}
 
                                             </textarea>
                                         </div>
@@ -159,7 +168,7 @@
                                                 <div class="input-group">
                                                     <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
                                                            name="end_date" class="date-picker form-control"
-                                                           value="{{ $education->end_date }}" readonly>
+                                                           value="Present" readonly>
                                                     <span class="input-group-addon">
                                                     <i class="fa fa-calendar-o"></i>
                                                 </span>
@@ -269,12 +278,12 @@
                                 <div class="form-group col-md-6">
                                     <label class="control-label" for="school">School <span class="required">*</span>
                                     </label>
-                                    <input name="school" type="text" id="school" required="required" class="form-control col-md-7 col-xs-12">
+                                    <input name="school" type="text" id="school" class="form-control col-md-7 col-xs-12">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="control-label" for="major">Major <span class="required">*</span>
                                     </label>
-                                    <input type="text" id="major" name="major" required="required" class="form-control col-md-7 col-xs-12">
+                                    <input type="text" id="major" name="major" class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
 
@@ -293,7 +302,7 @@
                                 <div class="form-group col-md-12">
                                     <label class="control-label" for="address">Adress <span class="required">*</span>
                                     </label>
-                                    <textarea type="text" id="address" name="address" required="required" class="form-control col-md-7 col-xs-12">
+                                    <textarea type="text" id="address" name="address" class="form-control col-md-7 col-xs-12">
 
                                             </textarea>
                                 </div>
@@ -422,7 +431,7 @@
         $('.slider_update').on('change', function() {
             if($(this).is(':checked')) {
 
-                $(this).parent('label').parent('div').parent('div').siblings('div.find_end_date').find('input[name=end_date]').val('').datepicker('destroy');
+                $(this).parent('label').parent('div').parent('div').siblings('div.find_end_date').find('input[name=end_date]').val('Present').datepicker('destroy');
                 $(this).parent('label').parent('div').siblings('input[name=is_present]').val('1');
 
             } else {
@@ -430,10 +439,18 @@
                 $(this).parent('label').parent('div').parent('div').siblings('div.find_end_date').find('input[name=end_date]').datepicker({
                     format:'yyyy-mm-d'
                 });
+                $(this).parent('label').parent('div').parent('div').siblings('div.find_end_date').find('input[name=end_date]').val('');
                 $(this).parent('label').parent('div').siblings('input[name=is_present]').val('0');
 
             }
 
         });
+
+        setTimeout(function(){
+            if($('.error_message_alert').is(':visible')) {
+                $('.error_message_alert').fadeOut();
+            }
+
+        }, 3000);
     </script>
 @endsection

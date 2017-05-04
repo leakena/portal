@@ -4,6 +4,15 @@
     <div role="main">
         <div class="clearfix"></div>
         <div class="row">
+            @if (count($errors) > 0)
+                <div class="alert alert-danger error_message_alert">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="col-md-12 col-sm-12 col-xs-12">
                 @if(count($references)>0)
                     @foreach( $references as $reference )
@@ -39,21 +48,21 @@
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input name="name" type="text" id="name" required="required" class="form-control col-md-7 col-xs-12" value="{{ $reference->name }}">
+                                            <input name="name" type="text" id="name" class="form-control col-md-7 col-xs-12" value="{{ $reference->name }}">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="position">Position <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="position" name="position" required="required" class="form-control col-md-7 col-xs-12" value="{{ $reference->position }}">
+                                            <input type="text" id="position" name="position" class="form-control col-md-7 col-xs-12" value="{{ $reference->position }}">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phone">Phone <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="description" name="phone" required="required" class="form-control col-md-7 col-xs-12" value="{{ $reference->phone }}">
+                                            <input type="text" id="description" name="phone" class="form-control col-md-7 col-xs-12" value="{{ $reference->phone }}">
                                         </div>
                                     </div>
 
@@ -61,7 +70,7 @@
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">E-mail <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="email" id="description" name="email" required="required" class="form-control col-md-7 col-xs-12" value="{{ $reference->email }}">
+                                            <input type="email" id="description" name="email" class="form-control col-md-7 col-xs-12" value="{{ $reference->email }}">
                                         </div>
                                     </div>
                                     <div class="ln_solid"></div>
@@ -123,21 +132,21 @@
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input name="name" type="text" id="name" required="required" class="form-control col-md-7 col-xs-12">
+                                    <input name="name" type="text" id="name" class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="position">Position <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="position" name="position" required="required" class="form-control col-md-7 col-xs-12">
+                                    <input type="text" id="position" name="position" class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phone">Phone <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="description" name="phone" required="required" class="form-control col-md-7 col-xs-12">
+                                    <input type="text" id="description" name="phone" class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
 
@@ -145,7 +154,7 @@
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">E-mail <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="description" name="email" required="required" class="form-control col-md-7 col-xs-12">
+                                    <input type="text" id="description" name="email" class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
 
@@ -220,6 +229,13 @@
                         swal("Cancelled", "Your experience is safe :)", "error");
                     }
                 });
-        })
+        });
+
+        setTimeout(function(){
+            if($('.error_message_alert').is(':visible')) {
+                $('.error_message_alert').fadeOut();
+            }
+
+        }, 3000);
     </script>
 @endsection

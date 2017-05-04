@@ -179,35 +179,24 @@
                                             <div class="entry personalAddress" data-order="1">
                                                 <div class="pointer"></div>
                                                 <div class="ico"></div>
-                                                <h4>Address</h4>
-                                                <div class="text">
-                                                    <p>{{ $personal->address }}</p>
-                                                </div>
+                                                <h4><b>Address: </b>{{ $personal->address }}</h4>
                                             </div>
                                             <div class="entry personalPhone" data-order="2">
                                                 <div class="pointer"></div>
                                                 <div class="ico"></div>
-                                                <h4>Phone</h4>
-                                                <div class="text">{{ $personal->phone }}</div>
+                                                <h4><b>Phone:</b> {{ $personal->phone }}</h4>
                                             </div>
                                             <div class="entry personalEmail" data-order="3">
                                                 <div class="pointer"></div>
                                                 <div class="ico"></div>
-                                                <h4>E-mail</h4>
-                                                <div class="text">
-                                                    <a href="mailto:vannat.rin@gmail.com" rel="nofollow"
-                                                       target="_blank">
-                                                        {{ $personal->email }}
-                                                    </a>
-                                                </div>
+                                                <h4><b>E-mail:</b> {{ $personal->email }}</h4>
                                             </div>
                                             <div class="entry dateBirth personalBirthday" data-birth-day=""
                                                  data-birth-month=""
                                                  data-birth-year="" data-order="5">
                                                 <div class="pointer"></div>
                                                 <div class="ico"></div>
-                                                <h4>Date of birth</h4>
-                                                <div class="text">{{ $personal->dob }}</div>
+                                                <h4><b>Date of birth:</b> {{ $personal->dob }}</h4>
                                             </div>
                                         </div>
                                     </div>

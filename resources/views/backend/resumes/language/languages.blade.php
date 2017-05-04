@@ -4,6 +4,15 @@
     <div role="main">
         <div class="clearfix"></div>
         <div class="row">
+            @if (count($errors) > 0)
+                <div class="alert alert-danger error_message_alert">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="col-md-12 col-sm-12 col-xs-12">
                 @if(count($selectedLanguages)>0)
                     @foreach($selectedLanguages as $selectedLanguage)
@@ -71,7 +80,7 @@
                                                    for="name">Proficiency</label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <input type="hidden" name="proficiency" value="Mother Tongue">
-                                                    <input disabled type="text" id="name" required="required"
+                                                    <input disabled type="text" id="name"
                                                            class="form-control col-md-7 col-xs-12"
                                                            value="{{ $selectedLanguage->proficiency }}">
 
@@ -106,7 +115,7 @@
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12"
                                                    for="name">Proficiency</label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <input name="proficiency" type="text" id="name" required="required"
+                                                <input name="proficiency" type="text" id="name"
                                                        class="form-control col-md-7 col-xs-12"
                                                        value="{{ $selectedLanguage->proficiency }}">
 
@@ -177,7 +186,7 @@
                                                        for="name">Proficiency</label>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <input type="hidden" name="proficiency" value="Mother Tongue">
-                                                    <input type="text" id="name" required="required"
+                                                    <input type="text" id="name"
                                                            class="form-control col-md-7 col-xs-12"
                                                            disabled
                                                            value="Mother tongue">
@@ -254,7 +263,7 @@
                                     <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input name="proficiency" type="text" id="proficiency" required="required"
+                                    <input name="proficiency" type="text" id="proficiency"
                                            class="form-control col-md-7 col-xs-12">
                                 </div>
 
@@ -330,8 +339,14 @@
                         swal("Cancelled", "Your experience is safe :)", "error");
                     }
                 });
+        });
 
-        })
+        setTimeout(function(){
+            if($('.error_message_alert').is(':visible')) {
+                $('.error_message_alert').fadeOut();
+            }
+
+        }, 3000);
     </script>
 
 @endsection
