@@ -27,7 +27,6 @@ class StoreCareerProfileRequest extends ApiRequest
     public function rules()
     {
         return [
-            'resume_uid' => 'required',
             'description' => 'required|max:200'
         ];
     }

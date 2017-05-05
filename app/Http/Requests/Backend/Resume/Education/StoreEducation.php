@@ -26,7 +26,6 @@ class StoreEducation extends ApiRequest
     public function rules()
     {
         return [
-            'resume_uid'    => 'required',
             'school'        => 'required',
             'major'         => 'required',
             'degree'        => 'required',

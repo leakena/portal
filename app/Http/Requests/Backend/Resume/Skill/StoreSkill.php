@@ -26,7 +26,6 @@ class StoreSkill extends ApiRequest
     public function rules()
     {
         return [
-            'resume_uid'    => 'required',
             'name'          => 'required',
             'description'   => 'required'
         ];

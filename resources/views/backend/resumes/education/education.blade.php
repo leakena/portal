@@ -335,7 +335,7 @@
                                 </div>
 
                                 <div class="form-group col-md-2">
-                                    <input type="hidden" name="is_present" value="{{ $education->is_present }}">
+                                    <input type="hidden" name="is_present" value="{{ isset($education)?$education->is_present:'' }}">
                                     <label class="control-label">Till today
                                     </label>
                                     <div class="input-group">

@@ -28,7 +28,6 @@ class StorePersonalInfoRequest extends ApiRequest
     {
         return [
 
-            'resume_uid' => 'required',
             'name' => 'required|max:255',
             'status_id' => 'max:255',
             'dob'   => 'required',
