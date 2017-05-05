@@ -115,7 +115,7 @@
                                         <div class="form-group col-md-6">
                                             <label class="control-label" for="position">Position <span class="required">*</span>
                                             </label>
-                                            <input type="text" id="company" name="company" required="required"
+                                            <input type="text" id="company" name="company"
                                                    class="form-control col-md-7 col-xs-12"
                                                    value="{{ $experience->company }}">
                                         </div>
@@ -123,7 +123,7 @@
                                             <label class="control-label" for="company">Company <span
                                                         class="required">*</span>
                                             </label>
-                                            <input type="text" id="position" name="position" required="required"
+                                            <input type="text" id="position" name="position"
                                                    class="form-control col-md-7 col-xs-12"
                                                    value="{{ $experience->position }}">
                                         </div>
@@ -134,7 +134,7 @@
                                             <label class="control-label" for="description">Address <span
                                                         class="required">*</span>
                                             </label>
-                                            <textarea type="text" id="description" name="address" required="required"
+                                            <textarea type="text" id="description" name="address"
                                                       class="form-control">{{ $experience->address }}
                                             </textarea>
                                         </div>
@@ -212,7 +212,7 @@
                                                         class="required">*</span>
                                             </label>
                                             <textarea type="text" id="description" name="description"
-                                                      required="required" class="form-control">{{ $experience->description }}
+                                                      class="form-control">{{ $experience->description }}
                                             </textarea>
                                         </div>
                                     </div>
@@ -281,14 +281,14 @@
                                 <div class="form-group col-md-6">
                                     <label class="control-label" for="position">Position <span class="required">*</span>
                                     </label>
-                                    <input type="text" id="company" name="company" required="required"
+                                    <input type="text" id="company" name="company"
                                            class="form-control col-md-7 col-xs-12">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="control-label" for="company">Company <span
                                                 class="required">*</span>
                                     </label>
-                                    <input type="text" id="position" name="position" required="required"
+                                    <input type="text" id="position" name="position"
                                            class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
@@ -297,7 +297,7 @@
                                     <label class="control-label" for="description">Address <span
                                                 class="required">*</span>
                                     </label>
-                                    <textarea type="text" id="description" name="address" required="required"
+                                    <textarea type="text" id="description" name="address"
                                               class="form-control">
                                             </textarea>
                                 </div>
@@ -308,7 +308,7 @@
                                                 class="required">*</span>
                                     </label>
                                     <textarea type="text" id="description" name="description"
-                                              required="required" class="form-control">
+                                              class="form-control">
                                             </textarea>
                                 </div>
                             </div>
@@ -355,10 +355,9 @@
 
                             <div class="ln_solid"></div>
                             <div class="form-group">
-                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-6">
-                                    <button class="btn btn-primary" type="button">Cancel</button>
-                                    <button class="btn btn-primary" type="reset">Reset</button>
-                                    <button type="submit" class="btn btn-success">Submit</button>
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-10">
+                                    <button class="btn btn-default" type="reset">Reset</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
 
