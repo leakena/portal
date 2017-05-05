@@ -41,6 +41,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/posts/edit/{post}', 'PortalController@edit');
         Route::post('/posts/update/{post}', 'PortalController@update');
 
+        Route::get('/score/{year}', 'PortalController@score')->name('show_score');
+
     });
 
     Route::group(['namespace' => 'Portal', 'as' => 'resume.'], function () {

@@ -26,7 +26,6 @@ class StoreReference extends ApiRequest
     public function rules()
     {
         return [
-            'resume_uid'    => 'required',
             'name'          => 'required',
             'position'      => 'required',
             'phone'         => 'required',

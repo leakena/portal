@@ -25,7 +25,6 @@ class StoreLanguage extends ApiRequest
     public function rules()
     {
         return [
-            'resume_uid'    => 'required',
             'language_id'          => 'required',
             'proficiency'   => 'required'
         ];

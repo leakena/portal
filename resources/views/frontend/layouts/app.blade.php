@@ -68,7 +68,7 @@
         {!! Html::script('js/vendor/jquery.sticky-kit.min.js') !!}
         {!! Html::script('js/vendor/tinymce/js/tinymce/tinymce.min.js') !!}
         {!! Html::script('js/bootstrap-datepicker.js') !!}
-        {!! Html::script('js/app.js') !!}
+        {{--{!! Html::script('js/app.js') !!}--}}
 
         <script type="text/javascript">
             jQuery(document).ready(function(){

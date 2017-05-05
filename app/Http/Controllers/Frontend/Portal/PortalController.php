@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend\Portal;
 
+use App\Http\Requests\Request;
 use App\Models\Access\User\Profile;
 use App\Models\Portal\Post\Post;
 use App\Models\Portal\Post\View;
@@ -10,6 +11,7 @@ use App\Models\Portal\Resume\Resume;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use App\Repositories\Backend\User\UserContract;
 
@@ -20,6 +22,7 @@ class PortalController extends Controller
      * PortalController constructor.
      */
 
+    protected $academic;
     protected $studentPrefix;
     protected $controller;
     protected $users;
@@ -27,6 +30,7 @@ class PortalController extends Controller
     {
         $this->middleware('auth');
         $this->studentPrefix = '/api/student';
+        $this->academic = '/api/academic-year';
         $this->controller = $cont;
         $this->users = $userRepo;
     }
@@ -41,9 +45,29 @@ class PortalController extends Controller
 
         $user =auth()->user();
 
-        /*$studentApi = $this->controller->getElementByApi($this->studentPrefix.'/annual-object', ['student_id_card'], [$user->email], []);
+        $studentScore = $this->controller->getElementByApi($this->studentPrefix.'/score', ['student_id_card'], [$user->email], []);
+        $years = $this->controller->getElementByApi($this->academic.'/all', [], [], []);
 
-        dd($studentApi);*/
+
+        $studentScore = $studentScore['course_score'];
+
+
+        foreach ($years as $year){
+            if($year == end($years))
+            $academic_year = $year ;
+        }
+
+
+        foreach ($studentScore as $score){
+            if($score == end($studentScore)){
+                $scores = $score;
+            }
+        }
+
+
+
+//        $studentScore = $studentApi['course_score'];
+//        dd($studentScore);
 
 
         /*$input = [
@@ -54,18 +78,18 @@ class PortalController extends Controller
 
 //        $this->users->create($input);
 
-//        hello thei
-//        iouhikjuhkihu
+
         $posts = Post::latest()->limit(3)->get();
         $profile = Profile::where(['user_uid' => auth()->id()])->first();
         $resume = Resume::where(['user_uid' => auth()->id()])->first();
 
-
+//
 //        $studentData = $this->controller->getElementByApi($this->studentPrefix.'/annual-object', ['student_id_card','academic_year_id'], ['e20150547', 2017], []);
 //
-//        dd($studentData);
-
-//        $studentData = $this->controller->getElementByApi($this->studentPrefix.'/data', [], [], []);
+//
+//
+//        $academic = $this->controller->getElementByApi($this->academic.'/all', [], [], []);
+//        dd($academic);
 //
 //
 //
@@ -86,7 +110,40 @@ class PortalController extends Controller
         //$studentData = $studentData['data'];
 
 
-        return view('frontend.portals.index', compact('resume', 'profile', 'posts'));
+        return view('frontend.portals.index', compact('resume', 'profile', 'posts', 'studentScore', 'years', 'scores', 'academic_year'));
+    }
+
+    /**
+     * @param $year
+     * @return mixed
+     */
+    public function score($year){
+        $user =auth()->user();
+
+        $studentScore = $this->controller->getElementByApi($this->studentPrefix.'/score', ['student_id_card', 'academic_year_id'], [$user->email, $year], []);
+        $academic_years = $this->controller->getElementByApi($this->academic.'/all', [], [], []);
+
+
+
+        $posts = Post::latest()->limit(3)->get();
+        $profile = Profile::where(['user_uid' => auth()->id()])->first();
+        $resume = Resume::where(['user_uid' => auth()->id()])->first();
+
+        if($studentScore == null || count($studentScore['course_score'])==0){
+
+            return Response::json([
+                view('frontend.portals.index', compact('academic_years', 'posts', 'profile', 'resume', 'studentScore')),
+                'status' => false,
+            ]);
+        }else{
+            return Response::json([
+                view('frontend.portals.index', compact('academic_years', 'posts', 'profile', 'resume', 'studentScore')),
+                'status' => true,
+                'data' => $studentScore
+            ]);
+        }
+
+
     }
 
     /**

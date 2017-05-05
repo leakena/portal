@@ -27,7 +27,6 @@ class StoreExperience extends ApiRequest
     {
 
         return [
-            'resume_uid'    => 'required',
             'position'      => 'required',
             'company'       => 'required',
             'address'       => 'required',

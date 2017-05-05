@@ -340,7 +340,7 @@
 
                                 </div>
                                 <div class="form-group col-md-2">
-                                    <input type="hidden" class="is_present" name="is_present" value="">
+                                    <input type="hidden" class="is_present" name="is_present" value="{{ isset($experience)?$experience->is_present:'' }}">
                                     <label class="control-label">Till today
                                     </label>
                                     <div class="input-group">
