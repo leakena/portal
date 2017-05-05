@@ -47,7 +47,7 @@
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input type="text"
-                                                   id="name" name="name" required="required"
+                                                   id="name" name="name"
                                                    class="form-control col-md-7 col-xs-12"
                                                    value="{{isset($student)?$student['name_latin']:''}}" readonly>
                                         </div>
@@ -99,7 +99,7 @@
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <div class="input-group">
                                                 <input id="birthday" class="date-picker form-control col-md-7 col-xs-12"
-                                                       required="required" type="text" name="dob"
+                                                       type="text" name="dob"
                                                        value="{{isset($student)?$student['dob']:''}}" readonly>
                                                 <span class="input-group-addon">
                                                 <i class="fa fa-calendar-o"></i>
@@ -113,7 +113,7 @@
                                             birth <span class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="birth-place" name="birth_place" required="required"
+                                            <input type="text" id="birth-place" name="birth_place"
                                                    class="form-control col-md-7 col-xs-12"
                                                    value="{{isset($personalInfo)?$personalInfo->birth_place:''}}">
                                         </div>
@@ -123,7 +123,7 @@
                                                     class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="email" name="email" required="required"
+                                            <input type="text" id="email" name="email"
                                                    class="form-control col-md-7 col-xs-12"
                                                    value="{{isset($personalInfo)?$personalInfo->email:''}}">
                                         </div>
@@ -133,7 +133,7 @@
                                                     class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="phone" name="phone" required="required"
+                                            <input type="text" id="phone" name="phone"
                                                    class="form-control col-md-7 col-xs-12 "
                                                    value="{{isset($personalInfo)?$personalInfo->phone:''}}">
                                         </div>
@@ -143,7 +143,7 @@
                                                     class="required">*</span>
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="address" name="address" required="required"
+                                            <input type="text" id="address" name="address"
                                                    class="form-control col-md-7 col-xs-12"
                                                    value="{{isset($personalInfo)?$personalInfo->address:$student['address']}}">
                                         </div>
