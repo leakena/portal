@@ -2,7 +2,17 @@
     @if($post->file == null)
         <div class="post">
             <span class="poster">{{ $post->user->name }}</span><br/>
-            <span class="text-muted">Posted on {{ $post->created_at->diffForHumans() }}</span><br/>
+            <span class="text-muted">
+                @if($post->published == false)
+                    <i class="fa fa-lock" aria-hidden="true"> Unpublished</i>
+                @else
+                    <i class="fa fa-globe" aria-hidden="true"> Published</i>
+                @endif
+                on {{ $post->updated_at->diffForHumans() }}
+                @if($post->published == false)
+                    <a href="{{ route('frontend.portal.publish', $post->id) }}" type="button" class="btn btn-link">Publish now</a>
+                @endif
+            </span><br/>
             <p>
                 {!! str_limit($post->body, 270) !!}
                 <span>
@@ -42,7 +52,14 @@
         @if(str_contains($post->file, '.pdf') || str_contains($post->file, '.ppt'))
             <div class="post">
                 <span class="poster">{{ $post->user->name }}</span><br/>
-                <span class="text-muted">Posted on {{ $post->created_at->diffForHumans() }}</span><br/>
+                <span class="text-muted">
+                    @if($post->published == false)
+                        <i class="fa fa-lock" aria-hidden="true"> Unpublished</i>
+                    @else
+                        <i class="fa fa-globe" aria-hidden="true"> Published</i>
+                    @endif
+                    on {{ $post->created_at->diffForHumans() }}
+                </span><br/>
                 <p>
                     {!! str_limit($post->body, 270) !!}
                     <span>
@@ -105,7 +122,18 @@
                 </a>
                 <div class="desc">
                     <span class="poster">{{ $post->user->name }}</span><br/>
-                    <span class="text-muted">Posted on {{ $post->created_at->diffForHumans() }}</span><br/>
+                    <span class="text-muted">
+                        @if($post->published == false)
+                            <i class="fa fa-lock" aria-hidden="true"> Unpublished</i>
+                        @else
+                            <i class="fa fa-globe" aria-hidden="true"> Published</i>
+                        @endif
+                        on {{ $post->updated_at->diffForHumans() }}
+                        @if($post->published == false)
+                            <a href="{{ route('frontend.portal.publish', $post->id) }}" type="button"
+                               class="btn btn-link">Publish now</a>
+                        @endif
+                    </span><br/>
                     <p>
                         {!! str_limit($post->body, 220) !!}
                         <span>

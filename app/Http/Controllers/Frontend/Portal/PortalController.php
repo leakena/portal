@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Frontend\Portal;
 
-use App\Http\Requests\Request;
 use App\Models\Access\User\Profile;
 use App\Models\Portal\Post\Post;
 use App\Models\Portal\Post\View;
@@ -14,6 +13,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use App\Repositories\Backend\User\UserContract;
+use Illuminate\Http\Request;
 
 
 class PortalController extends Controller
@@ -159,11 +159,8 @@ class PortalController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function store()
+    public function store(Request $request)
     {
-        $this->validate(request(), [
-            'body' => 'required'
-        ]);
 
         $newPost = new Post();
 
@@ -172,25 +169,37 @@ class PortalController extends Controller
         if (Input::file()) {
 
             $filename = Input::file('file');
+
             $change = $filename->getClientOriginalExtension();
-            $newfilename = auth()->id() . str_random(10) . '.';
+            $newFilename = auth()->id() . str_random(8) . '.'.$change;
+//            $filename->move('docs', "{$newFilename}" . $change);
+
+//            Storage::disk('local')->put($newFilename,  file_get_contents($filename->getRealPath()));
 
             if (Input::file('file')->getMimeType() == 'image/jpeg') {
-                $filename->move('img/frontend/uploads/images', "{$newfilename}" . $change);
+
+                $filename->move('img/frontend/uploads/images', "{$newFilename}");
             } else {
-                $filename->move('docs', "{$newfilename}" . $change);
+
+                $filename->move('docs', "{$newFilename}");
             }
-
-            $newPost->file = $newfilename . $change;
+            $newPost->file = $newFilename;
 
         }
 
+        switch($request->btn_submit) {
 
-        if (request('published') == true) {
-            $newPost->published = 1;
-        } else {
-            $newPost->published = 0;
+            case 'Publish':
+                //action save here
+                $newPost->published = 1;
+                break;
+
+            case 'Draft':
+                //action for save-draft here
+                $newPost->published = 0;
+                break;
         }
+
         $newPost->create_uid = auth()->id();
 
         if ($newPost->save()) {
@@ -278,12 +287,27 @@ class PortalController extends Controller
      */
     public function delete(Post $post)
     {
-        if(str_contains($post->file, '.pdf'))
-            unlink(public_path('docs/' . $post->file));
-        else
-            unlink(public_path('img/frontend/uploads/images/' . $post->file));
+
+        if ($post->file){
+            dd($post);
+            if(str_contains($post->file, '.pdf'))
+                unlink(public_path('docs/' . $post->file));
+            else
+                unlink(public_path('img/frontend/uploads/images/' . $post->file));
+        }
         Post::find($post->id)->delete();
         session()->flash('flash_success', 'Post have been deleted.');
         return redirect()->back();
+    }
+
+    public function publish(Post $post){
+
+        $post->published = 1;
+        $post->updated_at = Carbon::now();
+
+        if($post->save()){
+            return redirect()->back();
+        }
+
     }
 }

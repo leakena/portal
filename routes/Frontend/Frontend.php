@@ -40,6 +40,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/posts/delete/{post}', 'PortalController@delete');
         Route::get('/posts/edit/{post}', 'PortalController@edit');
         Route::post('/posts/update/{post}', 'PortalController@update');
+        Route::get('/posts/publish/{post}', 'PortalController@publish')->name('publish');
 
         Route::get('/score/{year}', 'PortalController@score')->name('show_score');
 
