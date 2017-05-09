@@ -12,27 +12,22 @@
                                 <h3 class="box-title">What're you thinking?</h3>
                             </div>
                             <div class="box-body">
-                                <form method="POST" action="{{ url('/posts/store') }}" enctype="multipart/form-data"
-                                      files="true" novalidate="novalidate">
-                                    {{ csrf_field() }}
+                                {!! Form::open(['enctype'=> 'multipart/form-data', 'files' => true, 'url' => '/posts/store', 'method' => 'post', 'id' => 'create-post']) !!}
+
                                     <div class="form-group">
                                         <textarea id="body_post" class="form-control" role="8" rows="4" name="body"
-                                                  id="body"></textarea>
+                                                  id="post_body"></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label for="published">
-                                            <input type="checkbox" name="published" id="published" checked> Published
-                                            now
-                                        </label>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="file" name="file"
+                                        <input id="myFile" type="file" name="file"
                                                accept="image/*, .doc, .docx,.ppt, .pptx,.txt,.pdf">
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary">Publish</button>
+                                        {!! Form::submit( 'Publish', ['class' => 'btn btn-info', 'name' => 'btn_submit', 'value' => 'publish'])!!}
+
+                                        {!! Form::submit( 'Draft', ['class' => 'btn btn-primary', 'name' => 'btn_submit', 'value' => 'draft']) !!}
                                     </div>
-                                </form>
+                                {!! Form::close() !!}
                             </div>
                         </div>
                     </div>
@@ -110,4 +105,41 @@
             </div>
         </div>
     </div><!-- row -->
+
+
 @endsection
+
+
+@section('after-scripts')
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myFile').change(function () {
+                var dom = $(this);
+                if(this.files[0].size > 5000000){
+                    swal({
+                        title: "You cannot upload file bigger than 5M",
+                        type: "warning"
+                    });
+                    dom.val('');
+                }
+
+            });
+
+            $('input[name=btn_submit]').on('click', function(e){
+
+                if(tinyMCE.activeEditor.getContent() == '' && $('#myFile').val() == ''){
+                    swal({
+                        title: "You need to write some text or upload a file",
+                        type: "warning"
+                    });
+                    e.preventDefault();
+                }
+            });
+
+        });
+
+
+    </script>
+
+@endsection
+

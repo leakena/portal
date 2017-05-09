@@ -188,6 +188,7 @@ return [
         Yajra\Datatables\DatatablesServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
 
+
         /*
          * Application Service Providers...
          */
@@ -262,6 +263,7 @@ return [
         'Html'        => Collective\Html\HtmlFacade::class,
         'Socialite'   => Laravel\Socialite\Facades\Socialite::class,
         'Image'       => Intervention\Image\Facades\Image::class,
+
 
     ],
 
