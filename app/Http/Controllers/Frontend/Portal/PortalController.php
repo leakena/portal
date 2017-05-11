@@ -236,24 +236,61 @@ class PortalController extends Controller
      */
     public function update(Post $post)
     {
-        if (!empty(Input::file())) {
 
-            $filename = Input::file('file');
-            $change = $filename->getClientOriginalExtension();
-            $newfilename = auth()->id() . str_random(10) . '.';
-            $filename->move('img/frontend/uploads/images', "{$newfilename}" . $change);
-            unlink(public_path('img/frontend/uploads/images/' . $post->file));
-            $post->file = $newfilename . $change;
+
+        if (!empty(Input::file())) {
+            if ($post->profile) {
+                $file = explode(".",$post->file);
+                $filename = Input::file('file');
+                $change = $filename->getClientOriginalExtension();
+                $newfilename = auth()->id() . str_random(10) . '.';
+
+                if (Input::file('file')->getMimeType() == 'image/jpeg') {
+
+                    $filename->move('img/frontend/uploads/images', "{$newfilename}".$change);
+                } else {
+
+                    $filename->move('docs', "{$newfilename}".$change);
+                }
+
+                if ($file[1] == 'jpg' || $file[1] == 'jpeg' || $file[1] == 'png') {
+                    unlink(public_path('img/frontend/uploads/images/' . $post->file));
+                }else{
+                    unlink(public_path('/docs' . $post->file));
+                }
+
+                $post->file = $newfilename . $change;
+            }else{
+                $filename = Input::file('file');
+                $change = $filename->getClientOriginalExtension();
+                $newfilename = auth()->id() . str_random(10) . '.';
+                if (Input::file('file')->getMimeType() == 'image/jpeg') {
+
+                    $filename->move('img/frontend/uploads/images', "{$newfilename}".$change);
+                } else {
+
+                    $filename->move('docs', "{$newfilename}".$change);
+                }
+                $post->file = $newfilename . $change;
+            }
+
+        }
+        elseif(request('name') == null){
+
+            if(isset($post->file)){
+                $file = explode(".",$post->file);
+                if ($file[1] == 'jpg' || $file[1] == 'jpeg' || $file[1] == 'png') {
+                    unlink(public_path('img/frontend/uploads/images/' . $post->file));
+                }else{
+                    unlink(public_path('docs/' . $post->file));
+                }
+                $post->file = null;
+            }
 
         }
 
         $post->body = request('body');
 
-        if (request('published') == true) {
-            $post->published = 1;
-        } else {
-            $post->published = 0;
-        }
         $post->save();
 
         return redirect('/posts');
@@ -289,7 +326,6 @@ class PortalController extends Controller
     {
 
         if ($post->file){
-            dd($post);
             if(str_contains($post->file, '.pdf'))
                 unlink(public_path('docs/' . $post->file));
             else
@@ -300,6 +336,10 @@ class PortalController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * @param Post $post
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function publish(Post $post){
 
         $post->published = 1;
