@@ -24,15 +24,15 @@ class Manager implements IManager
     public function getApiRequestResult($url, $methodType, array $params = array(), array $elements = array(), array $attributes = array(), $where) {
 
         $client = $this->getClientRequest();
-
         $res = $client->request(strtoupper($methodType), $this->urlManager->getCompleteUrl($url, $elements, $attributes, $where), ['form_params' => $params]);
 
         /*$res = (string)$res->getBody();
         return json_decode(utf8_encode($res));*/
-
         $res =  $res->getBody()->getContents();
         return json_decode($res, true);
     }
+
+
 
 //    public function getApiRequest
     public function getApiBaseUrl() {
@@ -41,6 +41,15 @@ class Manager implements IManager
 
     private function getClientRequest() {
         return new Client(['cookies' => true]);
+    }
+
+    public function getApiResultByIds($url, array $ids = array()) {
+
+        $client = $this->getClientRequest();
+        $res = $client->request('POST', $this->urlManager->getFullArrayIdUrl($url, $ids), [ 'form_params' => $ids]);
+        $res =  $res->getBody()->getContents();
+        return json_decode($res, true);
+
     }
 
 }

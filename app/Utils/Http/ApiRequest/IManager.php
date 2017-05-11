@@ -10,5 +10,6 @@ namespace App\Utils\Http\ApiRequest;
 
 interface IManager {
     public function getApiRequestResult($url, $methodType, array $params = array(), array $elements = array(), array $attributes = array(), $where);
+    public function getApiResultByIds($url, array $ids = array());
     public function getApiBaseUrl();
 }

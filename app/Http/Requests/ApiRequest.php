@@ -23,8 +23,6 @@ class ApiRequest extends FormRequest
         return false;
     }
 
-
-
     /**
      * Determine if the user is authorized to make this request.
      *

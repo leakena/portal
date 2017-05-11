@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend\Portal;
 
+use App\Http\Controllers\Frontend\Portal\ApiController;
 use App\Models\Access\User\Profile;
 use App\Models\Portal\Post\Post;
 use App\Models\Portal\Post\View;
@@ -44,27 +45,21 @@ class PortalController extends Controller
     {
 
         $user =auth()->user();
-
         $studentScore = $this->controller->getElementByApi($this->studentPrefix.'/score', ['student_id_card'], [$user->email], []);
         $years = $this->controller->getElementByApi($this->academic.'/all', [], [], []);
 
-
         $studentScore = $studentScore['course_score'];
-
 
         foreach ($years as $year){
             if($year == end($years))
             $academic_year = $year ;
         }
 
-
         foreach ($studentScore as $score){
             if($score == end($studentScore)){
                 $scores = $score;
             }
         }
-
-
 
 //        $studentScore = $studentApi['course_score'];
 //        dd($studentScore);
@@ -118,9 +113,11 @@ class PortalController extends Controller
      * @return mixed
      */
     public function score($year){
+
         $user =auth()->user();
 
         $studentScore = $this->controller->getElementByApi($this->studentPrefix.'/score', ['student_id_card', 'academic_year_id'], [$user->email, $year], []);
+
         $academic_years = $this->controller->getElementByApi($this->academic.'/all', [], [], []);
 
 
@@ -279,7 +276,6 @@ class PortalController extends Controller
 
         return view('frontend.portals.blog', compact('posts'));
     }
-
 
     /**
      * @param Post $post

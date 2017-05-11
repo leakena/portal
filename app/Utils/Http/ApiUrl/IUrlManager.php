@@ -12,5 +12,6 @@ interface IUrlManager {
 
     function setBaseApiUrl($baseUrl);
     function getCompleteUrl($endUrl, array $elements = array(), array $attributes = array(), $where);
+    function getFullArrayIdUrl($endUrl , array $ids = array());
     function getApiBaseUrl();
 }

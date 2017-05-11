@@ -22,9 +22,21 @@ class ApiRequestManager
     }
 
     public function getElementsFromApi($endUrl, array $elements = array(), array $attributes = array(), array $where = array()) {
+
         $result = $this->getApiResult($endUrl, $elements, $attributes, $where);
         /*return $result ? is_array($result) ? $result : [$result] : [];*/
         return $result;
+    }
+
+
+    public function getDataByArrayIds($endUrl, array $ids = array()) {
+
+        $result = $this->getResult($endUrl, $ids);
+        return $result;
+    }
+
+    private function getResult($endUrl,  array $ids = array()) {
+        return $this->apiManager->getApiResultByIds($endUrl, $ids);
     }
 
     private function getApiResult($endUrl, array $elements, array $attributes, array $where = array()) {

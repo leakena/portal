@@ -33,7 +33,14 @@ class UrlManager implements IUrlManager
         return $this->getApiBaseUrl() . $endUrl;
     }
 
+    public function getFullArrayIdUrl($endUrl, array $ids = array()) {
+
+        $endUrl = $this->constructArrayApiUrlWithParams($endUrl, $ids);
+        return $this->getApiBaseUrl() . $endUrl;
+    }
+
     private function constructApiUrlWithParams($endUrl, array $elements = array(), array $attributes = array(), array $where = array()) {
+
 
         $endUrl = $endUrl . '?params=';
         $endUrl .= $this->getParamsToAttachToUrl($elements);
@@ -51,18 +58,26 @@ class UrlManager implements IUrlManager
     }
 
 
+    private function constructArrayApiUrlWithParams($endUrl, array $elements = array()) {
+        return $endUrl;
+    }
+
     private function getParamsToAttachToUrl(array $elements, $replaceSpace = '', $separator = '+') {
 
         $paramsToAttach = '';
-
         foreach($elements as $i => $element) {
             $paramsToAttach .= str_replace(' ', $replaceSpace, $element);
 
             if($i + 1 < count($elements))
                 $paramsToAttach .= $separator;
         }
-
         return $paramsToAttach;
+    }
+
+    public function isAssoc(array $arr)
+    {
+        if (array() === $arr) return false;
+        return array_keys($arr) !== range(0, count($arr) - 1);
     }
     public function getApiBaseUrl() {
         return  $this->targetServerUrl;

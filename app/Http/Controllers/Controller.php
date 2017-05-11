@@ -24,5 +24,9 @@ class Controller extends BaseController
 
     }
 
+    public function get_Data_Array_Ids ($endUrl, $ids) {
+        return $this->apiRequestManager->getDataByArrayIds($endUrl,$ids);
+    }
+
 
 }
