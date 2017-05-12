@@ -874,7 +874,7 @@ class ResumeController extends Controller
 
                 DB::table('language_resume')
                     ->where([
-                        ['id', '=', $request->id],
+                        ['id', '=', $request->language_resume_id],
                         ['resume_uid', '=', $userResume->id]
                     ])
                     ->update([

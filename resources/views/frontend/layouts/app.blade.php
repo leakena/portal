@@ -68,6 +68,7 @@
         {!! Html::script('js/vendor/jquery.sticky-kit.min.js') !!}
         {!! Html::script('js/vendor/tinymce/js/tinymce/tinymce.min.js') !!}
         {!! Html::script('js/bootstrap-datepicker.js') !!}
+        {!! Html::script('bower_components/bootstrap-filestyle/src/bootstrap-filestyle.js') !!}
         {{--{!! Html::script('js/app.js') !!}--}}
 
         <script type="text/javascript">

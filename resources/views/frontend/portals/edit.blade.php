@@ -19,17 +19,58 @@
                                         <textarea id="body_post" class="form-control" role="8" rows="4"
                                                   name="body">{!! $post->body !!}</textarea>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="published">
-                                            <input type="checkbox" name="published" id="published" checked>
-                                            Published now
-                                        </label>
+                                    @if($post->file)
+                                        <div class="post-file">
+                                            <ul class="item-file">
+                                                <li class="icon-file"><i class="fa fa-file-pdf-o"></i></li>
+                                                <li>
+                                                <span class="file-name">
+                                                    <a href="{{ asset('docs') }}/{{ $post->file }}" target="_blank">
+                                                        {{ $post->file }}
+                                                    </a>
+                                                    <input type="text" name="name" class="form-control hidden"
+                                                           value="{{ $post->file }}">
+                                                </span>
+
+                                                </li>
+                                                <li style="float: right">
+                                                    <i class="fa fa-times cross" aria-hidden="true"></i>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    @else
+                                        <div class="post-file1">
+                                            <ul class="item-file">
+                                                <li class="icon-file"><i class="fa fa-file-pdf-o"></i></li>
+                                                <li>
+                                                <span class="file-name">
+                                                    <input type="text" class="form-control hidden">
+
+                                                </span>
+
+                                                </li>
+                                                <li style="float: right">
+                                                    <i class="fa fa-times cross" aria-hidden="true"></i>
+                                                </li>
+                                            </ul>
+
+                                        </div>
+
+                                    @endif
+
+                                    <div class="row file">
+                                        <div class="form-group col-md-6">
+                                            <input id="file" type="file" class="filestyle" name="file"
+                                                   accept="image/*, .doc, .docx,.ppt, .pptx,.txt,.pdf"
+                                                   data-buttonText="Change file" data-badge="false" data-input="false"
+                                                   data-value="{{ isset($post->file) ? $post->file : null }}">
+                                        </div>
+
                                     </div>
                                     <div class="form-group">
-                                        <input type="file" name="file" accept="image/*">
-                                    </div>
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-info">Update</button>
+                                        <a href="{{ route('frontend.portal.allPost') }}" type="button"
+                                           class="btn btn-default">Cancel</a>
+                                        <button type="submit" class="btn btn-info update">Update</button>
                                     </div>
                                 </form>
                             </div>
@@ -97,4 +138,65 @@
             </div>
         </div>
     </div><!-- row -->
+@endsection
+
+@section('after-scripts')
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('.post-file1').hide();
+            $(document).on('click', '.cross', function () {
+                $('.post-file').hide();
+                $('.post-file1').hide();
+                $('.buttonText').text('Chose file');
+                $('#file').attr('data-input', true);
+                $('#file').empty();
+                console.log($('#file').val(''))
+                $('input[name=name]').remove();
+            });
+
+            $(document).on('change', '#file', function () {
+                if ($('#file').val() != '') {
+                    var fake = 'fakepath';
+                    if ($('#file').val().indexOf(fake) != -1) {
+                        $('.post-file1').show();
+                        $('.post-file').show();
+                        var length = $('#file').val().length;
+                        var name = $('#file').val().substring(12, length);
+                        $('.file-name').text(name);
+                    } else {
+                        $('.post-file1').show();
+                        $('.post-file').show();
+                        $('.file-name').text($('#file').val());
+                    }
+                }
+            });
+
+            $('#file').change(function () {
+                var dom = $(this);
+                if (this.files[0].size > 5000000) {
+                    swal({
+                        title: "You cannot upload file bigger than 5M",
+                        type: "warning"
+                    });
+                    dom.val('');
+                }
+
+            });
+
+            $('.update').on('click', function (e) {
+
+                if (tinyMCE.activeEditor.getContent() == '' && $('#file').val() == '') {
+                    swal({
+                        title: "You need to write some text or upload a file",
+                        type: "warning"
+                    });
+                    e.preventDefault();
+                }
+            });
+
+        });
+
+    </script>
+
 @endsection

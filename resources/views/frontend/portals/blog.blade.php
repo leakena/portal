@@ -18,15 +18,21 @@
                                         <textarea id="body_post" class="form-control" role="8" rows="4" name="body"
                                                   id="post_body"></textarea>
                                     </div>
-                                    <div class="form-group">
-                                        <input id="myFile" type="file" name="file"
-                                               accept="image/*, .doc, .docx,.ppt, .pptx,.txt,.pdf">
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <input class="filestyle" id="myFile" type="file" name="file" data-buttonBefore="true"
+                                                   accept="image/*, .doc, .docx,.ppt, .pptx,.txt,.pdf">
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        {!! Form::submit( 'Publish', ['class' => 'btn btn-info', 'name' => 'btn_submit', 'value' => 'publish'])!!}
+                                    <div class="row">
+                                        <div class="form-group col-md-8">
+                                            {!! Form::submit( 'Publish', ['class' => 'btn btn-info', 'name' => 'btn_submit', 'value' => 'publish'])!!}
 
-                                        {!! Form::submit( 'Draft', ['class' => 'btn btn-primary', 'name' => 'btn_submit', 'value' => 'draft']) !!}
+                                            {!! Form::submit( 'Draft', ['class' => 'btn btn-primary', 'name' => 'btn_submit', 'value' => 'draft']) !!}
+                                        </div>
                                     </div>
+
+
                                 {!! Form::close() !!}
                             </div>
                         </div>
@@ -135,6 +141,8 @@
                     e.preventDefault();
                 }
             });
+
+            $(":file").filestyle({buttonName: "btn-primary"});
 
         });
 
