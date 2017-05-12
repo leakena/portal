@@ -15,6 +15,10 @@ class ModifyPostsTable extends Migration
     {
         Schema::table('posts', function ($table){
             $table->text('body')->nullable()->change();
+            $table->integer('department_id');
+            $table->integer('grade_id');
+            $table->integer('academic_year_id');
+            $table->integer('degree_id');
         });
     }
 

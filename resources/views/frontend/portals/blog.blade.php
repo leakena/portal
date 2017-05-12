@@ -47,7 +47,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        {{ $posts->links() }}
+                        {{ $posts_->links() }}
                     </div>
                 </div>
             </div>

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use App\Repositories\Backend\User\UserContract;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 
 class PortalController extends Controller
@@ -49,6 +50,7 @@ class PortalController extends Controller
         $years = $this->controller->getElementByApi($this->academic.'/all', [], [], []);
 
 
+
         $studentScore = $studentScore['course_score'];
 
 
@@ -66,6 +68,8 @@ class PortalController extends Controller
 
 
 
+
+
 //        $studentScore = $studentApi['course_score'];
 //        dd($studentScore);
 
@@ -79,16 +83,17 @@ class PortalController extends Controller
 //        $this->users->create($input);
 
 
+
         $posts = Post::latest()->limit(3)->get();
         $profile = Profile::where(['user_uid' => auth()->id()])->first();
         $resume = Resume::where(['user_uid' => auth()->id()])->first();
 
 //
-//        $studentData = $this->controller->getElementByApi($this->studentPrefix.'/annual-object', ['student_id_card','academic_year_id'], ['e20150547', 2017], []);
+        $studentData = $this->controller->getElementByApi($this->studentPrefix.'/annual-object', ['student_id_card','academic_year_id'], ['e20161226', 2017], []);
+
 //
-//
-//
-//        $academic = $this->controller->getElementByApi($this->academic.'/all', [], [], []);
+
+//        $academic = $this->controller->getElementByApi($this->studentPrefix.'/annual-object', ['student_id_card','academic_year_id'], ['e20150547',2017], []);
 //        dd($academic);
 //
 //
@@ -161,10 +166,22 @@ class PortalController extends Controller
      */
     public function store(Request $request)
     {
+        $academic_years = $this->controller->getElementByApi($this->academic.'/all', [], [], []);
+        foreach ($academic_years as $year){
+            if($year == end($academic_years))
+                $academic_year = $year ;
+        }
+
+        $studentData = $this->controller->getElementByApi($this->studentPrefix.'/annual-object', ['student_id_card','academic_year_id'], [auth()->user()->email, $academic_year['id']], []);
 
         $newPost = new Post();
 
         $newPost->body = request('body');
+        $newPost->department_id = $studentData['department_id'];
+        $newPost->degree_id = $studentData['degree_id'];
+        $newPost->grade_id = $studentData['grade_id'];
+        $newPost->academic_year_id = $studentData['academic_year_id'];
+
 
         if (Input::file()) {
 
@@ -312,9 +329,97 @@ class PortalController extends Controller
      */
     public function post()
     {
-        $posts = Post::latest()->paginate(5);
+        $years = $this->controller->getElementByApi($this->academic.'/all', [], [], []);
 
-        return view('frontend.portals.blog', compact('posts'));
+        foreach ($years as $year){
+            if($year == end($years))
+                $academic_year = $year ;
+        }
+
+        $studentData = $this->controller->getElementByApi($this->studentPrefix.'/annual-object', ['student_id_card','academic_year_id'], [auth()->user()->email, $academic_year['id']], []);
+
+        $posts_ = Post::paginate(4);
+        $array_key_post = [];
+
+        $index = 0;
+        foreach($posts_ as $post) {
+            $index ++;
+
+
+            if($post->user->email != auth()->user()->email && $post->published == false){
+
+
+                array_pull($posts_, $post);
+
+            }
+            $array_key_post[$post->degree_id][$post->department_id][$post->grade_id][] = $post;
+
+        }
+        dd($posts_);
+
+
+        if(isset($array_key_post[$studentData['degree_id']])) {
+            $level_degree = $array_key_post[$studentData['degree_id']];
+            $priority_to_post = $level_degree;
+        } else {
+            $priority_to_post = null;
+        }
+        if(isset($level_degree[$studentData['department_id']])) {
+
+            $level_dept = $level_degree[$studentData['department_id']];
+            $priority_to_post = $level_dept;
+
+        }
+        if(isset($level_dept[$studentData['grade_id']])) {
+            $level_grade = $level_dept[$studentData['grade_id']];
+            $priority_to_post = $level_grade;
+        }
+
+        //$priority_to_post = $level_grade; //$array_key_post[$studentData['degree_id']][$studentData['department_id']][$studentData['grade_id']];
+
+       if(!is_null($priority_to_post)) {
+           foreach($posts_ as $post) {
+               if($post->degree_id != $studentData['degree_id']) {
+                   if($post->department_id != $studentData['department_id']) {
+
+                       if($post->grade_id != $studentData['grade_id']) {
+                           $priority_to_post = array_merge($priority_to_post, [$post]) ;
+                       }
+                   }
+               }
+
+           }
+           $posts = $priority_to_post;
+       } else {
+            $posts = $posts_;
+       }
+
+
+
+        return view('frontend.portals.blog', compact('posts', 'posts_'));
+    }
+
+
+    /**
+     * @return array
+     */
+    private function selectFields() {
+
+        $select = [
+            'id',
+            'department_id',
+            'degree_id',
+            'grade_id',
+            'academic_year_id',
+            'file',
+            'body',
+            'published',
+            'create_uid',
+            'created_at',
+            'updated_at'
+        ];
+
+        return $select;
     }
 
 
