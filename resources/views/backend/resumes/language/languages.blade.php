@@ -4,15 +4,6 @@
     <div role="main">
         <div class="clearfix"></div>
         <div class="row">
-            @if (count($errors) > 0)
-                <div class="alert alert-danger error_message_alert">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
             <div class="col-md-12 col-sm-12 col-xs-12">
                 @if(count($selectedLanguages)>0)
                     @foreach($selectedLanguages as $selectedLanguage)
@@ -52,7 +43,7 @@
 
 
                                     @if( $selectedLanguage->proficiency == 'Mother Tongue')
-                                        <input name="language_resume_id" class="hidden" value="{{ $selectedLanguage->language_resume_id }}">
+                                        <input name="id" class="hidden" value="{{ $selectedLanguage->language_resume_id }}">
                                         <div class="form-group">
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
                                                         class="required">*</span>
@@ -63,7 +54,7 @@
                                                     @foreach( $languages as $language)
 
                                                         @if( $language->id == $selectedLanguage->language_id)
-                                                            <option selected value="{{ $language->id }}">{{ $language->name }}</option>
+                                                            <option selected value="{{ $language->id }}" class="old_value">{{ $language->name }}</option>
                                                         @else
                                                             <option value="{{ $language->id }}">{{ $language->name }}</option>
                                                         @endif
@@ -80,7 +71,7 @@
                                                    for="name">Proficiency</label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <input type="hidden" name="proficiency" value="Mother Tongue">
-                                                    <input disabled type="text" id="name"
+                                                    <input disabled type="text" id="name" required="required"
                                                            class="form-control col-md-7 col-xs-12"
                                                            value="{{ $selectedLanguage->proficiency }}">
 
@@ -88,7 +79,7 @@
                                         </div>
 
                                     @else
-                                        <input name="language_resume_id" class="hidden" value="{{ $selectedLanguage->language_resume_id }}">
+                                        <input name="id" class="hidden" value="{{ $selectedLanguage->language_resume_id }}">
                                         <div class="form-group">
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
                                                         class="required">*</span>
@@ -99,7 +90,7 @@
                                                     @foreach( $languages as $language)
 
                                                         @if( $language->id == $selectedLanguage->language_id)
-                                                            <option selected value="{{ $language->id }}">{{ $language->name }}</option>
+                                                            <option selected value="{{ $language->id }}" class="old_value">{{ $language->name }}</option>
                                                         @else
                                                             <option value="{{ $language->id }}">{{ $language->name }}</option>
                                                         @endif
@@ -115,7 +106,7 @@
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12"
                                                    for="name">Proficiency</label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <input name="proficiency" type="text" id="name"
+                                                <input name="proficiency" type="text" id="name" required="required"
                                                        class="form-control col-md-7 col-xs-12"
                                                        value="{{ $selectedLanguage->proficiency }}">
 
@@ -186,7 +177,7 @@
                                                        for="name">Proficiency</label>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <input type="hidden" name="proficiency" value="Mother Tongue">
-                                                    <input type="text" id="name"
+                                                    <input type="text" id="name" required="required"
                                                            class="form-control col-md-7 col-xs-12"
                                                            disabled
                                                            value="Mother tongue">
@@ -196,7 +187,9 @@
 
                                             <div class="ln_solid"></div>
                                             <div class="form-group">
-                                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-8">
+                                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                                    <button class="btn btn-primary" type="button">Cancel</button>
+                                                    <button class="btn btn-primary" type="reset">Reset</button>
                                                     <button type="submit" class="btn btn-primary">Submit</button>
                                                 </div>
                                             </div>
@@ -214,7 +207,7 @@
         </div>
     </div>
 
-    <div role="main" class="add_language">
+    <div role="main" class="add_language" style="display: none">
         <div class="clearfix"></div>
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -263,7 +256,7 @@
                                     <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input name="proficiency" type="text" id="proficiency"
+                                    <input name="proficiency" type="text" id="proficiency" required="required"
                                            class="form-control col-md-7 col-xs-12">
                                 </div>
 
@@ -271,9 +264,10 @@
 
                             <div class="ln_solid"></div>
                             <div class="form-group">
-                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-7">
-                                    <button class="btn btn-default" type="reset">Reset</button>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                    <button class="btn btn-primary" type="button">Cancel</button>
+                                    <button class="btn btn-primary" type="reset">Reset</button>
+                                    <button type="submit" class="btn btn-success">Submit</button>
                                 </div>
                             </div>
 
@@ -340,13 +334,40 @@
                     }
                 });
         });
-
-        setTimeout(function(){
-            if($('.error_message_alert').is(':visible')) {
-                $('.error_message_alert').fadeOut();
-            }
-
-        }, 3000);
+//        $(document).on('change', 'select[name="language_id"]', function () {
+//            event.preventDefault();
+//            var dom = $(this);
+//            dom.find('.old_value').removeAttr('selected');
+//            dom.find('.test').removeClass('test');
+//            $('select[name="language_id"] option:selected').addClass('test');
+//            var selectLanguage = dom.find('.test').val();
+//            var old_selectLanguage = $(this).find('.old_value').val();
+//
+//            console.log(old_selectLanguage+''+selectLanguage);
+//
+//            if(selectLanguage != old_selectLanguage)
+//            {
+//                $.ajax({
+//                    url: '/resume/languages',
+//                    data: {
+//                        'selectLanguage' : selectLanguage
+//                    },
+//                    dataType: 'JSON',
+//                    success: function (result) {
+//                        if(result.status == true ){
+//                            swal({
+//                                title: "Please choose another language!",
+//                                text: "Your choosen languge already have in your language list!",
+//                                type: "warning"
+//                            });
+//                            dom.find('.test').removeClass('test');
+//                            dom.find('.old_value').attr('selected', 'selected').addClass('test');
+//                        }
+//                    }
+//
+//                });
+//            }
+//        })
     </script>
 
 @endsection

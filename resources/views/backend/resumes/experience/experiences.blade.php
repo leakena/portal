@@ -255,7 +255,7 @@
         </div>
     </div>
 
-    <div role="main" class="add_experience">
+    <div role="main" class="add_experience" style="display: none">
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">

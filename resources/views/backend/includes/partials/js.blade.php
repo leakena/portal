@@ -25,27 +25,16 @@
 {{--<script src="{{ url('vendors/flot.orderbars/js/jquery.flot.orderBars.js') }}"></script>--}}
 {{--<script src="{{ url('vendors/flot-spline/js/jquery.flot.spline.min.js') }}"></script>--}}
 {{--<script src="{{ url('vendors/flot.curvedlines/curvedLines.js') }}"></script>--}}
-{{--<!-- DateJS -->--}}
+<!-- DateJS -->
 {{--<script src="{{ url('vendors/DateJS/build/date.js') }}"></script>--}}
 {{--<!-- JQVMap -->--}}
-{{--<script src="{{ url('vendors/jqvmap/dist/jquery.vmap.js') }}"></script>--}}
-{{--<script src="{{ url('vendors/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>--}}
-{{--<script src="{{ url('vendors/jqvmap/examples/js/jquery.vmap.sampledata.js') }}"></script>--}}
-
+{{--<script src="{{ url('bower_components/jqvmap/dist/jquery.vmap.js') }}"></script>--}}
+{{--<script src="{{ url('bower_components/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>--}}
+{{--<script src="{{ url('bower_components/jqvmap/examples/js/jquery.vmap.sampledata.js') }}"></script>--}}
 <!-- bootstrap-daterangepicker -->
 <script src="{{ url('vendors/moment/min/moment.min.js') }}"></script>
 <script src="{{ url('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
 
 <!-- Custom Theme Scripts -->
 <script src="{{ url('css/build/js/custom.min.js') }}"></script>
-<script src="{{ url('js/vendor/tinymce/js/tinymce/tinymce.min.js') }}"></script>
 <script src="{{ url('bower_components/bootstrap-sweetalert/dist/sweetalert.js') }}"> </script>
-<script type="text/javascript">
-    jQuery(document).ready(function() {
-        tinymce.init({
-            selector: 'textarea',
-            menubar: false,
-            statusbar: false
-        });
-    });
-</script>
