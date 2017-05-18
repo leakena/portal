@@ -8,10 +8,13 @@
 
 <style>
     .x_panel, .x_title {
-        margin-bottom: 0px !important;
+        margin-bottom: 10px !important;
     }
     h2{
         margin-top: 30px !important;
+    }
+    span.required{
+        color: red;
     }
 </style>
 
@@ -27,7 +30,7 @@
 <!-- bootstrap-progressbar -->
 <link href="{{ url('vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css') }}" rel="stylesheet">
 <!-- JQVMap -->
-{{--<link href="{{ url('vendors/jqvmap/dist/jqvmap.min.css') }}" rel="stylesheet"/>--}}
+<link href="{{ url('vendors/jqvmap/dist/jqvmap.min.css') }}" rel="stylesheet"/>
 <!-- bootstrap-daterangepicker -->
 
 <!-- Custom Theme Style -->

@@ -16,83 +16,93 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 @if(count($references)>0)
                     @foreach( $references as $reference )
+                        <button id="add" type="button" class="btn btn-primary btn-sm pull-left add_new"><i
+                                    class="fa fa-plus"
+                                    style="font-size: 14pt; color: #00a7d0"> </i>
+                        </button>
+                        @if(isset($userResume))
+                            <button type="button" class="btn btn-warning preview" data-toggle="modal"
+                                    data-target=".bs-example-modal-lg">
+                                <i class="fa fa-eye" aria-hidden="true"></i> Preview
+                            </button>
+                        @endif
                         <div class="x_panel">
                             <div class="x_title">
-                                <button id="add" type="button" class="btn btn-primary btn-sm pull-left add_new"><i class="fa fa-plus"
-                                                                             style="font-size: 14pt; color: #00a7d0"> </i>
-                                </button>
-                                @if(isset($userResume))
-                                    <button type="button" class="btn btn-warning preview" data-toggle="modal" data-target=".bs-example-modal-lg">
-                                        <i class="fa fa-eye" aria-hidden="true"></i> Preview
-                                    </button>
-                                @endif
 
-                                <ul class="nav navbar-right panel_toolbox">
-                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                    </li>
+
+                                <ul class="nav navbar-left panel_toolbox">
                                     <li>
-                                        <a class="btn_delete_reference" href="{{ route('frontend.resume.remove_reference', $reference->id) }}">
-                                            <i class="fa fa-trash" aria-hidden="true" style="color: red" ></i>
+                                        <a class="btn_edit_reference"
+                                           href="{{ route('frontend.resume.edit_reference', $reference->id) }}">
+                                            <i class="fa fa-pencil" aria-hidden="true" style="color: deepskyblue"></i>
                                         </a>
                                     </li>
+                                    <li>
+                                        <a class="btn_delete_reference"
+                                           href="{{ route('frontend.resume.remove_reference', $reference->id) }}">
+                                            <i class="fa fa-trash" aria-hidden="true" style="color: red"></i>
+                                        </a>
+                                    </li>
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+
                                 </ul>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
-                                <br />
-                                <form action="/resume/reference/save-reference" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                                <br/>
+                                <form action="/resume/reference/save-reference" method="POST" id="demo-form2"
+                                      data-parsley-validate class="form-horizontal form-label-left">
                                     {{ csrf_field() }}
                                     <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
                                     <input class="hidden" name="reference_id" value="{{ $reference->id }}">
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span>
+                                        <label class="col-md-2 col-sm-3 col-xs-12" for="name">Name
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input name="name" type="text" id="name" class="form-control col-md-7 col-xs-12" value="{{ $reference->name }}">
+                                            {{ $reference->name }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="position">Position <span class="required">*</span>
+                                        <label class="col-md-2 col-sm-3 col-xs-12" for="position">Position
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="position" name="position" class="form-control col-md-7 col-xs-12" value="{{ $reference->position }}">
+                                            {{ $reference->position }}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phone">Phone <span class="required">*</span>
+                                        <label class="col-md-2 col-sm-3 col-xs-12" for="phone">Phone
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="description" name="phone" class="form-control col-md-7 col-xs-12" value="{{ $reference->phone }}">
+                                            {{ $reference->phone }}
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">E-mail <span class="required">*</span>
+                                        <label class="col-md-2 col-sm-3 col-xs-12" for="email">E-mail
                                         </label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="email" id="description" name="email" class="form-control col-md-7 col-xs-12" value="{{ $reference->email }}">
+                                            {{ $reference->email }}
                                         </div>
                                     </div>
-                                    <div class="ln_solid"></div>
-                                    <div class="form-group">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-8">
-                                            <button type="submit" class="btn btn-info">Update</button>
-                                        </div>
-                                    </div>
+
 
                                 </form>
                             </div>
                         </div>
                     @endforeach
-                    @else
+                @else
                     <div class="x_panel">
                         <div class="x_title">
-                            <button id="add" type="button" class="btn btn-primary btn-sm pull-left add_new" data-toggle="modal"
-                                    data-target="#add-career-profile"> <i class="fa fa-plus" style="font-size: 14pt; color: #00a7d0">  </i>
+                            <button id="add" type="button" class="btn btn-primary btn-sm pull-left add_new"
+                                    data-toggle="modal"
+                                    data-target="#add-career-profile"><i class="fa fa-plus"
+                                                                         style="font-size: 14pt; color: #00a7d0"> </i>
                             </button>
 
                             @if(isset($userResume))
-                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bs-example-modal-lg">
+                                <button type="button" class="btn btn-warning" data-toggle="modal"
+                                        data-target=".bs-example-modal-lg">
                                     <i class="fa fa-eye" aria-hidden="true"></i> Preview
                                 </button>
                             @endif
@@ -122,39 +132,47 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                        <br />
-                        <form action="/resume/reference/save-reference" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                        <br/>
+                        <form action="/resume/reference/save-reference" method="POST" id="demo-form2"
+                              data-parsley-validate class="form-horizontal form-label-left">
                             {{ csrf_field() }}
                             @if(isset($userResume))
                                 <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
                             @endif
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
+                                            class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input name="name" type="text" id="name" class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="position">Position <span class="required">*</span>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="position">Position <span
+                                            class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="position" name="position" class="form-control col-md-7 col-xs-12">
+                                    <input type="text" id="position" name="position"
+                                           class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phone">Phone <span class="required">*</span>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phone">Phone <span
+                                            class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="description" name="phone" class="form-control col-md-7 col-xs-12">
+                                    <input type="text" id="description" name="phone"
+                                           class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">E-mail <span class="required">*</span>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">E-mail <span
+                                            class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="description" name="email" class="form-control col-md-7 col-xs-12">
+                                    <input type="text" id="description" name="email"
+                                           class="form-control col-md-7 col-xs-12">
                                 </div>
                             </div>
 
@@ -191,7 +209,7 @@
         $('.preview').hide();
         $('.preview').first().show();
 
-        $(document).on('click', '.btn_delete_reference', function(event)  {
+        $(document).on('click', '.btn_delete_reference', function (event) {
             event.preventDefault();
             var var_url = $(this).attr('href');
 
@@ -206,19 +224,19 @@
                     closeOnConfirm: false,
                     closeOnCancel: false
                 },
-                function(isConfirm) {
+                function (isConfirm) {
                     if (isConfirm) {
 
                         $.ajax({
                             method: 'POST',
                             url: var_url,
-                            data: {_token: '{{csrf_token()}}' },
+                            data: {_token: '{{csrf_token()}}'},
                             dataType: 'JSON',
-                            success: function(result) {
+                            success: function (result) {
 
-                                if(result.status == true) {
+                                if (result.status == true) {
                                     swal("Deleted!", "Your experience has been deleted.", "success");
-                                    setTimeout(function(){// wait for 3 secs(2)
+                                    setTimeout(function () {// wait for 3 secs(2)
                                         location.reload(); // then reload the page.(3)
                                     }, 3000);
                                 }
@@ -231,8 +249,8 @@
                 });
         });
 
-        setTimeout(function(){
-            if($('.error_message_alert').is(':visible')) {
+        setTimeout(function () {
+            if ($('.error_message_alert').is(':visible')) {
                 $('.error_message_alert').fadeOut();
             }
 
