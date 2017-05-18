@@ -19,6 +19,7 @@ use App\Models\Portal\Resume\Interest;
 use App\Models\Portal\Resume\Language;
 use App\Models\Portal\Resume\LanguageResume;
 use App\Models\Portal\Resume\MaritalStatus;
+use App\Models\Portal\Resume\PersonalInfo;
 use App\Models\Portal\Resume\Project;
 use App\Models\Portal\Resume\Reference;
 use App\Models\Portal\Resume\Resume;
@@ -79,12 +80,13 @@ class ResumeController extends Controller
         $marital_statuses = MaritalStatus::all();
 
         if ($userResume) {
-            $personalInfo = DB::table('personal_infos')->where('resume_uid', $userResume->id)->first();
+            $personalInfo = PersonalInfo::where('resume_uid', $userResume->id)->first();
         } else {
             $personalInfo = null;
         }
-        return view('backend.resumes.userInfo.userInfo', compact('userResume', 'personalInfo', 'marital_statuses', 'student'));
+        return view('backend.resumes.userInfo.personalInfo', compact('userResume', 'personalInfo', 'marital_statuses', 'student'));
     }
+
 
     /**
      * @param StorePersonalInfoRequest $request
@@ -104,7 +106,7 @@ class ResumeController extends Controller
                 $update = $this->personalInfos->update($resume->personalInfo->id, $request->all());
 
                 if ($update) {
-                    return redirect()->back()->with(['status' => 'Information Updated!']);
+                    return redirect()->route('frontend.resume.user_info')->with(['status' => 'Information Updated!']);
                 }
             } else {
                 /*---create personal-info--*/
@@ -125,7 +127,7 @@ class ResumeController extends Controller
                 /*---create personal information ---*/
                 $create = $this->personalInfos->create($request->all());
                 if ($create) {
-                    return redirect()->back()->with(['status' => 'Information Created!']);
+                    return redirect()->route('frontend.resume.user_info')->with(['status' => 'Information Created!']);
                 }
 
             }
@@ -340,18 +342,14 @@ class ResumeController extends Controller
     /**
      * @return mixed
      */
-    public function editExperience()
+    public function editExperience($id)
     {
+        $userResume = $this->getUserResume(auth()->id());
 
-        $experience = DB::table('experiences')->where([
-            ['id', '=', request('experience_uid')],
-            ['resume_uid', '=', request('resume_uid')]
-        ])->get()->toArray();
+        $experience = DB::table('experiences')->where('id',$id)->first();
 
-        return Response::json([
-            'data' => $experience,
-            'status' => true
-        ]);
+
+        return view('backend.resumes.experience.partial.edit_experiences', compact('experience', 'userResume'));
     }
 
     /**
@@ -562,19 +560,12 @@ class ResumeController extends Controller
     /**
      * @return mixed
      */
-    public function editSkill()
+    public function editSkill($id)
     {
-        $skill = DB::table('skills')
-            ->where([
-                ['id', '=', request('project_uid')],
-                ['resume_uid', '=', request('resume_uid')]
-            ])
-            ->get()->toArray();
+        $userResume = $this->getUserResume(auth()->id());
+        $skill = Skill::where('id', $id)->first();
 
-        return Response::json([
-            'data' => $skill,
-            'status' => true
-        ]);
+        return view('backend.resumes.skill.partial.edit_skill', compact('skill', 'userResume'));
     }
 
     /**
@@ -823,19 +814,14 @@ class ResumeController extends Controller
     /**
      * @return mixed
      */
-    public function editEducation()
+    public function editEducation($id)
     {
-        $education = DB::table('education')
-            ->where([
-                ['id', '=', request('education_uid')],
-                ['resume_uid', '=', request('resume_uid')]
-            ])
-            ->get()->toArray();
+        $userResume = $this->getUserResume(auth()->id());
+        $education = Education::where('id', $id)->first();
+        $degrees = Degree::all();
 
-        return Response::json([
-            'data' => $education,
-            'status' => true
-        ]);
+
+        return view('backend.resumes.education.partial.edit_education', compact('userResume', 'education', 'degrees'));
     }
 
     /**
@@ -981,19 +967,22 @@ class ResumeController extends Controller
     /**
      * @return mixed
      */
-    public function editLanguage()
+    public function editLanguage($id)
     {
-        $language = DB::table('languages')
-            ->where([
-                ['id', '=', request('language_uid')],
-                ['resume_uid', '=', request('resume_uid')]
-            ])
-            ->get()->toArray();
+        $userResume = $this->getUserResume(auth()->id());
+        $languages = Language::all();
+        if ($userResume) {
+//            $selectedLanguages = LanguageResume::where('resume_uid', $userResume->id)->get();
+            $selectedLanguage = $userResume->languages()->select('language_resume.proficiency', 'language_resume.id as language_resume_id', 'languages.name', 'languages.id as language_id', 'language_resume.is_mother_tongue')
+                ->where('language_resume.id', $id)
+                ->orderBy('language_resume_id')
+                ->first();
+        } else {
+            $selectedLanguage = null;
+        }
 
-        return Response::json([
-            'data' => $language,
-            'status' => true
-        ]);
+
+        return view('backend.resumes.language.partial.edit_languages', compact('userResume', 'languages', 'selectedLanguage'));
     }
 
     /**
@@ -1120,19 +1109,12 @@ class ResumeController extends Controller
     /**
      * @return mixed
      */
-    public function editInterest()
+    public function editInterest($id)
     {
-        $interest = DB::table('interests')
-            ->where([
-                ['id', '=', request('interest_uid')],
-                ['resume_uid', '=', request('resume_uid')]
-            ])
-            ->get()->toArray();
+        $userResume = $this->getUserResume(auth()->id());
+        $interest = Interest::where('id', $id)->first();
 
-        return Response::json([
-            'data' => $interest,
-            'status' => true
-        ]);
+        return view('backend.resumes.interest.partial.edit_interest', compact('interest', 'userResume'));
     }
 
     /**
@@ -1238,6 +1220,18 @@ class ResumeController extends Controller
         }
 
 
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function editReference($id){
+        $userResume = Resume::where('user_uid', auth()->id())->first();
+
+        $reference = Reference::where('id', $id)->first();
+
+        return view('backend.resumes.reference.partial.edit_reference', compact('reference', 'userResume'));
     }
 
     /**

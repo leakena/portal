@@ -411,7 +411,7 @@ class PortalController extends Controller
                     ['published', true]
                 ])->get();
 
-            dd($posts);
+           // dd($posts);
 
 
 

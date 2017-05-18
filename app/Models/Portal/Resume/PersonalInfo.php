@@ -11,4 +11,8 @@ class PersonalInfo extends Model
 
         'name', 'status', 'gender', 'dob', 'birthPlace', 'email', 'phone', 'address', 'profile', 'created_at', 'updated_at'
     ];
+
+    public function status(){
+        return $this->belongsTo('App\Models\Portal\Resume\MaritalStatus');
+    }
 }

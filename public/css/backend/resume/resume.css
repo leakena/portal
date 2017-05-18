@@ -24,3 +24,7 @@
 .form-control{
     margin-top: 0px !important;
 }
+
+span.required{
+    color: red;
+}
