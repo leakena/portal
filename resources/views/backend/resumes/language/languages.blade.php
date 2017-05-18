@@ -7,51 +7,68 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 @if(count($selectedLanguages)>0)
                     @foreach($selectedLanguages as $selectedLanguage)
+                        <button id="add" type="button" class="btn btn-primary btn-sm pull-left add_new"
+                                data-toggle="modal"
+                                data-target="#add-career-profile"><i class="fa fa-plus"
+                                                                     style="font-size: 14pt; color: #00a7d0"> </i>
+                        </button>
+                        @if(isset($userResume))
+                            <button type="button" class="btn btn-warning preview" data-toggle="modal"
+                                    data-target=".bs-example-modal-lg">
+                                <i class="fa fa-eye" aria-hidden="true"></i> Preview
+                            </button>
+                        @endif
                         <div class="x_panel">
                             <div class="x_title">
-                                <button id="add" type="button" class="btn btn-primary btn-sm pull-left add_new"
-                                        data-toggle="modal"
-                                        data-target="#add-career-profile"><i class="fa fa-plus"
-                                                                             style="font-size: 14pt; color: #00a7d0"> </i>
-                                </button>
-                                @if(isset($userResume))
-                                    <button type="button" class="btn btn-warning preview" data-toggle="modal" data-target=".bs-example-modal-lg">
-                                        <i class="fa fa-eye" aria-hidden="true"></i> Preview
-                                    </button>
-                                @endif
-                                <ul class="nav navbar-right panel_toolbox">
-                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+
+                                <ul class="nav navbar-left panel_toolbox">
+                                    <li>
+                                        <a class="btn_edit_language"
+                                           href="{{ route('frontend.resume.edit_language', $selectedLanguage->language_resume_id) }}">
+                                            <i class="fa fa-pencil" aria-hidden="true" style="color: deepskyblue"></i>
+                                        </a>
                                     </li>
                                     @if($selectedLanguage->proficiency != 'Mother Tongue')
                                         <li>
-                                            <a class="btn_delete_language" href="{{ route('frontend.resume.remove_language', $selectedLanguage->language_resume_id) }}">
-                                                <i class="fa fa-trash" aria-hidden="true" style="color: red" ></i>
+                                            <a class="btn_delete_language"
+                                               href="{{ route('frontend.resume.remove_language', $selectedLanguage->language_resume_id) }}">
+                                                <i class="fa fa-trash" aria-hidden="true" style="color: red"></i>
                                             </a>
                                         </li>
                                     @endif
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+
 
                                 </ul>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
                                 <br/>
-                                <form action="/resume/languages/save-language" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                                <form action="/resume/languages/save-language" method="POST" id="demo-form2"
+                                      data-parsley-validate class="form-horizontal form-label-left">
                                     {{ csrf_field() }}
 
                                     <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
-                                    <input class="hidden" name="language_resume_id" value="{{ $selectedLanguage->language_resume_id }}">
+                                    <input class="hidden" name="language_resume_id"
+                                           value="{{ $selectedLanguage->language_resume_id }}">
 
 
                                     @if( $selectedLanguage->proficiency == 'Mother Tongue')
-                                        <input name="id" class="hidden" value="{{ $selectedLanguage->language_resume_id }}">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
-                                                        class="required">*</span>
-                                            </label>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <select name="language_id" class="form-control">
 
-                                                    @foreach( $languages as $language)
+
+                                        <div class="col-md-43 col-offset-3">
+                                            <input name="language_resume_id" class="hidden"
+                                                   value="{{ $selectedLanguage->language_resume_id }}">
+                                            <div class="form-group">
+
+
+                                                <div class="col-md-2 col-sm-3 col-xs-12" for="name">
+                                                    <b><p>Name </p>
+                                                    </b>
+                                                </div>
+                                                <div class="col-md-9 col-sm-6 col-xs-12">
+                                                    <p>{{ $selectedLanguage->name }}</p>
 
                                                         @if( $language->id == $selectedLanguage->language_id)
                                                             <option selected value="{{ $language->id }}" class="old_value">{{ $language->name }}</option>
@@ -59,24 +76,24 @@
                                                             <option value="{{ $language->id }}">{{ $language->name }}</option>
                                                         @endif
 
-                                                    @endforeach
+                                                </div>
+                                            </div>
 
-                                                </select>
 
+                                            <div class="form-group">
+                                                <div class="col-md-2 col-sm-3 col-xs-12"
+                                                       for="name">
+                                                    <b><p>Proficiency </p>
+                                                    </b>
+
+                                                </div>
+                                                <div class="col-md-9 col-sm-6 col-xs-12">
+                                                    {{ $selectedLanguage->proficiency }}
+
+                                                </div>
                                             </div>
                                         </div>
 
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                   for="name">Proficiency</label>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <input type="hidden" name="proficiency" value="Mother Tongue">
-                                                    <input disabled type="text" id="name" required="required"
-                                                           class="form-control col-md-7 col-xs-12"
-                                                           value="{{ $selectedLanguage->proficiency }}">
-
-                                            </div>
-                                        </div>
 
                                     @else
                                         <input name="id" class="hidden" value="{{ $selectedLanguage->language_resume_id }}">
@@ -98,30 +115,39 @@
                                                     @endforeach
 
                                                 </select>
+                                            </div>
+                                        </div>
+
+
+                                    @else
+                                        <input name="language_resume_id" class="hidden"
+                                               value="{{ $selectedLanguage->language_resume_id }}">
+                                        <div class="form-group">
+                                            <div class="col-md-2 col-sm-3 col-xs-12" for="name">
+                                                <b><p>Name</p>
+                                                </b>
+                                            </div>
+                                            <div class="col-md-9 col-sm-6 col-xs-12">
+                                                {{$selectedLanguage->name}}
 
                                             </div>
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12"
-                                                   for="name">Proficiency</label>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <input name="proficiency" type="text" id="name" required="required"
-                                                       class="form-control col-md-7 col-xs-12"
-                                                       value="{{ $selectedLanguage->proficiency }}">
+
+                                            <div class="col-md-2 col-sm-3 col-xs-12"
+                                                   for="name">
+                                                <b><p>Proficiency</p>
+                                                </b></div>
+                                            <div class="col-md-9 col-sm-6 col-xs-12">
+                                                {{ $selectedLanguage->proficiency }}
+
 
                                             </div>
                                         </div>
 
                                     @endif
 
-
-                                    <div class="ln_solid"></div>
-                                    <div class="form-group">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-8">
-                                            <button type="submit" class="btn btn-info">Update</button>
-                                        </div>
-                                    </div>
 
                                 </form>
                             </div>
@@ -136,7 +162,8 @@
                                 <div class="x_panel">
                                     <div class="x_title">
                                         @if(isset($userResume))
-                                            <button type="button" class="btn btn-warning preview" data-toggle="modal" data-target=".bs-example-modal-lg">
+                                            <button type="button" class="btn btn-warning preview" data-toggle="modal"
+                                                    data-target=".bs-example-modal-lg">
                                                 <i class="fa fa-eye" aria-hidden="true"></i> Preview
                                             </button>
                                         @endif
@@ -162,7 +189,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name
-                                                    <span class="required">*</span>
+
                                                 </label>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <select name="language_id" class="form-control single">
@@ -231,8 +258,7 @@
                             @endif
 
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
-                                            class="required">*</span>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <select name="language_id" class="form-control">
@@ -253,7 +279,7 @@
 
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="proficiency">Proficiency
-                                    <span class="required">*</span>
+
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input name="proficiency" type="text" id="proficiency" required="required"
@@ -295,7 +321,7 @@
         $('.preview').hide();
         $('.preview').first().show();
 
-        $(document).on('click', '.btn_delete_language', function(event)  {
+        $(document).on('click', '.btn_delete_language', function (event) {
             event.preventDefault();
             var var_url = $(this).attr('href');
 
@@ -310,19 +336,19 @@
                     closeOnConfirm: false,
                     closeOnCancel: false
                 },
-                function(isConfirm) {
+                function (isConfirm) {
                     if (isConfirm) {
 
                         $.ajax({
                             method: 'POST',
                             url: var_url,
-                            data: {_token: '{{csrf_token()}}' },
+                            data: {_token: '{{csrf_token()}}'},
                             dataType: 'JSON',
-                            success: function(result) {
+                            success: function (result) {
 
-                                if(result.status == true) {
+                                if (result.status == true) {
                                     swal("Deleted!", "Your experience has been deleted.", "success");
-                                    setTimeout(function(){// wait for 3 secs(2)
+                                    setTimeout(function () {// wait for 3 secs(2)
                                         location.reload(); // then reload the page.(3)
                                     }, 3000);
                                 }
@@ -368,6 +394,14 @@
 //                });
 //            }
 //        })
+
+
+        setTimeout(function () {
+            if ($('.error_message_alert').is(':visible')) {
+                $('.error_message_alert').fadeOut();
+            }
+
+        }, 3000);
     </script>
 
 @endsection

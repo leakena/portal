@@ -1,7 +1,7 @@
 @extends('backend.layouts.resume')
 
-    <link rel="stylesheet" href="{{ asset('css/backend/resume/resume.css') }}"/>
-    <style>
+<link rel="stylesheet" href="{{ asset('css/backend/resume/resume.css') }}"/>
+<style>
     .switch {
         position: relative;
         display: inline-block;
@@ -9,7 +9,9 @@
         height: 28px;
     }
 
-    .switch input {display:none;}
+    .switch input {
+        display: none;
+    }
 
     .slider {
         position: absolute;
@@ -76,151 +78,131 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 @if(count($educations) >0)
                     @foreach($educations as $education)
+                        <button id="add" type="button" class="btn btn-primary btn-sm pull-left add_new"
+                                data-toggle="modal"
+                                data-target="#add-career-profile"><i class="fa fa-plus"
+                                                                     style="font-size: 14pt; color: #00a7d0"> </i>
+                        </button>
+                        @if(isset($userResume))
+                            <button type="button" class="btn btn-warning preview" data-toggle="modal"
+                                    data-target=".bs-example-modal-lg">
+                                <i class="fa fa-eye" aria-hidden="true"></i> Preview
+                            </button>
+                        @endif
+
                         <div class="x_panel">
                             <div class="x_title">
-                                <button id="add" type="button" class="btn btn-primary btn-sm pull-left add_new" data-toggle="modal"
-                                        data-target="#add-career-profile"> <i class="fa fa-plus" style="font-size: 14pt; color: #00a7d0">  </i>
-                                </button>
-                                @if(isset($userResume))
-                                    <button type="button" class="btn btn-warning preview" data-toggle="modal" data-target=".bs-example-modal-lg">
-                                        <i class="fa fa-eye" aria-hidden="true"></i> Preview
-                                    </button>
-                                @endif
-                                <ul class="nav navbar-right panel_toolbox">
+
+                                <ul class="nav navbar-left panel_toolbox">
+                                    <li>
+                                        <a class="btn_edit_edu"
+                                           href="{{ route('frontend.resume.edit_education', $education->id )}}">
+                                            <i class="fa fa-pencil" aria-hidden="true" style="color: deepskyblue"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="btn_delete_edu"
+                                           href="{{ route('frontend.resume.remove_education', $education->id )}}">
+                                            <i class="fa fa-trash" aria-hidden="true" style="color: red"></i>
+                                        </a>
+                                    </li>
                                     <li>
                                         <a class="collapse-link">
                                             <i class="fa fa-chevron-up"></i>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a class="btn_delete_edu" href="{{ route('frontend.resume.remove_education', $education->id )}}">
-                                            <i class="fa fa-trash" aria-hidden="true" style="color: red" ></i>
-                                        </a>
-                                    </li>
+
                                 </ul>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
-                                <br />
-                                <form action="/resume/educations/save-education" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                                <br/>
+                                <form action="/resume/educations/save-education" method="POST" id="demo-form2"
+                                      data-parsley-validate class="form-horizontal form-label-left">
 
                                     {{ csrf_field() }}
                                     <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
                                     <input name="education_id" type="hidden" value="{{ $education->id }}">
 
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label class="control-label" for="school">School <span class="required">*</span>
+                                    <div class="form-group col-md-6">
+                                        <div class="col-md-3 col-sm-3 col-xs-12" for="school">
+                                            <b><p>School </p>
+                                            </b>
+
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            {{ $education->school }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <div class="col-md-3 col-sm-3 col-xs-12" for="major">
+                                            <b><p>Major </p>
+                                            </b>
+                                        </div>
+                                        <div class="col-md-9 col-sm-6 col-xs-12">
+                                            {{ $education->major }}
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <div class="col-md-3 col-sm-3 col-xs-12">
+                                            <b><p>Degree </p>
+                                            </b>
+                                        </div>
+                                        <div class="col-md-9 col-sm-6 col-xs-12">
+                                            {{$education->degree->name}}
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="form-group col-md-6">
+                                        <div class="col-md-3 col-sm-3 col-xs-12" for="address">
+                                            <b><p>Adress </p>
+                                            </b>
+                                        </div>
+                                        <div class="col-md-9 col-sm-6 col-xs-12">
+                                            {!! $education->address !!}
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <div class="col-md-3 col-sm-3 col-xs-12" for="start_date">
+                                            <b><p>Start Date </p>
+                                            </b>
+                                        </div>
+                                        <div class="col-md-9 col-sm-6 col-xs-12">
+                                            {{ $education->start_date }}
+                                        </div>
+                                    </div>
+                                    @if($education->is_present == true)
+                                        <div class="form-group col-md-6 find_end_date">
+                                            <div class="col-md-3 col-sm-3 col-xs-12" for="end_date">
+                                                <b><p>End Date </p>
+                                                </b>
+                                            </div>
+                                            <div class="col-md-9 col-sm-6 col-xs-12">
+                                                Present
+                                            </div>
+                                        </div>
+
+
+                                    @else
+                                        <div class="form-group col-md-6 find_end_date">
+                                            <label class="col-sm-3 col-sm-3 col-xs-12" for="end_date">
+                                                <b><p>End Date </p>
+                                                </b>
                                             </label>
-                                            <input name="school" type="text" id="school" class="form-control col-md-7 col-xs-12" value="{{ $education->school }}">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label class="control-label" for="major">Major <span class="required">*</span>
-                                            </label>
-                                            <input type="text" id="major" name="major" class="form-control col-md-7 col-xs-12" value="{{ $education->major }}">
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label class="control-label">Degree</label>
-                                            <select name="degree" class="form-control single">
-
-                                                @foreach( $degrees as $degree )
-                                                    @if($degree->id == $education->degree->id)
-                                                        <option selected value="{{ $degree->id }}">{{ $degree->name }}</option>
-                                                    @else
-                                                        <option value="{{ $degree->id }}">{{ $degree->name }}</option>
-                                                    @endif
-
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="form-group col-md-12">
-                                            <label class="control-label" for="address">Adress <span class="required">*</span>
-                                            </label>
-                                            <textarea type="text" id="address" name="address" class="form-control col-md-7 col-xs-12">{{ $education->address }}
-
-                                            </textarea>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="form-group col-md-5">
-                                            <label class="control-label" for="start_date">Start Date <span class="required">*</span>
-                                            </label>
-                                            <div class="input-group">
-                                                <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
-                                                       name="start_date" class="date-picker form-control start_date"
-                                                       value="{{ $education->start_date }}" readonly>
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-calendar-o"></i>
-                                                </span>
+                                            <div class="col-md-9 col-sm-6 col-xs-12">
+                                                {{ $education->end_date }}
                                             </div>
                                         </div>
-                                        @if($education->is_present == true)
-                                            <div class="form-group col-md-5 find_end_date">
-                                                <label class="control-label" for="end_date"> End Date <span class="required">*</span>
-                                                </label>
-                                                <div class="input-group">
-                                                    <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
-                                                           name="end_date" class="date-picker form-control"
-                                                           value="Present" readonly>
-                                                    <span class="input-group-addon">
-                                                    <i class="fa fa-calendar-o"></i>
-                                                </span>
-                                                </div>
-                                            </div>
 
-                                            <div class="form-group col-md-2">
-                                                <input type="hidden" name="is_present" value="{{ $education->is_present }}">
-                                                <label class="control-label">Till today
-                                                </label>
-                                                <div class="input-group">
-                                                    <label class="switch">
-                                                        <input checked type="checkbox" class="slider_update">
-                                                        <div class="slider round" ></div>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        @else
-                                            <div class="form-group col-md-5 find_end_date">
-                                                <label class="control-label" for="end_date"> End Date <span class="required">*</span>
-                                                </label>
-                                                <div class="input-group">
-                                                    <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
-                                                           name="end_date" class="date-picker form-control end_date"
-                                                           value="{{ $education->end_date }}" readonly>
-                                                    <span class="input-group-addon">
-                                                    <i class="fa fa-calendar-o"></i>
-                                                </span>
-                                                </div>
-                                            </div>
 
-                                            <div class="form-group col-md-2">
-                                                <input type="hidden" name="is_present" value="{{ $education->is_present }}">
-                                                <label class="control-label">Till today
-                                                </label>
-                                                <div class="input-group">
-                                                    <label class="switch">
-                                                        <input type="checkbox" class="slider_update">
-                                                        <div class="slider round" ></div>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        @endif
+                                    @endif
 
-                                    </div>
-
-                                    <div class="ln_solid"></div>
-                                    <div class="form-group">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-11">
-                                            <button type="submit" class="btn btn-info">Update</button>
-                                        </div>
-                                    </div>
 
                                 </form>
                             </div>
@@ -231,11 +213,14 @@
 
                     <div class="x_panel">
                         <div class="x_title">
-                            <button id="add" type="button" class="btn btn-primary btn-sm pull-left add_new" data-toggle="modal"
-                                    data-target="#add-career-profile"> <i class="fa fa-plus" style="font-size: 14pt; color: #00a7d0">  </i>
+                            <button id="add" type="button" class="btn btn-primary btn-sm pull-left add_new"
+                                    data-toggle="modal"
+                                    data-target="#add-career-profile"><i class="fa fa-plus"
+                                                                         style="font-size: 14pt; color: #00a7d0"> </i>
                             </button>
                             @if(isset($userResume))
-                                <button type="button" class="btn btn-warning preview" data-toggle="modal" data-target=".bs-example-modal-lg">
+                                <button type="button" class="btn btn-warning preview" data-toggle="modal"
+                                        data-target=".bs-example-modal-lg">
                                     <i class="fa fa-eye" aria-hidden="true"></i> Preview
                                 </button>
                             @endif
@@ -266,8 +251,9 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                        <br />
-                        <form action="/resume/educations/save-education" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                        <br/>
+                        <form action="/resume/educations/save-education" method="POST" id="demo-form2"
+                              data-parsley-validate class="form-horizontal form-label-left">
 
                             {{ csrf_field() }}
                             @if(isset($userResume))
@@ -278,7 +264,8 @@
                                 <div class="form-group col-md-6">
                                     <label class="control-label" for="school">School <span class="required">*</span>
                                     </label>
-                                    <input name="school" type="text" id="school" class="form-control col-md-7 col-xs-12">
+                                    <input name="school" type="text" id="school"
+                                           class="form-control col-md-7 col-xs-12">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="control-label" for="major">Major <span class="required">*</span>
@@ -292,7 +279,8 @@
                                     <label class="control-label">Degree</label>
                                     <select name="degree" class="form-control single">
                                         @foreach( $degrees as $degree )
-                                            <option name="degree_id" value="{{ $degree->id }}">{{ $degree->name }}</option>
+                                            <option name="degree_id"
+                                                    value="{{ $degree->id }}">{{ $degree->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -302,7 +290,8 @@
                                 <div class="form-group col-md-12">
                                     <label class="control-label" for="address">Adress <span class="required">*</span>
                                     </label>
-                                    <textarea type="text" id="address" name="address" class="form-control col-md-7 col-xs-12">
+                                    <textarea type="text" id="address" name="address"
+                                              class="form-control col-md-7 col-xs-12">
 
                                             </textarea>
                                 </div>
@@ -310,7 +299,8 @@
 
                             <div class="row">
                                 <div class="form-group col-md-5">
-                                    <label class="control-label" for="start_date">Start Date <span class="required">*</span>
+                                    <label class="control-label" for="start_date">Start Date <span
+                                                class="required">*</span>
                                     </label>
                                     <div class="input-group">
                                         <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
@@ -322,7 +312,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-5 find_end_date">
-                                    <label class="control-label" for="end_date"> End Date <span class="required">*</span>
+                                    <label class="control-label" for="end_date"> End Date <span
+                                                class="required">*</span>
                                     </label>
                                     <div class="input-group">
                                         <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
@@ -335,13 +326,14 @@
                                 </div>
 
                                 <div class="form-group col-md-2">
-                                    <input type="hidden" name="is_present" value="{{ isset($education)?$education->is_present:'' }}">
+                                    <input type="hidden" name="is_present"
+                                           value="{{ isset($education)?$education->is_present:'' }}">
                                     <label class="control-label">Till today
                                     </label>
                                     <div class="input-group">
                                         <label class="switch">
                                             <input type="checkbox" class="slider_update">
-                                            <div class="slider round" ></div>
+                                            <div class="slider round"></div>
                                         </label>
                                     </div>
                                 </div>
@@ -371,7 +363,7 @@
 
         $(".add_education").hide();
 
-        $(document).on('click', "#add", function(){
+        $(document).on('click', "#add", function () {
             $(".add_education").toggle();
         });
         $('.add_new').hide();
@@ -379,7 +371,7 @@
         $('.preview').hide();
         $('.preview').first().show();
 
-        $(document).on('click', '.btn_delete_edu', function(event)  {
+        $(document).on('click', '.btn_delete_edu', function (event) {
             event.preventDefault();
             var var_url = $(this).attr('href');
 
@@ -394,19 +386,19 @@
                     closeOnConfirm: false,
                     closeOnCancel: false
                 },
-                function(isConfirm) {
+                function (isConfirm) {
                     if (isConfirm) {
 
                         $.ajax({
                             method: 'POST',
                             url: var_url,
-                            data: {_token: '{{csrf_token()}}' },
+                            data: {_token: '{{csrf_token()}}'},
                             dataType: 'JSON',
-                            success: function(result) {
+                            success: function (result) {
 
-                                if(result.status == true) {
+                                if (result.status == true) {
                                     swal("Deleted!", "Your experience has been deleted.", "success");
-                                    setTimeout(function(){// wait for 3 secs(2)
+                                    setTimeout(function () {// wait for 3 secs(2)
                                         location.reload(); // then reload the page.(3)
                                     }, 3000);
                                 }
@@ -421,14 +413,14 @@
         })
 
         $('.start_date').datepicker({
-            format:'yyyy-mm-d'
+            format: 'yyyy-mm-d'
         })
         $('.end_date').datepicker({
-            format:'yyyy-mm-d'
+            format: 'yyyy-mm-d'
         })
 
-        $('.slider_update').on('change', function() {
-            if($(this).is(':checked')) {
+        $('.slider_update').on('change', function () {
+            if ($(this).is(':checked')) {
 
                 $(this).parent('label').parent('div').parent('div').siblings('div.find_end_date').find('input[name=end_date]').val('Present').datepicker('destroy');
                 $(this).parent('label').parent('div').siblings('input[name=is_present]').val('1');
@@ -436,7 +428,7 @@
             } else {
 
                 $(this).parent('label').parent('div').parent('div').siblings('div.find_end_date').find('input[name=end_date]').datepicker({
-                    format:'yyyy-mm-d'
+                    format: 'yyyy-mm-d'
                 });
                 $(this).parent('label').parent('div').parent('div').siblings('div.find_end_date').find('input[name=end_date]').val('');
                 $(this).parent('label').parent('div').siblings('input[name=is_present]').val('0');
@@ -445,8 +437,8 @@
 
         });
 
-        setTimeout(function(){
-            if($('.error_message_alert').is(':visible')) {
+        setTimeout(function () {
+            if ($('.error_message_alert').is(':visible')) {
                 $('.error_message_alert').fadeOut();
             }
 

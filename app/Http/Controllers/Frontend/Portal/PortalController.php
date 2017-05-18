@@ -379,7 +379,11 @@ class PortalController extends Controller
 
         if (isset($array_key_post[$studentData['degree_id']])) {
 
+
             $level_degree = $array_key_post[$studentData['degree_id']];
+
+           // dd($posts);
+
 
 
             if (isset($level_degree[$studentData['department_id']])) {

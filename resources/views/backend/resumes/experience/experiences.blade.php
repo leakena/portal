@@ -9,7 +9,9 @@
         height: 28px;
     }
 
-    .switch input {display:none;}
+    .switch input {
+        display: none;
+    }
 
     .slider {
         position: absolute;
@@ -74,23 +76,26 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 @if(count($experiences)>0)
                     @foreach($experiences as $experience)
+                        <button id="add" type="button" class="btn btn-primary btn-sm pull-left add_new"
+                                data-toggle="modal"
+                                data-target="#add-career-profile"><i class="fa fa-plus"
+                                                                     style="font-size: 14pt; color: #00a7d0"> </i>
+                        </button>
+                        @if(isset($userResume))
+                            <button type="button" class="btn btn-sm btn-warning preview" data-toggle="modal"
+                                    data-target=".bs-example-modal-lg">
+                                <i class="fa fa-eye" aria-hidden="true"></i> Preview
+                            </button>
+                        @endif
 
                         <div class="x_panel">
                             <div class="x_title">
-                                <button id="add" type="button" class="btn btn-primary btn-sm pull-left add_new"
-                                        data-toggle="modal"
-                                        data-target="#add-career-profile"><i class="fa fa-plus"
-                                                                             style="font-size: 14pt; color: #00a7d0"> </i>
-                                </button>
-                                @if(isset($userResume))
-                                    <button type="button" class="btn btn-warning preview" data-toggle="modal" data-target=".bs-example-modal-lg">
-                                        <i class="fa fa-eye" aria-hidden="true"></i> Preview
-                                    </button>
-                                @endif
-                                <ul class="nav navbar-right panel_toolbox">
+
+                                <ul class="nav navbar-left panel_toolbox">
                                     <li>
-                                        <a class="collapse-link">
-                                            <i class="fa fa-chevron-up"></i>
+                                        <a class="btn_edit_exp"
+                                           href="{{ route('frontend.resume.edit_experience',$experience->id) }}">
+                                            <i class="fa fa-pencil" aria-hidden="true" style="color: deepskyblue"></i>
                                         </a>
                                     </li>
                                     <li>
@@ -98,10 +103,15 @@
                                            href="{{ route('frontend.resume.remove_experience',$experience->id) }}">
                                             <i class="fa fa-trash" aria-hidden="true" style="color: red"></i>
                                         </a>
-
-
+                                    </li>
+                                    <li>
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
                                     </li>
                                 </ul>
+
+
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
@@ -111,118 +121,91 @@
                                     <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
                                     <input type="hidden" name="experience_id" value="{{ $experience->id }}">
 
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label class="control-label" for="position">Position <span class="required">*</span>
-                                            </label>
-                                            <input type="text" id="company" name="company"
-                                                   class="form-control col-md-7 col-xs-12"
-                                                   value="{{ $experience->company }}">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label class="control-label" for="company">Company <span
-                                                        class="required">*</span>
-                                            </label>
-                                            <input type="text" id="position" name="position"
-                                                   class="form-control col-md-7 col-xs-12"
-                                                   value="{{ $experience->position }}">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="col-md-3 col-sm-3 col-xs-12" for="position">
+                                                <b><p>Position </p>
+                                                </b>
+                                            </div>
+                                            <div class="col-md-9 col-sm-6 col-xs-12">
+                                                {{ $experience->position }}
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="form-group col-md-12">
-                                            <label class="control-label" for="description">Address <span
-                                                        class="required">*</span>
-                                            </label>
-                                            <textarea type="text" id="description" name="address"
-                                                      class="form-control">{{ $experience->address }}
-                                            </textarea>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="col-md-3 col-sm-3 col-xs-12" for="company">
+                                                <b><p>Company</p>
+                                                </b>
+
+                                            </div>
+                                            <div class="col-md-9 col-sm-6 col-xs-12">
+                                                {{ $experience->company}}
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="form-group col-md-5">
-                                            <label class="control-label">Start Date <span class="required">*</span>
-                                            </label>
-                                            <div class="input-group">
-                                                <input type="text" data-date-format="yyyy-mm-dd" id="start_date"
-                                                       name="start_date" class="date-picker form-control start_date"
-                                                       value="{{ $experience->start_date }}" readonly>
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-calendar-o"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        @if($experience->is_present == true)
-                                            <div class="form-group col-md-5 find_end_date">
-                                                <label class="control-label">End Date <span class="required">*</span>
-                                                </label>
-                                                <div class="input-group">
-                                                    <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
-                                                           name="end_date" class="date-picker form-control update_end_date"
-                                                           value="Present" readonly>
-                                                    <span class="input-group-addon">
-                                                        <i class="fa fa-calendar-o"></i>
-                                                    </span>
-                                                </div>
 
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="col-md-3 col-sm-3 col-xs-12" for="Address">
+                                                <b><p>Address</p>
+                                                </b>
                                             </div>
-                                            <div class="form-group col-md-2">
-                                                <input type="hidden" name="is_present" value="{{ $experience->is_present }}">
-                                                <label class="control-label">Till today
-                                                </label>
-                                                <div class="input-group">
-                                                    <label class="switch">
-                                                        <input checked type="checkbox" class="slider_update">
-                                                        <div class="slider round" ></div>
-                                                    </label>
-                                                </div>
+                                            <div class="col-md-9 col-sm-6 col-xs-12">
+                                                {!! $experience->address !!}
                                             </div>
-                                        @else
-                                            <div class="form-group col-md-5 find_end_date">
-                                                <label class="control-label">End Date <span class="required">*</span>
-                                                </label>
-                                                <div class="input-group">
-                                                    <input type="text" data-date-format="yyyy-mm-dd" id="end_date"
-                                                           name="end_date" class="date-picker end_date form-control update_end_date"
-                                                           value="{{ $experience->end_date }}" readonly>
-                                                    <span class="input-group-addon">
-                                                        <i class="fa fa-calendar-o"></i>
-                                                    </span>
-                                                </div>
 
-                                            </div>
-                                            <div class="form-group col-md-2">
-                                                <input type="hidden" name="is_present" value="{{ $experience->is_present }}">
-                                                <label class="control-label">Till today
-                                                </label>
-                                                <div class="input-group">
-                                                    <label class="switch">
-                                                        <input type="checkbox" class="slider_update">
-                                                        <div class="slider round" ></div>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        @endif
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="form-group col-md-12">
-                                            <label class="control-label" for="description">Description <span
-                                                        class="required">*</span>
-                                            </label>
-                                            <textarea type="text" id="description" name="description"
-                                                      class="form-control">{{ $experience->description }}
-                                            </textarea>
                                         </div>
                                     </div>
 
-                                    <div class="ln_solid"></div>
-                                    <div class="form-group">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-11">
-                                            <button type="submit" class="btn btn-info">Update </button>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="col-md-3 col-sm-3 col-xs-12" for="description">
+                                                <b><p>Description</p>
+                                                </b>
+                                            </div>
+                                            <div class="col-md-9 col-sm-6 col-xs-12">
+                                                {!! $experience->description !!}
+                                            </div>
+
                                         </div>
                                     </div>
+
+
+                                    <div class="form-group col-md-6">
+                                        <div class="col-md-3 col-sm-3 col-xs-12">
+                                            <b><p>Start Date</p>
+                                            </b>
+                                        </div>
+                                        <div class="col-md-9 col-sm-6 col-xs-12">
+                                            {{ $experience->start_date }}
+                                        </div>
+                                    </div>
+                                    @if($experience->is_present == true)
+                                        <div class="form-group col-md-6 find_end_date">
+                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                <b><p>End Date</p>
+                                                </b>
+                                            </div>
+                                            <div class="col-md-9 col-sm-6 col-xs-12">
+                                                Present
+                                            </div>
+                                        </div>
+
+                                    @else
+                                        <div class="form-group col-md-6 find_end_date">
+                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                <b><p>End Date</p>
+                                                </b>
+                                            </div>
+                                            <div class="col-md-9 col-sm-6 col-xs-12">
+                                                {{ $experience->end_date }}
+                                            </div>
+                                        </div>
+
+                                    @endif
 
 
                                 </form>
@@ -239,7 +222,8 @@
                                                                          style="font-size: 14pt; color: #00a7d0"> </i>
                             </button>
                             @if(isset($userResume))
-                                <button type="button" class="btn btn-warning preview" data-toggle="modal" data-target=".bs-example-modal-lg">
+                                <button type="button" class="btn btn-warning preview" data-toggle="modal"
+                                        data-target=".bs-example-modal-lg">
                                     <i class="fa fa-eye" aria-hidden="true"></i> Preview
                                 </button>
                             @endif
@@ -340,13 +324,14 @@
 
                                 </div>
                                 <div class="form-group col-md-2">
-                                    <input type="hidden" class="is_present" name="is_present" value="{{ isset($experience)?$experience->is_present:'' }}">
+                                    <input type="hidden" class="is_present" name="is_present"
+                                           value="{{ isset($experience)?$experience->is_present:'' }}">
                                     <label class="control-label">Till today
                                     </label>
                                     <div class="input-group">
                                         <label class="switch">
                                             <input type="checkbox" class="slider_update">
-                                            <div class="slider round" ></div>
+                                            <div class="slider round"></div>
                                         </label>
                                     </div>
 
@@ -382,6 +367,7 @@
 
         $('.add_new').hide();
         $('.add_new').first().show();
+
 
         $('.preview').hide();
         $('.preview').first().show();
@@ -427,15 +413,15 @@
         });
 
         $('.start_date').datepicker({
-            format:'yyyy-mm-d'
+            format: 'yyyy-mm-d'
         });
         $('.end_date').datepicker({
-            format:'yyyy-mm-d'
+            format: 'yyyy-mm-d'
         });
 
 
-        $('.slider_update').on('change', function() {
-            if($(this).is(':checked')) {
+        $('.slider_update').on('change', function () {
+            if ($(this).is(':checked')) {
 
                 $(this).parent('label').parent('div').parent('div').siblings('div.find_end_date').find('input[name=end_date]').val('Present').datepicker('destroy');
                 $(this).parent('label').parent('div').siblings('input[name=is_present]').val('1');
@@ -443,7 +429,7 @@
             } else {
 
                 $(this).parent('label').parent('div').parent('div').siblings('div.find_end_date').find('input[name=end_date]').datepicker({
-                    format:'yyyy-mm-d'
+                    format: 'yyyy-mm-d'
                 });
                 $(this).parent('label').parent('div').parent('div').siblings('div.find_end_date').find('input[name=end_date]').val('');
                 $(this).parent('label').parent('div').siblings('input[name=is_present]').val('0');
@@ -453,12 +439,13 @@
 
         });
 
-        setTimeout(function(){
-            if($('.error_message_alert').is(':visible')) {
+        setTimeout(function () {
+            if ($('.error_message_alert').is(':visible')) {
                 $('.error_message_alert').fadeOut();
             }
 
         }, 3000);
+
 
     </script>
 

@@ -1,7 +1,3 @@
-@extends('backend.layouts.resume')
-
-
-@section('content')
 
     <div role="main">
         <div class="">
@@ -17,7 +13,7 @@
                         </ul>
                     </div>
                 @endif
-                <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="col-md-12 col-sm-12 col-xs-12 update1">
                     <div class="x_panel">
                         <div class="x_title">
                             @if(isset($userResume))
@@ -183,75 +179,8 @@
     </div>
 
     {{--modal preview cv--}}
-    @include('backend.resumes.includes.modal.preview')
-
-@endsection
-
-@section('js')
-    <script>
-
-        @if(isset($personalInfo))
-            var material_status = '{{$personalInfo->status_id}}'
-        @else
-            var material_status = ''
-        @endif
-
-        $(document).on('click', '.gender', function () {
-           /* $('#gender').find('.focus').removeClass('focus');
-            $('#gender').find('.active .focus').removeClass('active focus');
-            $(this).addClass('active focus');*/
 
 
 
-        });
-
-        $('label.gender').on('click', function (e) {
-            $(this).prop('disabled', true);
-        })
-
-        $('select[name=status_id] option').each(function (key, value) {
-            var status = $(this).val();
-            if (status == material_status) {
-                $(this).prop('selected', true);
-
-            }
-        });
-
-        $(document).on('click', '.information_name', function (event) {
-            event.preventDefault();
-            swal({
-                title: "You cannot edit name",
-                text: "If you want to edit, please go to administration office!",
-                type: "info"
-            });
-
-        } );
-
-        $(document).on('click', '.information_gender', function (event) {
-            event.preventDefault();
-            swal({
-                title: "You cannot edit gender",
-                text: "If you want to edit, please go to administration office!",
-                type: "info"
-            });
-
-        } );
-
-        $(document).on('click', '.information_birth_place', function (event) {
-            event.preventDefault();
-            swal({
-                title: "You cannot edit date of birth",
-                text: "If you want to edit, please go to administration office!",
-                type: "info"
-            });
-
-        } );
 
 
-       /* $('#birthday').datepicker({
-            format: 'yyyy-mm-d'
-        })*/
-
-
-    </script>
-@endsection
