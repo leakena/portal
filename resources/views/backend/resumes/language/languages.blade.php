@@ -75,7 +75,6 @@
                                                 </div>
                                                 <div class="col-md-9 col-sm-6 col-xs-12">
                                                     <p>{{ $selectedLanguage->name }}</p>
-
                                                 </div>
                                             </div>
 
@@ -92,18 +91,17 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
                                     @else
+
                                         <input name="language_resume_id" class="hidden"
                                                value="{{ $selectedLanguage->language_resume_id }}">
                                         <div class="form-group">
-                                            <div class="col-md-2 col-sm-3 col-xs-12" for="name">
-                                                <b><p>Name</p>
-                                                </b>
-                                            </div>
+                                            <div class="col-md-2 col-sm-3 col-xs-12"
+                                                   for="name">
+                                                <b><p>Proficiency</p>
+                                                </b></div>
                                             <div class="col-md-9 col-sm-6 col-xs-12">
-                                                {{$selectedLanguage->name}}
+                                                {{ $selectedLanguage->proficiency }}
                                             </div>
                                         </div>
 
@@ -119,7 +117,6 @@
                                         </div>
 
                                     @endif
-
 
                                 </form>
                             </div>

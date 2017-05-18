@@ -140,6 +140,9 @@
         });
         @endif
 
+        function setLabelButton(label) {
+            $('#add').text(label)
+        }
 
         setTimeout(function () {
             if ($('.error_message_alert').is(':visible')) {

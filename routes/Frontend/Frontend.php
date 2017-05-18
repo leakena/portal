@@ -130,8 +130,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/resume/experiences/{id}/remove-experience', 'ResumeController@removeExperience')->name('remove_experience');
 
         /**
-         *    Project
-         */
+        *	Project
+        */
         Route::get('/resume/projects', 'ResumeController@projectContent')->name('get_project_content');
         Route::post('/resume/projects/save-project', 'ResumeController@saveProject');
         Route::get('/resume/projects/edit-project', 'ResumeController@editProject');
@@ -172,17 +172,24 @@ Route::group(['middleware' => 'auth'], function () {
          */
         Route::get('/resume/languages', 'ResumeController@languageContent')->name('get_language_content');
         Route::get('/resume/get-languages', 'ResumeController@language')->name('get_language');
-        Route::post('/resume/languages/save-language', 'ResumeController@saveLanguage');
+        Route::post('/resume/languages/save-language', 'ResumeController@saveLanguage')->name('store_language');
         Route::get('/resume/languages/edit-language/{id}', 'ResumeController@editLanguage')->name('edit_language');
+        Route::post('/resume/languages/update_language', 'ResumeController@updateLanguage')->name('update_language');
+        Route::post('/resume/languages/delete-language', 'ResumeController@deleteLanguage')->name('remove_language');
+        Route::get('/resume/languages/remote_languages', 'ResumeController@remote_languages')->name('remote_languages');
+        Route::get('/resume/languages/edit_remote_languages', 'ResumeController@edit_remote_languages')->name('edit_remote_languages');
+        Route::post('/resume/languages/compare_language', 'ResumeController@compare_language')->name('compare_language');
+        Route::post('/resume/languages/get_circle_language', 'ResumeController@get_circle_language')->name('getCircleLanguages');
         Route::post('/resume/languages/update-language', 'ResumeController@updateLanguage');
         Route::post('/resume/languages/{id}/delete-language', 'ResumeController@deleteLanguage')->name('remove_language');
+
 
         /**
          * Interest
          */
         Route::get('/resume/interests', 'ResumeController@interestContent')->name('get_interest_content');
         Route::get('/resume/get-interests', 'ResumeController@interest')->name('get_interest');
-        Route::post('/resume/interests/save-interest', 'ResumeController@saveInterest');
+        Route::post('/resume/interests/save-interest', 'ResumeController@saveInterest')->name('save_interest');
         Route::get('/resume/interests/edit-interest/{id}', 'ResumeController@editInterest')->name('edit_interest');
         Route::post('/resume/interests/update-interest', 'ResumeController@updateInterest');
         Route::post('/resume/interests/{id}/delete-interest', 'ResumeController@deleteInterest')->name('remove_interest');
