@@ -106,7 +106,12 @@
                 $(this).children('i').prop('class', 'fa  fa-plus-square')
             }
         });
-        
+
+
+
+
+
+        $(this);
         
         $(document).on('click', '.btn_edit_experience', function (e) {
             e.preventDefault();
