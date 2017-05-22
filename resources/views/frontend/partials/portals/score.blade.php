@@ -60,16 +60,21 @@
                                                 GPA
                                             </td>
                                             <td>
-                                                {{ $scores['final_score'] }}
-                                                @if( $scores['final_score'] < 50 )
-                                                    <p>1.5</p>
-                                                @elseif( $scores['final_score'] < 65 )
-                                                    <p>2.0</p>
-                                                @elseif( $scores['final_score'] < 70 )
-                                                    <p>2.5</p>
-                                                @elseif( $scores['final_score'] < 80 )
-                                                    <p>3.0</p>
+                                                @if(isset($scores['final_score']))
+                                                    {{ isset($scores['final_score'])?$scores['final_score']: 0 }}
+                                                    @if( $scores['final_score'] < 50 )
+                                                        <p>1.5</p>
+                                                    @elseif( $scores['final_score'] < 65 )
+                                                        <p>2.0</p>
+                                                    @elseif( $scores['final_score'] < 70 )
+                                                        <p>2.5</p>
+                                                    @elseif( $scores['final_score'] < 80 )
+                                                        <p>3.0</p>
+                                                    @endif
+                                                @else
+                                                    0
                                                 @endif
+
                                             </td>
                                         </tr>
                                         </tbody>

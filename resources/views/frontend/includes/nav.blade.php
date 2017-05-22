@@ -38,7 +38,7 @@
                                 <li>{{ link_to_route('admin.dashboard', trans('navs.frontend.user.administration')) }}</li>
                             @endauth
 
-                            <li><a href="/resume">{{ trans('navs.frontend.user.resume') }}</a></li>
+                            <li><a href="{{route('frontend.resume.index')}}" id="resume_index"> {{ trans('navs.frontend.user.resume') }} </a></li>
                             <li>{{ link_to_route('frontend.user.account', trans('navs.frontend.user.account')) }}</li>
                             <li>{{ link_to_route('frontend.auth.logout', trans('navs.general.logout')) }}</li>
                         </ul>

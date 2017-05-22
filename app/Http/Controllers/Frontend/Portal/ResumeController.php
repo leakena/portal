@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend\Portal;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Frontend\Portal\HelperTrait\ResumeTrait;
 use App\Http\Requests\Backend\Resume\CareerProfile\StoreCareerProfileRequest;
 use App\Http\Requests\Backend\Resume\Education\StoreEducation;
 use App\Http\Requests\Backend\Resume\Experience\StoreExperience;
@@ -38,7 +39,7 @@ class ResumeController extends Controller
     protected $personalInfos;
     protected $prefix;
     protected $requestManager;
-
+    use ResumeTrait;
     /**
      * ResumeController constructor.
      * @param PersonalInfoContract $personalIfoRepo

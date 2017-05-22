@@ -1,31 +1,31 @@
 <div class="col-md-12">
-    @if($post->file == null)
-        <div class="post">
-            <span class="poster">{{ $post->user->name }}</span><br/>
-            <span class="text-muted">
+        @if($post->file == null)
+            <div class="post">
+                <span class="poster">{{ $post->user->name }}</span><br/>
+                <span class="text-muted">
                 @if($post->published == false)
-                    <i class="fa fa-lock" aria-hidden="true"> Unpublished</i>
-                @else
-                    <i class="fa fa-globe" aria-hidden="true"> Published</i>
-                @endif
-                on {{ $post->updated_at->diffForHumans() }}
-                @if($post->published == false)
-                    <a href="{{ route('frontend.portal.publish', $post->id) }}" type="button" class="btn btn-link">Publish now</a>
-                @endif
+                        <i class="fa fa-lock" aria-hidden="true"> Unpublished</i>
+                    @else
+                        <i class="fa fa-globe" aria-hidden="true"> Published</i>
+                    @endif
+                    on {{ $post->updated_at->diffForHumans() }}
+                    @if($post->published == false)
+                        <a href="{{ route('frontend.portal.publish', $post->id) }}" type="button" class="btn btn-link">Publish now</a>
+                    @endif
             </span><br/>
-            <p>
-                {!! str_limit($post->body, 270) !!}
-                <span>
+                <p>
+                    {!! str_limit($post->body, 270) !!}
+                    <span>
                                             <a href="/posts/show/{{ $post->id }}"> See more</a>
                                         </span>
-            </p>
-            <div class="react">
-                <button type="button" class="btn btn-default btn-xs"><i
-                            class="fa fa-thumbs-o-up"></i> Like
-                </button>
-                45 likes, {{ count($post->views)}} Views
-            </div>
-            <div class="option">
+                </p>
+                <div class="react">
+                    <button type="button" class="btn btn-default btn-xs"><i
+                                class="fa fa-thumbs-o-up"></i> Like
+                    </button>
+                    45 likes, {{ count($post->views)}} Views
+                </div>
+                <div class="option">
                 <span class="dropdown">
                     <span class="btn btn-box-tool dropdown-toggle" type="button"
                           id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
@@ -45,53 +45,53 @@
                         @endif
                     </ul>
                 </span>
+                </div>
             </div>
-        </div>
-    @else
+        @else
 
-        @if(str_contains($post->file, '.pdf') || str_contains($post->file, '.ppt'))
-            <div class="post">
-                <span class="poster">{{ $post->user->name }}</span><br/>
-                <span class="text-muted">
+            @if(str_contains($post->file, '.pdf') || str_contains($post->file, '.ppt') || str_contains($post->file, '.docx'))
+                <div class="post">
+                    <span class="poster">{{ $post->user->name }}</span><br/>
+                    <span class="text-muted">
                     @if($post->published == false)
-                        <i class="fa fa-lock" aria-hidden="true"> Unpublished</i>
-                    @else
-                        <i class="fa fa-globe" aria-hidden="true"> Published</i>
-                    @endif
-                    on {{ $post->created_at->diffForHumans() }}
+                            <i class="fa fa-lock" aria-hidden="true"> Unpublished</i>
+                        @else
+                            <i class="fa fa-globe" aria-hidden="true"> Published</i>
+                        @endif
+                        on {{ $post->created_at->diffForHumans() }}
                 </span><br/>
-                <p>
-                    {!! str_limit($post->body, 270) !!}
-                    <span>
+                    <p>
+                        {!! str_limit($post->body, 270) !!}
+                        <span>
                                             <a href="/posts/show/{{ $post->id }}"> See more</a>
                                         </span>
-                </p>
-                <div class="post-file">
-                    <ul class="item-file">
-                        <li class="icon-file"><i class="fa fa-file-pdf-o"></i></li>
-                        <li>
-                            {{ $post->file }}
-                            <div class="btn-group">
-                                <a href="{{ asset('docs') }}/{{ $post->file }}" target="_blank">
-                                    <button class="btn btn-default btn-xs">Preview</button>
-                                </a>
-                                <a href="{{ asset('docs') }}/{{ $post->file }}" download="{{ $post->file }}">
-                                    <button class="btn btn-default btn-xs">
-                                        Download
-                                    </button>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="react">
-                    <button type="button" class="btn btn-default btn-xs"><i
-                                class="fa fa-thumbs-o-up"></i> Like
-                    </button>
-                    45 likes, {{ count($post->views)}} Views
-                </div>
+                    </p>
+                    <div class="post-file">
+                        <ul class="item-file">
+                            <li class="icon-file"><i class="fa fa-file-pdf-o"></i></li>
+                            <li>
+                                {{ $post->file }}
+                                <div class="btn-group">
+                                    <a href="{{ asset('docs') }}/{{ $post->file }}" target="_blank">
+                                        <button class="btn btn-default btn-xs">Preview</button>
+                                    </a>
+                                    <a href="{{ asset('docs') }}/{{ $post->file }}" download="{{ $post->file }}">
+                                        <button class="btn btn-default btn-xs">
+                                            Download
+                                        </button>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="react">
+                        <button type="button" class="btn btn-default btn-xs"><i
+                                    class="fa fa-thumbs-o-up"></i> Like
+                        </button>
+                        45 likes, {{ count($post->views)}} Views
+                    </div>
 
-                <div class="option">
+                    <div class="option">
                     <span class="dropdown">
                         <span class="btn btn-box-tool dropdown-toggle" type="button"
                               id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
@@ -111,43 +111,43 @@
                             @endif
                         </ul>
                     </span>
-                </div>
-            </div>
-
-        @else
-            <div class="post">
-                <a href="/posts/show/{{ $post->id }}">
-                    <div class="thumb"
-                         style="background-image: url('{{ asset('img/frontend/uploads/images/'.$post->file) }}')"></div>
-                </a>
-                <div class="desc">
-                    <span class="poster">{{ $post->user->name }}</span><br/>
-                    <span class="text-muted">
-                        @if($post->published == false)
-                            <i class="fa fa-lock" aria-hidden="true"> Unpublished</i>
-                        @else
-                            <i class="fa fa-globe" aria-hidden="true"> Published</i>
-                        @endif
-                        on {{ $post->updated_at->diffForHumans() }}
-                        @if($post->published == false)
-                            <a href="{{ route('frontend.portal.publish', $post->id) }}" type="button"
-                               class="btn btn-link">Publish now</a>
-                        @endif
-                    </span><br/>
-                    <p>
-                        {!! str_limit($post->body, 220) !!}
-                        <span>
-                                            <a href="/posts/show/{{ $post->id }}"> See more</a>
-                                        </span>
-                    </p>
-                    <div class="react">
-                        <button type="button" class="btn btn-default btn-xs"><i
-                                    class="fa fa-thumbs-o-up"></i> Like
-                        </button>
-                        45 likes, {{ count($post->views)}} Views
                     </div>
                 </div>
-                <div class="option">
+
+            @else
+                <div class="post">
+                    <a href="/posts/show/{{ $post->id }}">
+                        <div class="thumb"
+                             style="background-image: url('{{ asset('img/frontend/uploads/images/'.$post->file) }}')"></div>
+                    </a>
+                    <div class="desc">
+                        <span class="poster">{{ $post->user->name }}</span><br/>
+                        <span class="text-muted">
+                        @if($post->published == false)
+                                <i class="fa fa-lock" aria-hidden="true"> Unpublished</i>
+                            @else
+                                <i class="fa fa-globe" aria-hidden="true"> Published</i>
+                            @endif
+                            on {{ $post->updated_at->diffForHumans() }}
+                            @if($post->published == false)
+                                <a href="{{ route('frontend.portal.publish', $post->id) }}" type="button"
+                                   class="btn btn-link">Publish now</a>
+                            @endif
+                    </span><br/>
+                        <p>
+                            {!! str_limit($post->body, 220) !!}
+                            <span>
+                                            <a href="/posts/show/{{ $post->id }}"> See more</a>
+                                        </span>
+                        </p>
+                        <div class="react">
+                            <button type="button" class="btn btn-default btn-xs"><i
+                                        class="fa fa-thumbs-o-up"></i> Like
+                            </button>
+                            45 likes, {{ count($post->views)}} Views
+                        </div>
+                    </div>
+                    <div class="option">
                                         <span class="dropdown">
                                             <span class="btn btn-box-tool dropdown-toggle" type="button"
                                                   id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
@@ -167,12 +167,14 @@
                                                 @endif
                                             </ul>
                                         </span>
-                </div>
-                <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
 
-            </div>
+                </div>
+            @endif
+
         @endif
 
-    @endif
+
 
 </div>

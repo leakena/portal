@@ -7,6 +7,9 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
+use App\Models\Portal\Resume\PersonalInfo;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -75,6 +78,56 @@ class AppServiceProvider extends ServiceProvider
                     'abr_name' => $abr_name
 //                    'languages' => $resume->language()->select('language_resume.proficiency', 'languages.name', 'languages.id as language_id')->get(),
                 ]);
+        });
+
+
+        View::composer('*', function($view){/*--(*) allow to all view to access this currentUser--*/
+
+            if(Auth::check()) {
+                $authUser = auth()->user();
+                $resume = Resume::where('user_uid', $authUser->id)->first();
+
+                if(is_object($resume)) {
+                    $personalInfo = PersonalInfo::where('resume_uid', $resume->id)->first();
+
+                    if(!is_object($personalInfo)) {
+                        $personalInfo = null;
+                    }
+                } else {
+                    $resume = null;
+                    $personalInfo = null;
+                }
+
+                $prefix = 'frontend.portal';
+                $homeActiveRoutes = [
+                    $prefix.'.index',
+                    $prefix.'.profile',
+                    $prefix.'.classmate',
+                    $prefix.'.involve_project',
+                    $prefix.'.history',
+                    $prefix.'.setting',
+                ];
+
+                $resumeActiveRoute = [
+                    $prefix.'.resume.experience',
+                    $prefix.'.resume.skill',
+                ];
+
+                $blockActiveRoutes = [
+                    $prefix.'.my_post',
+                ];
+
+                $homeActiveRoutes = array_merge($homeActiveRoutes,$resumeActiveRoute );
+
+                $view->with([
+                    'authUser'=> Auth::user(),
+                    'resume' => $resume,
+                    'personal_info'=> $personalInfo,
+                    'homeActiveRoutes' => $homeActiveRoutes,
+                    'blockActiveRoutes' => $blockActiveRoutes,
+                    'resumeActiveRoute' => $resumeActiveRoute
+                ]);
+            }
         });
     }
 

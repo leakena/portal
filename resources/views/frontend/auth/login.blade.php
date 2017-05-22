@@ -1,61 +1,49 @@
-@extends('frontend.layouts.app')
+@extends('frontend.layouts.auth_master')
 
 @section('content')
 
-    <div class="row">
+    <div class="reg-block">
+        <div class="reg-block-header">
+            <h2>ITC-Student-Portal</h2>
+            <ul class="social-icons text-center">
+                <li><a class="rounded-x social_facebook" data-original-title="Facebook" href="#"></a></li>
+                <li><a class="rounded-x social_twitter" data-original-title="Twitter" href="#"></a></li>
+                <li><a class="rounded-x social_googleplus" data-original-title="Google Plus" href="#"></a></li>
+                <li><a class="rounded-x social_linkedin" data-original-title="Linkedin" href="#"></a></li>
+            </ul>
+            <p> Sign up with your Identification and birth date as password!</p>
+        </div>
 
-        <div class="col-md-8 col-md-offset-2">
+        {{ Form::open(['route' => 'frontend.auth.login', 'class' => 'form-horizontal']) }}
 
-            <div class="panel panel-default">
-                <div class="panel-heading">{{ trans('labels.frontend.auth.login_box_title') }}</div>
+            <div class="input-group margin-bottom-20">
+                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                {{ Form::input('text', 'email', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.frontend.email')]) }}
 
-                <div class="panel-body">
+            </div>
+            <div class="input-group margin-bottom-20">
+                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                {{ Form::input('password', 'password', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.frontend.password')]) }}
+            </div>
+            <hr>
 
-                    {{ Form::open(['route' => 'frontend.auth.login', 'class' => 'form-horizontal']) }}
+            <div class="checkbox">
+                <label>
+                    {{ Form::checkbox('remember') }}
+                    <p>{{ trans('labels.frontend.auth.remember_me') }}</p>
+                </label>
+                <label for="">
+                    {{ link_to_route('frontend.auth.password.reset', trans('labels.frontend.passwords.forgot_password')) }}
+                </label>
+            </div>
 
-                    <div class="form-group">
-                        {{ Form::label('email', trans('validation.attributes.frontend.email'), ['class' => 'col-md-4 control-label']) }}
-                        <div class="col-md-6">
-                            {{ Form::input('text', 'email', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.frontend.email')]) }}
-                        </div><!--col-md-6-->
-                    </div><!--form-group-->
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    {{ Form::submit(trans('labels.frontend.auth.login_button'), ['class' => 'btn-u btn-block']) }}
+                </div>
 
-                    <div class="form-group">
-                        {{ Form::label('password', trans('validation.attributes.frontend.password'), ['class' => 'col-md-4 control-label']) }}
-                        <div class="col-md-6">
-                            {{ Form::input('password', 'password', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.frontend.password')]) }}
-                        </div><!--col-md-6-->
-                    </div><!--form-group-->
-
-                    <div class="form-group">
-                        <div class="col-md-6 col-md-offset-4">
-                            <div class="checkbox">
-                                <label>
-                                    {{ Form::checkbox('remember') }} {{ trans('labels.frontend.auth.remember_me') }}
-                                </label>
-                            </div>
-                        </div><!--col-md-6-->
-                    </div><!--form-group-->
-
-                    <div class="form-group">
-                        <div class="col-md-6 col-md-offset-4">
-                            {{ Form::submit(trans('labels.frontend.auth.login_button'), ['class' => 'btn btn-primary', 'style' => 'margin-right:15px']) }}
-
-                            {{ link_to_route('frontend.auth.password.reset', trans('labels.frontend.passwords.forgot_password')) }}
-                        </div><!--col-md-6-->
-                    </div><!--form-group-->
-
-                    {{ Form::close() }}
-
-                    <div class="row text-center">
-                        {!! $socialite_links !!}
-                    </div>
-                </div><!-- panel body -->
-
-            </div><!-- panel -->
-
-        </div><!-- col-md-8 -->
-
-    </div><!-- row -->
+            </div>
+        {{ Form::close() }}
+    </div>
 
 @endsection

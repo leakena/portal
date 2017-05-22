@@ -33,7 +33,23 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['namespace' => 'Portal', 'as' => 'portal.'], function () {
 
-        Route::get('/', 'PortalController@index');
+        Route::get('/', 'PortalController@index')->name('index');
+        Route::get('/profile', 'PortalController@profile')->name('profile');
+        Route::get('/classmate', 'PortalController@classmate')->name('classmate');
+        Route::get('/involve-project', 'PortalController@involveProject')->name('involve_project');
+        Route::get('/history', 'PortalController@history')->name('history');
+        Route::get('/setting', 'PortalController@setting')->name('setting');
+
+
+        Route::get('/my-post', 'PortalController@myPosts')->name('my_post');
+
+        Route::group(['as' => 'resume.'], function () {
+            Route::get('/experience', 'ResumeController@getExperience')->name('experience');
+            Route::get('/skill', 'ResumeController@getSkill')->name('skill');
+
+        });
+
+
         Route::post('/posts/store', 'PortalController@store');
         Route::get('/posts/show/{post}', 'PortalController@show');
         Route::get('/posts', 'PortalController@post')->name('allPost');
@@ -41,7 +57,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/posts/edit/{post}', 'PortalController@edit');
         Route::post('/posts/update/{post}', 'PortalController@update');
         Route::get('/posts/publish/{post}', 'PortalController@publish')->name('publish');
-
         Route::get('/score/{year}', 'PortalController@score')->name('show_score');
 
     });
@@ -50,7 +65,7 @@ Route::group(['middleware' => 'auth'], function () {
         /***
          * Resume Index
          */
-        Route::get('/resume', 'ResumeController@index');
+        Route::get('/resume-index', 'ResumeController@index')->name('index');
 
         /**
          * User Information

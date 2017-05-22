@@ -91,6 +91,11 @@
                $('#update-end-date-education').datepicker();
 
             });
+
+            $('#resume_index').on('click', function (e) {
+
+
+            })
         </script>
         @yield('after-scripts')
 
