@@ -6,6 +6,15 @@
 
 <title>Portal </title>
 
+<style>
+    .x_panel, .x_title {
+        margin-bottom: 0px !important;
+    }
+    h2{
+        margin-top: 30px !important;
+    }
+</style>
+
 <!-- Bootstrap -->
 <link href="{{ url('vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
 <!-- Font Awesomess -->
@@ -20,7 +29,9 @@
 <!-- JQVMap -->
 <link href="{{ url('vendors/jqvmap/dist/jqvmap.min.css') }}" rel="stylesheet"/>
 <!-- bootstrap-daterangepicker -->
-<link href="{{ url('vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
 
 <!-- Custom Theme Style -->
+<link rel="stylesheet" href="{{url('css/creator.css')}}">
 <link href="{{ url('css/build/css/custom.min.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="{{url('bower_components/bootstrap-sweetalert/dist/sweetalert.css')}}">
+<link rel="stylesheet" href="{{ url('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css') }}">

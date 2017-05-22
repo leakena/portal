@@ -38,8 +38,6 @@ class ApiRequestManager
         /*echo $res->getStatusCode(); // 200*/
         $res =  $res->getBody()->getContents();
 
-
-
         return json_decode($res, true);
     }
 
