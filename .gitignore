@@ -1,5 +1,7 @@
 /node_modules
 /public/storage
+/public/portals/assets/ajax
+/public/portals/assets/img
 /public/hot
 /storage/*.key
 /vendor

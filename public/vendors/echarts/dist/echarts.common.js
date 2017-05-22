@@ -43974,7 +43974,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var lang = model.get('lang');
 	            var html = ''
 	                + '<body style="margin:0;">'
-	                + '<img src="' + url + '" style="max-width:100%;" title="' + ((lang && lang[0]) || '') + '" />'
+	                + '<img_ src="' + url + '" style="max-width:100%;" title="' + ((lang && lang[0]) || '') + '" />'
 	                + '</body>';
 	            var tab = window.open();
 	            tab.document.write(html);
@@ -45695,9 +45695,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * IMAGE
 	     **************************************************/
 	    var isImage = function (img) {
-	        // FIXME img instanceof Image 如果 img 是一个字符串的时候，IE8 下会报错
+	        // FIXME img_ instanceof Image 如果 img_ 是一个字符串的时候，IE8 下会报错
 	        return (typeof img === 'object') && img.tagName && img.tagName.toUpperCase() === 'IMG';
-	        // return img instanceof Image;
+	        // return img_ instanceof Image;
 	    };
 
 	    // Rewrite the original path method

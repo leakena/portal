@@ -125,7 +125,7 @@
             new_slide.id        = $slide_ele.data('id');
 
 			// Slide Background Image
-			var slide_img = $slide_ele.children('img:not(.ms-layer)');
+			var slide_img = $slide_ele.children('img_:not(.ms-layer)');
 			if( slide_img.length > 0 ){
 				new_slide.setBG(slide_img[0]);
 			}
@@ -206,7 +206,7 @@
 			var $layer_element = $(this),
 				$parent_ele;
 
-			if( domEle.nodeName === 'A' && $layer_element.find('>img').data('type') === 'image' ) {
+			if( domEle.nodeName === 'A' && $layer_element.find('>img_').data('type') === 'image' ) {
 				$parent_ele = $(this);
 				$layer_element = $parent_ele.find('img');
 			}

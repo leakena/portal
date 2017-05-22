@@ -318,7 +318,7 @@
             <tbody>
             <tr>
                 <td>
-                    <img class="rounded-x" src="{{asset('portals/assets/img/testimonials/img1.jpg')}}" alt="">
+                    <img class="rounded-x" src="{{asset('img')}}" alt="">
                 </td>
                 <td class="td-width">
                     <h3><a href="#">Sed nec elit arcu</a></h3>
@@ -357,7 +357,7 @@
             </tr>
             <tr>
                 <td>
-                    <img class="rounded-x" src="{{asset('portals/assets/img/testimonials/img2.jpg')}}" alt="">
+                    <img class="rounded-x" src="{{asset('img')}}" alt="">
                 </td>
                 <td>
                     <h3><a href="#">Donec at aliquam est, a mattis mauris</a></h3>
@@ -396,7 +396,7 @@
             </tr>
             <tr>
                 <td>
-                    <img class="rounded-x" src="{{asset('portals/assets/img/testimonials/img3.jpg')}}" alt="">
+                    <img class="rounded-x" src="{{asset('img_')}}" alt="">
                 </td>
                 <td>
                     <h3><a href="#">Pellentesque semper tempus vehicula</a></h3>
@@ -435,7 +435,7 @@
             </tr>
             <tr>
                 <td>
-                    <img class="rounded-x" src="{{asset('portals/assets/img/testimonials/img4.jpg')}}" alt="">
+                    <img class="rounded-x" src="{{asset('img_')}}" alt="">
                 </td>
                 <td>
                     <h3><a href="#">Alesuada fames ac turpis egestas</a></h3>

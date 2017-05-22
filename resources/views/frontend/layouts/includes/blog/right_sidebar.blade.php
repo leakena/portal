@@ -127,7 +127,7 @@
             </dd>
         </dl>
         <dl class="dl-horizontal">
-            <dt><a href="#"><img src="{{asset('portals/assets/img/sliders/elastislide/11.jpg')}}" alt="" /></a></dt>
+            <dt><a href="#"><img src="{{asset('img')}}" alt="" /></a></dt>
             <dd>
                 <p><a href="#">Developer Friendly Code imperdiet condime ntumi mperdiet condim.</a></p>
             </dd>

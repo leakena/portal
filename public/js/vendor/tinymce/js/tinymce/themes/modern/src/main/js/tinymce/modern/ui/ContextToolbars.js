@@ -269,7 +269,7 @@ define('tinymce.modern.ui.ContextToolbars', [
 				return;
 			}
 
-			// Needs to be delayed to avoid Chrome img focus out bug
+			// Needs to be delayed to avoid Chrome img_ focus out bug
 			Delay.setEditorTimeout(editor, function() {
 				var match;
 

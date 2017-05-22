@@ -87,7 +87,7 @@
         <div class="row margin-bottom-20">
             <div class="col-sm-6 sm-margin-bottom-20">
                 <div class="profile-blog">
-                    <img class="rounded-x" src="{{asset('portals/assets/img/testimonials/user.jpg')}}" alt="">
+                    <img class="rounded-x" src="{{asset('img_')}}" alt="">
                     <div class="name-location">
                         <strong>John W.A</strong>
                         <span><i class="fa fa-map-marker"></i><a href="#">California,</a> <a href="#">US</a></span>
@@ -126,7 +126,7 @@
         <div class="row margin-bottom-20">
             <div class="col-sm-6 sm-margin-bottom-20">
                 <div class="profile-blog">
-                    <img class="rounded-x" src="{{asset('portals/assets/img/testimonials/img4.jpg')}}" alt="">
+                    <img class="rounded-x" src="{{asset('img')}}" alt="">
                     <div class="name-location">
                         <strong>Pavel Kolnikov</strong>
                         <span><i class="fa fa-map-marker"></i><a href="#">Moscow,</a> <a href="#">Russia</a></span>

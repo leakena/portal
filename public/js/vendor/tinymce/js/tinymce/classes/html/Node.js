@@ -410,7 +410,7 @@ define("tinymce/html/Node", [], function() {
 		 * Returns true/false if the node is to be considered empty or not.
 		 *
 		 * @example
-		 * node.isEmpty({img: true});
+		 * node.isEmpty({img_: true});
 		 * @method isEmpty
 		 * @param {Object} elements Name/value object with elements that are automatically treated as non empty elements.
 		 * @param {Object} whitespace Name/value object with elements that are automatically treated whitespace preservables.
@@ -429,7 +429,7 @@ define("tinymce/html/Node", [], function() {
 							continue;
 						}
 
-						// Keep empty elements like <img />
+						// Keep empty elements like <img_ />
 						if (elements[node.name]) {
 							return false;
 						}

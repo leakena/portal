@@ -57,7 +57,7 @@
 
         <div class="col-sm-6">
             <div class="service-or easy-block-v2 no-margin-bottom">
-                <img class="img-responsive" src="{{asset('portals/assets/img/main/img16.jpg')}}" alt="">
+                <img class="img-responsive" src="{{asset('img_')}}" alt="">
                 <div class="easy-bg-v2 rgba-default">Unify</div>
             </div>
             <div class="projects">
@@ -161,7 +161,7 @@
 
         <div class="col-sm-6">
             <div class="service-or easy-block-v2 no-margin-bottom">
-                <img class="img-responsive" src="{{asset('portals/assets/img/main/img18.jpg')}}" alt="">
+                <img class="img-responsive" src="{{asset('img')}}" alt="">
                 <div class="easy-bg-v2 rgba-blue">Nokia</div>
             </div>
             <div class="projects">

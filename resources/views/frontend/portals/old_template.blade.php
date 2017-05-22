@@ -168,7 +168,7 @@ Sidebar
                         <div class="side-right">
                             <div class="side-thumb">
                                 <a href="/posts/show/{{ $post->id }}">
-                                    <img src="{{ asset('img/frontend/uploads/images/'.$post->file) }}"
+                                    <img src="{{ asset('img_'.$post->file) }}"
                                          class="img-responsive" title="title-posts"/>
                                 </a>
                             </div>
