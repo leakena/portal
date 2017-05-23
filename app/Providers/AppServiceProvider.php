@@ -110,6 +110,7 @@ class AppServiceProvider extends ServiceProvider
 
                 $resumeActiveRoute = [
                     $prefix.'.resume.experience',
+                    $prefix.'.resume.education',
                     $prefix.'.resume.skill',
                 ];
 

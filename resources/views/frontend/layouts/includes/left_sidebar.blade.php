@@ -34,9 +34,9 @@
                         Experience
                     </a>
                 </li>
-                <li>
+                <li class="{{ ActiveManager::isActiveRoute('frontend.portal.resume.education') }}">
                     {{--<span class="badge badge-u">New</span>--}}
-                    <a href="shortcode_form_general1.html"><i class="fa fa-graduation-cap"></i>Education</a>
+                    <a href="{{route('frontend.portal.resume.education')}}"><i class="fa fa-graduation-cap"></i>Education</a>
                 </li>
                 <li class="{{ ActiveManager::isActiveRoute('frontend.portal.resume.skill') }}">
                     {{--<span class="badge badge-u">New</span>--}}

@@ -46,7 +46,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::group(['as' => 'resume.'], function () {
             Route::get('/experience', 'ResumeController@getExperience')->name('experience');
             Route::post('/experience/store', 'ResumeController@saveExperience')->name('store_experience');
+            Route::get('/education', 'ResumeController@getEducation')->name('education');
             Route::get('/skill', 'ResumeController@getSkill')->name('skill');
+            Route::get('/degree', 'ResumeController@get_degree')->name('get_degree');
 
         });
 
@@ -130,7 +132,7 @@ Route::group(['middleware' => 'auth'], function () {
          */
         Route::get('/resume/educations', 'ResumeController@educationContent')->name('get_education_content');
         Route::get('/resume/get-educations', 'ResumeController@education')->name('get_education');
-        Route::post('/resume/educations/save-education', 'ResumeController@saveEducation');
+        Route::post('/resume/educations/save-education', 'ResumeController@saveEducation')->name('store_education');
         Route::get('/resume/educations/edit-education/{id}', 'ResumeController@editEducation')->name('edit_education');
         Route::post('/resume/educations/update-education', 'ResumeController@updateEducation');
         Route::post('/resume/educations/{id}/delete-education', 'ResumeController@deleteEducation')->name('remove_education');

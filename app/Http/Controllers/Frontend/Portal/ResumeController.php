@@ -714,7 +714,7 @@ class ResumeController extends Controller
                         'start_date' => $request->start_date,
                         'end_date' => $end_date
                     ]);
-                return redirect()->route('frontend.resume.get_education');
+                return redirect()->route('frontend.portal.resume.education');
             } else {
 
                 /*-- Create a new education---*/
@@ -738,7 +738,7 @@ class ResumeController extends Controller
                 // Save new education
                 if ($newEducation->save()) {
 
-                    return redirect()->route('frontend.resume.get_education');
+                    return redirect()->route('frontend.portal.resume.education');
                 }
 
 
@@ -767,7 +767,7 @@ class ResumeController extends Controller
                 }
                 // Save new education
                 if ($newEducation->save()) {
-                    return redirect()->route('frontend.resume.get_education');
+                    return redirect()->route('frontend.portal.resume.education');
                 }
             }
         }
