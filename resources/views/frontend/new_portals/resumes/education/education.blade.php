@@ -221,7 +221,6 @@
 
             $('form#form_edit_education option[name=degree_id]').text(dom.find('.degree').text());
 
-
         });
 
         $('.slider_update').on('change', function () {
