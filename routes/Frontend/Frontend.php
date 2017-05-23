@@ -113,7 +113,7 @@ Route::group(['middleware' => 'auth'], function () {
          */
         Route::get('/resume/skills', 'ResumeController@skillContent')->name('get_skill_content');
         Route::get('/resume/get-skills', 'ResumeController@skill')->name('get_skill');
-        Route::post('/resume/skills/save-skill', 'ResumeController@saveSkill');
+        Route::post('/resume/skills/save-skill', 'ResumeController@saveSkill')->name('store_skill');
         Route::get('/resume/skills/edit-skill/{id}', 'ResumeController@editSkill')->name('edit_skill');
         Route::post('/resume/skills/update-skill', 'ResumeController@updateSkill');
         Route::post('/resume/skills/{id}/delete-skill', 'ResumeController@deleteSkill')->name('remove_skill');

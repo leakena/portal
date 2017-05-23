@@ -473,7 +473,7 @@ class ResumeController extends Controller
     /**
      * @return mixed
      */
-    public function saveSkill(StoreSkill $request)
+    public function saveSkill(Request $request)
     {
         if (isset($request->resume_uid)) {
 
@@ -492,7 +492,7 @@ class ResumeController extends Controller
                         'name' => request('name'),
                         'description' => request('description')
                     ]);
-                return redirect()->route('frontend.resume.get_skill');
+                return redirect()->route('frontend.portal.resume.skill');
             } else {
 
                 // Create a new skill
@@ -503,7 +503,7 @@ class ResumeController extends Controller
                 $newSkill->description = request('description');
                 // Save new skill
                 if ($newSkill->save()) {
-                    return redirect()->route('frontend.resume.get_skill');
+                    return redirect()->route('frontend.portal.resume.skill');
                 }
             }
 
@@ -523,7 +523,7 @@ class ResumeController extends Controller
                 $newSkill->description = request('description');
                 // Save new skill
                 if ($newSkill->save()) {
-                    return redirect()->route('frontend.resume.get_skill');
+                    return redirect()->route('frontend.portal.resume.skill');
                 }
 
             }
