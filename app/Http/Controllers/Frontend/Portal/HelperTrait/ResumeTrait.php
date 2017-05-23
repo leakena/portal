@@ -75,4 +75,20 @@ trait ResumeTrait
         return Response::json(['status' => true, 'degrees' => $degrees]);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function get_reference()
+    {
+        $userResume = $this->getUserResume(auth()->id());
+
+        if ($userResume) {
+            $references = DB::table('references')->where('resume_uid', $userResume->id)->get();
+        } else {
+            $references = null;
+        }
+
+        return view('frontend.new_portals.resumes.reference.reference', compact('userResume', 'references'));
+    }
+
 }

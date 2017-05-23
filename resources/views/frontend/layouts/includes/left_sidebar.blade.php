@@ -50,9 +50,9 @@
                     {{--<span class="badge badge-u">New</span>--}}
                     <a href="shortcode_form_layouts_advanced.html"><i class="fa fa-gratipay"></i> Interest </a>
                 </li>
-                <li>
+                <li {{ ActiveManager::isActiveRoute('frontend.portal.resume.reference') }}>
                     {{--<span class="badge badge-u">New</span>--}}
-                    <a href="shortcode_form_states.html"><i class="fa fa-external-link-square"></i> Reference </a>
+                    <a href="{{ route('frontend.portal.resume.reference') }}"><i class="fa fa-external-link-square"></i> Reference </a>
                 </li>
 
             </ul>

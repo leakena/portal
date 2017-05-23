@@ -112,6 +112,7 @@ class AppServiceProvider extends ServiceProvider
                     $prefix.'.resume.experience',
                     $prefix.'.resume.education',
                     $prefix.'.resume.skill',
+                    $prefix.'.resume.reference',
                 ];
 
                 $blockActiveRoutes = [

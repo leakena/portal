@@ -1161,10 +1161,10 @@ class ResumeController extends Controller
     }
 
     /**
-     * @param StoreReference $request
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function saveReference(StoreReference $request)
+    public function saveReference(Request $request)
     {
 
         if (isset($request->resume_uid)) {
@@ -1187,7 +1187,7 @@ class ResumeController extends Controller
                         'phone' => $request->phone,
                         'email' => $request->email
                     ]);
-                return redirect()->route('frontend.resume.get_reference');
+                return redirect()->route('frontend.portal.resume.reference');
             } else {
 
                 /*-- Create new reference --*/
@@ -1201,7 +1201,7 @@ class ResumeController extends Controller
                 // Save new reference
 
                 if ($newReference->save()) {
-                    return redirect()->route('frontend.resume.get_reference');
+                    return redirect()->route('frontend.portal.resume.reference');
                 }
 
             }
@@ -1224,7 +1224,7 @@ class ResumeController extends Controller
                 // Save new reference
 
                 if ($newReference->save()) {
-                    return redirect()->route('frontend.resume.get_reference');
+                    return redirect()->route('frontend.portal.resume.reference');
                 }
 
             }
