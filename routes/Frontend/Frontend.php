@@ -49,6 +49,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/education', 'ResumeController@getEducation')->name('education');
             Route::get('/skill', 'ResumeController@getSkill')->name('skill');
             Route::get('/degree', 'ResumeController@get_degree')->name('get_degree');
+            Route::get('/reference', 'ResumeController@get_reference')->name('reference');
 
         });
 
@@ -161,7 +162,7 @@ Route::group(['middleware' => 'auth'], function () {
          * Reference
          */
         Route::get('/resume/references', 'ResumeController@reference')->name('get_reference');
-        Route::post('/resume/references/save-reference', 'ResumeController@saveReference');
+        Route::post('/resume/references/save-reference', 'ResumeController@saveReference')->name('store_reference');
         Route::get('/resume/references/{id}/edit-reference', 'ResumeController@editReference')->name('edit_reference');
         Route::post('/resume/references/{id}/delete-reference', 'ResumeController@deleteReference')->name('remove_reference');
     });
