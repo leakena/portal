@@ -47,3 +47,9 @@
 <!-- CSS Customization -->
 {{ Html::style('portals/assets/css/custom.css') }}
 
+<!-- CSS Sweet alert -->
+{{ Html::style('bower_components/bootstrap-sweetalert/dist/sweetalert.css') }}
+
+<!-- CSS datepicker --!>
+{{ Html::style('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css') }}
+

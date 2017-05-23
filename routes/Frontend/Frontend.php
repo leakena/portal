@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::group(['as' => 'resume.'], function () {
             Route::get('/experience', 'ResumeController@getExperience')->name('experience');
+            Route::post('/experience/store', 'ResumeController@saveExperience')->name('store_experience');
             Route::get('/skill', 'ResumeController@getSkill')->name('skill');
 
         });

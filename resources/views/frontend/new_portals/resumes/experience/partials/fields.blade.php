@@ -1,42 +1,49 @@
 <dl class="dl-horizontal">
+    <input type="hidden" class="experience_id" name="hidden_id" value="{{ $experience->id }}">
     <dt><strong><img src="{{asset('portals/icons/position.png')}}" alt=""> </strong></dt>
     <dd class="position">
-        Junior System Engineer
-        <input type="hidden" name="hidden_position" value="Junior System Engineer">
+        {{ $experience->position }}
+        <input type="hidden" name="hidden_position" value="{{ $experience->position }}">
     </dd>
     <hr>
-    <dt><strong><img src="{{asset('portals/icons/company.png')}}" alt="">  </strong></dt>
+    <dt><strong><img src="{{asset('portals/icons/company.png')}}" alt=""> </strong></dt>
     <dd class="company">
-        Institute of Technology of Cambodia
-        <input type="hidden" name="hidden_company" value="Institute of Technology of Cambodia">
+        {{ $experience->company }}
+        <input type="hidden" name="hidden_company" value="{{ $experience->company }}">
 
     </dd>
     <hr>
-    <dt><strong><img src="{{asset('portals/icons/home.png')}}" alt="">  </strong></dt>
+    <dt><strong><img src="{{asset('portals/icons/home.png')}}" alt=""> </strong></dt>
     <dd class="address">
-        Toul Kok, BeogKork 1, Phnom Pehn, Cambodia
-        <input type="hidden" name="hidden_address" value="Toul Kok, BeogKork 1, Phnom Pehn, Cambodia">
+        {{ $experience->address }}
+        <input type="hidden" name="hidden_address" value="{{ $experience->address }}">
     </dd>
     <hr>
-    <dt><strong><img src="{{asset('portals/icons/calendar.png')}}" alt="">  </strong></dt>
-    <dd class="date">
-        12-12-2012 <span class="glyphicon glyphicon-random" style="color: green;" ></span> 12-12-2014
+    @if($experience->is_present == true)
+        <dt><strong><img src="{{asset('portals/icons/calendar.png')}}" alt=""> </strong></dt>
+        <dd class="date">
+            {{ $experience->start_date }} <span class="glyphicon glyphicon-random" style="color: green;"></span> Present
 
-        <input type="hidden" name="hidden_date" value="12-12-2012 - 12-12-2014">
-    </dd>
-    <hr>
-    <dt><strong><img src="{{asset('portals/icons/phone.png')}}" alt="">  </strong></dt>
-    <dd class="phone">
-        (304) 33-2867-499
-        <input type="hidden" name="hidden_phone" value=" (304) 33-2867-499">
+            <input type="hidden" name="hidden_start_date" class="start" value="{{ $experience->start_date }}">
+            <input type="hidden" name="hidden_end_date" class="end" value="{{ $experience->end_date }}">
+            <input type="hidden" name="hidden_is_present" class="is_present" value="{{ $experience->is_present }}">
+        </dd>
+    @else
+        <dt><strong><img src="{{asset('portals/icons/calendar.png')}}" alt=""> </strong></dt>
+        <dd class="date">
+            {{ $experience->start_date }} <span class="glyphicon glyphicon-random"
+                                                style="color: green;"></span> {{ $experience->end_date }}
 
-    </dd>
+            <input type="hidden" name="hidden_start_date" class="start" value="{{ $experience->start_date }}">
+            <input type="hidden" name="hidden_end_date" class="end" value="{{ $experience->end_date }}">
+        </dd>
+    @endif
     <hr>
-    <dt><strong><img src="{{asset('portals/icons/description.png')}}" alt="">  </strong></dt>
+    <dt><strong><img src="{{asset('portals/icons/description.png')}}" alt=""> </strong></dt>
     <dd class="description">
-        Scoring $ Course Management
+        {{ $experience->description }}
 
-        <input type="hidden" name="hidden_description" value="Scoring $ Course Management">
+        <input type="hidden" name="hidden_description" value="{{ $experience->description }}">
     </dd>
 
 </dl>

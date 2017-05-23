@@ -11,7 +11,9 @@
                         <i class="icon-custom rounded-x icon-sm icon-color-u fa fa-lightbulb-o"></i>
     </span>
     <ul class="dropdown-menu" role="menu">
-        <li><a href="#" class="btn_edit_experience" data-toggle="modal" data-target="#edit_form"><i class="fa fa-edit " ></i> Edit Experience</a></li>
-        <li><a href="#"><i class="fa fa-trash-o"></i> Delete Experience</a></li>
+        <li><a href="#" class="btn_edit_experience" data-toggle="modal" data-target="#edit_form"><i
+                        class="fa fa-edit "></i> Edit Experience</a></li>
+        <li><a class="btn_delete_experience" href="{{ route('frontend.resume.remove_experience',$experience->id) }}"><i
+                        class="fa fa-trash-o"></i> Delete Experience</a></li>
     </ul>
 </div>

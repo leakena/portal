@@ -7,7 +7,9 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <form action="assets/php/demo-order.php" method="post" enctype="multipart/form-data" id="form_edit_experience" class="sky-form" novalidate="novalidate">
+                    <form action="{{ route('frontend.portal.resume.store_experience') }}" method="post"
+                          enctype="multipart/form-data" id="form_edit_experience" class="sky-form"
+                          novalidate="novalidate">
                         <fieldset>
                             @include('frontend.new_portals.resumes.experience.partials.create_edit_fields')
                         </fieldset>

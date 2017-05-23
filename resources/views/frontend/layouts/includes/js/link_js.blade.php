@@ -22,6 +22,8 @@
 {!! Html::script('portals/assets/js/plugins/datepicker.js') !!}
 {!! Html::script('portals/assets/js/plugins/circles-master.js') !!}
 {!! Html::script('portals/assets/js/plugins/style-switcher.js') !!}
+{!! Html::script('bower_components/bootstrap-sweetalert/dist/sweetalert.js') !!}
+{!! Html::script('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') !!}
 
 
 <script type="text/javascript">
