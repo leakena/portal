@@ -848,7 +848,7 @@ class ResumeController extends Controller
     /**
      * @return mixed
      */
-    public function saveLanguage(StoreLanguage $request)
+    public function saveLanguage(Request $request)
     {
 
         if (isset($request->resume_uid)) {

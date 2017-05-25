@@ -50,6 +50,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/skill', 'ResumeController@getSkill')->name('skill');
             Route::get('/degree', 'ResumeController@get_degree')->name('get_degree');
             Route::get('/reference', 'ResumeController@get_reference')->name('reference');
+            Route::get('/language', 'ResumeController@get_language')->name('language');
 
         });
 
@@ -143,10 +144,12 @@ Route::group(['middleware' => 'auth'], function () {
          */
         Route::get('/resume/languages', 'ResumeController@languageContent')->name('get_language_content');
         Route::get('/resume/get-languages', 'ResumeController@language')->name('get_language');
-        Route::post('/resume/languages/save-language', 'ResumeController@saveLanguage');
+        Route::post('/resume/languages/save-language', 'ResumeController@saveLanguage')->name('store_language');
         Route::get('/resume/languages/edit-language/{id}', 'ResumeController@editLanguage')->name('edit_language');
         Route::post('/resume/languages/update-language', 'ResumeController@updateLanguage');
         Route::post('/resume/languages/{id}/delete-language', 'ResumeController@deleteLanguage')->name('remove_language');
+        Route::get('/resume/languages/remote_languages', 'ResumeController@remote_languages')->name('remote_languages');
+        Route::post('/resume/languages/compare_language', 'ResumeController@compare_language')->name('compare_language');
 
         /**
          * Interest

@@ -24,10 +24,11 @@
 {!! Html::script('portals/assets/js/plugins/style-switcher.js') !!}
 {!! Html::script('bower_components/bootstrap-sweetalert/dist/sweetalert.js') !!}
 {!! Html::script('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') !!}
+{!! Html::script('bower_components/select2/dist/js/select2.js') !!}
 
 
 <script type="text/javascript">
-    jQuery(document).ready(function() {
+    jQuery(document).ready(function () {
         App.init();
         App.initCounter();
         App.initScrollBar();
