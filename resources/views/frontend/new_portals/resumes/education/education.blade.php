@@ -198,7 +198,7 @@
                     });
 
                     $('select[name=degree]').html(degree);
-                    console.log(degree);
+                    console.log(degree)
                 }
 
             });

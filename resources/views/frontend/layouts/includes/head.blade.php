@@ -53,3 +53,7 @@
 <!-- CSS datepicker --!>
 {{ Html::style('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css') }}
 
+<!-- Select 2 --!>
+{{ Html::style('bower_components/select2/dist/css/select2.css') }}
+
+

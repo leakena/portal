@@ -848,16 +848,19 @@ class ResumeController extends Controller
     /**
      * @return mixed
      */
-    public function saveLanguage(StoreLanguage $request)
+    public function saveLanguage(Request $request)
     {
 
+
         if (isset($request->resume_uid)) {
+
 
             $userResume = $this->getUserResume(auth()->id());
 
             /*-- This user already has a resume id so can create or update language--*/
 
             if (isset($request->language_resume_id)) {
+
                 /*-- Update language --*/
 
                 DB::table('language_resume')
@@ -869,9 +872,10 @@ class ResumeController extends Controller
                         'language_id' => $request->language_id,
                         'proficiency' => $request->proficiency
                     ]);
-                return redirect()->route('frontend.resume.get_language');
+                return redirect()->route('frontend.portal.resume.language');
 
             } else {
+                dd(300);
 
                 // Create a new language
                 $newLanguage = new LanguageResume();
@@ -887,7 +891,7 @@ class ResumeController extends Controller
 
                 // Save new language
                 if ($newLanguage->save()) {
-                    return redirect()->route('frontend.resume.get_language');
+                    return redirect()->route('frontend.portal.resume.language');
                 }
             }
 
@@ -913,7 +917,7 @@ class ResumeController extends Controller
 
                 // Save new language
                 if ($newLanguage->save()) {
-                    return redirect()->route('frontend.resume.get_language');
+                    return redirect()->route('frontend.portal.resume.language');
                 }
             }
         }
@@ -964,9 +968,10 @@ class ResumeController extends Controller
     /**
      * @return mixed
      */
-    public function deleteLanguage($lanId)
+    public function deleteLanguage()
     {
-        $language = LanguageResume::where('id', $lanId)->delete();
+        $language = LanguageResume::where('id', request('id'))->delete();
+        //dd($language);
 
         if ($language) {
             return Response::json(['status' => true, 'message' => 'Deleted!']);
@@ -999,18 +1004,35 @@ class ResumeController extends Controller
     /**
      * @return mixed
      */
-    public function updateLanguage()
+    public function updateLanguage(Request $request)
     {
-        DB::table('languages')
+
+//        dd($request->all());
+        $userResume = $this->getUserResume(auth()->id());
+
+        if ($request->proficiency == 'Mother Tongue'){
+            $isMotherTongue = true;
+        }else{
+            $isMotherTongue = false;
+        }
+
+        DB::table('language_resume')
             ->where([
-                ['id', '=', request('language_uid')],
-                ['resume_uid', '=', request('resume_uid')]
+                ['id', '=', $request->language_resume_id],
+                ['resume_uid', '=', $userResume->id]
             ])
             ->update([
-                'name' => request('name'),
-                'degree' => request('degree')
+                'language_id' => $request->language_id,
+                'proficiency' => $request->proficiency,
+                'is_mother_tongue'=> $isMotherTongue
             ]);
-        return Response::json(['status' => true]);
+
+
+        return Response::json([
+            'status' => true,
+            'is_mother_tongue'=> $isMotherTongue
+        ]);
+
     }
 
     /**

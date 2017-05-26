@@ -1,8 +1,8 @@
 <!-- JS Global Compulsory -->
 
 {!! Html::script('portals/assets/plugins/jquery/jquery.min.js') !!}
-{!! Html::script('portals/assets/plugins/jquery/jquery-migrate.min.js') !!}
 {!! Html::script('portals/assets/plugins/bootstrap/js/bootstrap.min.js') !!}
+{!! Html::script('portals/assets/plugins/jquery/jquery-migrate.min.js') !!}
 
 <!-- JS Implementing Plugins -->
 
@@ -24,10 +24,11 @@
 {!! Html::script('portals/assets/js/plugins/style-switcher.js') !!}
 {!! Html::script('bower_components/bootstrap-sweetalert/dist/sweetalert.js') !!}
 {!! Html::script('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') !!}
+{!! Html::script('bower_components/select2/dist/js/select2.js') !!}
 
 
 <script type="text/javascript">
-    jQuery(document).ready(function() {
+    jQuery(document).ready(function () {
         App.init();
         App.initCounter();
         App.initScrollBar();
