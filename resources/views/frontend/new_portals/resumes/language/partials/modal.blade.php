@@ -1,17 +1,21 @@
-<div class="modal fade" id="edit_form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="edit_form" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel4">Edit Your Skill</h4>
+                <h4 class="modal-title" id="myModalLabel4">Edit Your Language</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <form action="{{ route('frontend.resume.store_skill') }}" method="post"
-                          enctype="multipart/form-data" id="form_edit_skill" class="sky-form"
+                    <form action="{{ route('frontend.resume.update_language') }}" method="post"
+                          enctype="multipart/form-data" id="form_edit_language" class="sky-form"
                           novalidate="novalidate">
                         <fieldset>
-                            @include('frontend.new_portals.resumes.skill.partials.create_edit_fields')
+                            @include('frontend.new_portals.resumes.language.partials.create_edit_fields')
+                            <footer>
+                                <button type="submit" class="btn-u pull-left update">Update</button>
+                                <div class="progress"></div>
+                            </footer>
                         </fieldset>
                     </form>
                 </div>

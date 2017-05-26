@@ -6,7 +6,7 @@
 <div class="row">
     <section class=" col-md-12">
 
-        <select class="form-control input-sm" id="language1" name="language_id" style="width: 100%;">
+        <select class="form-control input-sm language" id="language1" name="language_id" style="width: 100%;">
             <option> Select Language </option>
         </select>
 
@@ -46,13 +46,9 @@
             <input class="proficiency" type="radio" value="100%" name="proficiency">100%
         </label>
         <label class="radio-inline">
-            <input class="proficiency" type="radio" value="Mother Tongue" name="proficiency">Mother Tongue
+            <input id="is_mother_tongue" class="proficiency" type="radio" value="Mother Tongue" name="proficiency">Mother Tongue
         </label>
     </section>
 
 </div>
 
-<footer>
-    <button type="submit" class="btn-u pull-left save">Save</button>
-    <div class="progress"></div>
-</footer>

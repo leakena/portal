@@ -1,8 +1,8 @@
 <!-- JS Global Compulsory -->
 
 {!! Html::script('portals/assets/plugins/jquery/jquery.min.js') !!}
-{!! Html::script('portals/assets/plugins/jquery/jquery-migrate.min.js') !!}
 {!! Html::script('portals/assets/plugins/bootstrap/js/bootstrap.min.js') !!}
+{!! Html::script('portals/assets/plugins/jquery/jquery-migrate.min.js') !!}
 
 <!-- JS Implementing Plugins -->
 
