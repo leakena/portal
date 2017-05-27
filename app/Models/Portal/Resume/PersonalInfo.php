@@ -15,4 +15,8 @@ class PersonalInfo extends Model
     public function status(){
         return $this->belongsTo('App\Models\Portal\Resume\MaritalStatus');
     }
+
+    public function personalInfo(){
+        return $this->belongsTo(Resume::class);
+    }
 }

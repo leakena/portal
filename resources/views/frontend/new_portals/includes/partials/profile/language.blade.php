@@ -5,16 +5,22 @@
     </div>
     <div class="panel-body">
         <div class="row">
-            <div class="p-chart col-sm-6 col-xs-6 sm-margin-bottom-10">
-                <div class="circle margin-bottom-20" id="circle-4"></div>
-                <h3 class="heading-xs">Engagement Score</h3>
-                <p>Celery coriander bitterleaf epazote radicchio shallot.</p>
-            </div>
-            <div class="p-chart col-sm-6 col-xs-6">
-                <div class="circle margin-bottom-20" id="circle-5"></div>
-                <h3 class="heading-xs">Progfile Completness</h3>
-                <p>Celery coriander bitterleaf epazote radicchio shallot.</p>
-            </div>
+            @if(isset($resume))
+                @if($languages = $resume->languages)
+                    @foreach($languages as $language)
+                        <div class="p-chart col-sm-6 col-xs-6 sm-margin-bottom-10">
+                            <div class="circle margin-bottom-20" id="{{ $language->id }}"></div>
+                            <h3 class="heading-xs">
+                                {{ $language->name }}
+                                @if($language->pivot->proficiency == 'Mother Tongue')
+                                    (Mother Tongue)
+                                @endif
+                            </h3>
+
+                        </div>
+                    @endforeach
+                @endif
+            @endif
         </div>
     </div>
 </div>

@@ -8,10 +8,7 @@ use App\Http\Requests\Backend\Resume\CareerProfile\StoreCareerProfileRequest;
 use App\Http\Requests\Backend\Resume\Education\StoreEducation;
 use App\Http\Requests\Backend\Resume\Experience\StoreExperience;
 use App\Http\Requests\Backend\Resume\Interest\StoreInterest;
-use App\Http\Requests\Backend\Resume\Language\StoreLanguage;
 use App\Http\Requests\Backend\Resume\PersonalInfo\StorePersonalInfoRequest;
-use App\Http\Requests\Backend\Resume\Reference\StoreReference;
-use App\Http\Requests\Backend\Resume\Skill\StoreSkill;
 use App\Models\Portal\Resume\Contact;
 use App\Models\Portal\Resume\Degree;
 use App\Models\Portal\Resume\Education;
@@ -94,8 +91,9 @@ class ResumeController extends Controller
      * @param StorePersonalInfoRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function storeUserInfo(StorePersonalInfoRequest $request)
+    public function storeUserInfo(Request $request)
     {
+        //dd($request->all());
 
         if (isset($request->resume_uid)) {
             /*--there is a resume id so we need to create user information --*/
@@ -108,7 +106,7 @@ class ResumeController extends Controller
                 $update = $this->personalInfos->update($resume->personalInfo->id, $request->all());
 
                 if ($update) {
-                    return redirect()->route('frontend.resume.user_info')->with(['status' => 'Information Updated!']);
+                    return redirect()->back()->with(['status' => 'Information Updated!']);
                 }
             } else {
                 /*---create personal-info--*/
@@ -1010,9 +1008,9 @@ class ResumeController extends Controller
 //        dd($request->all());
         $userResume = $this->getUserResume(auth()->id());
 
-        if ($request->proficiency == 'Mother Tongue'){
+        if ($request->proficiency == 'Mother Tongue') {
             $isMotherTongue = true;
-        }else{
+        } else {
             $isMotherTongue = false;
         }
 
@@ -1024,13 +1022,13 @@ class ResumeController extends Controller
             ->update([
                 'language_id' => $request->language_id,
                 'proficiency' => $request->proficiency,
-                'is_mother_tongue'=> $isMotherTongue
+                'is_mother_tongue' => $isMotherTongue
             ]);
 
 
         return Response::json([
             'status' => true,
-            'is_mother_tongue'=> $isMotherTongue
+            'is_mother_tongue' => $isMotherTongue
         ]);
 
     }
