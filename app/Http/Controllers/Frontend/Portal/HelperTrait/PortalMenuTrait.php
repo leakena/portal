@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend\Portal\HelperTrait;
 
+use App\Models\Portal\Resume\Resume;
 use Illuminate\Http\Request;
 
 /**
@@ -13,11 +14,21 @@ use Illuminate\Http\Request;
 trait PortalMenuTrait
 {
     /**
+     * @param $userId
+     * @return mixed
+     */
+    private function getUserResume($userId)
+    {
+        return Resume::where('user_uid', $userId)->first();
+    }
+
+    /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function profile(Request $request)
     {
-        return view('frontend.new_portals.includes.profile');
+        $resume = $this->getUserResume(auth()->id());
+        return view('frontend.new_portals.includes.profile', compact('resume'));
     }
 
 

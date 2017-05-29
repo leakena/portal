@@ -7,6 +7,7 @@ use App\Models\Portal\Resume\Degree;
 use App\Models\Portal\Resume\Education;
 use App\Models\Portal\Resume\Language;
 use App\Models\Portal\Resume\LanguageResume;
+use App\Models\Portal\Resume\MaritalStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
@@ -232,6 +233,9 @@ trait ResumeTrait
         return Response::json(['data' => $selectedLanguages], 200);
     }
 
+    /**
+     * @return mixed
+     */
     public function find_mother_tongue()
     {
         $userResume = $this->getUserResume(auth()->id());
@@ -253,6 +257,14 @@ trait ResumeTrait
 
         }
 
+    }
+
+    public function get_marital_status(){
+        $statues = MaritalStatus::all();
+        return Response::json([
+            'status' => true,
+            'statues' => $statues
+        ]);
     }
 
 }

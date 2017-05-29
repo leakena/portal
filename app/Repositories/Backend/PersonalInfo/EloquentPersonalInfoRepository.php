@@ -54,6 +54,7 @@ class EloquentPersonalInfoRepository implements PersonalInfoContract
         $personalInfo->birth_place = isset($input['birth_place'])?$input['birth_place']:null;
         $personalInfo->phone = isset($input['phone'])?$input['phone']:null;
         $personalInfo->address = isset($input['address'])?$input['address']:null;
+        $personalInfo->job = isset($input['job'])?$input['job']:null;
         $personalInfo->profile = isset($input['profile']) ? $input['profile'] : null;
         $personalInfo->created_at = Carbon::now();
 
@@ -103,6 +104,7 @@ class EloquentPersonalInfoRepository implements PersonalInfoContract
         $personalInfo->birth_place = isset($input['birth_place'])?$input['birth_place']:null;
         $personalInfo->phone = isset($input['phone'])?$input['phone']:null;
         $personalInfo->address = isset($input['address'])?$input['address']:null;
+        $personalInfo->job = isset($input['job'])?$input['job']:null;
         $personalInfo->updated_at = Carbon::now();
 
         if (isset($input['profile'])) {

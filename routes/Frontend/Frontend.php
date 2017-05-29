@@ -78,6 +78,7 @@ Route::group(['middleware' => 'auth'], function () {
          */
         Route::get('/resume/user-info', 'ResumeController@userInfo')->name('user_info');
         Route::post('/resume/store-user-info', 'ResumeController@storeUserInfo')->name('store_user_info');
+        Route::post('/resume/user-info/get_marital_status', 'ResumeController@get_marital_status')->name('get_marital_status');
 
 
         /**
