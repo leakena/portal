@@ -46,7 +46,7 @@
 
                     @endforeach
                 @else
-                    There is no experience please click on button add to add experience
+                    <span class="no_have">There is no language please click on button add to add language</span>
                 @endif
             </div>
         </div>
@@ -108,6 +108,7 @@
             }
             newLanguage += '</h3></div>';
             $('#mab').append(newLanguage);
+            $('span.no_have').hide();
             getCircleLanguages();
         }
 
@@ -202,6 +203,13 @@
                                     swal("Deleted!", "Your language has been deleted.", "success");
                                     dom.parent().parent().parent().parent().remove();
                                 }
+                                if(result.rest_language<=0){
+                                    var no_language = '';
+                                    no_language += '<span class="no_have">There is no language please click on button add to add language</span>';
+                                    $('#mab').append(no_language);
+
+
+                                }
                             },
                             error: function () {
 
@@ -242,28 +250,28 @@
                         $('#edit_form').modal('toggle');
 
                         var updatedLanguage = '';
-                         updatedLanguage += '<div class="btn-group pull-right">';
-                         updatedLanguage += '<span class="btn btn-box-tool dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" title="" data-widget="chat-pane-toggle" data-original-title="Setting">'
-                         updatedLanguage += '<i class="icon-custom rounded-x icon-sm icon-color-u fa fa-lightbulb-o"></i>'
-                         updatedLanguage += '</span>'
-                         updatedLanguage += '<ul class="dropdown-menu" role="menu">'
-                         updatedLanguage += '<li><a href="#" class="btn_edit_language" data-toggle="modal" data-target="#edit_form"><i class="fa fa-edit "></i> Edit Language</a></li>'
-                         updatedLanguage += '<li><a class="btn_delete_language" href="/resume/languages/' + value + '/delete-language"><i class="fa fa-trash-o"></i> Delete Language</a></li>'
-                         updatedLanguage += '</ul>'
-                         updatedLanguage += '</div>'
-                         updatedLanguage += '<input type="hidden" class="language_resume_id" name="language_resume_id" value="' + language_resume_id + '">';
-                         updatedLanguage += '<input type="hidden" class="language_id" name="language_id" value="' + value + '">';
-                         updatedLanguage += '<input type="hidden" class="proficiency1" name="proficiency" value="' + proficiency + '">'
-                         updatedLanguage += '<div class="circle margin-bottom-20" id="' + value + '"></div>';
+                        updatedLanguage += '<div class="btn-group pull-right">';
+                        updatedLanguage += '<span class="btn btn-box-tool dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" title="" data-widget="chat-pane-toggle" data-original-title="Setting">'
+                        updatedLanguage += '<i class="icon-custom rounded-x icon-sm icon-color-u fa fa-lightbulb-o"></i>'
+                        updatedLanguage += '</span>'
+                        updatedLanguage += '<ul class="dropdown-menu" role="menu">'
+                        updatedLanguage += '<li><a href="#" class="btn_edit_language" data-toggle="modal" data-target="#edit_form"><i class="fa fa-edit "></i> Edit Language</a></li>'
+                        updatedLanguage += '<li><a class="btn_delete_language" href="/resume/languages/' + value + '/delete-language"><i class="fa fa-trash-o"></i> Delete Language</a></li>'
+                        updatedLanguage += '</ul>'
+                        updatedLanguage += '</div>'
+                        updatedLanguage += '<input type="hidden" class="language_resume_id" name="language_resume_id" value="' + language_resume_id + '">';
+                        updatedLanguage += '<input type="hidden" class="language_id" name="language_id" value="' + value + '">';
+                        updatedLanguage += '<input type="hidden" class="proficiency1" name="proficiency" value="' + proficiency + '">'
+                        updatedLanguage += '<div class="circle margin-bottom-20" id="' + value + '"></div>';
 
-                         var subfix = '';
-                         if(result.is_mother_tongue === true){
+                        var subfix = '';
+                        if (result.is_mother_tongue === true) {
                             subfix = '(Mother Tongue)';
-                         }
-                         updatedLanguage += '<h3 class="heading-xs name"><span class="language_name">' + language_name + '</span><span class="subfix_name">' + subfix + '</span></h3>';
+                        }
+                        updatedLanguage += '<h3 class="heading-xs name"><span class="language_name">' + language_name + '</span><span class="subfix_name">' + subfix + '</span></h3>';
 
 
-                         $('.editing').html(updatedLanguage);
+                        $('.editing').html(updatedLanguage);
                     }
                 },
                 complete: function () {

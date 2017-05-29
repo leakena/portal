@@ -108,21 +108,26 @@
         </form>
     </div>
 
-    <div class="row">
-        @if(count($experiences)>0)
-            @foreach($experiences as $experience)
-                <div class="col-md-6">
-                    <div class="tag-box tag-box-v3 margin-bottom-40 no-padding">
-                        @include('frontend.new_portals.resumes.experience.partials.action')
-                        <div id="" class="profile-edit blog_experience tab-pane fade in active">
-                            @include('frontend.new_portals.resumes.experience.partials.fields')
+    <div class="panel panel-profile">
+        <div class="panel-body">
+            <div class="row experience">
+                @if(count($experiences)>0)
+                    @foreach($experiences as $experience)
+                        <div class="col-md-6">
+                            <div class="tag-box tag-box-v3 margin-bottom-40 no-padding">
+                                @include('frontend.new_portals.resumes.experience.partials.action')
+                                <div id="" class="profile-edit blog_experience tab-pane fade in active">
+                                    @include('frontend.new_portals.resumes.experience.partials.fields')
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            @endforeach
-        @else
-            There is no experience please click on button add to add experience
-        @endif
+                    @endforeach
+                @else
+                    <span class="no_experience"> There is no experience please click on button add to add experience</span>
+
+                @endif
+            </div>
+        </div>
     </div>
 
 
@@ -255,6 +260,11 @@
                                 if (result.status == true) {
                                     swal("Deleted!", "Your experience has been deleted.", "success");
                                     dom.parent().parent().parent().parent().parent().remove();
+                                }
+                                if(result.rest_experience<=0){
+                                    var no_experience = '<span class="no_experience"> There is no experience please click on button add to add experience </span>'
+                                    $('div.experience').append(no_experience);
+
                                 }
                             },
                             error: function () {

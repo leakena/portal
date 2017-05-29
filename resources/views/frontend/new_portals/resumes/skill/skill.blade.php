@@ -21,7 +21,7 @@
     </div>
 
     <div class="tab-pane fade active in profile-edit blog_experience" id="tab-1" >
-            <div class="row">
+            <div class="row skill">
                 @if(count($skills)>0)
                     @foreach($skills as $skill)
                         <div class="col-md-12">
@@ -33,7 +33,7 @@
 
                     @endforeach
                 @else
-                    There is no experience please click on button add to add experience
+                    There is no skill please click on button add to add skill
                 @endif
             </div>
     </div>
@@ -104,6 +104,12 @@
                                 if (result.status == true) {
                                     swal("Deleted!", "Your skill has been deleted.", "success");
                                     dom.parent().parent().parent().parent().remove();
+                                }
+
+                                if(result.rest_skill<=0){
+                                    var no_skill = '<span class="no_skill"> There is no education please click on button add to add education </span>'
+                                    $('div.skill').append(no_skill);
+
                                 }
                             },
                             error: function () {
