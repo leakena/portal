@@ -47,7 +47,17 @@ trait ResumeTrait
             $skills = null;
         }
 
-        return view('frontend.new_portals.resumes.skill.skill', compact('skills', 'userResume'));
+        $languages = Language::all();
+        if ($userResume) {
+//            $selectedLanguages = LanguageResume::where('resume_uid', $userResume->id)->get();
+            $selectedLanguages = $userResume->languages()->select('language_resume.proficiency', 'language_resume.id as language_resume_id', 'languages.name', 'languages.id as language_id', 'language_resume.is_mother_tongue')
+                ->orderBy('language_resume_id')
+                ->get();
+        } else {
+            $selectedLanguages = null;
+        }
+
+        return view('frontend.new_portals.resumes.skill.skill', compact('skills', 'userResume', 'languages', 'selectedLanguages'));
 
     }
 
