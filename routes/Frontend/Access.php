@@ -17,6 +17,7 @@ Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
 
         // Change Password Routes
         Route::patch('password/change', 'ChangePasswordController@changePassword')->name('password.change');
+        Route::post('/portal/change-password', 'ChangePasswordController@changePassword')->name('change_password');
     });
 
     /*

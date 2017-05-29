@@ -28,11 +28,11 @@
                                 <dd>
                                     <span id="name" class="editing">
                                         <input type="hidden" name="name" value="{{ $resume->personalInfo->name }}">
-                                        {{ $resume->personalInfo->name }}
+                                        <span class="old">{{ $resume->personalInfo->name }}</span>
                                     </span>
 
                                     <span>
-												<a class="pull-right" href="#">
+												<a class="pull-right">
 													<i class="fa fa-pencil edit"></i>
 												</a>
 											</span>
@@ -42,7 +42,7 @@
                                 <dd>
                                     <span id="email" class="editing">
                                         <input type="hidden" name="email" value="{{ $resume->personalInfo->email }}">
-                                        {{ $resume->personalInfo->email }}
+                                        <span class="old">{{ $resume->personalInfo->email }}</span>
                                     </span>
 
                                     <span>
@@ -57,7 +57,7 @@
                                 <dd>
                                     <span id="dob" class="editing">
                                         <input type="hidden" name="dob" value="{{ $resume->personalInfo->dob }}">
-                                        {{ $resume->personalInfo->dob }}
+                                        <span class="old">{{ $resume->personalInfo->dob }}</span>
                                     </span>
                                     <span>
 												<a class="pull-right">
@@ -72,7 +72,7 @@
                                     <span id="birth_place" class="editing">
                                         <input type="hidden" name="birth_place"
                                                value="{{ $resume->personalInfo->birth_place }}">
-                                        {{ $resume->personalInfo->birth_place }}
+                                        <span class="old"> {{ $resume->personalInfo->birth_place }} </span>
                                     </span>
                                     <span>
 												<a class="pull-right">
@@ -85,12 +85,10 @@
                                 <hr>
                                 <dt><strong>Marital Status </strong></dt>
                                 <dd>
-                                    <span id="status_id" class="editing">
-                                        <input type="hidden" name="status_id"
-                                               value="{{ $resume->personalInfo->status_id}}">
-                                        {{ $resume->personalInfo->status->name }}
-
-                                    </span>
+                                    <span id="status_id" class="editing"></span>
+                                    <input type="hidden" name="status_id"
+                                           value="{{ $resume->personalInfo->status_id}}">
+                                    <span class="old">{{ $resume->personalInfo->status->name }}</span>
                                     <span>
 												<a class="pull-right">
 													<i class="fa fa-pencil edit_status"></i>
@@ -103,7 +101,7 @@
                                 <dd>
                                     <span id="job" class="editing">
                                         <input type="hidden" name="job" value="{{ $resume->personalInfo->job }}">
-                                        {{ $resume->personalInfo->job }}
+                                        <span class="old">{{ $resume->personalInfo->job }}</span>
                                     </span>
 
                                     <span>
@@ -118,7 +116,7 @@
                                 <dd>
                                     <span id="phone" class="editing">
                                         <input type="hidden" name="phone" value="{{ $resume->personalInfo->phone }}">
-                                        {{ $resume->personalInfo->phone }}
+                                        <span class="old">{{ $resume->personalInfo->phone }}</span>
                                     </span>
 
                                     <span>
@@ -134,7 +132,7 @@
                                     <span id="address" class="editing">
                                         <input type="hidden" name="address"
                                                value="{{ $resume->personalInfo->address }}">
-                                        {{ $resume->personalInfo->address }}
+                                        <span class="old">{{ $resume->personalInfo->address }}</span>
                                     </span>
 
                                     <span>
@@ -162,8 +160,8 @@
                                 <dd>
                                     <span id="name" class="editing">{{ $resume->user->name }}</span>
                                     <span>
-												<a class="pull-right" href="#">
-													<i class="fa fa-pencil edit"></i>
+												<a class="pull-right">
+													<i class="fa fa-pencil edit_new"></i>
 												</a>
 											</span>
                                 </dd>
@@ -173,8 +171,8 @@
                                     <span id="email" class="editing">{{ $resume->user->email }}</span>
 
                                     <span>
-												<a class="pull-right" href="#">
-													<i class="fa fa-pencil edit"></i>
+												<a class="pull-right">
+													<i class="fa fa-pencil edit_new"></i>
 												</a>
 											</span>
                                 </dd>
@@ -183,8 +181,8 @@
                                 <dd>
                                     <span id="dob" class="editing"></span>
                                     <span>
-												<a class="pull-right" href="#">
-													<i class="fa fa-pencil edit"></i>
+												<a class="pull-right">
+													<i class="fa fa-pencil edit_new"></i>
 												</a>
 											</span>
                                 </dd>
@@ -194,8 +192,8 @@
                                 <dd>
                                     <span id="birth_place" class="editing"></span>
                                     <span>
-												<a class="pull-right" href="#">
-													<i class="fa fa-pencil edit"></i>
+												<a class="pull-right">
+													<i class="fa fa-pencil edit_new"></i>
 												</a>
 											</span>
                                 </dd>
@@ -206,8 +204,8 @@
                                 <dd>
                                     <span id="status_id" class="editing"></span>
                                     <span>
-												<a class="pull-right" href="#">
-													<i class="fa fa-pencil edit_status"></i>
+												<a class="pull-right">
+													<i class="fa fa-pencil edit_create_status"></i>
 												</a>
 											</span>
                                 </dd>
@@ -217,8 +215,8 @@
                                 <dd>
                                     <span id="job" class="editing"></span>
                                     <span>
-												<a class="pull-right" href="#">
-													<i class="fa fa-pencil edit"></i>
+												<a class="pull-right">
+													<i class="fa fa-pencil edit_new"></i>
 												</a>
 											</span>
                                 </dd>
@@ -228,8 +226,8 @@
                                 <dd>
                                     <span id="phone" class="editing"></span>
                                     <span>
-												<a class="pull-right" href="#">
-													<i class="fa fa-pencil edit"></i>
+												<a class="pull-right">
+													<i class="fa fa-pencil edit_new"></i>
 												</a>
 											</span>
                                 </dd>
@@ -239,8 +237,8 @@
                                 <dd>
                                     <span id="address" class="editing"></span>
                                     <span>
-												<a class="pull-right" href="#">
-													<i class="fa fa-pencil edit"></i>
+												<a class="pull-right">
+													<i class="fa fa-pencil edit_new"></i>
 												</a>
 											</span>
                                 </dd>
@@ -258,29 +256,42 @@
                     <h2 class="heading-md">Manage your Security Settings</h2>
                     <p>Change your password.</p>
                     <br>
-                    <form class="sky-form" id="sky-form4" action="#">
+                    <form class="sky-form" id="sky-form4" action="{{ route('frontend.auth.change_password') }}"
+                          method="post">
+
+                        {{csrf_field()}}
                         <dl class="dl-horizontal">
-                            <dt>Username</dt>
+                            {{--<dt>Username</dt>--}}
+                            {{--<dd>--}}
+                            {{--<section>--}}
+                            {{--<label class="input">--}}
+                            {{--<i class="icon-append fa fa-user"></i>--}}
+                            {{--<input type="text" placeholder="Username" name="username">--}}
+                            {{--<b class="tooltip tooltip-bottom-right">Needed to enter the website</b>--}}
+                            {{--</label>--}}
+                            {{--</section>--}}
+                            {{--</dd>--}}
+                            {{--<dt>Email address</dt>--}}
+                            {{--<dd>--}}
+                            {{--<section>--}}
+                            {{--<label class="input">--}}
+                            {{--<i class="icon-append fa fa-envelope"></i>--}}
+                            {{--<input type="email" placeholder="Email address" name="email">--}}
+                            {{--<b class="tooltip tooltip-bottom-right">Needed to verify your account</b>--}}
+                            {{--</label>--}}
+                            {{--</section>--}}
+                            {{--</dd>--}}
+                            <dt>Olde password</dt>
                             <dd>
                                 <section>
                                     <label class="input">
-                                        <i class="icon-append fa fa-user"></i>
-                                        <input type="text" placeholder="Username" name="username">
-                                        <b class="tooltip tooltip-bottom-right">Needed to enter the website</b>
+                                        <i class="icon-append fa fa-lock"></i>
+                                        <input type="password" id="password" name="old_password"
+                                               placeholder="Old Password">
                                     </label>
                                 </section>
                             </dd>
-                            <dt>Email address</dt>
-                            <dd>
-                                <section>
-                                    <label class="input">
-                                        <i class="icon-append fa fa-envelope"></i>
-                                        <input type="email" placeholder="Email address" name="email">
-                                        <b class="tooltip tooltip-bottom-right">Needed to verify your account</b>
-                                    </label>
-                                </section>
-                            </dd>
-                            <dt>Enter your password</dt>
+                            <dt>Enter new password</dt>
                             <dd>
                                 <section>
                                     <label class="input">
@@ -295,19 +306,20 @@
                                 <section>
                                     <label class="input">
                                         <i class="icon-append fa fa-lock"></i>
-                                        <input type="password" name="passwordConfirm" placeholder="Confirm password">
+                                        <input type="password" name="password_confirmation"
+                                               placeholder="Confirm password">
                                         <b class="tooltip tooltip-bottom-right">Don't forget your password</b>
                                     </label>
                                 </section>
                             </dd>
                         </dl>
-                        <label class="toggle toggle-change"><input type="checkbox" checked=""
-                                                                   name="checkbox-toggle-1"><i class="no-rounded"></i>Remember
-                            password</label>
-                        <br>
-                        <section>
-                            <label class="checkbox"><input type="checkbox" id="terms" name="terms"><i></i><a href="#">I
-                                    agree with the Terms and Conditions</a></label>
+                        {{--<label class="toggle toggle-change"><input type="checkbox" checked=""--}}
+                        {{--name="checkbox-toggle-1"><i class="no-rounded"></i>Remember--}}
+                        {{--password</label>--}}
+                        {{--<br>--}}
+                        {{--<section>--}}
+                        {{--<label class="checkbox"><input type="checkbox" id="terms" name="terms"><i></i><a href="#">I--}}
+                        {{--agree with the Terms and Conditions</a></label>--}}
                         </section>
                         <button type="button" class="btn-u btn-u-default">Cancel</button>
                         <button class="btn-u" type="submit">Save Changes</button>
@@ -419,20 +431,84 @@
 
     <script>
         $(document).on('click', '.edit', function () {
+            var dom = $(this).parent().parent().parent();
+            var old_value = dom.find('.old').text();
+
+
+            if (dom.find('input').prop('type') == 'hidden') {
+                dom.find('input').prop('type', 'text');
+                dom.find('.old').hide();
+            } else {
+                dom.find('input').prop({'type': 'hidden', 'value': old_value});
+                dom.find('.old').show().text(dom.find('input').val());
+
+            }
+
+        });
+
+        $(document).on('click', '.edit_new', function () {
             var dom = $(this).parent().parent().parent().find('.editing');
+            console.log(dom);
 
             var edit = '';
             edit += '<input class="form-group" style="width: 70%; " name="' + dom.prop('id') + '" value="' + (dom.text()).trim() + '">';
 
             dom.html(edit);
-            console.log(edit);
+            // console.log(dom.prop('type'))
 
 
         });
 
         $(document).on('click', '.edit_status', function () {
             var dom = $(this).parent().parent().parent().find('.editing');
-            console.log(dom.text());
+            var selectedStatus = $(this).parent().parent().parent().find('.old').text()
+            var temp = $(this);
+
+            if (temp.parent().parent().parent().find('.old').is(":visible")) {
+                temp.parent().parent().parent().find('input[name=status_id]').prop('name', 'not_status');
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('frontend.resume.get_marital_status') }}',
+                    data: {
+                        _token: '{!! csrf_token() !!}',
+                    },
+                    success: function (result) {
+                        if (result.status = true) {
+                            var edit = '';
+                            edit += '<select name="status_id" class="form-control col-md-7 col-xs-12" id="status" style="width: 80%">';
+
+                            $.each(result.statues, function (key, val) {
+                                if (val.name == selectedStatus) {
+                                    edit += '<option selected value="' + val.id + '">' + val.name + '</option>';
+                                } else {
+                                    edit += '<option value="' + val.id + '">' + val.name + '</option>';
+                                }
+
+                            });
+
+                            dom.html(edit);
+                            temp.parent().parent().parent().find('.old').hide();
+
+                        }
+
+                    }
+
+                });
+
+            } else {
+                temp.parent().parent().parent().find('#status').remove();
+                temp.parent().parent().parent().find('input[name=not_status]').prop('name', 'status_id');
+
+                temp.parent().parent().parent().find('.old').show();
+            }
+
+
+        });
+
+        $(document).on('click', '.edit_create_status', function () {
+            var dom = $(this).parent().parent().parent().find('.editing');
+
+            var temp = $(this);
 
             $.ajax({
                 type: 'POST',
@@ -452,22 +528,13 @@
                         });
 
                         dom.html(edit);
-
-
-
-
-                        {{--<select name="status_id" class="form-control col-md-7 col-xs-12" id="status">--}}
-                        {{--@foreach( $marital_statuses as $marital_status)--}}
-                        {{--<option value="{{ $marital_status->id }}">{{ $marital_status->name }}</option>--}}
-                        {{--@endforeach--}}
-                        {{--</select>--}}
+                        temp.parent().parent().parent().find('.old').hide();
 
                     }
 
                 }
 
             });
-
 
         });
 
