@@ -4,7 +4,7 @@
 @endif
 <input type="hidden" name="skill_id" value="">
 <div class="row">
-    <section class=" col-md-12">
+    <section class=" col-md-12 no-padding">
         <label class="input">
             <i class="icon-append fa fa-map-marker green"></i>
             <input type="text" name="name" placeholder="Skill Name">
@@ -13,7 +13,7 @@
 </div>
 
 <div class="row">
-    <section class="col col-12">
+    <section class="col col-12 no-padding">
         <label class="radio-inline">
             <input class="description" type="radio" value="25%" name="description">Beginner
         </label>
@@ -31,6 +31,6 @@
 </div>
 
 <footer>
-    <button type="submit" class="btn-u pull-left">Save</button>
+    <button type="submit" class="btn-u pull-left" style="margin-left: -50px">Save</button>
     <div class="progress"></div>
 </footer>

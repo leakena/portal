@@ -11,7 +11,7 @@
                         <i class="icon-custom rounded-x icon-sm icon-color-u fa fa-lightbulb-o"></i>
     </span>
     <ul class="dropdown-menu" role="menu">
-        <li><a href="#" class="btn_edit_language" data-toggle="modal" data-target="#edit_form"><i
+        <li><a href="#" class="btn_edit_language" data-toggle="modal" data-target="#edit_language_form"><i
                         class="fa fa-edit "></i> Edit Language</a></li>
         <li><a class="btn_delete_language" href="{{ route('frontend.resume.remove_language',$selectedLanguage->language_resume_id) }}"><i
                         class="fa fa-trash-o"></i> Delete Language</a></li>
