@@ -108,20 +108,25 @@
     </div>
 
 
-
-    <div class="row">
-        @if(count($educations)>0)
-            @foreach($educations as $education)
-                <div class="col-md-6">
-                    <div class="tag-box tag-box-v3 margin-bottom-40 no-padding">
-                        @include('frontend.new_portals.resumes.education.partials.action')
-                        <div id="" class="profile-edit blog_experience tab-pane fade in active">
-                            @include('frontend.new_portals.resumes.education.partials.fields')
+    <div class="panel panel-profile">
+        <div class="panel-body">
+            <div class="row education">
+                @if(count($educations)>0)
+                    @foreach($educations as $education)
+                        <div class="col-md-6">
+                            <div class="tag-box tag-box-v3 margin-bottom-40 no-padding">
+                                @include('frontend.new_portals.resumes.education.partials.action')
+                                <div id="" class="profile-edit blog_experience tab-pane fade in active">
+                                    @include('frontend.new_portals.resumes.education.partials.fields')
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            @endforeach
-        @endif
+                    @endforeach
+                @else
+                    There is no education please click on button add to add education
+                @endif
+            </div>
+        </div>
     </div>
 
     @include('frontend.new_portals.resumes.education.partials.modal')
@@ -270,6 +275,11 @@
                                 if (result.status == true) {
                                     swal("Deleted!", "Your experience has been deleted.", "success");
                                     dom.parent().parent().parent().parent().parent().remove();
+                                }
+                                if(result.rest_education<=0){
+                                    var no_education = '<span class="no_education"> There is no education please click on button add to add education </span>'
+                                    $('div.education').append(no_education);
+
                                 }
                             },
                             error: function () {

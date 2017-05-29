@@ -88,7 +88,7 @@ class ResumeController extends Controller
 
 
     /**
-     * @param StorePersonalInfoRequest $request
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function storeUserInfo(Request $request)
@@ -284,6 +284,7 @@ class ResumeController extends Controller
                     ]);
                 return redirect()->route('frontend.portal.resume.experience');
             } else {
+//                dd($request->all());
 
                 /*--create experience--*/
 
@@ -380,11 +381,16 @@ class ResumeController extends Controller
      */
     public function removeExperience($expId)
     {
-
+        $userResume = $this->getUserResume(auth()->id());
         $experience = Experience::where('id', $expId)->delete();
+        $rest_experience = Experience::where('resume_uid', $userResume->id)->get()->toArray();
 
         if ($experience) {
-            return Response::json(['status' => true, 'message' => 'Deleted!']);
+            return Response::json([
+                'status' => true,
+                'message' => 'Deleted!',
+                'rest_experience' => count($rest_experience)
+            ]);
         } else {
             return Response::json(['status' => false, 'message' => 'Not Deleted!']);
         }
@@ -589,10 +595,16 @@ class ResumeController extends Controller
      */
     public function deleteSkill($skillId)
     {
+        $userResume = $this->getUserResume(auth()->id());
         $skill = Skill::where('id', $skillId)->delete();
+        $rest_skill = Skill::where('resume_uid', $userResume->id)->get()->toArray();
 
         if ($skill) {
-            return Response::json(['status' => true, 'message' => 'Deleted!']);
+            return Response::json([
+                'status' => true,
+                'message' => 'Deleted!',
+                'rest_skill'=> count($rest_skill)
+            ]);
         } else {
             return Response::json(['status' => false, 'message' => 'Not Deleted!']);
         }
@@ -802,10 +814,17 @@ class ResumeController extends Controller
      */
     public function deleteEducation($eduId)
     {
+        $userResume = $this->getUserResume(auth()->id());
         $education = Education::where('id', $eduId)->delete();
+        $rest_education = Education::where('resume_uid', $userResume->id)->get()->toArray();
+
 
         if ($education) {
-            return Response::json(['status' => true, 'message' => 'Deleted!']);
+            return Response::json([
+                'status' => true,
+                'message' => 'Deleted!',
+                'rest_education' => count($rest_education)
+            ]);
         } else {
             return Response::json(['status' => false, 'message' => 'Not Deleted!']);
         }
@@ -968,11 +987,17 @@ class ResumeController extends Controller
      */
     public function deleteLanguage()
     {
+        $userResume = $this->getUserResume(auth()->id());
         $language = LanguageResume::where('id', request('id'))->delete();
-        //dd($language);
+        $rest_language = LanguageResume::where('resume_uid', $userResume->id)->get()->toArray();
+
 
         if ($language) {
-            return Response::json(['status' => true, 'message' => 'Deleted!']);
+            return Response::json([
+                'status' => true,
+                'message' => 'Deleted!',
+                'rest_language'=> count($rest_language)
+            ]);
         } else {
             return Response::json(['status' => false, 'message' => 'Not Deleted!']);
         }
