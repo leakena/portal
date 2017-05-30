@@ -53,6 +53,8 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/language', 'ResumeController@get_language')->name('language');
             Route::post('/language/find_mother_tongue', 'ResumeController@find_mother_tongue')->name('find_mother_tongue');
 
+            Route::post('/profile/upload-profile', 'ResumeController@upload_profile')->name('upload_profile');
+
         });
 
 

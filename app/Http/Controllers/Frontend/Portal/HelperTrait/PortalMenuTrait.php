@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend\Portal\HelperTrait;
 
 use App\Models\Portal\Resume\Resume;
 use Illuminate\Http\Request;
+use App\Models\Portal\Resume\PersonalInfo;
 
 /**
  * Created by PhpStorm.
@@ -28,7 +29,8 @@ trait PortalMenuTrait
     public function profile(Request $request)
     {
         $resume = $this->getUserResume(auth()->id());
-        return view('frontend.new_portals.includes.profile', compact('resume'));
+        $profile = PersonalInfo::where('resume_uid', $resume->id)->first();
+        return view('frontend.new_portals.includes.profile', compact('resume', 'profile'));
     }
 
 
