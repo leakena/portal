@@ -7,10 +7,23 @@
     <div class="profile-body">
         <div class="profile-bio">
             <div class="row">
-                <div class="col-md-5">
-                    <img class="img-responsive md-margin-bottom-10" src="{{url('portals/assets/img/team/img32-md.jpg')}}" alt="">
-                    <a class="btn-u btn-u-sm" href="#">Change Picture</a>
-                </div>
+                {!! Form::open(['enctype'=> 'multipart/form-data', 'files' => true, 'route' => 'frontend.portal.resume.upload_profile', 'class' => 'form-horizontal create_user_info', 'role' => 'form', 'method' => 'post', 'id' => 'create-user-info']) !!}
+
+
+                    <div class="col-md-5">
+                        <div class="image-frame"
+                             style="width: 163px;height: 213px; border: 2px solid #f1f1f1; padding: 5px; box-sizing: border-box;">
+                            <img class="img-responsive profile-img margin-bottom-20 img" src="{{ asset('img/backend/profile') }}/{{ $profile->profile }}" alt="" style="width: 100%" >
+                        </div>
+                        {{--<label class="control-label">Chose your profile</label>--}}
+                        <input type="file" class="filestyle" id="image" name="profile" accept="image/*" data-input="false" data-icon="false" data-badge="false">
+                        <input type="submit" class="btn btn-primary" value="Upload" style="margin-top: -55px; margin-left: 100px; ">
+
+                        {{--<a class="btn-u btn-u-sm upload-image">Change Picture</a>--}}
+                    </div>
+                {!! Form::close() !!}
+
+
                 <div class="col-md-7">
                     <h2>{{$authUser->name}}</h2>
                     <span><strong>Job:</strong> System-Engineering </span>
@@ -75,6 +88,7 @@
 
 
 @section('after-script-end')
+    <script type="text/javascript" src="{{ url('bower_components/bootstrap-filestyle/src/bootstrap-filestyle.js') }}"> </script>
     <script>
 
         $(document).ready(function (e) {
@@ -146,6 +160,59 @@
                 }
             })
         }
+
+        {{--$(document).on('change', 'input[name=upload-profile]', function (e) {--}}
+            {{--e.preventDefault();--}}
+
+
+            {{--var file_data = $('#image').prop("files")[0];--}}
+            {{--var CSRF_TOKEN = $('input[name="_token"]').val();--}}
+
+            {{--console.log(file_data)--}}
+
+
+            {{--$.ajax({--}}
+                {{--type: 'POST',--}}
+                {{--url: '{{ route('frontend.portal.resume.upload_profile') }}' + '?_token=' + CSRF_TOKEN,--}}
+                {{--processData: false, // important--}}
+                {{--contentType: false, // important--}}
+                {{--dataType: 'JSON',--}}
+                {{--data: {--}}
+                    {{--_token: '{!! csrf_token() !!}',--}}
+                    {{--'file_data': new FormData($("#image")[0]),--}}
+                {{--},--}}
+                {{--success: function (response) {--}}
+                    {{--if(response.status == true){--}}
+
+                        {{--var image = '<img class="profile" src="{{ asset('img/backend/resume/profile') }}/' + response.profile + 'alt=""/>';--}}
+                        {{--$('.img').html(image);--}}
+
+
+                    {{--}--}}
+                {{--}--}}
+            {{--});--}}
+
+        {{--});--}}
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('.img').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("input[name=profile]").change(function(){
+            readURL(this);
+        });
+
+
     </script>
 @endsection
+
+
 
