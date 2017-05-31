@@ -89,18 +89,20 @@
         }
 
         .panel-yellow {
-            border-color: #27d7e7;
+            border-color: #56e71b;
         }
 
         body {
-            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
             font-size: 14px;
             line-height: 1.42857143;
             color: #333;
             background-color: #fff;
         }
+
         .panel-yellow > .panel-heading {
-            background: #27d7e7;
+            background: #72c02c;
+            color: white;
         }
 
         .panel-u > .panel-heading {
@@ -166,7 +168,8 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">
                         <i class="fa fa-tasks"></i> References
-                        <a style="position: sticky;" class="accordion-toggle collapsed pull-right" id="icon_toggle" href="#id_form" data-toggle="collapse" aria-expanded="false">
+                        <a style="position: sticky;" class="accordion-toggle collapsed pull-right" id="icon_toggle"
+                           href="#id_form" data-toggle="collapse" aria-expanded="false">
                             <i class="fa fa-plus-square" id="add"></i>
                         </a>
                     </h3>
@@ -177,6 +180,7 @@
                     <div id="id_form" class="collapse " aria-expanded="false">
                         <form action="{{ route('frontend.resume.store_reference') }}" method="post" enctype="multipart/form-data" class="sky-form form-horizontal form_create_reference">
                             <header style="font-size: 8pt">   Create Your Reference </header>
+
                             <fieldset>
                                 @include('frontend.new_portals.resumes.reference.partials.create_edit_fields')
                             </fieldset>
@@ -207,7 +211,9 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">
                         <i class="fa fa-tasks"></i> Interest
-                        <a style="position: sticky;" class="accordion-toggle collapsed pull-right" id="icon_toggle_interest" href="#id_form_interest" data-toggle="collapse" aria-expanded="false">
+                        <a style="position: sticky;" class="accordion-toggle collapsed pull-right"
+                           id="icon_toggle_interest" href="#id_form_interest" data-toggle="collapse"
+                           aria-expanded="false">
                             <i class="fa fa-plus-square" id="add_interest"></i>
                         </a>
                     </h3>
@@ -220,8 +226,10 @@
                             @if(isset($userResume))
                                 <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
                             @endif
+
                             {{csrf_field()}}
-                            <header style="font-size: 8pt">   Create Your Interest </header>
+
+                            <header style="font-size: 8pt"> Create Your Interest</header>
                             <fieldset>
                                 @include('frontend.new_portals.resumes.reference.partials.interest_field')
                             </fieldset>
@@ -232,10 +240,12 @@
                         @foreach($interests as $interest)
                             <div class="col-md-12" style="border-color: #27d7e7 !important;">
 
-                                <input type="hidden" name="hidden_interest_resume_uid" value="{{$interest->resume_uid}}">
+                                <input type="hidden" name="hidden_interest_resume_uid"
+                                       value="{{$interest->resume_uid}}">
                                 <input type="hidden" name="hidden_interest_id" value="{{$interest->id}}">
                                 <input type="hidden" name="hidden_interest_name" value="{{$interest->name}}">
-                                <input type="hidden" name="hidden_interest_description" value="{{$interest->description}}">
+                                <input type="hidden" name="hidden_interest_description"
+                                       value="{{$interest->description}}">
 
                                 @include('frontend.new_portals.resumes.reference.partials.action_interest')
 
@@ -253,7 +263,6 @@
                         @endforeach
                     @endif
                 </div>
-
 
 
             </div>
@@ -302,9 +311,6 @@
         });
 
 
-
-
-
         $('input[name="start_date"]').datepicker({
             format: 'yyyy-mm-d'
         });
@@ -336,7 +342,6 @@
             $('form#form_edit_interest input[name=resume_uid]').val(dom.siblings('input[name=hidden_interest_resume_uid]').val());
 
         })
-
 
 
         $(document).on('click', '.btn_delete_reference', function (event) {
@@ -389,43 +394,43 @@
             var var_url = $(this).attr('href');
             var dom = $(this);
             swal({
-                        title: "Are you sure?",
-                        text: "Do you want to delete this Interest?",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonClass: "btn-danger",
-                        confirmButtonText: "Yes, delete it!",
-                        cancelButtonText: "No, cancel!",
-                        closeOnConfirm: false,
-                        closeOnCancel: false
-                    },
-                    function (isConfirm) {
-                        if (isConfirm) {
+                    title: "Are you sure?",
+                    text: "Do you want to delete this Interest?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Yes, delete it!",
+                    cancelButtonText: "No, cancel!",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
 
-                            $.ajax({
-                                method: 'POST',
-                                url: var_url,
-                                data: {_token: '{{csrf_token()}}'},
-                                dataType: 'JSON',
-                                success: function (result) {
+                        $.ajax({
+                            method: 'POST',
+                            url: var_url,
+                            data: {_token: '{{csrf_token()}}'},
+                            dataType: 'JSON',
+                            success: function (result) {
 
-                                    if (result.status == true) {
-                                        swal("Deleted!", "Your reference has been deleted.", "success");
-                                        dom.parent().parent().parent().parent().remove();
-                                    }
-                                },
-                                error: function () {
-
-                                },
-                                complete: function () {
-
+                                if (result.status == true) {
+                                    swal("Deleted!", "Your reference has been deleted.", "success");
+                                    dom.parent().parent().parent().parent().remove();
                                 }
-                            })
+                            },
+                            error: function () {
 
-                        } else {
-                            swal("Cancelled", "Your reference is safe :)", "error");
-                        }
-                    });
+                            },
+                            complete: function () {
+
+                            }
+                        })
+
+                    } else {
+                        swal("Cancelled", "Your reference is safe :)", "error");
+                    }
+                });
         });
 
 

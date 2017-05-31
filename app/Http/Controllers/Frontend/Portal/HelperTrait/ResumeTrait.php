@@ -9,11 +9,11 @@ use App\Models\Portal\Resume\Language;
 use App\Models\Portal\Resume\LanguageResume;
 use App\Models\Portal\Resume\MaritalStatus;
 use App\Models\Portal\Resume\PersonalInfo;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Input;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Response;
 use Intervention\Image\Facades\Image;
 
 /**
@@ -98,6 +98,7 @@ trait ResumeTrait
     public function get_reference()
     {
         $userResume = $this->getUserResume(auth()->id());
+       // dd($userResume);
 
         if ($userResume) {
             $references = DB::table('references')->where('resume_uid', $userResume->id)->get();
@@ -106,6 +107,7 @@ trait ResumeTrait
             $references = null;
             $interests = null;
         }
+
 
         return view('frontend.new_portals.resumes.reference.reference', compact('userResume', 'references', 'interests'));
     }
@@ -178,8 +180,6 @@ trait ResumeTrait
             } else {
                 $newLanguage->is_mother_tongue = false;
             }
-
-
 
 
             // Save new language
@@ -278,7 +278,8 @@ trait ResumeTrait
     /**
      * @return mixed
      */
-    public function get_marital_status(){
+    public function get_marital_status()
+    {
         $statues = MaritalStatus::all();
         return Response::json([
             'status' => true,
@@ -286,22 +287,26 @@ trait ResumeTrait
         ]);
     }
 
-    public function upload_profile(){
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function upload_profile()
+    {
         $userResume = $this->getUserResume(auth()->id());
 
         $profile = PersonalInfo::where('resume_uid', $userResume->id)->first();
-       // dd(request()->all());
+        // dd(request()->all());
 
         if ($profile->profile) {
 
             $old_profile = $profile->profile;
-            if(file_exists('img/backend/profile/' . $old_profile)) {
+            if (file_exists('img/backend/profile/' . $old_profile)) {
                 if (unlink('img/backend/profile/' . $old_profile)) {
                     if (Input::file()) {
 
                         $image = Input::file('profile');
                         $newfilename = auth()->id() . Carbon::now()->getTimestamp();
-                        $filename  = $newfilename . '.' . $image->getClientOriginalExtension();
+                        $filename = $newfilename . '.' . $image->getClientOriginalExtension();
                         $path = public_path('img/backend/profile/' . $filename);
                         Image::make($image->getRealPath())->save($path);
                         $profile->profile = $filename;
@@ -311,7 +316,7 @@ trait ResumeTrait
                 if (Input::file()) {
                     $image = Input::file('profile');
                     $newfilename = auth()->id() . Carbon::now()->getTimestamp();
-                    $filename  = $newfilename . '.' . $image->getClientOriginalExtension();
+                    $filename = $newfilename . '.' . $image->getClientOriginalExtension();
                     $path = public_path('img/backend/profile/' . $filename);
                     Image::make($image->getRealPath())->save($path);
                     $profile->profile = $filename;
@@ -322,7 +327,7 @@ trait ResumeTrait
 
                 $image = Input::file('profile');
                 $newfilename = auth()->id() . Carbon::now()->getTimestamp();
-                $filename  = $newfilename . '.' . $image->getClientOriginalExtension();
+                $filename = $newfilename . '.' . $image->getClientOriginalExtension();
                 $path = public_path('img/backend/profile/' . $filename);
                 Image::make($image->getRealPath())->save($path);
                 $profile->profile = $filename;

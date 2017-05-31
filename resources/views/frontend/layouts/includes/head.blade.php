@@ -56,6 +56,10 @@
 <!-- Select 2 --!>
 {{ Html::style('bower_components/select2/dist/css/select2.css') }}
 
+
 {{ Html::style('bower_components/form.validation/dist/css/formValidation.min.css') }}
+
+<!-- Full Calendar --!>
+
 
 

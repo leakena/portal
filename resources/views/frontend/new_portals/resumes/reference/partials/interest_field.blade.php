@@ -1,5 +1,11 @@
 <input type="hidden" name="interest_id" value="">
 
+@if(isset($userResume))
+    <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
+@else
+    <input type="hidden" name="resume_uid" value="">
+@endif
+
 {{--<section class="col col-md-12 no-padding">
     <label class="input">
         <i class="icon-append fa fa-heart green"></i>

@@ -1,58 +1,91 @@
 @extends('frontend.layouts.master_portal')
 
+@section('after-style-end')
+    <style>
+        .panel-yellow {
+            border-color: #56e71b;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #333;
+            background-color: #fff;
+        }
+
+        .panel-yellow > .panel-heading {
+            background: #72c02c;
+            color: white;
+        }
+
+        .panel-u > .panel-heading {
+            background: #72c02c;
+        }
+
+        .each_top_row {
+            margin-top: 2px;
+        }
+    </style>
+@endsection
+
 
 @section('content')
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="profile-bio margin-bottom-30">
-            <form action="{{ route('frontend.resume.store_skill') }}" method="post" enctype="multipart/form-data"
-                  id="sky-form1" class="sky-form" novalidate="novalidate">
-                <header><a style="position: sticky;" class="accordion-toggle collapsed pull-right" id="icon_toggle"
-                           href="#id_form" data-toggle="collapse" aria-expanded="false"> <i class="fa fa-plus-square"
-                                                                                            id="add"> </i> </a>
-                    <div style="font-size: 14px; margin-left: -30px">Create Your Skills</div>
-                </header>
-                <div id="id_form" class="collapse " aria-expanded="false">
-                    <fieldset>
-                        @include('frontend.new_portals.resumes.skill.partials.create_edit_fields')
-                    </fieldset>
+    <div class="row margin-bottom-20">
+        <div class="col-md-6">
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-tasks"></i> Skills
+                        <a style="position: sticky;" class="accordion-toggle collapsed pull-right" id="icon_toggle"
+                           href="#id_form" data-toggle="collapse" aria-expanded="false">
+                            <i class="fa fa-plus-square" id="add"></i>
+                        </a>
+                    </h3>
+
                 </div>
-            </form>
-        </div>
-
-
-
-        <div class="panel panel-profile">
-            <div class="panel-heading overflow-h">
-                <h2 class="panel-title heading-sm pull-left"><i class="fa fa-lightbulb-o"></i> Skills</h2>
-            </div>
-            <div class="panel-body">
-                <div class="row skill">
-                    @if(count($skills)>0)
-                        @foreach($skills as $skill)
-                            <div class="col-md-12">
-                                @include('frontend.new_portals.resumes.skill.partials.action')
-
-                                @include('frontend.new_portals.resumes.skill.partials.fields')
-
-                            </div>
-
-                        @endforeach
-                    @else
-                        There is no skill please click on button add to add skill
-                    @endif
+                <div class="panel-body no-padding">
+                    <div id="id_form" class="collapse no-padding " aria-expanded="false">
+                        <form action="{{ route('frontend.resume.store_skill') }}" method="post"
+                              enctype="multipart/form-data"
+                              id="sky-form1" class="sky-form form-horizontal form_create_experience" novalidate="novalidate">
+                            <header style="font-size: 8pt; "> Create Your Skill</header>
+                            <fieldset>
+                                @include('frontend.new_portals.resumes.skill.partials.create_edit_fields')
+                            </fieldset>
+                        </form>
+                    </div>
                 </div>
+
+
+
+                <div class="tag-box tag-box-v3 margin-bottom-10">
+                    <div class="row skill">
+                        @if(count($skills)>0)
+                            @foreach($skills as $skill)
+                                <div class="col-md-12">
+                                    @include('frontend.new_portals.resumes.skill.partials.action')
+
+                                    @include('frontend.new_portals.resumes.skill.partials.fields')
+
+                                </div>
+
+                            @endforeach
+                        @else
+                            There is no skill please click on button add to add skill
+                        @endif
+                    </div>
+                </div>
+
             </div>
+
+            @include('frontend.new_portals.resumes.skill.partials.modal')
         </div>
-
-
-        @include('frontend.new_portals.resumes.skill.partials.modal')
+        <div class="col-md-6">
+            @include('frontend.new_portals.resumes.language.language')
+        </div>
     </div>
-    <div class="col-md-6">
-        @include('frontend.new_portals.resumes.language.language')
-    </div>
-</div>
 
 @endsection
 
@@ -81,8 +114,8 @@
             $('form#form_edit_skill input[name=name]').val(dom.find('.name').val());
             $('form#form_edit_skill input[name=skill_id]').val(dom.find('.skill_id').val());
 
-            obj.each(function(){
-                if ($(this).val() == dom.find('.description').text()){
+            obj.each(function () {
+                if ($(this).val() == dom.find('.description').text()) {
                     $(this).prop('checked', true);
                 }
 
@@ -120,7 +153,7 @@
                                     dom.parent().parent().parent().parent().remove();
                                 }
 
-                                if(result.rest_skill<=0){
+                                if (result.rest_skill <= 0) {
                                     var no_skill = '<span class="no_skill"> There is no education please click on button add to add education </span>'
                                     $('div.skill').append(no_skill);
 
@@ -286,7 +319,7 @@
                                     swal("Deleted!", "Your language has been deleted.", "success");
                                     dom.parent().parent().parent().parent().remove();
                                 }
-                                if(result.rest_language<=0){
+                                if (result.rest_language <= 0) {
                                     var no_language = '';
                                     no_language += '<span class="no_have">There is no language please click on button add to add language</span>';
                                     $('#mab').append(no_language);

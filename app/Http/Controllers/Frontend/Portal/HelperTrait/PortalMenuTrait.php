@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Frontend\Portal\HelperTrait;
 
+use App\Models\Portal\Resume\PersonalInfo;
 use App\Models\Portal\Resume\Resume;
 use Illuminate\Http\Request;
-use App\Models\Portal\Resume\PersonalInfo;
+use Illuminate\Support\Facades\Response;
 
 /**
  * Created by PhpStorm.
@@ -44,24 +45,48 @@ trait PortalMenuTrait
         return view('frontend.new_portals.includes.classmate');
     }
 
-    public function involveProject (Request $request)
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function involveProject(Request $request)
     {
 
         return view('frontend.new_portals.includes.involve_project');
     }
 
-
-    public function history (Request $request)
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function history(Request $request)
     {
 
         return view('frontend.new_portals.includes.history');
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function setting(Request $request)
     {
 
 
         return view('frontend.new_portals.includes.setting');
+    }
+
+    public function timetable(Request $request){
+        $year = $request->year;
+        $semester = $request->semester;
+        $week = $request->week;
+
+        return Response::json([
+            'status'=>true,
+            'year' => $year,
+            'semester' => $semester,
+            'week' => $week
+        ]);
     }
 
 }
