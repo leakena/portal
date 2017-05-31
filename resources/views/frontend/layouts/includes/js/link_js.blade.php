@@ -5,8 +5,8 @@
 {!! Html::script('portals/assets/plugins/jquery/jquery.min.js') !!}
 
 
-{!! Html::script('bower_components/form.validation/dist/js/formValidation.min.js') !!}
-{!! Html::script('bower_components/form.validation/dist/js/framework/bootstrap_.min.js') !!}
+{!! Html::script('bower_components/form.validation/dist/js/formValidation.js') !!}
+{!! Html::script('bower_components/form.validation/dist/js/framework/bootstrap.js') !!}
 {!! Html::script('portals/assets/plugins/bootstrap/js/bootstrap.min.js') !!}
 
 {!! Html::script('portals/assets/plugins/jquery/jquery-migrate.min.js') !!}

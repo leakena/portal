@@ -47,10 +47,12 @@
         .fc-time-grid-event {
             margin-bottom: 2px !important;
         }
-        .fc-title{
+
+        .fc-title {
             color: #000000;
         }
-        .select{
+
+        .select {
             background-color: #fff;
             padding: 10px;
             width: 100%;
@@ -95,13 +97,13 @@
                         <option>2016-2017</option>
                     </select>
                     <select id="semester" class="form-control">
-                        <option disabled >Semester</option>
+                        <option disabled>Semester</option>
                         <option>Semester 1</option>
                         <option>Semester 2</option>
                     </select>
 
-                    <select id="week" class="form-control" >
-                        <option disabled >Week</option>
+                    <select id="week" class="form-control">
+                        <option disabled>Week</option>
                         <option>Week 1</option>
                         <option>Week 2</option>
                         <option>Week 3</option>
@@ -127,7 +129,6 @@
             <div class="panel-body">
 
 
-
                 <div class="clearfix"></div>
                 <div id="box-timetable">
                     @include('frontend.new_portals.includes.partials.timetable')
@@ -148,14 +149,182 @@
 
     <script type="text/javascript">
 
+        var eventData = [
+            {
+                title: 'Hello',
+                start: '2017-01-02 07:00:00',
+                end: '2017-01-02 09:00:00',
+                course_name: 'AI',
+                teacher_name: 'CHUN Thavorac',
+                type: 'Course',
+                building: 'A',
+                room: 404,
+                groups: ['A', 'B', 'C']
+            },
+            {
+                title: 'Hello',
+                start: '2017-01-02 13:00:00',
+                end: '2017-01-02 15:00:00',
+                course_name: 'Project management',
+                teacher_name: 'TAL Tongsreng',
+                type: 'Course',
+                building: 'A',
+                room: 404,
+                groups: ['A', 'B', 'C']
+            },
+            {
+                title: 'Hello',
+                start: '2017-01-03 09:00:00',
+                end: '2017-01-03 11:00:00',
+                course_name: 'AI',
+                teacher_name: 'CHUN Thavorac',
+                type: 'TD',
+                building: 'A',
+                room: 404,
+                groups: ['A', 'B', 'C']
+            },
+            {
+                title: 'Hello',
+                start: '2017-01-03 07:00:00',
+                end: '2017-01-03 09:00:00',
+                course_name: 'Research Methodology',
+                teacher_name: 'CHHUN Sophea',
+                type: 'Course',
+                building: 'A',
+                room: 404,
+                groups: ['A', 'B', 'C']
+            },
+            {
+                title: 'Hello',
+                start: '2017-01-03 13:00:00',
+                end: '2017-01-03 15:00:00',
+                course_name: 'Natural Language Processing',
+                teacher_name: 'KHEANG Seng',
+                type: 'Course',
+                building: 'A',
+                room: 404,
+                groups: ['A', 'B', 'C']
+            },
+            {
+                title: 'Hello',
+                start: '2017-01-04 07:00:00',
+                end: '2017-01-03 09:00:00',
+                course_name: 'Project Management',
+                teacher_name: 'TAL Tongsreng',
+                type: 'TP',
+                building: 'F',
+                room: 306,
+                groups: ['A']
+            },
+            {
+                title: 'Hello',
+                start: '2017-01-04 13:00:00',
+                end: '2017-01-03 15:00:00',
+                course_name: 'Project Management',
+                teacher_name: 'TAL Tongsreng',
+                type: 'TP',
+                building: 'F',
+                room: 306,
+                groups: ['B']
+            },
+            {
+                title: 'Hello',
+                start: '2017-01-04 15:00:00',
+                end: '2017-01-03 17:00:00',
+                course_name: 'Cloud Computing',
+                teacher_name: 'YOU Vanndy',
+                type: 'TP',
+                building: 'F',
+                room: 306,
+                groups: ['A', 'B']
+            },
+            {
+                title: 'Hello',
+                start: '2017-01-05 09:00:00',
+                end: '2017-01-05 11:00:00',
+                course_name: 'Cloud Computing',
+                teacher_name: 'YOU Vanndy',
+                type: 'Course',
+                building: 'F',
+                room: 306,
+                groups: ['A', 'B']
+            },
+            {
+                title: 'Hello',
+                start: '2017-01-05 13:00:00',
+                end: '2017-01-05 15:00:00',
+                course_name: 'Cloud Computing',
+                teacher_name: 'YOU Vanndy',
+                type: 'Course',
+                building: 'F',
+                room: 306,
+                groups: ['A', 'B']
+            },
+            {
+                title: 'Hello',
+                start: '2017-01-05 15:00:00',
+                end: '2017-01-05 17:00:00',
+                course_name: 'Cloud Computing',
+                teacher_name: 'YOU Vanndy',
+                type: 'Course',
+                building: 'F',
+                room: 306,
+                groups: ['A', 'B']
+            },
+            {
+                title: 'Hello',
+                start: '2017-01-06 15:00:00',
+                end: '2017-01-06 17:00:00',
+                course_name: 'Cloud Computing',
+                teacher_name: 'YOU Vanndy',
+                type: 'Course',
+                building: 'F',
+                room: 306,
+                groups: ['A', 'B']
+            },
+            {
+                title: 'Hello',
+                start: '2017-01-06 07:00:00',
+                end: '2017-01-06 09:00:00',
+                course_name: 'Cloud Computing',
+                teacher_name: 'YOU Vanndy',
+                type: 'Course',
+                building: 'F',
+                room: 306,
+                groups: ['A', 'B']
+            },
+            {
+                title: 'Hello',
+                start: '2017-01-06 09:00:00',
+                end: '2017-01-06 11:00:00',
+                course_name: 'Cloud Computing',
+                teacher_name: 'YOU Vanndy',
+                type: 'Course',
+                building: 'F',
+                room: 306,
+                groups: ['A', 'B']
+            },
+            {
+                title: 'Hello',
+                start: '2017-01-06 13:00:00',
+                end: '2017-01-06 15:00:00',
+                course_name: 'Cloud Computing',
+                teacher_name: 'YOU Vanndy',
+                type: 'Course',
+                building: 'F',
+                room: 306,
+                groups: ['A', 'B']
+            }
+        ];
+
         $('#year , #semester, #week').on('change', function () {
             var dom = $(this).parent();
             var year = dom.find('#year').val();
             var semester = dom.find('#semester').val();
-            var week = dom.find('#week').val()
+            var week = dom.find('#week').val();
 
             $.ajax({
-               type: 'POST',
+                type: 'POST',
                 url: '{{ route('frontend.portal.timetable') }}',
                 dataType: 'JSON',
                 data: {
@@ -165,24 +334,46 @@
                     'week': week
                 },
                 success: function (response) {
-                    if(response.status == true){
-                        var all = ''
-                        all += 'Year = ' + response.year + '<br>'
-                        all += 'Semester = ' + response.semester + '<br>'
-                        all += 'Week = ' + response.week
-                        $('#timetable').html(all);
+                    if (response.status == true) {
+                        var all = '';
+                        all += 'Year = ' + response.year + '<br>';
+                        all += 'Semester = ' + response.semester + '<br>';
+                        all += 'Week = ' + response.week;
+
+                        var data = [
+                            {
+                                title: 'Hello',
+                                start: '2017-01-02 07:00:00',
+                                end: '2017-01-02 09:00:00',
+                                course_name: 'AI',
+                                teacher_name: 'CHUN Thavorac',
+                                type: 'Course',
+                                building: 'A',
+                                room: 404,
+                                groups: ['A', 'B', 'C']
+                            }
+                        ];
+
+                        $('#timetable').fullCalendar('removeEvents');
+                        $('#timetable').fullCalendar('renderEvents', data, true);
+                        $('#timetable').fullCalendar('rerenderEvents');
+
                     }
                 }
             });
 
-        } );
+        });
 
-        function get_timetable() {
+
+        function get_timetable(eventData) {
+
             var date = new Date();
             var d = date.getDate(),
                 m = date.getMonth(),
                 y = date.getFullYear();
+
             $('#timetable').fullCalendar({
+
                 defaultView: 'timetable',
                 defaultDate: '2017-01-01',
                 header: false,
@@ -202,173 +393,7 @@
                 slotLabelFormat: 'h:mm a',
                 columnFormat: 'dddd',
                 editable: false,
-                events: [
-                    {
-                        title: 'Hello',
-                        start: '2017-01-02 07:00:00',
-                        end: '2017-01-02 09:00:00',
-                        course_name: 'AI',
-                        teacher_name: 'CHUN Thavorac',
-                        type: 'Course',
-                        building: 'A',
-                        room: 404,
-                        groups: ['A', 'B', 'C']
-                    },
-                    {
-                        title: 'Hello',
-                        start: '2017-01-02 13:00:00',
-                        end: '2017-01-02 15:00:00',
-                        course_name: 'Project management',
-                        teacher_name: 'TAL Tongsreng',
-                        type: 'Course',
-                        building: 'A',
-                        room: 404,
-                        groups: ['A', 'B', 'C']
-                    },
-                    {
-                        title: 'Hello',
-                        start: '2017-01-03 09:00:00',
-                        end: '2017-01-03 11:00:00',
-                        course_name: 'AI',
-                        teacher_name: 'CHUN Thavorac',
-                        type: 'TD',
-                        building: 'A',
-                        room: 404,
-                        groups: ['A', 'B', 'C']
-                    },
-                    {
-                        title: 'Hello',
-                        start: '2017-01-03 07:00:00',
-                        end: '2017-01-03 09:00:00',
-                        course_name: 'Research Methodology',
-                        teacher_name: 'CHHUN Sophea',
-                        type: 'Course',
-                        building: 'A',
-                        room: 404,
-                        groups: ['A', 'B', 'C']
-                    },
-                    {
-                        title: 'Hello',
-                        start: '2017-01-03 13:00:00',
-                        end: '2017-01-03 15:00:00',
-                        course_name: 'Natural Language Processing',
-                        teacher_name: 'KHEANG Seng',
-                        type: 'Course',
-                        building: 'A',
-                        room: 404,
-                        groups: ['A', 'B', 'C']
-                    },
-                    {
-                        title: 'Hello',
-                        start: '2017-01-04 07:00:00',
-                        end: '2017-01-03 09:00:00',
-                        course_name: 'Project Management',
-                        teacher_name: 'TAL Tongsreng',
-                        type: 'TP',
-                        building: 'F',
-                        room: 306,
-                        groups: ['A']
-                    },
-                    {
-                        title: 'Hello',
-                        start: '2017-01-04 13:00:00',
-                        end: '2017-01-03 15:00:00',
-                        course_name: 'Project Management',
-                        teacher_name: 'TAL Tongsreng',
-                        type: 'TP',
-                        building: 'F',
-                        room: 306,
-                        groups: [ 'B']
-                    },
-                    {
-                        title: 'Hello',
-                        start: '2017-01-04 15:00:00',
-                        end: '2017-01-03 17:00:00',
-                        course_name: 'Cloud Computing',
-                        teacher_name: 'YOU Vanndy',
-                        type: 'TP',
-                        building: 'F',
-                        room: 306,
-                        groups: [ 'A', 'B']
-                    },
-                    {
-                        title: 'Hello',
-                        start: '2017-01-05 09:00:00',
-                        end: '2017-01-05 11:00:00',
-                        course_name: 'Cloud Computing',
-                        teacher_name: 'YOU Vanndy',
-                        type: 'Course',
-                        building: 'F',
-                        room: 306,
-                        groups: [ 'A', 'B']
-                    },
-                    {
-                        title: 'Hello',
-                        start: '2017-01-05 13:00:00',
-                        end: '2017-01-05 15:00:00',
-                        course_name: 'Cloud Computing',
-                        teacher_name: 'YOU Vanndy',
-                        type: 'Course',
-                        building: 'F',
-                        room: 306,
-                        groups: [ 'A', 'B']
-                    },
-                    {
-                        title: 'Hello',
-                        start: '2017-01-05 15:00:00',
-                        end: '2017-01-05 17:00:00',
-                        course_name: 'Cloud Computing',
-                        teacher_name: 'YOU Vanndy',
-                        type: 'Course',
-                        building: 'F',
-                        room: 306,
-                        groups: [ 'A', 'B']
-                    },
-                    {
-                        title: 'Hello',
-                        start: '2017-01-06 15:00:00',
-                        end: '2017-01-06 17:00:00',
-                        course_name: 'Cloud Computing',
-                        teacher_name: 'YOU Vanndy',
-                        type: 'Course',
-                        building: 'F',
-                        room: 306,
-                        groups: [ 'A', 'B']
-                    },
-                    {
-                        title: 'Hello',
-                        start: '2017-01-06 07:00:00',
-                        end: '2017-01-06 09:00:00',
-                        course_name: 'Cloud Computing',
-                        teacher_name: 'YOU Vanndy',
-                        type: 'Course',
-                        building: 'F',
-                        room: 306,
-                        groups: [ 'A', 'B']
-                    },
-                    {
-                        title: 'Hello',
-                        start: '2017-01-06 09:00:00',
-                        end: '2017-01-06 11:00:00',
-                        course_name: 'Cloud Computing',
-                        teacher_name: 'YOU Vanndy',
-                        type: 'Course',
-                        building: 'F',
-                        room: 306,
-                        groups: [ 'A', 'B']
-                    },
-                    {
-                        title: 'Hello',
-                        start: '2017-01-06 13:00:00',
-                        end: '2017-01-06 15:00:00',
-                        course_name: 'Cloud Computing',
-                        teacher_name: 'YOU Vanndy',
-                        type: 'Course',
-                        building: 'F',
-                        room: 306,
-                        groups: [ 'A', 'B']
-                    },
-                ],
+                events: eventData,
                 droppable: true,
                 dragRevertDuration: 0,
                 eventRender: function (event, element, view) {
@@ -440,7 +465,7 @@
             });
         }
         $(function () {
-            get_timetable();
+            get_timetable(eventData);
         })
     </script>
 
