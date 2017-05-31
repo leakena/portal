@@ -1,6 +1,6 @@
 <dl class="dl-horizontal">
     <input type="hidden" class="education_id" name="hidden_id" value="{{ $education->id }}">
-    <dt><strong><img src="{{asset('portals/icons/position.png')}}" alt=""> </strong></dt>
+    <dt><strong><img src="{{asset('portals/icons/book.png')}}" alt=""> </strong></dt>
     <dd class="school">
         {{ $education->school }}
         <input type="hidden" name="hidden_school" value="{{ $education->school }}">
@@ -13,7 +13,7 @@
 
     </dd>
     <hr>
-    <dt><strong><img src="{{asset('portals/icons/description.png')}}" alt="">  </strong></dt>
+    <dt><strong><img src="{{asset('portals/icons/tutorqual.png')}}" alt="">  </strong></dt>
     <dd class="degree">
 
         {{ $education->degree->name }}

@@ -40,6 +40,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/history', 'PortalController@history')->name('history');
         Route::get('/setting', 'PortalController@setting')->name('setting');
 
+        Route::post('/profile/timetable', 'PortalController@timetable')->name('timetable');
+
 
         Route::get('/my-post', 'PortalController@myPosts')->name('my_post');
 

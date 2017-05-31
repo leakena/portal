@@ -13,7 +13,7 @@
                     <div class="col-md-5">
                         <div class="image-frame"
                              style="width: 163px;height: 213px; border: 2px solid #f1f1f1; padding: 5px; box-sizing: border-box;">
-                            <img class="img-responsive profile-img margin-bottom-20 img" src="{{ asset('img/backend/profile') }}/{{ $profile->profile }}" alt="" style="width: 100%" >
+                            <img class="img-responsive profile-img margin-bottom-20 img" src="{{ isset($profile->profile)?url('img/backend/profile/'.$profile->profile):url('portals/assets/img/team/img32-md.jpg') }}" alt="" style="width: 100%" >
                         </div>
                         {{--<label class="control-label">Chose your profile</label>--}}
                         <input type="file" class="filestyle" id="image" name="profile" accept="image/*" data-input="false" data-icon="false" data-badge="false">
@@ -26,8 +26,7 @@
 
                 <div class="col-md-7">
                     <h2>{{$authUser->name}}</h2>
-                    <span><strong>Job:</strong> System-Engineering </span>
-                    <span><strong>Position:</strong> Web Developer </span>
+                    <span><strong>Job:</strong> {{ $profile->job }} </span>
                     <hr>
                     {!! isset($resume)?$resume->career_profile: ''  !!}
                 </div>
