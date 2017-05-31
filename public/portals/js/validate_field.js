@@ -133,3 +133,102 @@ function jsValidator(object_form, urlRemote, user_id) {
     })
 
 }
+
+
+function validate_reference(object) {
+
+    object.formValidation({
+        framework: 'bootstrap',
+        icon: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+
+            name: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please add your reference name!'
+                    },
+                    stringLength: {
+                        min: 3,
+                        max: 100,
+                        message: 'The  name must be more than 3 and less than 100 characters long'
+                    }
+                }
+            },
+            position: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please specify your reference position !'
+                    }
+                }
+            },
+            phone: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please add your reference phone number'
+                    },
+                    regexp: {
+                        regexp: '^\([0-9])',
+                        message: 'The value is not a valid phone number'
+
+                    }
+                }
+            },
+            email: {
+                validators: {
+                    emailAddress: {
+                        message: 'The value is not a valid email address'
+                    },
+                    regexp: {
+                        regexp: '^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$',
+                        message: 'The value is not a valid email address'
+                    }
+                }
+            }
+        }
+    });
+
+}
+
+function validate_interest(object) {
+
+    object.formValidation({
+        framework: 'bootstrap',
+        icon: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+
+            name: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please add your Title!'
+                    },
+                    stringLength: {
+                        min: 3,
+                        max: 20,
+                        message: 'The school name must be more than 3 and less than 100 characters long'
+                    }
+                }
+            },
+            description: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please add your descrtiption !'
+                    },
+                    stringLength: {
+                        min: 5,
+                        max: 100,
+                        message: 'The description must be more than 5 and less than 100 characters long'
+                    }
+                }
+            }
+        }
+    });
+
+}

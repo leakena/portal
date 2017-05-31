@@ -348,6 +348,7 @@
                     },
 
                     start_date: {
+                        verbose:false,
                         validators: {
                             notEmpty: {
                                 message: 'The start date is required'
@@ -364,12 +365,23 @@
                                     var selectedDate = validator.getFieldElements('start_date').val();
                                     var split  = selectedDate.split('-');
                                     var new_selecteddate = new Date(split[2], split[1] - 1, split[0]);
-                                    if(new_selecteddate.getTime() > get_today.getTime()) {
-                                        return false;
+
+
+                                    var check = object.find('input[name=is_present]').val();
+                                    if(check == 1) {
+                                        object.formValidation('enableFieldValidators', 'end_date', false)
+                                        if(new_selecteddate.getTime() > get_today.getTime()) {
+                                            return false;
+                                        } else {
+                                            validator.updateStatus('start_date', validator.STATUS_VALID, 'callback');
+                                            validator.updateStatus('end_date', validator.STATUS_VALID, 'callback');
+                                            return true;
+                                        }
                                     } else {
-                                        validator.updateStatus('end_date', validator.STATUS_VALID, 'callback');
+                                        object.formValidation('enableFieldValidators', 'end_date', true)
                                         return true;
                                     }
+
                                 }
                             }
                         }
@@ -377,7 +389,7 @@
 
                     end_date: {
                         validators: {
-                            enable: true,
+                            enable: false,
                             notEmpty: {
                                 message: 'The end date is required'
                             },
@@ -403,33 +415,18 @@
                         }
                     }
                 }
-            }).on('change', '[name=start_date]', function(e, data) {
+            }).on('change', 'input[name=start_date]', function(e, data) {
 
-                var check = $('input[name=is_present]').val();
-                if(check == 1) {
-                    object.formValidation('revalidateField', 'start_date');
+                object.formValidation('revalidateField', 'start_date');
 
-                } else {
 
-                    object.formValidation('enableFieldValidators', 'start_date', true)
-                            .formValidation('enableFieldValidators', 'end_date', true);
-                    object.formValidation('revalidateField', 'start_date')
-                            .formValidation('revalidateField', 'end_date');
-
-                }
 
             }).on('change', '[name=end_date]', function(e, data) {
 
-                var check = $('input[name=is_present]').val();
-                if(check == 1) {
 
-                } else {
-
-                    object.formValidation('enableFieldValidators', 'end_date', true)
-                            .formValidation('revalidateField', 'start_date')
-                            .formValidation('revalidateField', 'end_date');
-
-                }
+                object.formValidation('enableFieldValidators', 'end_date', true)
+                        .formValidation('revalidateField', 'start_date')
+                        .formValidation('revalidateField', 'end_date');
 
             }).on('change', '[name="slider_date"]', function(e) {
 
@@ -442,22 +439,9 @@
                     fv.revalidateField('start_date');
                 } else {
                     fv.enableFieldValidators('end_date', true).revalidateField('end_date');
-                }
-            }).on('submit', function (e) {
-
-                var end_date = $(this).find('input[name="end_date"]').val(),
-                        start_date = $(this).find('input[name="start_date"]').val(),
-                        fv         = $(this).data('formValidation');
-
-                if($(this).find('input[name=slider_date] :checked')) {
-                    fv.enableFieldValidators('end_date', false);
                     fv.revalidateField('start_date');
-
-                } else {
-                    fv.enableFieldValidators('end_date', true).revalidateField('end_date');
                 }
 
-                return true ;
             })
         }
 

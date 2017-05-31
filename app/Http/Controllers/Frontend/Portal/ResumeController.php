@@ -1104,25 +1104,46 @@ class ResumeController extends Controller
 
         } else {
 
-            /*-- This user has no resume id so need to create resume first--*/
-            $resume = new Resume();
-            $resume->career_profile = null;
-            $resume->user_uid = auth()->id();
-            if ($resume->save()) {
-                // Create a new interest
-                $newInterest = new Interest();
-                // Set value into each field
-                $newInterest->resume_uid = $resume->id;
-                $newInterest->name = $request->name;
-                $newInterest->description = $request->description;
-                // Save new education
-                if ($newInterest->save()) {
-                    //return redirect()->route('frontend.resume.get_interest');
+            if (isset($request->interest_id)) {
 
-                    return redirect()->back()->with(['status' => 'Interest Created']);
+                /*-- Update Interest --*/
+
+                DB::table('interests')
+                    ->where([
+                        ['id', '=', request('interest_id')]
+                    ])
+                    ->update([
+                        'name' => request('name'),
+                        'description' => request('description')
+                    ]);
+
+                return redirect()->back()->with(['status' => 'Interest Created']);
+            } else {
+
+                /*-- This user has no resume id so need to create resume first--*/
+                $resume = new Resume();
+                $resume->career_profile = null;
+                $resume->user_uid = auth()->id();
+                if ($resume->save()) {
+                    // Create a new interest
+                    $newInterest = new Interest();
+                    // Set value into each field
+                    $newInterest->resume_uid = $resume->id;
+                    $newInterest->name = $request->name;
+                    $newInterest->description = $request->description;
+                    // Save new education
+                    if ($newInterest->save()) {
+                        //return redirect()->route('frontend.resume.get_interest');
+
+                        return redirect()->back()->with(['status' => 'Interest Created']);
+                    }
+
                 }
 
+
             }
+
+
         }
 
     }

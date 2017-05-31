@@ -172,31 +172,6 @@
 
 
     <script type="text/javascript">
-        //        $(function() {
-        //            $('input[name="daterange"]').daterangepicker({
-        //
-        //                beforeShow: function( input ) {
-        //                    setTimeout(function() {
-        //                        var headerPane = $( input )
-        //                                .datepicker( "widget" )
-        //                                .find( ".ui-datepicker-header" );
-        //
-        //                        $( "<button>", {
-        //                            text: "Close",
-        //                            click: function() {
-        //                                $.datepicker.hide();
-        //                            }
-        //                        }).appendTo( headerPane );
-        //                    }, 1 );
-        //                },
-        //                timePicker: true,
-        //                timePickerIncrement: 30,
-        //                locale: {
-        //                    format: 'MM/DD/YYYY h:mm A'
-        //                }
-        //            });
-        //
-        //        });
 
 
         $('input[name="start_date"]').datepicker({
@@ -236,6 +211,7 @@
             if (dom.find('.is_present').val() == true) {
                 $('form#form_edit_education input[class=slider_update]').prop({'checked': true});
                 $('form#form_edit_education input[name=end_date]').val('Present').datepicker('destroy').prop('readonly', true);
+                $('form#form_edit_education input[name=is_present]').val(1);
             } else {
 
                 $('form#form_edit_education input[class=slider_update]').prop({'checked': false});
@@ -248,32 +224,13 @@
 
         $('.slider_update').on('change', function () {
 
-
-
-
             if ($(this).is(':checked')) {
-                $('.form_create_ecducation').formValidation('enableFieldValidators', 'end_date', false, 'date');
-                $('.form_create_ecducation').formValidation('revalidateField', 'start_date');
-
-                /*$(this).parent('label').parent('div').parent('section').siblings('section.find_end_date').find('input[name=end_date]').val('Present').datepicker('destroy');
-                $(this).parent('label').parent('div').parent('section').siblings('section.find_end_date').find('input[name=end_date]').prop('readonly', true);
-                $(this).parent('label').parent('div').siblings('input[name=is_present]').val('1');*/
-
 
                 $(this).parent('label').parent('div').parent('div').siblings('div.date').children('div').children('div.div_end_date').find('input[name=end_date]').prop('readonly', true);
                 $(this).parent('label').parent('div').parent('div').siblings('div.date').children('div').children('div.div_end_date').find('input[name=end_date]').val('Present').datepicker('destroy');
                 $(this).parent('label').parent('div').siblings('input[name=is_present]').val('1');
 
             } else {
-                $('.form_create_ecducation').formValidation('revalidateField', 'end_date');
-                $('.form_create_ecducation').formValidation('revalidateField', 'start_date');
-
-               /* $(this).parent('label').parent('div').parent('section').siblings('section.find_end_date').find('input[name=end_date]').datepicker({
-                    format: 'yyyy-mm-d'
-                });
-                $(this).parent('label').parent('div').parent('section').siblings('section.find_end_date').find('input[name=end_date]').val('');
-                $(this).parent('label').parent('div').siblings('input[name=is_present]').val('0');*/
-
 
                 $(this).parent('label').parent('div').parent('div').siblings('div.date').children('div').children('div.div_end_date').find('input[name=end_date]').prop('readonly', false).val('').datepicker({
                     format: 'dd-mm-yyyy'
@@ -335,103 +292,159 @@
 
 
 
-        $('.form_create_ecducation').formValidation({
-            framework: 'bootstrap',
-            icon: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                school: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Please add your Position!'
-                        },
-                        stringLength: {
-                            min: 3,
-                            max: 100,
-                            message: 'The school name must be more than 3 and less than 100 characters long'
-                        }
-                    }
-                },
+        validate_education( $('.form_create_ecducation'))
+        validate_education($('#form_edit_education'))
 
-                degree: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Please select your degree !'
-                        }
-                    }
-                },
+        function validate_education(object) {
 
-                address: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Please input your school Address!'
-                        },
-                        stringLength: {
-                            min: 5,
-                            max: 100,
-                            message: 'Your address must be between 5 to 100 character'
-                        }
-                    }
+            object.formValidation({
+                framework: 'bootstrap',
+                icon: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
                 },
+                fields: {
 
-                start_date: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The start date is required'
-                        },
-                        date: {
-                            format: 'DD-MM-YYYY',
-                            max: 'end_date',
-                            message: 'The start date is not a valid'
+                    school: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Please add your Position!'
+                            },
+                            stringLength: {
+                                min: 3,
+                                max: 100,
+                                message: 'The school name must be more than 3 and less than 100 characters long'
+                            }
                         }
-                    }
-                },
-                end_date: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The end date is required'
-                        },
-                        date: {
-                            format: 'DD-MM-YYYY',
-                            min: 'start_date',
-                            message: 'The end date is not a valid'
+                    },
+                    degree: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Please select your degree !'
+                            }
                         }
-                    }
-                },
+                    },
+                    major: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Please add your major or skill!'
+                            },
+                            stringLength: {
+                                min: 5,
+                                max: 50,
+                                message: 'Your Description must be between 5 to 50 character'
+                            }
+                        }
+                    },
+                    address: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Please input your Address!'
+                            },
+                            stringLength: {
+                                min: 3,
+                                max: 100,
+                                message: 'The address must be more than 3 and less than 100 characters long'
+                            }
+                        }
+                    },
 
-                major: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Please add your major or skill!'
-                        },
-                        stringLength: {
-                            min: 5,
-                            max: 50,
-                            message: 'Your Description must be between 5 to 50 character'
+                    start_date: {
+                        verbose:false,
+                        validators: {
+                            notEmpty: {
+                                message: 'The start date is required'
+                            },
+                            date: {
+                                format: 'DD-MM-YYYY',
+                                message: 'The start date is not a valid'
+                            },
+                            callback: {
+                                message: 'The start date must be earlier then the Present',
+                                callback: function(value, validator, $field) {
+
+                                    var get_today = new Date();
+                                    var selectedDate = validator.getFieldElements('start_date').val();
+                                    var split  = selectedDate.split('-');
+                                    var new_selecteddate = new Date(split[2], split[1] - 1, split[0]);
+
+
+                                    var check = object.find('input[name=is_present]').val();
+
+                                    if(check == 1) {
+                                        object.formValidation('enableFieldValidators', 'end_date', false)
+                                        if(new_selecteddate.getTime() > get_today.getTime()) {
+                                            return false;
+                                        } else {
+                                            validator.updateStatus('start_date', validator.STATUS_VALID, 'callback');
+                                            validator.updateStatus('end_date', validator.STATUS_VALID, 'callback');
+                                            return true;
+                                        }
+                                    } else {
+                                        object.formValidation('enableFieldValidators', 'end_date', true)
+                                        return true;
+                                    }
+
+                                }
+                            }
+                        }
+                    },
+
+                    end_date: {
+                        validators: {
+                            enable: false,
+                            notEmpty: {
+                                message: 'The end date is required'
+                            },
+                            date: {
+                                format: 'DD-MM-YYYY',
+                                min:'start_date',
+                                message: 'The start date is not a valid'
+                            }
+
+                        }
+                    },
+
+                    description: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Please add your description!'
+                            },
+                            stringLength: {
+                                min: 10,
+                                max: 200,
+                                message: 'Your Description must be between 10 to 200 character'
+                            }
                         }
                     }
                 }
-            }
-        }).on('changeDate', '[name=start_date]', function() {
+            }).on('change', 'input[name=start_date]', function(e, data) {
 
-            var check = $(this).parent().parent().parent().siblings('div.switcher').find('input[name=is_present]').val();
-            if(check == 1) {
-                /*---disabled validation date ---*/
-                $('.form_create_ecducation').formValidation('enableFieldValidators', 'end_date', false, 'date');
-            } else {
+                object.formValidation('revalidateField', 'start_date');
 
-                /*---revalidate the end date ---*/
-                $('.form_create_ecducation').formValidation('revalidateField', 'start_date');
-                $('.form_create_ecducation').formValidation('revalidateField', 'end_date');
-            }
-        }).on('changeDate', '[name=end_date]', function() {
+            }).on('change', '[name=end_date]', function(e, data) {
 
-            $('.form_create_ecducation').formValidation('revalidateField', 'start_date');
-            $('.form_create_ecducation').formValidation('revalidateField', 'end_date');
-        });
+                object.formValidation('enableFieldValidators', 'end_date', true)
+                        .formValidation('revalidateField', 'start_date')
+                        .formValidation('revalidateField', 'end_date');
+
+            }).on('change', '[name="slider_date"]', function(e) {
+
+                var end_date = object.find('input[name="end_date"]').val(),
+                        start_date = object.find('input[name="start_date"]').val(),
+                        fv         = object.data('formValidation');
+
+                if($(this).is(':checked')) {
+                    fv.enableFieldValidators('end_date', false);
+                    fv.revalidateField('start_date');
+                } else {
+                    fv.enableFieldValidators('end_date', true).revalidateField('end_date');
+                    fv.revalidateField('start_date');
+                }
+
+            })
+        }
 
     </script>
 @endsection

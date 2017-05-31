@@ -8,8 +8,7 @@
             <div class="modal-body">
                 <div class="row">
                     <form action="{{ route('frontend.resume.save_interest') }}" method="post"
-                          enctype="multipart/form-data" id="form_edit_interest" class="sky-form"
-                          novalidate="novalidate">
+                          enctype="multipart/form-data" id="form_edit_interest" class="sky-form form-horizontal">
                         {{csrf_field()}}
                         <fieldset>
                             @include('frontend.new_portals.resumes.reference.partials.interest_field')

@@ -35,6 +35,8 @@
 {!! Html::script('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') !!}
 {!! Html::script('bower_components/select2/dist/js/select2.js') !!}
 
+{!! Html::script('portals/js/validate_field.js') !!}
+
 
 
 

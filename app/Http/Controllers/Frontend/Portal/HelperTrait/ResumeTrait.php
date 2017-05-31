@@ -303,7 +303,7 @@ trait ResumeTrait
                         $newfilename = auth()->id() . Carbon::now()->getTimestamp();
                         $filename  = $newfilename . '.' . $image->getClientOriginalExtension();
                         $path = public_path('img/backend/profile/' . $filename);
-                        Image::make($image->getRealPath())->resize(163, 216)->save($path);
+                        Image::make($image->getRealPath())->save($path);
                         $profile->profile = $filename;
                     }
                 }
@@ -313,7 +313,7 @@ trait ResumeTrait
                     $newfilename = auth()->id() . Carbon::now()->getTimestamp();
                     $filename  = $newfilename . '.' . $image->getClientOriginalExtension();
                     $path = public_path('img/backend/profile/' . $filename);
-                    Image::make($image->getRealPath())->resize(163, 216)->save($path);
+                    Image::make($image->getRealPath())->save($path);
                     $profile->profile = $filename;
                 }
             }
@@ -324,7 +324,7 @@ trait ResumeTrait
                 $newfilename = auth()->id() . Carbon::now()->getTimestamp();
                 $filename  = $newfilename . '.' . $image->getClientOriginalExtension();
                 $path = public_path('img/backend/profile/' . $filename);
-                Image::make($image->getRealPath())->resize(163, 216)->save($path);
+                Image::make($image->getRealPath())->save($path);
                 $profile->profile = $filename;
             }
         }

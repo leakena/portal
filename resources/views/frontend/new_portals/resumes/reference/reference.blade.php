@@ -110,6 +110,51 @@
         .each_top_row {
             margin-top: 2px;
         }
+
+
+        .input-group {
+            position: relative;
+            display: table;
+            border-collapse: separate;
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            height: 34px;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .input-group-addon, .input-group-btn {
+            width: 1%;
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+
+        .sky-form .icon-append {
+            right: 17px;
+            padding: 1px 3px;
+            min-width: 34px;
+        }
+
+        .panel-body{
+            padding: 15px !important;
+            padding-top: 15px !important;
+            padding-right: 15px !important;
+            padding-bottom: 15px !important;
+            padding-left: 15px !important;
+        }
+
+        #form_edit_interest .col-md-offest2 {
+            margin-left: 50px;
+        }
     </style>
 @endsection
 @section('content')
@@ -127,18 +172,16 @@
                     </h3>
 
                 </div>
-                <div class="panel-body no-padding">
+                <div class="panel-body">
 
-                    <div id="id_form" class="collapse no-padding " aria-expanded="false">
-                        <form action="{{ route('frontend.resume.store_reference') }}" method="post" enctype="multipart/form-data" class="sky-form form-horizontal form_create_experience" novalidate="novalidate">
+                    <div id="id_form" class="collapse " aria-expanded="false">
+                        <form action="{{ route('frontend.resume.store_reference') }}" method="post" enctype="multipart/form-data" class="sky-form form-horizontal form_create_reference">
                             <header style="font-size: 8pt">   Create Your Reference </header>
                             <fieldset>
                                 @include('frontend.new_portals.resumes.reference.partials.create_edit_fields')
                             </fieldset>
                         </form>
                     </div>
-
-
 
                     @if(count($references)>0)
                         @foreach($references as $reference)
@@ -153,8 +196,6 @@
                         @endforeach
                     @endif
                 </div>
-
-
 
             </div>
             <!-- End Yellow Panel -->
@@ -175,7 +216,7 @@
                 <div class="panel-body no-padding">
 
                     <div id="id_form_interest" class="collapse no-padding " aria-expanded="false">
-                        <form action="{{ route('frontend.resume.save_interest') }}" method="post" enctype="multipart/form-data" class="sky-form form-horizontal form_create_experience" novalidate="novalidate">
+                        <form action="{{ route('frontend.resume.save_interest') }}" method="post" enctype="multipart/form-data" class="sky-form form-horizontal form_create_interest">
                             @if(isset($userResume))
                                 <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
                             @endif
@@ -187,8 +228,6 @@
                         </form>
                     </div>
 
-
-
                     @if($interests != null)
                         @foreach($interests as $interest)
                             <div class="col-md-12" style="border-color: #27d7e7 !important;">
@@ -199,6 +238,7 @@
                                 <input type="hidden" name="hidden_interest_description" value="{{$interest->description}}">
 
                                 @include('frontend.new_portals.resumes.reference.partials.action_interest')
+
                                 <div class="faq-add">
                                     <div class="top-part">
                                         <h3 class="new-title">
@@ -221,79 +261,6 @@
         </div>
     </div>
 
-    {{--<div class="row">
-
-        <div class="col-md-6">
-            <div class="row">
-                <div class="profile-bio margin-bottom-30 col-md-12">
-                    <form action="{{ route('frontend.resume.store_reference') }}" method="post"
-                          enctype="multipart/form-data" class="sky-form form-horizontal form_create_experience"
-                          novalidate="novalidate">
-                        <header>
-                            <a style="position: sticky;" class="accordion-toggle collapsed pull-right" id="icon_toggle"
-                               href="#id_form" data-toggle="collapse" aria-expanded="false"> <i class="fa fa-plus-square" id="add"> </i> </a> Create Your
-                            Reference
-                        </header>
-                        <div id="id_form" class="collapse " aria-expanded="false">
-
-                            <fieldset>
-                                @include('frontend.new_portals.resumes.reference.partials.create_edit_fields')
-                            </fieldset>
-                        </div>
-                    </form>
-
-
-                    @if(count($references)>0)
-                        @foreach($references as $reference)
-                            <div class="col-md-12">
-                                <div class="tag-box tag-box-v3 margin-bottom-40 no-padding">
-                                    @include('frontend.new_portals.resumes.reference.partials.action')
-                                    <div id="" class="profile-edit blog_experience tab-pane fade in active">
-                                        @include('frontend.new_portals.resumes.reference.partials.fields')
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                </div>
-
-
-
-            </div>
-
-
-
-            @else
-                There is no experience please click on button add to add experience
-            @endif
-        </div>
-
-        <div class="col-md-6">
-            <div class="profile">
-                <a style="position: sticky;" class="accordion-toggle collapsed pull-right" id="icon_toggle"
-                   href="#form_interest" data-toggle="collapse" aria-expanded="false"> <i class="fa fa-plus-square" id="add"> Create Your Interest </i></a>
-
-            </div>
-
-            <div class="profile-bio margin-bottom-30 collapse" id="form_interest" aria-expanded="false">
-
-                <form action="{{ route('frontend.resume.store_reference') }}" method="post"
-                      enctype="multipart/form-data" class="sky-form form-horizontal form_create_experience"
-                      novalidate="novalidate">
-
-                    <fieldset>
-                        @include('frontend.new_portals.resumes.reference.partials.create_edit_fields')
-                    </fieldset>
-
-                </form>
-
-            </div>
-
-        </div>
-
-    </div>--}}
-
-
-
     @include('frontend.new_portals.resumes.reference.partials.modal')
 
     @include('frontend.new_portals.resumes.reference.partials.modal_interest')
@@ -304,34 +271,17 @@
 @section('after-script-end')
 
     {!! Html::script('portals/assets/jstree/jstree.min.js') !!}
-
-
     <script type="text/javascript">
-        //        $(function() {
-        //            $('input[name="daterange"]').daterangepicker({
-        //
-        //                beforeShow: function( input ) {
-        //                    setTimeout(function() {
-        //                        var headerPane = $( input )
-        //                                .datepicker( "widget" )
-        //                                .find( ".ui-datepicker-header" );
-        //
-        //                        $( "<button>", {
-        //                            text: "Close",
-        //                            click: function() {
-        //                                $.datepicker.hide();
-        //                            }
-        //                        }).appendTo( headerPane );
-        //                    }, 1 );
-        //                },
-        //                timePicker: true,
-        //                timePickerIncrement: 30,
-        //                locale: {
-        //                    format: 'MM/DD/YYYY h:mm A'
-        //                }
-        //            });
-        //
-        //        });
+
+
+        validate_reference($('.form_create_reference'));
+        validate_reference($('#form_edit_reference'));
+
+
+        validate_interest($('.form_create_interest'));
+        validate_interest($('#form_edit_interest'));
+
+
         $('a#icon_toggle').on('click', function (e) {
 
             if ($(this).attr('aria-expanded') == 'false') {
@@ -367,11 +317,11 @@
             e.preventDefault();
             var dom = $(this).parent().parent().parent().parent().children().eq(1);
 
-            $('form#form_edit_experience input[name=reference_id]').val(dom.siblings('input[name=hidden_interest_name]').val());
-            $('form#form_edit_experience input[name=name]').val((dom.find('.name').text()).trim());
-            $('form#form_edit_experience input[name=position]').val((dom.find('.position').text()).trim());
-            $('form#form_edit_experience input[name=phone]').val((dom.find('.phone').text()).trim());
-            $('form#form_edit_experience input[name=email]').val((dom.find('.email').text()).trim());
+            $('form#form_edit_reference input[name=reference_id]').val(dom.siblings('input[name=hidden_interest_name]').val());
+            $('form#form_edit_reference input[name=name]').val((dom.find('.name').text()).trim());
+            $('form#form_edit_reference input[name=position]').val((dom.find('.position').text()).trim());
+            $('form#form_edit_reference input[name=phone]').val((dom.find('.phone').text()).trim());
+            $('form#form_edit_reference input[name=email]').val((dom.find('.email').text()).trim());
 
         })
 

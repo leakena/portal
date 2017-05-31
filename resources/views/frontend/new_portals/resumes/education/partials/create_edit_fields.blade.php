@@ -91,10 +91,10 @@
 
     <div class="row no-padding switcher">
         <input type="hidden" name="is_present"
-               value="{{ isset($experience)?$experience->is_present:'0' }}">
+               value="0">
         <div class="input-group pull-right">
             <label class="switch">
-                <input type="checkbox" class="slider_update">
+                <input type="checkbox" name="slider_date" class="slider_update">
                 <div class="slider round"></div>
             </label>
         </div>

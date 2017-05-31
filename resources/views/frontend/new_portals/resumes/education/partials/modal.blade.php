@@ -38,7 +38,7 @@
             <div class="modal-body">
 
                 <form action="{{ route('frontend.resume.store_education') }}" method="post"
-                      enctype="multipart/form-data" class="sky-form form-horizontal form_create_ecducation " id="form_edit_education"
+                      enctype="multipart/form-data" class="sky-form form-horizontal " id="form_edit_education"
                       novalidate="novalidate">
                     <fieldset>
                         @include('frontend.new_portals.resumes.education.partials.create_edit_fields')
