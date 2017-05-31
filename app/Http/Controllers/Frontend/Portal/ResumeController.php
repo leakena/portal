@@ -1238,7 +1238,6 @@ class ResumeController extends Controller
      */
     public function saveReference(Request $request)
     {
-
         if (isset($request->resume_uid)) {
 
             $userResume = $this->getUserResume(auth()->id());
@@ -1280,26 +1279,46 @@ class ResumeController extends Controller
 
         } else {
 
-            /*-- This user has no resume id so need to create resume first--*/
-            $resume = new Resume();
-            $resume->career_profile = null;
-            $resume->user_uid = auth()->id();
-            if ($resume->save()) {
-                /*-- Create new reference --*/
-                $newReference = new Reference();
-                // Set value into each field
-                $newReference->resume_uid = $resume->id;
-                $newReference->name = $request->name;
-                $newReference->position = $request->position;
-                $newReference->phone = $request->phone;
-                $newReference->email = $request->email;
-                // Save new reference
+            if (isset($request->reference_id)) {
+                /*-- Update reference --*/
 
-                if ($newReference->save()) {
-                    return redirect()->route('frontend.portal.resume.reference');
+                DB::table('references')
+                    ->where([
+                        ['id', '=', $request->reference_id]
+                    ])
+                    ->update([
+                        'name' => $request->name,
+                        'position' => $request->position,
+                        'phone' => $request->phone,
+                        'email' => $request->email
+                    ]);
+                return redirect()->route('frontend.portal.resume.reference');
+            } else {
+
+                /*-- This user has no resume id so need to create resume first--*/
+                $resume = new Resume();
+                $resume->career_profile = null;
+                $resume->user_uid = auth()->id();
+                if ($resume->save()) {
+                    /*-- Create new reference --*/
+                    $newReference = new Reference();
+                    // Set value into each field
+                    $newReference->resume_uid = $resume->id;
+                    $newReference->name = $request->name;
+                    $newReference->position = $request->position;
+                    $newReference->phone = $request->phone;
+                    $newReference->email = $request->email;
+                    // Save new reference
+
+                    if ($newReference->save()) {
+                        return redirect()->route('frontend.portal.resume.reference');
+                    }
+
                 }
 
             }
+
+
         }
 
 
