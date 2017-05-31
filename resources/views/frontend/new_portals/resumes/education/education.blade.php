@@ -87,13 +87,47 @@
         .slider.round:before {
             border-radius: 50%;
         }
+
+
+        .input-group {
+            position: relative;
+            display: table;
+            border-collapse: separate;
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            height: 34px;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .input-group-addon, .input-group-btn {
+            width: 1%;
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+
+        .sky-form .icon-append {
+            right: 17px;
+            padding: 1px 3px;
+            min-width: 34px;
+        }
+
     </style>
 @endsection
 @section('content')
 
     <div class="profile-bio margin-bottom-30">
         <form action="{{ route('frontend.resume.store_education') }}" method="post" enctype="multipart/form-data"
-              id="sky-form1" class="sky-form" novalidate="novalidate">
+               class="sky-form form-horizontal form_create_ecducation" novalidate="novalidate">
             <header><a style="position: sticky;" class="accordion-toggle collapsed pull-right" id="icon_toggle"
                        href="#id_form" data-toggle="collapse" aria-expanded="false"> <i class="fa fa-plus-square"
                                                                                         id="add"> </i> </a> Create Your
@@ -166,11 +200,12 @@
 
 
         $('input[name="start_date"]').datepicker({
-            format: 'yyyy-mm-d'
+            format: 'dd-mm-yyyy',
+            useCurrent: false
         });
 
         $('input[name="end_date"]').datepicker({
-            format: 'yyyy-mm-d'
+            format: 'dd-mm-yyyy'
         });
 
         $('a#icon_toggle').on('click', function (e) {
@@ -185,27 +220,12 @@
         $(document).on('click', '.btn_edit_education', function (e) {
             //e.preventDefault();
             var dom = $(this).parent().parent().parent().parent().children().eq(1);
-            $.ajax({
-                type: 'GET',
-                url: '{{ route('frontend.portal.resume.get_degree') }}',
-                success: function (result) {
-                    var degree = '';
-                    $.each(result.degrees, function (key, val) {
+            var selectedDegreeId = dom.find('input[name=hidden_degree_id]').val();
 
-
-                        if (val.name == dom.find('.degree').text().trim()) {
-                            degree += '<option value="' + val.id + '" data-mab="test" selected>' + val.name + '</option>';
-                        }
-                        else {
-                            degree += '<option value="' + val.id + '" data-mab="test">' + val.name + '</option>';
-                        }
-
-                    });
-
-                    $('select[name=degree]').html(degree);
-                    console.log(degree)
+            $('form#form_edit_education select[name=degree] option').each(function (key, option) {
+                if($(option).attr('value') == selectedDegreeId ) {
+                    $(this).prop('selected', true);
                 }
-
             });
 
             $('form#form_edit_education input[name=education_id]').val(dom.find('.education_id').val());
@@ -220,27 +240,44 @@
 
                 $('form#form_edit_education input[class=slider_update]').prop({'checked': false});
                 $('form#form_edit_education input[name=end_date]').val(dom.find('.end').val()).datepicker({
-                    format: 'yyyy-mm-d'
+                    format: 'dd-mm-yyyy'
                 });
             }
-
-            $('form#form_edit_education option[name=degree_id]').text(dom.find('.degree').text());
 
         });
 
         $('.slider_update').on('change', function () {
-            if ($(this).is(':checked')) {
 
-                $(this).parent('label').parent('div').parent('section').siblings('section.find_end_date').find('input[name=end_date]').val('Present').datepicker('destroy');
+
+
+
+            if ($(this).is(':checked')) {
+                $('.form_create_ecducation').formValidation('enableFieldValidators', 'end_date', false, 'date');
+                $('.form_create_ecducation').formValidation('revalidateField', 'start_date');
+
+                /*$(this).parent('label').parent('div').parent('section').siblings('section.find_end_date').find('input[name=end_date]').val('Present').datepicker('destroy');
                 $(this).parent('label').parent('div').parent('section').siblings('section.find_end_date').find('input[name=end_date]').prop('readonly', true);
+                $(this).parent('label').parent('div').siblings('input[name=is_present]').val('1');*/
+
+
+                $(this).parent('label').parent('div').parent('div').siblings('div.date').children('div').children('div.div_end_date').find('input[name=end_date]').prop('readonly', true);
+                $(this).parent('label').parent('div').parent('div').siblings('div.date').children('div').children('div.div_end_date').find('input[name=end_date]').val('Present').datepicker('destroy');
                 $(this).parent('label').parent('div').siblings('input[name=is_present]').val('1');
 
             } else {
+                $('.form_create_ecducation').formValidation('revalidateField', 'end_date');
+                $('.form_create_ecducation').formValidation('revalidateField', 'start_date');
 
-                $(this).parent('label').parent('div').parent('section').siblings('section.find_end_date').find('input[name=end_date]').datepicker({
+               /* $(this).parent('label').parent('div').parent('section').siblings('section.find_end_date').find('input[name=end_date]').datepicker({
                     format: 'yyyy-mm-d'
                 });
                 $(this).parent('label').parent('div').parent('section').siblings('section.find_end_date').find('input[name=end_date]').val('');
+                $(this).parent('label').parent('div').siblings('input[name=is_present]').val('0');*/
+
+
+                $(this).parent('label').parent('div').parent('div').siblings('div.date').children('div').children('div.div_end_date').find('input[name=end_date]').prop('readonly', false).val('').datepicker({
+                    format: 'dd-mm-yyyy'
+                });
                 $(this).parent('label').parent('div').siblings('input[name=is_present]').val('0');
 
             }
@@ -294,6 +331,106 @@
                         swal("Cancelled", "Your experience is safe :)", "error");
                     }
                 });
+        });
+
+
+
+        $('.form_create_ecducation').formValidation({
+            framework: 'bootstrap',
+            icon: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                school: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please add your Position!'
+                        },
+                        stringLength: {
+                            min: 3,
+                            max: 100,
+                            message: 'The school name must be more than 3 and less than 100 characters long'
+                        }
+                    }
+                },
+
+                degree: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please select your degree !'
+                        }
+                    }
+                },
+
+                address: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please input your school Address!'
+                        },
+                        stringLength: {
+                            min: 5,
+                            max: 100,
+                            message: 'Your address must be between 5 to 100 character'
+                        }
+                    }
+                },
+
+                start_date: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The start date is required'
+                        },
+                        date: {
+                            format: 'DD-MM-YYYY',
+                            max: 'end_date',
+                            message: 'The start date is not a valid'
+                        }
+                    }
+                },
+                end_date: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The end date is required'
+                        },
+                        date: {
+                            format: 'DD-MM-YYYY',
+                            min: 'start_date',
+                            message: 'The end date is not a valid'
+                        }
+                    }
+                },
+
+                major: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please add your major or skill!'
+                        },
+                        stringLength: {
+                            min: 5,
+                            max: 50,
+                            message: 'Your Description must be between 5 to 50 character'
+                        }
+                    }
+                }
+            }
+        }).on('changeDate', '[name=start_date]', function() {
+
+            var check = $(this).parent().parent().parent().siblings('div.switcher').find('input[name=is_present]').val();
+            if(check == 1) {
+                /*---disabled validation date ---*/
+                $('.form_create_ecducation').formValidation('enableFieldValidators', 'end_date', false, 'date');
+            } else {
+
+                /*---revalidate the end date ---*/
+                $('.form_create_ecducation').formValidation('revalidateField', 'start_date');
+                $('.form_create_ecducation').formValidation('revalidateField', 'end_date');
+            }
+        }).on('changeDate', '[name=end_date]', function() {
+
+            $('.form_create_ecducation').formValidation('revalidateField', 'start_date');
+            $('.form_create_ecducation').formValidation('revalidateField', 'end_date');
         });
 
     </script>

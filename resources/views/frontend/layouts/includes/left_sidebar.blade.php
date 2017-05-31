@@ -51,20 +51,20 @@
                 </li>
                 <li class="{{ ActiveManager::isActiveRoute('frontend.portal.resume.skill') }}">
                     {{--<span class="badge badge-u">New</span>--}}
-                    <a href="{{route('frontend.portal.resume.skill')}}"><i class="fa fa-snowflake-o"></i> Skill and Language </a>
+                    <a href="{{route('frontend.portal.resume.skill')}}"><i class="fa fa-snowflake-o"></i> Skill </a>
                 </li>
-                {{--<li class="{{ ActiveManager::isActiveRoute('frontend.portal.resume.language') }}">--}}
+                <li class="{{ ActiveManager::isActiveRoute('frontend.portal.resume.language') }}">
                     {{--<span class="badge badge-u">New</span>--}}
-                    {{--<a href="{{ route('frontend.portal.resume.language') }}"><i class="fa fa-flag"></i> Language </a>--}}
-                {{--</li>--}}
-                <li>
-                    {{--<span class="badge badge-u">New</span>--}}
+                    <a href="{{ route('frontend.portal.resume.language') }}"><i class="fa fa-flag"></i> Language </a>
+                </li>
+               {{-- <li>
+                    --}}{{--<span class="badge badge-u">New</span>--}}{{--
                     <a href="shortcode_form_layouts_advanced.html"><i class="fa fa-gratipay"></i> Interest </a>
-                </li>
+                </li>--}}
                 <li class="{{ ActiveManager::isActiveRoute('frontend.portal.resume.reference') }}">
                     {{--<span class="badge badge-u">New</span>--}}
                     <a href="{{ route('frontend.portal.resume.reference') }}"><i class="fa fa-external-link-square"></i>
-                        Reference </a>
+                        Reference & Interest </a>
                 </li>
 
             </ul>

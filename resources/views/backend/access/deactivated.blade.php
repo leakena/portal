@@ -46,10 +46,9 @@
 
 @section('after-scripts')
     {{ Html::script("js/backend/plugin/datatables/jquery.dataTables.min.js") }}
-    {{ Html::script("js/backend/plugin/datatables/dataTables.bootstrap.min.js") }}
+    {{ Html::script("bootstrap.min.js") }}
 
-    <script>
-        $(function() {
+    <sbootstrap_validation.min.js(function() {
             $('#users-table').DataTable({
                 processing: true,
                 serverSide: true,

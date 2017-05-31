@@ -4,62 +4,81 @@
 @endif
 <input type="hidden" name="experience_id" value="">
 <div class="row">
-    <section class="col col-6">
-        <label class="input">
-            <i class="icon-append fa fa-user green"></i>
-            <input type="text" name="position" placeholder="Position">
-        </label>
-    </section>
-    <section class="col col-6">
-        <label class="input">
-            <i class="icon-append fa fa-briefcase green"></i>
-            <input type="text" name="company" placeholder="Company">
-        </label>
-    </section>
+
+    <div class="form-group">
+
+        {!! Form::label('position', 'Position', ['class' => 'col-md-1 control-label required']) !!}
+        <div class="col-md-5 mail_input_form">
+            {!! Form::input('text', 'position', null, ['class' => 'form-control ', 'placeholder' => 'Position', 'id' => 'position', 'required']) !!}
+        </div><!--col-md-6-->
+
+        {!! Form::label('company', 'Company', ['class' => 'col-md-1 control-label required']) !!}
+        <div class="col-md-5 ">
+            {!! Form::input('text', 'company', null, ['class' => 'form-control ', 'placeholder' => 'Company', 'id' => 'company', 'required']) !!}
+        </div><!--col-md-6-->
+
+    </div><!--form-group-->
+
 </div>
 
 <div class="row">
-    <section class=" col-md-12">
-        <label class="input">
-            <i class="icon-append fa fa-map-marker green"></i>
-            <input type="text" name="address" placeholder="Company Address">
+
+    <div class="form-group">
+
+        {!! Form::label('address', 'Address', ['class' => 'col-md-1 control-label required']) !!}
+        <div class="col-md-11 ">
+            {!! Form::input('text', 'address', null, ['class' => 'form-control ', 'placeholder' => 'Address', 'id' => 'address', 'required']) !!}
+        </div><!--col-md-6-->
+    </div><!--form-group-->
+
+</div>
+
+<div class="row date">
+
+    <div class="form-group">
+
+        {!! Form::label('start_date', 'Start Date', ['class' => 'col-md-1 control-label required input']) !!}
+        <div class="col-md-5 div_start_date  ">
+            {{--<i class="icon-append fa fa-calendar green"></i>--}}
+            {!! Form::input('text', 'start_date', null, ['class' => 'form-control  ', 'placeholder' => 'StartDate', 'id' => 'start_date', 'required']) !!}
+        </div><!--col-md-6-->
+
+
+        {!! Form::label('end_date', 'End Date', ['class' => 'col-md-1 control-label input']) !!}
+        <div class="col-md-5 div_end_date ">
+           {{-- <i class="icon-append fa fa-calendar green"></i>--}}
+            {!! Form::input('text', 'end_date', null, ['class' => 'form-control  ', 'placeholder' => 'EndDate', 'id' => 'end_date']) !!}
+        </div><!--col-md-6-->
+
+    </div><!--form-group-->
+
+</div>
+
+<div class="row no-padding switcher">
+    <input type="hidden" name="is_present"
+           value="0">
+    <div class="input-group pull-right">
+        <label class="switch">
+            <input type="checkbox" name="slider_date" class="slider_update">
+            <div class="slider round"></div>
         </label>
-    </section>
+    </div>
+
 </div>
 
 <div class="row">
-    <section class="col col-5">
-        <label class="input">
-            <i class="icon-append fa fa-calendar green"></i>
-            <input type="text" name="start_date" placeholder="Start Date"/>
-        </label>
-    </section>
-    <section class="col col-5 find_end_date">
-        <label class="input">
-            <i class="icon-append fa fa-calendar green"></i>
-            <input type="text" name="end_date" placeholder="End Date"/>
-        </label>
-    </section>
 
-    <section class="col col-2 ">
-        <input type="hidden" name="is_present"
-               value="{{ isset($experience)?$experience->is_present:'0' }}">
-        <div class="input-group">
-            <label class="switch">
-                <input type="checkbox" class="slider_update">
-                <div class="slider round"></div>
-            </label>
+    <div class="form-group">
+
+        <div class="col-md-12">
+            {{--<i class="icon-append fa fa-comment green"></i>--}}
+            <textarea rows="5" class="form-control" name="description" placeholder="Your Description"></textarea>
         </div>
-    </section>
-
-</div>
-
-<div class="row">
+    </div>
 
     <section class="col-md-12">
         <label class="textarea">
-            <i class="icon-append fa fa-comment green"></i>
-            <textarea rows="5" name="description" placeholder="Your Description"></textarea>
+
         </label>
     </section>
 </div>

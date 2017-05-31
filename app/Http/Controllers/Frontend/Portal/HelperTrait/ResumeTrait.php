@@ -101,11 +101,13 @@ trait ResumeTrait
 
         if ($userResume) {
             $references = DB::table('references')->where('resume_uid', $userResume->id)->get();
+            $interests = DB::table('interests')->where('resume_uid', $userResume->id)->get();
         } else {
             $references = null;
+            $interests = null;
         }
 
-        return view('frontend.new_portals.resumes.reference.reference', compact('userResume', 'references'));
+        return view('frontend.new_portals.resumes.reference.reference', compact('userResume', 'references', 'interests'));
     }
 
     /**

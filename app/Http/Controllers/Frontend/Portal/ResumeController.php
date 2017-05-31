@@ -24,6 +24,7 @@ use App\Models\Portal\Resume\Resume;
 use App\Models\Portal\Resume\Skill;
 use App\Repositories\Backend\PersonalInfo\PersonalInfoContract;
 use App\Utils\Http\Facades\ApiRequestManager;
+use App\Utils\Http\Facades\DateManager;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -251,7 +252,6 @@ class ResumeController extends Controller
      */
     public function saveExperience(StoreExperience $request)
     {
-
         if (isset($request->resume_uid)) {
 
             $userResume = $this->getUserResume(auth()->id());
@@ -265,7 +265,7 @@ class ResumeController extends Controller
                 if ($request->is_present == true) {
                     $end_date = Carbon::now();
                 } else {
-                    $end_date = $request->end_date;
+                    $end_date = DateManager::dbDate($request->end_date);
                 }
 
                 DB::table('experiences')
@@ -279,7 +279,7 @@ class ResumeController extends Controller
                         'description' => request('description'),
                         'address' => request('address'),
                         'is_present' => request('is_present'),
-                        'start_date' => request('start_date'),
+                        'start_date' => DateManager::dbDate($request->start_date),
                         'end_date' => $end_date
                     ]);
                 return redirect()->route('frontend.portal.resume.experience');
@@ -294,12 +294,12 @@ class ResumeController extends Controller
                 $newExperience->company = $request->company;
                 $newExperience->description = $request->description;
                 $newExperience->address = $request->address;
-                $newExperience->start_date = $request->start_date;
+                $newExperience->start_date = DateManager::dbDate($request->start_date);
                 $newExperience->is_present = $request->is_present;
                 if ($request->is_present == true) {
                     $newExperience->end_date = Carbon::now();
                 } else {
-                    $newExperience->end_date = $request->end_date;
+                    $newExperience->end_date = DateManager::dbDate($request->end_date);
                 }
 
                 if ($newExperience->save()) {
@@ -324,11 +324,11 @@ class ResumeController extends Controller
                 $newExperience->description = $request->description;
                 $newExperience->address = $request->address;
                 $newExperience->is_present = $request->is_present;
-                $newExperience->start_date = $request->start_date;
+                $newExperience->start_date = DateManager::dbDate($request->start_date);
                 if ($request->is_present == true) {
                     $newExperience->end_date = Carbon::now();
                 } else {
-                    $newExperience->end_date = $request->end_date;
+                    $newExperience->end_date = DateManager::dbDate($request->end_date);
                 }
 
                 $newExperience->save();
@@ -707,7 +707,7 @@ class ResumeController extends Controller
                 if ($request->is_present == true) {
                     $end_date = Carbon::now();
                 } else {
-                    $end_date = $request->end_date;
+                    $end_date = DateManager::dbDate($request->end_date);
                 }
 
                 DB::table('education')
@@ -721,7 +721,7 @@ class ResumeController extends Controller
                         'degree_id' => $request->degree,
                         'address' => $request->address,
                         'is_present' => $request->is_present,
-                        'start_date' => $request->start_date,
+                        'start_date' => DateManager::dbDate($request->start_date),
                         'end_date' => $end_date
                     ]);
                 return redirect()->route('frontend.portal.resume.education');
@@ -738,11 +738,11 @@ class ResumeController extends Controller
                 $newEducation->degree_id = $request->degree;
                 $newEducation->address = $request->address;
                 $newEducation->is_present = $request->is_present;
-                $newEducation->start_date = $request->start_date;
+                $newEducation->start_date = DateManager::dbDate($request->start_date);
                 if ($request->is_present == true) {
                     $newEducation->end_date = Carbon::now();
                 } else {
-                    $newEducation->end_date = $request->end_date;
+                    $newEducation->end_date = DateManager::dbDate($request->end_date);
                 }
 
                 // Save new education
@@ -769,11 +769,11 @@ class ResumeController extends Controller
                 $newEducation->degree_id = $request->degree;
                 $newEducation->address = $request->address;
                 $newEducation->is_present = $request->is_present;
-                $newEducation->start_date = $request->start_date;
+                $newEducation->start_date = DateManager::dbDate($request->start_date);
                 if ($request->is_present == true) {
                     $newEducation->end_date = Carbon::now();
                 } else {
-                    $newEducation->end_date = $request->end_date;
+                    $newEducation->end_date = DateManager::dbDate($request->end_date);
                 }
                 // Save new education
                 if ($newEducation->save()) {
@@ -1083,7 +1083,9 @@ class ResumeController extends Controller
                         'name' => request('name'),
                         'description' => request('description')
                     ]);
-                return redirect()->route('frontend.resume.get_interest');
+                /*return redirect()->route('frontend.resume.get_interest');*/
+
+                return redirect()->back()->with(['status' => 'Interest Created']);
             } else {
 
                 // Create a new interest
@@ -1094,7 +1096,9 @@ class ResumeController extends Controller
                 $newInterest->description = $request->description;
                 // Save new education
                 if ($newInterest->save()) {
-                    return redirect()->route('frontend.resume.get_interest');
+                   /* return redirect()->route('frontend.resume.get_interest');*/
+
+                    return redirect()->back()->with(['status' => 'Interest Created']);
                 }
             }
 
@@ -1113,7 +1117,9 @@ class ResumeController extends Controller
                 $newInterest->description = $request->description;
                 // Save new education
                 if ($newInterest->save()) {
-                    return redirect()->route('frontend.resume.get_interest');
+                    //return redirect()->route('frontend.resume.get_interest');
+
+                    return redirect()->back()->with(['status' => 'Interest Created']);
                 }
 
             }

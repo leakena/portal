@@ -87,18 +87,64 @@
         .slider.round:before {
             border-radius: 50%;
         }
+
+        .sky-form .icon-append {
+            right: 17px;
+            padding: 1px 3px;
+            min-width: 34px;
+        }
+
+        .input-group {
+            position: relative;
+            display: table;
+            border-collapse: separate;
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            height: 34px;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .input-group-addon, .input-group-btn {
+            width: 1%;
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+
+        .input-group .form-control, .input-group-addon, .input-group-btn {
+            display: table-cell;
+        }
+
+
+        textarea {
+            display: inline-block;
+            min-width: 100%;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
     </style>
 @endsection
 @section('content')
 
     <div class="profile-bio margin-bottom-30">
         <form action="{{ route('frontend.portal.resume.store_experience') }}" method="post"
-              enctype="multipart/form-data" class="sky-form form-horizontal form_create_experience"
-              novalidate="novalidate">
-            <header><a style="position: sticky;" class="accordion-toggle collapsed pull-right" id="icon_toggle"
-                       href="#id_form" data-toggle="collapse" aria-expanded="false"> <i class="fa fa-plus-square"
-                                                                                        id="add"> </i> </a> Create Your
-                Experiences
+              enctype="multipart/form-data" class="sky-form form-horizontal form_create_experience">
+            <header>
+                <a style="position: sticky;" class="accordion-toggle collapsed pull-right" id="icon_toggle"
+                       href="#id_form" data-toggle="collapse" aria-expanded="false">
+                    <i class="fa fa-plus-square" id="add"> </i>
+                </a>
+                Create Your Experiences
             </header>
             <div id="id_form" class="collapse " aria-expanded="false">
                 <fieldset>
@@ -140,31 +186,7 @@
 
 
     <script type="text/javascript">
-        //        $(function() {
-        //            $('input[name="daterange"]').daterangepicker({
-        //
-        //                beforeShow: function( input ) {
-        //                    setTimeout(function() {
-        //                        var headerPane = $( input )
-        //                                .datepicker( "widget" )
-        //                                .find( ".ui-datepicker-header" );
-        //
-        //                        $( "<button>", {
-        //                            text: "Close",
-        //                            click: function() {
-        //                                $.datepicker.hide();
-        //                            }
-        //                        }).appendTo( headerPane );
-        //                    }, 1 );
-        //                },
-        //                timePicker: true,
-        //                timePickerIncrement: 30,
-        //                locale: {
-        //                    format: 'MM/DD/YYYY h:mm A'
-        //                }
-        //            });
-        //
-        //        });
+
         $('a#icon_toggle').on('click', function (e) {
 
             if ($(this).attr('aria-expanded') == 'false') {
@@ -175,15 +197,12 @@
         });
 
         $('input[name="start_date"]').datepicker({
-            format: 'yyyy-mm-d'
+            format: 'dd-mm-yyyy'
         });
 
         $('input[name="end_date"]').datepicker({
-            format: 'yyyy-mm-d'
+            format: 'dd-mm-yyyy'
         });
-
-
-        $(this);
 
         $(document).on('click', '.btn_edit_experience', function (e) {
             e.preventDefault();
@@ -197,14 +216,15 @@
             $('form#form_edit_experience input[name=start_date]').val(dom.find('.start').val());
             if (dom.find('.is_present').val() == true) {
                 $('form#form_edit_experience input[class=slider_update]').prop({'checked': true});
+                $('form#form_edit_experience input[name=is_present]').val(1);
                 $('form#form_edit_experience input[name=end_date]').val('Present').datepicker('destroy').prop('readonly', true);
             } else {
 
                 $('form#form_edit_experience input[class=slider_update]').prop({'checked': false});
                 $('form#form_edit_experience input[name=end_date]').val(dom.find('.end').val()).datepicker({
-                    format: 'yyyy-mm-d'
+                    format: 'dd-mm-yyyy'
                 });
-                ;
+                $('form#form_edit_experience input[name=is_present]').val(0);
             }
 
             $('form#form_edit_experience textarea[name=description]').val((dom.find('.description').text()).trim());
@@ -213,19 +233,19 @@
         })
 
         $('.slider_update').on('change', function () {
+
             if ($(this).is(':checked')) {
 
-                $(this).parent('label').parent('div').parent('section').siblings('section.find_end_date').find('input[name=end_date]').val('Present').datepicker('destroy');
-                $(this).parent('label').parent('div').parent('section').siblings('section.find_end_date').find('input[name=end_date]').prop('readonly', true);
-                $(this).parent('label').parent('div').siblings('input[name=is_present]').val('1');
+                $(this).parent('label').parent('div').parent('div').siblings('div.date').children('div').children('div.div_end_date').find('input[name=end_date]').prop('readonly', true);
+                $(this).parent('label').parent('div').parent('div').siblings('div.date').children('div').children('div.div_end_date').find('input[name=end_date]').val('Present').datepicker('destroy');
+                $(this).parent('label').parent('div').siblings('input[name=is_present]').val(1);
 
             } else {
 
-                $(this).parent('label').parent('div').parent('section').siblings('section.find_end_date').find('input[name=end_date]').datepicker({
-                    format: 'yyyy-mm-d'
+                $(this).parent('label').parent('div').parent('div').siblings('div.date').children('div').children('div.div_end_date').find('input[name=end_date]').prop('readonly', false).val('').datepicker({
+                    format: 'dd-mm-yyyy'
                 });
-                $(this).parent('label').parent('div').parent('section').siblings('section.find_end_date').find('input[name=end_date]').val('');
-                $(this).parent('label').parent('div').siblings('input[name=is_present]').val('0');
+                $(this).parent('label').parent('div').siblings('input[name=is_present]').val(0);
 
             }
 
@@ -280,6 +300,168 @@
                     }
                 });
         });
+
+        validate_experience($('.form_create_experience'));
+        validate_experience($('#form_edit_experience'));
+
+        function validate_experience(object) {
+
+            object.formValidation({
+                framework: 'bootstrap',
+                icon: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    position: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Please add your Position!'
+                            },
+                            stringLength: {
+                                min: 3,
+                                max: 15,
+                                message: 'The position must be more than 3 and less than 15 characters long'
+                            }
+                        }
+                    },
+
+                    company: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Please input your company name!'
+                            }
+                        }
+                    },
+                    address: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Please input your Address!'
+                            },
+                            stringLength: {
+                                min: 3,
+                                max: 100,
+                                message: 'The address must be more than 3 and less than 100 characters long'
+                            }
+                        }
+                    },
+
+                    start_date: {
+                        validators: {
+                            notEmpty: {
+                                message: 'The start date is required'
+                            },
+                            date: {
+                                format: 'DD-MM-YYYY',
+                                message: 'The start date is not a valid'
+                            },
+                            callback: {
+                                message: 'The start date must be earlier then the Present',
+                                callback: function(value, validator, $field) {
+
+                                    var get_today = new Date();
+                                    var selectedDate = validator.getFieldElements('start_date').val();
+                                    var split  = selectedDate.split('-');
+                                    var new_selecteddate = new Date(split[2], split[1] - 1, split[0]);
+                                    if(new_selecteddate.getTime() > get_today.getTime()) {
+                                        return false;
+                                    } else {
+                                        validator.updateStatus('end_date', validator.STATUS_VALID, 'callback');
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    },
+
+                    end_date: {
+                        validators: {
+                            enable: true,
+                            notEmpty: {
+                                message: 'The end date is required'
+                            },
+                            date: {
+                                format: 'DD-MM-YYYY',
+                                min:'start_date',
+                                message: 'The start date is not a valid'
+                            }
+
+                        }
+                    },
+
+                    description: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Please add your description!'
+                            },
+                            stringLength: {
+                                min: 10,
+                                max: 200,
+                                message: 'Your Description must be between 10 to 200 character'
+                            }
+                        }
+                    }
+                }
+            }).on('change', '[name=start_date]', function(e, data) {
+
+                var check = $('input[name=is_present]').val();
+                if(check == 1) {
+                    object.formValidation('revalidateField', 'start_date');
+
+                } else {
+
+                    object.formValidation('enableFieldValidators', 'start_date', true)
+                            .formValidation('enableFieldValidators', 'end_date', true);
+                    object.formValidation('revalidateField', 'start_date')
+                            .formValidation('revalidateField', 'end_date');
+
+                }
+
+            }).on('change', '[name=end_date]', function(e, data) {
+
+                var check = $('input[name=is_present]').val();
+                if(check == 1) {
+
+                } else {
+
+                    object.formValidation('enableFieldValidators', 'end_date', true)
+                            .formValidation('revalidateField', 'start_date')
+                            .formValidation('revalidateField', 'end_date');
+
+                }
+
+            }).on('change', '[name="slider_date"]', function(e) {
+
+                var end_date = object.find('input[name="end_date"]').val(),
+                        start_date = object.find('input[name="start_date"]').val(),
+                        fv         = object.data('formValidation');
+
+                if($(this).is(':checked')) {
+                    fv.enableFieldValidators('end_date', false);
+                    fv.revalidateField('start_date');
+                } else {
+                    fv.enableFieldValidators('end_date', true).revalidateField('end_date');
+                }
+            }).on('submit', function (e) {
+
+                var end_date = $(this).find('input[name="end_date"]').val(),
+                        start_date = $(this).find('input[name="start_date"]').val(),
+                        fv         = $(this).data('formValidation');
+
+                if($(this).find('input[name=slider_date] :checked')) {
+                    fv.enableFieldValidators('end_date', false);
+                    fv.revalidateField('start_date');
+
+                } else {
+                    fv.enableFieldValidators('end_date', true).revalidateField('end_date');
+                }
+
+                return true ;
+            })
+        }
+
+
 
     </script>
 @endsection

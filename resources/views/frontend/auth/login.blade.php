@@ -14,7 +14,7 @@
             <p> Sign up with your Identification and birth date as password!</p>
         </div>
 
-        {{ Form::open(['route' => 'frontend.auth.login', 'class' => 'form-horizontal']) }}
+        {{ Form::open(['route' => 'frontend.auth.login', 'id'=> 'login_form' ,'class' => 'form-horizontal ']) }}
 
             <div class="input-group margin-bottom-20">
                 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
@@ -45,5 +45,18 @@
             </div>
         {{ Form::close() }}
     </div>
+
+@endsection
+
+
+@section('after-script-end')
+
+    <script>
+
+
+    </script>
+
+
+
 
 @endsection

@@ -22,20 +22,20 @@
     @if($experience->is_present == true)
         <dt><strong><img src="{{asset('portals/icons/calendar.png')}}" alt=""> </strong></dt>
         <dd class="date">
-            {{ $experience->start_date }} <span class="glyphicon glyphicon-random" style="color: green;"></span> Present
+            {{ DateManager::viewDate($experience->start_date) }} <span class="glyphicon glyphicon-random" style="color: green;"></span> Present
 
-            <input type="hidden" name="hidden_start_date" class="start" value="{{ $experience->start_date }}">
-            <input type="hidden" name="hidden_end_date" class="end" value="{{ $experience->end_date }}">
+            <input type="hidden" name="hidden_start_date" class="start" value="{{ DateManager::viewDate($experience->start_date) }}">
+            <input type="hidden" name="hidden_end_date" class="end" value="{{ DateManager::viewDate($experience->end_date) }}">
             <input type="hidden" name="hidden_is_present" class="is_present" value="{{ $experience->is_present }}">
         </dd>
     @else
         <dt><strong><img src="{{asset('portals/icons/calendar.png')}}" alt=""> </strong></dt>
         <dd class="date">
-            {{ $experience->start_date }} <span class="glyphicon glyphicon-random"
-                                                style="color: green;"></span> {{ $experience->end_date }}
+            {{ DateManager::viewDate($experience->start_date) }} <span class="glyphicon glyphicon-random"
+                                                style="color: green;"> </span> {{ DateManager::viewDate($experience->end_date) }}
 
-            <input type="hidden" name="hidden_start_date" class="start" value="{{ $experience->start_date }}">
-            <input type="hidden" name="hidden_end_date" class="end" value="{{ $experience->end_date }}">
+            <input type="hidden" name="hidden_start_date" class="start" value="{{ DateManager::viewDate($experience->start_date) }}">
+            <input type="hidden" name="hidden_end_date" class="end" value="{{ DateManager::viewDate($experience->end_date) }}">
         </dd>
     @endif
     <hr>

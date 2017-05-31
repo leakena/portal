@@ -1,8 +1,17 @@
 <!-- JS Global Compulsory -->
 
+
+
 {!! Html::script('portals/assets/plugins/jquery/jquery.min.js') !!}
+
+
+{!! Html::script('bower_components/form.validation/dist/js/formValidation.min.js') !!}
+{!! Html::script('bower_components/form.validation/dist/js/framework/bootstrap_.min.js') !!}
+
 {!! Html::script('portals/assets/plugins/bootstrap/js/bootstrap.min.js') !!}
+
 {!! Html::script('portals/assets/plugins/jquery/jquery-migrate.min.js') !!}
+
 
 <!-- JS Implementing Plugins -->
 
@@ -25,6 +34,12 @@
 {!! Html::script('bower_components/bootstrap-sweetalert/dist/sweetalert.js') !!}
 {!! Html::script('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') !!}
 {!! Html::script('bower_components/select2/dist/js/select2.js') !!}
+
+
+
+
+
+
 
 
 <script type="text/javascript">

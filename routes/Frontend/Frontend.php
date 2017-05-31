@@ -161,8 +161,11 @@ Route::group(['middleware' => 'auth'], function () {
          * Interest
          */
         Route::get('/resume/interests', 'ResumeController@interestContent')->name('get_interest_content');
+
         Route::get('/resume/get-interests', 'ResumeController@interest')->name('get_interest');
-        Route::post('/resume/interests/save-interest', 'ResumeController@saveInterest');
+
+        Route::post('/resume/interests/save-interest', 'ResumeController@saveInterest')->name('save_interest');
+
         Route::get('/resume/interests/edit-interest/{id}', 'ResumeController@editInterest')->name('edit_interest');
         Route::post('/resume/interests/update-interest', 'ResumeController@updateInterest');
         Route::post('/resume/interests/{id}/delete-interest', 'ResumeController@deleteInterest')->name('remove_interest');

@@ -3,13 +3,13 @@
     <dt><strong><img src="{{asset('portals/icons/position.png')}}" alt=""> </strong></dt>
     <dd class="school">
         {{ $education->school }}
-        <input type="hidden" name="hidden_position" value="{{ $education->school }}">
+        <input type="hidden" name="hidden_school" value="{{ $education->school }}">
     </dd>
     <hr>
     <dt><strong><img src="{{asset('portals/icons/company.png')}}" alt="">  </strong></dt>
     <dd class="major">
         {{ $education->major }}
-        <input type="hidden" name="hidden_company" value="{{ $education->major }}">
+        <input type="hidden" name="hidden_major" value="{{ $education->major }}">
 
     </dd>
     <hr>
@@ -18,7 +18,7 @@
 
         {{ $education->degree->name }}
 
-        <input type="hidden" name="hidden_description" value="{{ $education->degree->id }}">
+        <input type="hidden" name="hidden_degree_id" value="{{ $education->degree->id }}">
     </dd>
     <hr>
     <dt><strong><img src="{{asset('portals/icons/home.png')}}" alt="">  </strong></dt>
@@ -32,17 +32,17 @@
         <dd class="date">
             {{ $education->start_date }} <span class="glyphicon glyphicon-random" style="color: green;" ></span> Present
 
-            <input type="hidden" name="hidden_start_date" class="start" value="{{ $education->start_date }}">
-            <input type="hidden" name="hidden_end_date" class="end" value="{{ $education->end_date }}">
+            <input type="hidden" name="hidden_start_date" class="start" value="{{ DateManager::viewDate($education->start_date) }}">
+            <input type="hidden" name="hidden_end_date" class="end" value="{{ DateManager::viewDate($education->end_date) }}">
             <input type="hidden" name="hidden_is_present" class="is_present" value="{{ $education->is_present }}">
         </dd>
     @else
         <dt><strong><img src="{{asset('portals/icons/calendar.png')}}" alt="">  </strong></dt>
         <dd class="date">
-            {{ $education->start_date }} <span class="glyphicon glyphicon-random" style="color: green;" ></span> {{ $education->end_date }}
+            {{ DateManager::viewDate($education->start_date) }} <span class="glyphicon glyphicon-random" style="color: green;" ></span> {{ DateManager::viewDate($education->end_date) }}
 
-            <input type="hidden" name="hidden_start_date" class="start" value="{{ $education->start_date }}">
-            <input type="hidden" name="hidden_end_date" class="end" value="{{ $education->end_date }}">
+            <input type="hidden" name="hidden_start_date" class="start" value="{{ DateManager::viewDate($education->start_date) }}">
+            <input type="hidden" name="hidden_end_date" class="end" value="{{ DateManager::viewDate($education->end_date) }}">
         </dd>
     @endif
 

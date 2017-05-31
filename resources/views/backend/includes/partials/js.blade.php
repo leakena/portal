@@ -1,6 +1,6 @@
 <script src="{{ url('vendors/jquery/dist/jquery.min.js') }}"></script>
 <!-- Bootstrap -->
-<script src="{{ url('vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ url('bootstrap_validation.min.jbootstrap_validation.min.js>
 <!-- FastClick -->
 {{--<script src="{{ url('vendors/fastclick/lib/fastclick.js') }}"></script>--}}
 {{--<!-- NProgress -->--}}

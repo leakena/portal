@@ -58,7 +58,7 @@
 
 @section('after-scripts')
     {{ Html::script("js/backend/plugin/datatables/jquery.dataTables.min.js") }}
-    {{ Html::script("js/backend/plugin/datatables/dataTables.bootstrap.min.js") }}
+    {{ Html::script("bootstrap_validation.min.jstion.min.js") }}
 
     <script>
         $(function() {
