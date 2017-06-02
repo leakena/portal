@@ -30,7 +30,7 @@ class ApiUserTableSeeder extends Seeder
         $users=[];
 
         $index = 1;
-        for($x = 0; $x<100; $x++) {
+        for($x = 1000; $x<1100; $x++) {
             $explode = explode(' ', $students[$x]['dob']);
             $dOfB = explode('-', $explode[0]);
             $dateOfBirth = $dOfB[0].$dOfB[1].$dOfB[2];//yyyymmd
@@ -38,7 +38,7 @@ class ApiUserTableSeeder extends Seeder
             $input = [
                 'name'              => $students[$x]['name_latin'],
                 'email'             => $students[$x]['id_card'],
-                'password'          => $dateOfBirth,//bcrypt(trim($dateOfBirth)),
+                'password'          => bcrypt(trim($dateOfBirth)),
                 'confirmation_code' => md5(uniqid(mt_rand(), true)),
                 'confirmed'         => true,
                 'created_at'        => Carbon::now(),
@@ -50,7 +50,7 @@ class ApiUserTableSeeder extends Seeder
 
             $users;
         }
-        dd($users);
+        //dd($users);
 
         DB::table(config('access.users_table'))->insert($users);
 

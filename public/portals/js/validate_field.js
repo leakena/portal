@@ -290,6 +290,70 @@ function validate_language(object) {
                 }
             }
         }
-    })
+    });
+}
 
+function validate_personal_info(object) {
+    object.formValidation({
+        framework: 'bootstrap',
+        icon: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            status_id: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please choose your marital status !'
+                    }
+                }
+            },
+            birth_place: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please add your place of birth !'
+                    }
+                }
+            },
+            job: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please add your job !'
+                    }
+                }
+            },
+            phone: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please add your phone number !'
+                    },
+                    regexp: {
+                        regexp: '^\([0-9])',
+                        message: 'The value is not a valid phone number'
+
+                    }
+                }
+            },
+            address: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please add your address !'
+                    },
+                }
+            },
+            email: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please add your email !'
+                    },
+                    regexp: {
+                        regexp: '^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$',
+                        message: 'The value is not a valid email address'
+                    }
+                }
+            }
+
+        }
+    });
 }

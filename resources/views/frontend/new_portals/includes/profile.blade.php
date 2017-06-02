@@ -26,7 +26,7 @@
 
                 <div class="col-md-7">
                     <h2>{{$authUser->name}}</h2>
-                    <span><strong>Job:</strong> {{ $profile->job }} </span>
+                    <span><strong>Job:</strong> {{ isset($profile)?$profile->job:'' }} </span>
                     <hr>
                     {!! isset($resume)?$resume->career_profile: ''  !!}
                 </div>

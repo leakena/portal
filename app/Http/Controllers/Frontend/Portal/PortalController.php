@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Frontend\Portal\HelperTrait\PortalMenuTrait;
+use App\Utils\Http\Facades\ApiRequestManager;
 
 
 class PortalController extends Controller
@@ -28,12 +29,14 @@ class PortalController extends Controller
     protected $studentPrefix;
     protected $controller;
     protected $users;
+    protected $requestManager;
 
     use PortalMenuTrait;
 
-    public function __construct(Controller $cont, UserContract $userRepo)
+    public function __construct(Controller $cont, UserContract $userRepo, ApiRequestManager $apiRequestManager)
     {
         $this->middleware('auth');
+        $this->requestManager = $apiRequestManager;
         $this->studentPrefix = '/api/student';
         $this->academic = '/api/academic-year';
         $this->controller = $cont;
@@ -48,6 +51,10 @@ class PortalController extends Controller
 
     public function index(Request $request)
     {
+//        $studentData = $this->controller->getElementByApi($this->studentPrefix . '/program', ['student_id_card', 'academic_year_id'], ['e20150415', ''], []);
+//        dd($studentData);
+
+
         return view('frontend.new_portals.index');
 
     }

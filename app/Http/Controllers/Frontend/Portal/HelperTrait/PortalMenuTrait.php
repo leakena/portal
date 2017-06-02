@@ -29,9 +29,16 @@ trait PortalMenuTrait
      */
     public function profile(Request $request)
     {
+        $user = auth()->user();
+        $student = $this->requestManager->getElementsFromApi($this->studentPrefix . '/prop', ['student_id_card'], [$user->email], []);
         $resume = $this->getUserResume(auth()->id());
-        $profile = PersonalInfo::where('resume_uid', $resume->id)->first();
-        return view('frontend.new_portals.includes.profile', compact('resume', 'profile'));
+        if ($resume){
+            $profile = PersonalInfo::where('resume_uid', $resume->id)->first();
+        }else{
+            $profile = null;
+        }
+
+        return view('frontend.new_portals.includes.profile', compact('resume', 'profile', 'student'));
     }
 
 
@@ -41,6 +48,10 @@ trait PortalMenuTrait
      */
     public function classmate(Request $request)
     {
+        $user = auth()->user();
+        $resume = $this->getUserResume(auth()->id());
+        $student = $this->requestManager->getElementsFromApi($this->studentPrefix . '/annual-object', ['student_id_card'], [$user->email], []);
+        //dd($student);
 
         return view('frontend.new_portals.includes.classmate');
     }
@@ -71,9 +82,12 @@ trait PortalMenuTrait
      */
     public function setting(Request $request)
     {
+        $user = auth()->user();
+        $resume = $this->getUserResume(auth()->id());
+        $student = $this->requestManager->getElementsFromApi($this->studentPrefix . '/prop', ['student_id_card'], [$user->email], []);
+       // dd($student['name_latin']);
 
-
-        return view('frontend.new_portals.includes.setting');
+        return view('frontend.new_portals.includes.setting', compact('resume','student'));
     }
 
     public function timetable(Request $request){
