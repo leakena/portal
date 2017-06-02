@@ -23,4 +23,9 @@ class DateManager
         return Carbon::parse($date)->format('d-m-Y');
     }
 
+    public static function fullDate($date)
+    {
+        return Carbon::parse($date)->format('M-d-Y');
+    }
+
 }

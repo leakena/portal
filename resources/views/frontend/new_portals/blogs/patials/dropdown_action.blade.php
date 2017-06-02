@@ -1,27 +1,6 @@
-{{--<div class="option pull-right">
-                <span class="dropdown">
-                    <span class="btn btn-box-tool dropdown-toggle" type="button"
-                          id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
-                          aria-expanded="true" data-toggle="tooltip" title=""
-                          data-widget="chat-pane-toggle" data-original-title="Setting">
-                        <i class="icon-custom rounded-x icon-sm icon-color-u fa fa-lightbulb-o"></i>
-                    </span>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li><a href="#">Edit</a></li>
-                            <li><a href="#">Hide</a></li>
-                            <li><a href="#">Delete</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Report</a></li>
+<div class="btn-group pull-right" style="margin-right: -12px; position:relative; z-index: 1">
+    <button type="button" class=" btn-xs btn-u rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 
-
-                    </ul>
-                </span>
-</div>--}}
-
-
-<div class="btn-group pull-right">
-    <button type="button" class="btn-u dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-        Action
         <i class="fa fa-angle-down"></i>
     </button>
     <ul class="dropdown-menu" role="menu">

@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Frontend\Portal;
 
 use App\Helpers\Auth\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Frontend\Portal\HelperTrait\BlogPostTrait;
 use App\Models\Access\User\Profile;
 use App\Models\Portal\Post\Post;
 use App\Models\Portal\Post\View;
 use App\Models\Portal\Resume\PersonalInfo;
 use App\Models\Portal\Resume\Resume;
+use App\Repositories\Backend\Post\PostContract;
 use App\Repositories\Backend\User\UserContract;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -30,10 +32,13 @@ class PortalController extends Controller
     protected $controller;
     protected $users;
     protected $requestManager;
+    protected $posts;
+
 
     use PortalMenuTrait;
+    use BlogPostTrait;
 
-    public function __construct(Controller $cont, UserContract $userRepo, ApiRequestManager $apiRequestManager)
+    public function __construct(Controller $cont, UserContract $userRepo, ApiRequestManager $apiRequestManager,PostContract $postContract)
     {
         $this->middleware('auth');
         $this->requestManager = $apiRequestManager;
@@ -41,6 +46,7 @@ class PortalController extends Controller
         $this->academic = '/api/academic-year';
         $this->controller = $cont;
         $this->users = $userRepo;
+        $this->posts = $postContract;
     }
 
     /**
@@ -67,11 +73,32 @@ class PortalController extends Controller
         //$endYearId = collect($years)->max('id');
         //$studentData = $this->controller->getElementByApi($this->studentPrefix . '/annual-object', ['student_id_card', 'academic_year_id'], [$authUser->email, $endYearId], []);
 
-        $posts = Post::where('create_uid', $authUser->id)
-            ->whereMonth('created_at', '>=', date("n", strtotime("first day of previous month")))//dd(date("Y-n-j", strtotime("first day of previous month")));
-            ->orderBy('created_at', 'ASCE')->get();
+        $posts = Post::whereMonth('created_at', '>=', date("n", strtotime("first day of previous month")))//dd(date("Y-n-j", strtotime("first day of previous month")));
+            ->orderBy('created_at', 'ASCE');
+        $postIds = $posts->pluck('id');
 
-        return view('frontend.new_portals.blogs.my_post', compact('posts'));
+        $categoryPostTags = DB::table('category_post_tags')->whereIn('post_id', $postIds);
+
+        $categoryTagIds = $categoryPostTags->pluck('category_tag_id');
+
+        $tagBypostIds = collect($categoryPostTags->get())->groupBy('post_id')->toArray();
+
+
+        $tags = DB::table('tags')
+            ->join('category_tags', function ($query) use($categoryTagIds) {
+                $query->on('category_tags.tag_id', '=', 'tags.id')
+                    ->whereIn('category_tags.id',$categoryTagIds );
+            })
+            ->select('tags.name', 'tags.id as tag_id', 'category_tags.id as category_tag_id')
+            ->get();
+
+        $collectionTags = collect($tags)->keyBy('category_tag_id')->toArray();
+
+
+
+        $posts = $posts->get();
+
+        return view('frontend.new_portals.blogs.my_post', compact('posts', 'tagBypostIds', 'collectionTags'));
 
     }
     public function index_()

@@ -43,14 +43,14 @@
                 <!-- End Pages -->
 
                 <!-- Blog -->
-                <li class="dropdown {{\App\Utils\Http\Facades\ActiveClassManager::areActiveRoutes($blockActiveRoutes)}}">
-                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+                <li class="{{\App\Utils\Http\Facades\ActiveClassManager::areActiveRoutes($blockActiveRoutes)}}">
+                    <a href="{{route('frontend.portal.my_post')}}" >
                         Blog
                     </a>
-                    <ul class="dropdown-menu">
+                   {{-- <ul class="dropdown-menu">
                         <li><a href="{{route('frontend.portal.my_post')}}">My Posts</a></li>
                         <li><a href="blog_timeline.html">Timelines</a></li>
-                    </ul>
+                    </ul>--}}
                 </li>
                 <!-- End Blog -->
 

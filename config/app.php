@@ -266,6 +266,7 @@ return [
         'Image'       => Intervention\Image\Facades\Image::class,
         'ActiveManager' => App\Utils\Http\Facades\ActiveClassManager::class,
         'DateManager' => App\Utils\Http\Facades\DateManager::class,
+        'User'        => App\Models\Access\User\User::class,
 
 
     ],

@@ -11,9 +11,17 @@
                         <i class="icon-custom rounded-x icon-sm icon-color-u fa fa-lightbulb-o"></i>
     </span>
     <ul class="dropdown-menu" role="menu">
-        <li><a href="#" class="btn_edit_reference" data-toggle="modal" data-target="#edit_form"><i
-                        class="fa fa-edit "></i> Edit Reference</a></li>
-        <li><a class="btn_delete_reference" href="{{ route('frontend.resume.remove_reference',$reference->id) }}"><i
-                        class="fa fa-trash-o"></i> Delete Reference</a></li>
+        <li>
+            <a href="#" class="btn_edit_reference" data-toggle="modal" data-target="#edit_form">
+                <i class="fa fa-edit "> </i>
+                Edit Reference
+            </a>
+        </li>
+        <li>
+            <a class="btn_delete_reference" href="{{ route('frontend.resume.remove_reference',$reference->id) }}">
+                <i class="fa fa-trash-o"> </i>
+                Delete Reference
+            </a>
+        </li>
     </ul>
 </div>

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Portal\Resume\Resume;
+use App\Providers\TraitProvider\HelperTraitProvider;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
@@ -13,6 +14,8 @@ use App\Models\Portal\Resume\PersonalInfo;
 
 class AppServiceProvider extends ServiceProvider
 {
+
+    use HelperTraitProvider;
     /**
      * Bootstrap any application services.
      *
@@ -128,7 +131,9 @@ class AppServiceProvider extends ServiceProvider
                     'personal_info' => $personalInfo,
                     'homeActiveRoutes' => $homeActiveRoutes,
                     'blockActiveRoutes' => $blockActiveRoutes,
-                    'resumeActiveRoute' => $resumeActiveRoute
+                    'resumeActiveRoute' => $resumeActiveRoute,
+                    'tags' => $this->tags(),
+                    'categories' => $this->categories()
                 ]);
             }
         });

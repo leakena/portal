@@ -91,6 +91,11 @@ class AccessServiceProvider extends ServiceProvider
             \App\Repositories\Backend\PersonalInfo\EloquentPersonalInfoRepository::class
         );
 
+        $this->app->bind(
+            \App\Repositories\Backend\Post\PostContract::class,
+            \App\Repositories\Backend\Post\EloquentPostRepository::class
+        );
+
 
     }
 

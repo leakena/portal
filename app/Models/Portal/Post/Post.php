@@ -15,4 +15,9 @@ class Post extends Model
     public function views(){
     	return $this->hasMany(View::class, 'post_uid');
     }
+
+    public function categoryTag()
+    {
+        return $this->belongsToMany(CategoryTag::class, 'category_post_tags', 'post_id', 'category_tag_id');
+    }
 }

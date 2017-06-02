@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ModifyEducationsTable extends Migration
+class CreateTableCategories extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,14 @@ class ModifyEducationsTable extends Migration
      */
     public function up()
     {
-        Schema::table('education', function ($table) {
-
-            $table->string('address');
-
-            $table->integer('degree_id')->unsigned();
-            $table->foreign('degree_id')
-                ->references('id')
-                ->on('degrees');
+        Schema::create('categories', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('description')->nullable();
+            $table->timestamps();
 
         });
+
     }
 
     /**
@@ -32,6 +30,6 @@ class ModifyEducationsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('categories');
     }
 }

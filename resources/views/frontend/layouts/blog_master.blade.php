@@ -41,12 +41,19 @@
     <div class="container content">
         <div class="row blog-page">
             <!-- Left Sidebar -->
-            <div class="col-md-9 md-margin-bottom-40">
+
+            @include('frontend.layouts.includes.left_sidebar')
+
+            <!-- End Left Sidebar -->
+
+            {{--section content--}}
+
+            <div class="col-md-6 md-margin-bottom-40">
 
                 {{--section content post --}}
                 @yield('content')
             </div>
-            <!-- End Left Sidebar -->
+            {{--end Section content--}}
 
             <!-- Right Sidebar -->
         @include('frontend.layouts.includes.blog.right_sidebar')

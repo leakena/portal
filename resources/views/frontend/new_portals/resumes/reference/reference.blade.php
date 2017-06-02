@@ -192,7 +192,7 @@
                             <div class="col-md-12" style="border-color: #27d7e7 !important;">
                                 <div class="tag-box tag-box-v3 margin-bottom-10 no-padding">
                                     @include('frontend.new_portals.resumes.reference.partials.action')
-                                    <div id="" class="profile-edit blog_experience tab-pane fade in active">
+                                    <div id="" class="profile-edit blog_reference tab-pane fade in active">
                                         @include('frontend.new_portals.resumes.reference.partials.fields')
                                     </div>
                                 </div>
@@ -323,7 +323,7 @@
             e.preventDefault();
             var dom = $(this).parent().parent().parent().parent().children().eq(1);
 
-            $('form#form_edit_reference input[name=reference_id]').val(dom.siblings('input[name=hidden_interest_name]').val());
+            $('form#form_edit_reference input[name=reference_id]').val(dom.find('input[name=hidden_reference_id]').val());
             $('form#form_edit_reference input[name=name]').val((dom.find('.name').text()).trim());
             $('form#form_edit_reference input[name=position]').val((dom.find('.position').text()).trim());
             $('form#form_edit_reference input[name=phone]').val((dom.find('.phone').text()).trim());

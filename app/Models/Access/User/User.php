@@ -2,6 +2,7 @@
 
 namespace App\Models\Access\User;
 
+use App\Models\Access\User\Traits\PostUser;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Access\User\Traits\UserAccess;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -22,7 +23,10 @@ class User extends Authenticatable
         SoftDeletes,
         UserAttribute,
         UserRelationship,
-        UserSendPasswordReset;
+        UserSendPasswordReset,
+        PostUser;
+
+
 
     /**
      * The database table used by the model.

@@ -43,7 +43,20 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/profile/timetable', 'PortalController@timetable')->name('timetable');
 
 
+        /*--new post route here------*/
+
         Route::get('/my-post', 'PortalController@myPosts')->name('my_post');
+        Route::get('/select-categories', 'PortalController@selectCategory')->name('select_category');
+        Route::get('/select-tag', 'PortalController@selectTag')->name('select_tag');
+        Route::post('/blog-post/store', 'PortalController@storePost')->name('store_post');
+        Route::get('/blog-post/{name}/view-pdf', 'PortalController@viewPdf')->name('view_pdf');
+
+        Route::get('/blog-post/my-post', 'PortalController@getMyPost')->name('get_my_post');
+        Route::get('/blog-post/search-post', 'PortalController@searchPost')->name('search_post');
+
+
+
+        /*---end new post route -----*/
 
         Route::group(['as' => 'resume.'], function () {
             Route::get('/experience', 'ResumeController@getExperience')->name('experience');

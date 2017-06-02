@@ -1,75 +1,50 @@
-<div class="headline headline-md">
+<div class="row" style="margin-top: 0px">
+    <section class=" col-md-6 " style="padding-left: 0px">
 
-    <ul class="nav nav-justified nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#profile">Create Post</a></li>
-        <li><a data-toggle="tab" href="#passwordTab">Upload file/Photo</a></li>
-    </ul>
+        <select class="form-control input-sm category" multiple id="select2_category" name="category[]" data-placeholder=" Select Category" style="width: 100%; ">
+
+        </select>
+
+    </section>
+
+
+    <section class=" col-md-6" style="padding-right: 0px">
+
+        <select class="form-control input-sm tag" multiple id="selecte2_tage" data-placeholder=" Select Category" name="tag[]" style="width: 100%">
+        </select>
+
+    </section>
+</div>
+
+<div class="row">
+    <div class="form-group">
+
+        <div class="col-md-12">
+            {{--<i class="icon-append fa fa-comment green"></i>--}}
+            <textarea rows="3" class="form-control" name="body" placeholder="Type Your Content Here..."></textarea>
+        </div>
+    </div>
 
 </div>
 
+<div class="row">
+    <div class="form-group" style="margin-right: 0px">
 
-
-<div class="tab-v1">
-
-    <div class="tab-content">
-        <div id="profile" class="profile-edit tab-pane fade in active">
-
-            <form class="sky-form" id="sky-form4" action="#">
-                <dl class="dl-horizontal">
-                    <dt>Username</dt>
-                    <dd>
-                        <section>
-                            <label class="input">
-                                <i class="icon-append fa fa-user"></i>
-                                <input type="text" placeholder="Username" name="username">
-                                <b class="tooltip tooltip-bottom-right">Needed to enter the website</b>
-                            </label>
-                        </section>
-                    </dd>
-                    <dt>Email address</dt>
-                    <dd>
-                        <section>
-                            <label class="input">
-                                <i class="icon-append fa fa-envelope"></i>
-                                <input type="email" placeholder="Email address" name="email">
-                                <b class="tooltip tooltip-bottom-right">Needed to verify your account</b>
-                            </label>
-                        </section>
-                    </dd>
-                    <dt>Enter your password</dt>
-                    <dd>
-                        <section>
-                            <label class="input">
-                                <i class="icon-append fa fa-lock"></i>
-                                <input type="password" id="password" name="password" placeholder="Password">
-                                <b class="tooltip tooltip-bottom-right">Don't forget your password</b>
-                            </label>
-                        </section>
-                    </dd>
-                    <dt>Confirm Password</dt>
-                    <dd>
-                        <section>
-                            <label class="input">
-                                <i class="icon-append fa fa-lock"></i>
-                                <input type="password" name="passwordConfirm" placeholder="Confirm password">
-                                <b class="tooltip tooltip-bottom-right">Don't forget your password</b>
-                            </label>
-                        </section>
-                    </dd>
-                </dl>
-                <label class="toggle toggle-change"><input type="checkbox" checked="" name="checkbox-toggle-1"><i class="no-rounded"></i>Remember password</label>
-                <br>
-                <section>
-                    <label class="checkbox"><input type="checkbox" id="terms" name="terms"><i></i><a href="#">I agree with the Terms and Conditions</a></label>
-                </section>
-                <button type="button" class="btn-u btn-u-default">Cancel</button>
-                <button class="btn-u" type="submit">Save Changes</button>
-            </form>
-        </div>
-
-        <div id="passwordTab" class="profile-edit tab-pane fade">
-
+        <div class="col-md-3 " style="padding-right: 0px">
+            <input type="file" class="btn btn-u " style="display: none" name="file" accept="image/*, .doc, .docx,.ppt, .pptx,.txt,.pdf">
+            <button class="btn-u btn-brd rounded btn-u-green btn-u-sm" id="choose_file">
+                <i class="fa fa fa-unlink"></i>
+                Attach File
+            </button>
 
         </div>
+
+        <div  class="col-md-6" id="selected_file" style="padding-left: 1px; padding-right: 0px"> </div>
+
+
+        <button class="btn-u btn-brd rounded-4x col-md-2 pull-right" style="padding-right: 20px" type="submit" id="btn_submit_post"><i class="fa fa-bell-o"></i> Publish</button>
+
     </div>
+
+
 </div>

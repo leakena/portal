@@ -76,11 +76,7 @@
         </div>
     </div>
 
-    <section class="col-md-12">
-        <label class="textarea">
 
-        </label>
-    </section>
 </div>
 
 <button type="submit" class="btn-u pull-left">Save</button>
