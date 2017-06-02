@@ -153,6 +153,7 @@ trait ResumeTrait
      */
     public function compare_language(Request $request)
     {
+
         $flag = true;
         $userResume = $this->getUserResume(auth()->id());
         $languages = LanguageResume::where('resume_uid', $userResume->id)->get();

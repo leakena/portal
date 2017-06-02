@@ -250,7 +250,7 @@ class ResumeController extends Controller
     /**
      * @return mixed
      */
-    public function saveExperience(StoreExperience $request)
+    public function saveExperience(Request $request)
     {
         if (isset($request->resume_uid)) {
 
@@ -892,7 +892,7 @@ class ResumeController extends Controller
                 return redirect()->route('frontend.portal.resume.language');
 
             } else {
-                dd(300);
+
 
                 // Create a new language
                 $newLanguage = new LanguageResume();

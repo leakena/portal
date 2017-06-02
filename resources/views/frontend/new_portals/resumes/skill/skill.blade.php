@@ -26,6 +26,50 @@
         .each_top_row {
             margin-top: 2px;
         }
+
+        .input-group {
+            position: relative;
+            display: table;
+            border-collapse: separate;
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            height: 34px;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .input-group-addon, .input-group-btn {
+            width: 1%;
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+
+        .sky-form .icon-append {
+            right: 17px;
+            padding: 1px 3px;
+            min-width: 34px;
+        }
+
+        .panel-body {
+            padding: 15px !important;
+            padding-top: 15px !important;
+            padding-right: 15px !important;
+            padding-bottom: 15px !important;
+            padding-left: 15px !important;
+        }
+
+        #form_edit_interest .col-md-offest2 {
+            margin-left: 50px;
+        }
     </style>
 @endsection
 
@@ -49,39 +93,35 @@
                     <div id="id_form" class="collapse no-padding " aria-expanded="false">
                         <form action="{{ route('frontend.resume.store_skill') }}" method="post"
                               enctype="multipart/form-data"
-                              id="sky-form1" class="sky-form form-horizontal form_create_experience" novalidate="novalidate">
+                              id="sky-form1" class="sky-form form-horizontal form_create_skill">
                             <header style="font-size: 8pt; "> Create Your Skill</header>
                             <fieldset>
                                 @include('frontend.new_portals.resumes.skill.partials.create_edit_fields')
                             </fieldset>
                         </form>
                     </div>
-                </div>
-
-
-
-                <div class="tag-box tag-box-v3 margin-bottom-10">
-                    <div class="row skill">
-                        @if(count($skills)>0)
-                            @foreach($skills as $skill)
-                                <div class="col-md-12">
+                    <div class="col-md-12" style="border-color: #27d7e7 !important;">
+                        <div class="tag-box tag-box-v3 margin-bottom-10 ">
+                            @if(count($skills)>0)
+                                @foreach($skills as $skill)
                                     @include('frontend.new_portals.resumes.skill.partials.action')
 
                                     @include('frontend.new_portals.resumes.skill.partials.fields')
 
-                                </div>
 
-                            @endforeach
-                        @else
-                            There is no skill please click on button add to add skill
-                        @endif
+                                @endforeach
+                            @endif
+                        </div>
                     </div>
+
                 </div>
+
 
             </div>
 
             @include('frontend.new_portals.resumes.skill.partials.modal')
         </div>
+
         <div class="col-md-6">
             @include('frontend.new_portals.resumes.language.language')
         </div>
@@ -94,6 +134,7 @@
 
     {{--{!! JsValidator::formRequest('App\Http\Requests\Backend\Resume\Skill\StoreSkill') !!}--}}
     <script>
+        validate_skill($('.form_create_skill'));
 
         $('a#icon_toggle').on('click', function (e) {
 
@@ -178,10 +219,67 @@
     <script>
         $(document).ready(function (e) {
             //show_language();
+            validate_language($('.form_create_language'));
             getCircleLanguages();
             $('[data-toggle="tooltip"]').tooltip();
             reloadLanguage();
+            save();
+
+
         });
+//        function validate(e) {
+//            $('.form_create_language').formValidation({
+//                framework: 'bootstrap',
+//                icon: {
+//                    valid: 'glyphicon glyphicon-ok',
+//                    invalid: 'glyphicon glyphicon-remove',
+//                    validating: 'glyphicon glyphicon-refresh'
+//                },
+//                fields: {
+//                    language_id: {
+//                        validators: {
+//                            notEmpty: {
+//                                message: 'Please choose your Language !'
+//                            }
+//                        }
+//                    },
+//                    proficiency: {
+//                        validators: {
+//                            notEmpty: {
+//                                message: 'Please choose your proficiency of your language !'
+//                            }
+//                        }
+//                    }
+//                },
+//                submitHandler: function (form) {
+//                    $.ajax({
+//                        type: form.method,
+//                        url: form.action,
+//                        dataType: 'json',
+//                        data: $('form.form_create_language').serialize(),
+//                        success: function (result) {
+//                            if (result.status === false) {
+//                                swal({
+//                                    title: "Please check your language or level!",
+//                                    text: "You cannot choose language that already exist in your language list!" +
+//                                    " Or you cannot choose Mother Tongue for multiple language",
+//                                    type: "warning"
+//                                });
+//                            } else {
+//                                addNewLanguage(result.language_id, language_name, result.language_resume_id, proficiency);
+//
+//                                //getCircleLanguages();
+//                            }
+//                        },
+//                        complete: function () {
+//                            getCircleLanguages();
+//                        }
+//                    });
+//
+//                    // return false;
+//                }
+//            });
+//        }
 
         function reloadLanguage() {
             $.ajax({
@@ -204,7 +302,7 @@
 
         function addNewLanguage(id, name, resume_id, proficiency) {
             var newLanguage = '';
-            newLanguage += '<div class="p-chart col-sm-4 col-xs-4 sm-margin-bottom-10">';
+            newLanguage += '<div class="p-chart col-sm-6 col-xs-4 sm-margin-bottom-10">';
             newLanguage += '<div class="btn-group pull-right">';
             newLanguage += '<span class="btn btn-box-tool dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" title="" data-widget="chat-pane-toggle" data-original-title="Setting">'
             newLanguage += '<i class="icon-custom rounded-x icon-sm icon-color-u fa fa-lightbulb-o"></i>'
@@ -223,7 +321,7 @@
                 newLanguage += ' (Mother Tongue)';
             }
             newLanguage += '</h3></div>';
-            $('#mab').append(newLanguage);
+            $('.new_lan').append(newLanguage);
             $('span.no_have').hide();
             getCircleLanguages();
         }
@@ -246,7 +344,6 @@
             var old_language_id = dom.find('.language_id').val();
             dom.parent().find('.editing').removeClass('editing');
             dom.addClass('editing');
-
 
             reloadLanguage();
             $("form#form_edit_language").find('.language').select2({
@@ -417,43 +514,53 @@
         });
 
 
-        $(document).on('click', '.save', function (event) {
-            event.preventDefault();
-            var value = $(this).parent().siblings().find('#language1').val();
-            var language_name = $(this).parent().siblings().find('#language1 option:selected').text();
-            var proficiency = $(this).parent().siblings().find('input[name=proficiency]:checked').val();
+        function save() {
+            $(document).on('click', '.save', function (event) {
+                event.preventDefault();
+                var value = $(this).parent().siblings().find('#language1').val();
+                var language_name = $(this).parent().siblings().find('#language1 option:selected').text();
+                var proficiency = $(this).parent().siblings().find('input[name=proficiency]:checked').val();
 
-            $.ajax({
-                type: 'POST',
-                url: '/resume/languages/compare_language',
-                dataType: 'json',
-                data: {
-                    'language_id': value,
-                    'language_name': language_name,
-                    'proficiency': proficiency,
-                    _token: '{!! csrf_token() !!}'
-                },
-                success: function (result) {
-                    var newLanguage = '';
 
-                    if (result.status == false) {
-                        swal({
-                            title: "Please check your language or level!",
-                            text: "You cannot choose language that already exist in your language list!" +
-                            " Or you cannot choose Mother Tongue for multiple language",
-                            type: "warning"
-                        });
-                    } else {
-                        addNewLanguage(result.language_id, language_name, result.language_resume_id, proficiency);
+                var fv = $('form.form_create_language').data('formValidation');
+                fv.revalidateField('language_id');
+                fv.revalidateField('proficiency');
 
-                        //getCircleLanguages();
+                console.log(fv)
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/resume/languages/compare_language',
+                    dataType: 'json',
+                    data: {
+                        'language_id': value,
+                        'language_name': language_name,
+                        'proficiency': proficiency,
+                        _token: '{!! csrf_token() !!}'
+                    },
+                    success: function (result) {
+                        var newLanguage = '';
+
+                        if (result.status == false) {
+                            swal({
+                                title: "Please check your language or level!",
+                                text: "You cannot choose language that already exist in your language list!" +
+                                " Or you cannot choose Mother Tongue for multiple language",
+                                type: "warning"
+                            });
+                        } else {
+                            addNewLanguage(result.language_id, language_name, result.language_resume_id, proficiency);
+
+                            //getCircleLanguages();
+                        }
+                    },
+                    complete: function () {
+                        getCircleLanguages();
                     }
-                },
-                complete: function () {
-                    getCircleLanguages();
-                }
+                });
             });
-        });
+        }
 
 
         function getCircleLanguages() {

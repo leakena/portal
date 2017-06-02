@@ -232,3 +232,64 @@ function validate_interest(object) {
     });
 
 }
+
+function validate_skill(object) {
+    object.formValidation({
+        framework: 'bootstrap',
+        icon: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            name: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please add your Skill !'
+                    },
+                    stringLength: {
+                        min: 3,
+                        max: 20,
+                        message: 'The school name must be more than 3 and less than 100 characters long'
+                    }
+                }
+            },
+            description: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please choose your level of your skill !'
+                    }
+                }
+            }
+        }
+    });
+
+}
+
+function validate_language(object) {
+    object.formValidation({
+        framework: 'bootstrap',
+        icon: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            language_id: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please choose your Language !'
+                    }
+                }
+            },
+            proficiency: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please choose your proficiency of your language !'
+                    }
+                }
+            }
+        }
+    })
+
+}
