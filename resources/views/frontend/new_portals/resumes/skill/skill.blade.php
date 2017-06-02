@@ -321,7 +321,7 @@
                 newLanguage += ' (Mother Tongue)';
             }
             newLanguage += '</h3></div>';
-            $('.new_lan').append(newLanguage);
+            $('.clearfix').prepend(newLanguage);
             $('span.no_have').hide();
             getCircleLanguages();
         }
