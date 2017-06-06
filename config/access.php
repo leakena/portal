@@ -9,6 +9,9 @@ return [
      */
     'users_table' => 'users',
 
+
+    'smis_server' => 'http://192.168.105.109:8000',//'http://192.168.51.89',
+
     /*
      * Role model used by Access to create correct relations. Update the role if it is in a different namespace.
     */

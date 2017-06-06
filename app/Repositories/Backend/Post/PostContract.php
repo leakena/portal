@@ -37,4 +37,6 @@ interface PostContract
      * @return mixed
      */
     public function getAll();
+
+    public function removeFile($file);
 }

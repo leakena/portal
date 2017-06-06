@@ -19,7 +19,7 @@ class UrlManager implements IUrlManager
 
     public function __construct() {
         $this->endApiUrl = str_replace(url('/'), '', url('api'));
-        $this->targetServerUrl = 'http://192.168.51.89';//'http://192.168.51.89';//'http://192.168.105.106:8000';
+        $this->targetServerUrl = config('access.smis_server');//'http://192.168.51.89';//'http://192.168.105.106:8000';
 
     }
 
@@ -30,6 +30,8 @@ class UrlManager implements IUrlManager
     public function getCompleteUrl($endUrl, array $elements = array(), array $attributes = array(), $where) {
 
         $endUrl = $this->constructApiUrlWithParams($endUrl, $elements, $attributes, $where);
+
+        //dd($this->getApiBaseUrl() . $endUrl);
         return $this->getApiBaseUrl() . $endUrl;
     }
 

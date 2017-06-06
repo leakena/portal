@@ -50,9 +50,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/select-tag', 'PortalController@selectTag')->name('select_tag');
         Route::post('/blog-post/store', 'PortalController@storePost')->name('store_post');
         Route::get('/blog-post/{name}/view-pdf', 'PortalController@viewPdf')->name('view_pdf');
-
+        Route::post('/blog-post/{id}/delete-post', 'PortalController@deletePost')->name('delete_blog_post');
+        Route::get('/blog-post/{id}/ajax-edit-post', 'PortalController@ajaxEditPost')->name('ajax_edit_post');
+        Route::post('/blog-post/update-blog-post', 'PortalController@updateBlogPost')->name('update_blog_post');
         Route::get('/blog-post/my-post', 'PortalController@getMyPost')->name('get_my_post');
         Route::get('/blog-post/search-post', 'PortalController@searchPost')->name('search_post');
+        Route::get('/blog-post/{id}/post-by-category', 'PortalController@postByCategory')->name('post_by_category');
+        Route::get('/blog-post/{id}/post-by-tag', 'PortalController@postByTag')->name('post_by_tag');
+        Route::get('/blog-post/load-more-post', 'PortalController@loadMorePost')->name('load_more_post');
 
 
 

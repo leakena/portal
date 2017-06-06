@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Frontend\Portal\HelperTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Portal\Post\Post;
+use Illuminate\Support\Facades\Response;
 
 trait BlogPostTrait
 {
@@ -97,26 +98,26 @@ trait BlogPostTrait
 
     public function storePost(Request $request)
     {
-       // $studentData = $this->controller->getElementByApi($this->studentPrefix . '/annual-object', ['student_id_card', 'academic_year_id'], [auth()->user()->email, $academic_year['id']], []);
+        $thisYear = date("Y");
+        $studentData = $this->controller->getElementByApi($this->studentPrefix . '/annual-object', ['student_id_card', 'academic_year_id'], [auth()->user()->email, $thisYear], []);
 
-        $categoryTagIds = $this->findCategoryPostTag($request->category, $request->tag);
+        $store = $this->create_post($request->category, $request->tag, $request->body, $studentData, $request->file);
+        if($store) {
+            return redirect()->back();
+        }
 
-        $studentData = [
-            'department_id' => 4,
-            'degree_id' => 1,
-            'grade_id' => 4,
-            'academic_year_id' => 2017
+    }
 
-        ];
+    private function create_post($categoryIds, $tagIds, $body, $studentData, $file)
+    {
 
-
-
+        $categoryTagIds = $this->findCategoryPostTag($categoryIds, $tagIds);
         $input = [
-            'body' => $request->body,
-            'department_id' => 4,
-            'degree_id' => 1,
-            'grade_id' => 4,
-            'academic_year_id' => 2017,
+            'body' => $body,
+            'department_id' => $studentData['department_id'],
+            'degree_id' => $studentData['degree_id'],
+            'grade_id' => $studentData['grade_id'],
+            'academic_year_id' => $studentData['academic_year_id'],
             'published' => 1
 
         ];
@@ -125,12 +126,15 @@ trait BlogPostTrait
             $input += ['category_tag_id' => $categoryTagIds];
         }
 
-        if (isset($request->file)) {
+        if (isset($file)) {
 
-            $filename = $request->file;
+
+            $filename = $file;
+
+            $filenameWithExtention =$filename->getClientOriginalName();
 
             $change = $filename->getClientOriginalExtension();
-            $newFilename = auth()->id() . str_random(8) . '.' . $change;
+            $newFilename = auth()->id() . str_random(8).'_'. $filenameWithExtention;
 
             if ($filename->getMimeType() == 'image/jpeg' || $filename->getMimeType() == 'image/png' || $filename->getMimeType() == 'image/jpg') {
                 $filename->move('img/frontend/uploads/images', "{$newFilename}");
@@ -143,7 +147,7 @@ trait BlogPostTrait
         $savePost = $this->posts->create($input);
         if($savePost) {
 
-            return redirect()->back();
+            return true;
         }
 
     }
@@ -206,16 +210,276 @@ trait BlogPostTrait
             $query->on('category_post_tags.post_id', '=', 'posts.id')
                 ->whereIn('category_post_tags.category_tag_id', $category_tag_ids);
         })
-            ->select('posts.id', 'posts.body', 'posts.file', 'posts.created_at', 'posts.create_uid', 'category_post_tags.post_id', 'category_post_tags.category_tag_id')
+            ->select(
+                'posts.id',
+                'posts.body',
+                'posts.file',
+                'posts.created_at',
+                'posts.create_uid',
+                'category_post_tags.post_id',
+                'category_post_tags.category_tag_id',
+                'posts.degree_id',
+                'posts.department_id',
+                'posts.grade_id'
+            )
             ->orderBy('posts.created_at', 'ASCE')->get();
 
         $tagBypostIds = collect($posts)->groupBy('post_id')->toArray();
 
+        return view('frontend.new_portals.blogs.patials.each_blog_post', compact('posts','tagBypostIds', 'collectionTags' ));
 
+    }
+
+
+    public function deletePost($postId, Request $request)
+    {
+
+       $destroy = $this->posts->destroy($postId);
+        if($destroy) {
+            return Response::json(['status'=> true]);
+        }
+
+    }
+
+    public function ajaxEditPost($postId, Request $request)
+    {
+        $post  = DB::table('posts')->where('id', $postId)->first();
+
+        $categories = DB::table('categories')
+            ->join('category_tags', function ($query) use($post){
+                $query->on('category_tags.category_id', '=', 'categories.id')
+                    ->whereIn('category_tags.id', DB::table('category_post_tags')->where('post_id', $post->id)->pluck('category_tag_id'));
+            })
+            ->select('categories.id', 'categories.name')
+            ->get();
+
+        $categories = collect($categories)->mapWithKeys(function($item){
+            return [$item->id => $item->name];
+        })->toArray();
+
+
+        $tags = DB::table('tags')
+            ->join('category_tags', function ($query) use($post){
+                $query->on('category_tags.tag_id', '=', 'tags.id')
+                    ->whereIn('category_tags.id', DB::table('category_post_tags')->where('post_id', $post->id)->pluck('category_tag_id'));
+            })
+            ->select('tags.id', 'tags.name')
+            ->get()->toArray();
+
+        $tags = collect($tags)->mapWithKeys(function($item){
+            return [$item->id => $item->name];
+        })->toArray();
+
+
+
+        return Response::json([
+            'status' => true,
+            'post' => $post,
+            'category' => $categories,
+            'tag' => $tags
+        ]);
+
+    }
+
+
+    public function updateBlogPost(Request $request)
+    {
+        $thisYear = date("Y");
+        $studentData = $this->controller->getElementByApi($this->studentPrefix . '/annual-object', ['student_id_card', 'academic_year_id'], [auth()->user()->email, $thisYear], []);
+
+        $postId = $request->post_id;
+
+        if($postId) {
+
+            /*--user must at least select one type of category and tag---*/
+            $categoryTagIds = $this->findCategoryPostTag($request->category, $request->tag);
+            if(isset($request->file)) {
+
+                /*--destroy post first then create it again ---*/
+                $destroy = $this->posts->destroy($postId);
+                if($destroy) {
+                    $createAgain = $this->create_post($request->category, $request->tag, $request->body, $studentData, $request->file);
+
+                    if($createAgain) {
+                        return redirect()->back();
+                    }
+                }
+
+            } else {
+                $input = $request->all();
+                $input += $studentData;
+                $input += ['category_tag_id' => $categoryTagIds];
+                $update  = $this->posts->update($postId, $input);
+                if($update) {
+                    return redirect()->back();
+                }
+            }
+
+        } else {
+            return redirect()->back()->with(['error' => 'Request sent without Post Id']);
+            //return Response::json(['status' => false, 'message' => 'Request sent without Post Id']);
+
+        }
+
+    }
+
+    public function postByCategory($categoryId, Request $request)
+    {
+
+        $posts = DB::table('posts')
+            ->join('category_post_tags', function($query) use($categoryId) {
+
+                $categoryTagIds = DB::table('categories')->join('category_tags', function ($subQuery) use($categoryId){
+                    $subQuery->on('category_tags.category_id', '=', 'categories.id')
+                        ->where('categories.id', '=', $categoryId);
+                })->pluck('category_tags.id')->toArray();
+
+                $query->on('category_post_tags.post_id', '=', 'posts.id')
+                    ->whereIn('category_post_tags.category_tag_id',$categoryTagIds);
+
+            })->select(
+                'posts.id',
+                'posts.body',
+                'posts.file',
+                'posts.created_at',
+                'posts.create_uid',
+                'category_post_tags.post_id',
+                'category_post_tags.category_tag_id',
+                'posts.degree_id',
+                'posts.department_id',
+                'posts.grade_id'
+            )
+            ->orderBy('posts.created_at', 'ASCE')->get();
+
+        $tags = DB::table('tags')
+            ->join('category_tags', function ($query) use($categoryId) {
+                $query->on('category_tags.tag_id', '=', 'tags.id')
+                    ->whereIn('category_tags.category_id', [$categoryId]);
+            })->select('tags.name',  'tags.id as tag_id', 'category_tags.id as category_tag_id');
+
+        $collectionTags = collect($tags->get())->keyBy('category_tag_id')->toArray();
+        $tagBypostIds = collect($posts)->groupBy('id')->toArray();
+
+
+        $posts = collect($posts)->mapWithKeys(function($item) {
+            return ([$item->post_id => $item]);
+        })->toArray();
 
         return view('frontend.new_portals.blogs.patials.each_blog_post', compact('posts','tagBypostIds', 'collectionTags' ));
 
 
+    }
+
+
+    public function postByTag($tagId, Request $request)
+    {
+
+        $posts = DB::table('posts')
+            ->join('category_post_tags', function($query) use($tagId) {
+
+                $categoryTagIds = DB::table('tags')->join('category_tags', function ($subQuery) use($tagId){
+                    $subQuery->on('category_tags.tag_id', '=', 'tags.id')
+                        ->where('tags.id', '=', $tagId);
+                })->pluck('category_tags.id')->toArray();
+
+                $query->on('category_post_tags.post_id', '=', 'posts.id')
+                    ->whereIn('category_post_tags.category_tag_id',$categoryTagIds);
+
+            })->select(
+                'posts.id',
+                'posts.body',
+                'posts.file',
+                'posts.created_at',
+                'posts.create_uid',
+                'category_post_tags.post_id',
+                'category_post_tags.category_tag_id',
+                'posts.degree_id',
+                'posts.department_id',
+                'posts.grade_id'
+            )
+            ->orderBy('posts.created_at', 'ASCE')->get();
+
+        $tags = DB::table('tags')
+            ->join('category_tags', function ($query) use($tagId) {
+                $query->on('category_tags.tag_id', '=', 'tags.id')
+                    ->whereIn('category_tags.tag_id', [$tagId]);
+            })->select('tags.name',  'tags.id as tag_id', 'category_tags.id as category_tag_id');
+
+        $collectionTags = collect($tags->get())->keyBy('category_tag_id')->toArray();
+        $tagBypostIds = collect($posts)->groupBy('id')->toArray();
+
+
+        $posts = collect($posts)->mapWithKeys(function($item) {
+            return ([$item->post_id => $item]);
+        })->toArray();
+
+        return view('frontend.new_portals.blogs.patials.each_blog_post', compact('posts','tagBypostIds', 'collectionTags' ));
 
     }
+
+
+    public function loadMorePost(Request $request)
+    {
+
+        $dataToLoads = $this->loadPosts($request->month -1);
+
+        $posts = $this->setPriority($dataToLoads['post'], $dataToLoads['student_data']);
+        $tagBypostIds = $dataToLoads['tag_by_post_id'];
+        $collectionTags = $dataToLoads['collection_tag'];
+        $lastMonth = $dataToLoads['last_month'];
+
+        return view('frontend.new_portals.blogs.patials.each_blog_post', compact('posts','tagBypostIds', 'collectionTags','lastMonth' ));
+
+    }
+
+
+    private function loadPosts($month)
+    {
+
+        //dd( date("Y",strtotime("-1 year")));
+
+        if($month >= 1) {
+
+            $thisYear = date("Y");
+            $studentData = $this->controller->getElementByApi($this->studentPrefix . '/annual-object', ['student_id_card', 'academic_year_id'], [auth()->user()->email, $thisYear], []);
+
+            $posts = Post::whereYear('created_at', '=', $thisYear)
+                ->whereMonth('created_at', '>=', $month )//dd(date("Y-n-j", strtotime("first day of previous month")));
+                ->whereNotIn('create_uid', [auth()->id()])
+                ->orderBy('created_at', 'ASCE');
+
+            $postIds = $posts->pluck('id');
+
+
+            $categoryPostTags = DB::table('category_post_tags')->whereIn('post_id', $postIds);
+            $categoryTagIds = $categoryPostTags->pluck('category_tag_id');
+            $tagBypostIds = collect($categoryPostTags->get())->groupBy('post_id')->toArray();
+
+
+            $tags = DB::table('tags')
+                ->join('category_tags', function ($query) use($categoryTagIds) {
+                    $query->on('category_tags.tag_id', '=', 'tags.id')
+                        ->whereIn('category_tags.id',$categoryTagIds );
+                })
+                ->select('tags.name', 'tags.id as tag_id', 'category_tags.id as category_tag_id')
+                ->get();
+            $collectionTags = collect($tags)->keyBy('category_tag_id')->toArray();
+
+            $posts = $posts->limit(100)->get();
+            $posts = $this->setPriority($posts, $studentData);
+            return [
+                'post' => $posts,
+                'tag_by_post_id' => $tagBypostIds,
+                'collection_tag' => $collectionTags,
+                'last_month' => $month,
+                'student_data' => $studentData
+            ];
+
+        } else {
+            return [];
+        }
+    }
+
+
+
 }

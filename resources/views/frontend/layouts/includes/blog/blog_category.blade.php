@@ -4,7 +4,7 @@
     @if(isset($categories))
         @foreach($categories as $category)
             <li>
-                <a href="#" class="btn rounded btn-xs btn-twitter fa-fixed">
+                <a href="{{route('frontend.portal.post_by_category', $category->id)}}" class="btn_category_list btn rounded btn-xs btn-twitter fa-fixed">
                     <i class="fa  fa-object-group"></i>
                     {{$category->name}}
                 </a>

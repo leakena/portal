@@ -4,7 +4,7 @@
 
         @foreach($tags as $tag)
             <li>
-                <a href="#">
+                <a href="{{route('frontend.portal.post_by_tag', $tag->id)}}" class="btn_tag_list">
                     <i class="fa fa-tags"></i>
                     {{$tag->name}}
                 </a>

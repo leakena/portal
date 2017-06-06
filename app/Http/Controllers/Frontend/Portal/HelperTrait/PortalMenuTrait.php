@@ -49,9 +49,10 @@ trait PortalMenuTrait
     public function classmate(Request $request)
     {
         $user = auth()->user();
-        $resume = $this->getUserResume(auth()->id());
-        $student = $this->requestManager->getElementsFromApi($this->studentPrefix . '/annual-object', ['student_id_card'], [$user->email], []);
-        //dd($student);
+
+        //$students = $this->requestManager->getElementsFromApi($this->studentPrefix . '/student-classmate', ['student_id_card'], [$user->email], []);
+
+        //dd($students);
 
         return view('frontend.new_portals.includes.classmate');
     }

@@ -67,39 +67,52 @@ class PortalController extends Controller
 
     public function myPosts(Request $request) {
 
-        $authUser = auth()->user();
 
-        //$years = $this->controller->getElementByApi($this->academic . '/all', [], [], []);
-        //$endYearId = collect($years)->max('id');
-        //$studentData = $this->controller->getElementByApi($this->studentPrefix . '/annual-object', ['student_id_card', 'academic_year_id'], [$authUser->email, $endYearId], []);
+        $dataToLoads = $this->loadPosts(date("n", strtotime("first day of previous month")));
 
-        $posts = Post::whereMonth('created_at', '>=', date("n", strtotime("first day of previous month")))//dd(date("Y-n-j", strtotime("first day of previous month")));
-            ->orderBy('created_at', 'ASCE');
-        $postIds = $posts->pluck('id');
+        $posts = $this->setPriority($dataToLoads['post'], $dataToLoads['student_data']);
+        $tagBypostIds = $dataToLoads['tag_by_post_id'];
+        $collectionTags = $dataToLoads['collection_tag'];
+        $lastMonth = $dataToLoads['last_month'];
+        return view('frontend.new_portals.blogs.my_post', compact('posts', 'tagBypostIds', 'collectionTags', 'lastMonth'));
 
-        $categoryPostTags = DB::table('category_post_tags')->whereIn('post_id', $postIds);
+    }
 
-        $categoryTagIds = $categoryPostTags->pluck('category_tag_id');
+    private function setPriority($posts, $studentData)
+    {
 
-        $tagBypostIds = collect($categoryPostTags->get())->groupBy('post_id')->toArray();
+        $priority_to_post = [];
+        $firstPriority = [];
+        $secondPriority = [];
+        $thirdPriority = [];
+        $fourthPriority = [];
 
+        foreach ($posts as $index =>  $post) {
 
-        $tags = DB::table('tags')
-            ->join('category_tags', function ($query) use($categoryTagIds) {
-                $query->on('category_tags.tag_id', '=', 'tags.id')
-                    ->whereIn('category_tags.id',$categoryTagIds );
-            })
-            ->select('tags.name', 'tags.id as tag_id', 'category_tags.id as category_tag_id')
-            ->get();
+           if($post->degree_id == $studentData['degree_id']) {
 
-        $collectionTags = collect($tags)->keyBy('category_tag_id')->toArray();
+               if($post->department_id == $studentData['department_id']) {
 
+                   if($post->grade_id == $studentData['grade_id']) {
 
+                       $firstPriority[] = $post;
+                   } else {
+                       $secondPriority[] = $post;
+                   }
+               } else {
+                   $thirdPriority[] = $post;
+               }
 
-        $posts = $posts->get();
+           } else {
+               $fourthPriority[] = $post;
+           }
+        }
+        $priority_to_post = array_merge($priority_to_post, $firstPriority);
+        $priority_to_post = array_merge($priority_to_post, $secondPriority);
+        $priority_to_post = array_merge($priority_to_post, $thirdPriority);
+        $priority_to_post = array_merge($priority_to_post, $fourthPriority);
 
-        return view('frontend.new_portals.blogs.my_post', compact('posts', 'tagBypostIds', 'collectionTags'));
-
+        return $priority_to_post;
     }
     public function index_()
     {
@@ -121,7 +134,6 @@ class PortalController extends Controller
         $posts_ = Post::where('published', true)->limit(3)->get();
         $array_key_post = [];
         foreach ($posts_ as $post) {
-
             $array_key_post[$post->degree_id][$post->department_id][$post->grade_id][] = $post;
 
         }
