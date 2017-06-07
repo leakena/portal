@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Frontend\Portal\HelperTrait;
 
+use App\Models\Access\User\User;
 use App\Models\Portal\Resume\PersonalInfo;
 use App\Models\Portal\Resume\Resume;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Created by PhpStorm.
@@ -48,13 +51,36 @@ trait PortalMenuTrait
      */
     public function classmate(Request $request)
     {
+        $url = $request->url();
+        if($request->page) {
+            $page = $request->page;
+        } else {
+            $page = 1;
+        }
         $user = auth()->user();
+        $classmates = $this->requestManager->getElementsFromApi($this->studentPrefix . '/student-classmate', ['student_id_card'], [$user->email], []);
+        $idCards = collect($classmates)->pluck('id_card')->toArray();
+        $classmates = array_chunk($classmates, 2);
+        $collection = collect($classmates);
 
-        //$students = $this->requestManager->getElementsFromApi($this->studentPrefix . '/student-classmate', ['student_id_card'], [$user->email], []);
 
-        //dd($students);
+        $usersResumes = User::join('resumes', function ($joinResume) use($idCards) {
+            $joinResume->on('resumes.user_uid', '=', 'users.id')
+                ->whereNotNull('resumes.user_uid')
+                ->whereIn('users.email', $idCards);
+        })->join('personal_infos', function ($joinPersonal) {
+            $joinPersonal->on('personal_infos.resume_uid', '=', 'resumes.id')
+                ->whereNotNull('personal_infos.resume_uid');
+        })->select(
+            [
+                'users.email as id_card', 'resumes.career_profile', 'personal_infos.birth_place', 'personal_infos.profile', 'personal_infos.email'
+            ]
+        )->get();
 
-        return view('frontend.new_portals.includes.classmate');
+        $userResumes = collect($usersResumes)->keyBy('id_card')->toArray();
+        $classmates = $collection->forPage($page, 5);
+
+        return view('frontend.new_portals.includes.classmate', compact('classmates', 'page', 'url', 'userResumes'));
     }
 
     /**
