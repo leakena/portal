@@ -34,6 +34,8 @@
 {!! Html::script('bower_components/select2/dist/js/select2.js') !!}
 
 {!! Html::script('portals/js/validate_field.js') !!}
+{{--toastr js--}}
+{!! Html::script('bower_components/toastr/toastr.js') !!}
 
 
 
@@ -46,6 +48,30 @@
         CirclesMaster.initCirclesMaster1();
         StyleSwitcher.initStyleSwitcher();
     });
+
+    function notify(type, title, description) {
+        toastr[type](description, title);
+    }
+
+    $(function () {
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": true,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+    })
 </script>
 <!--[if lt IE 9]>
 {!! Html::script('portals/assets/plugins/respond.js') !!}

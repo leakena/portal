@@ -102,7 +102,8 @@ class ResumeController extends Controller
             $resume = Resume::where('id', $request->resume_uid)->first();
 
             /*---check if personal-info hase already created ---*/
-            if (count($resume->personalInfo)) {
+            if (isset($request->personal_info_id)) {
+                dd($request->all());
                 /*--update personal info --*/
                 $update = $this->personalInfos->update($resume->personalInfo->id, $request->all());
 
@@ -113,8 +114,18 @@ class ResumeController extends Controller
                 /*---create personal-info--*/
 
                 $create = $this->personalInfos->create($request->all());
-                if ($create) {
-                    return redirect()->back()->with(['status' => 'Information Created!']);
+
+                if ($create[0]) {
+                    return Response::json([
+                       'status'=> true,
+                        'id'=> $create[1],
+                        'birth_place'=> $request->birth_place,
+                        'status_id' => $request->status_id,
+                        'job'=>$request->job,
+                        'phone'=> $request->phone,
+                        'address'=> $request->address,
+                        'email'=> $request->email
+                    ]);
                 }
             }
 
@@ -127,6 +138,7 @@ class ResumeController extends Controller
             if ($resume->save()) {
                 /*---create personal information ---*/
                 $create = $this->personalInfos->create($request->all());
+
                 if ($create) {
                     return redirect()->route('frontend.resume.user_info')->with(['status' => 'Information Created!']);
                 }
