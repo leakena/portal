@@ -22,6 +22,7 @@
                             @if(isset($resume))
                                 <input type="hidden" name="resume_uid" value="{{ $resume->id }}">
                             @endif
+                            <input type="hidden" name="personal_info_id" value="{{ $resume->personalInfo->id }}">
                             <dl class="dl-horizontal">
                                 <dt><strong>Your name </strong></dt>
                                 <dd>
@@ -154,7 +155,7 @@
                                 <input type="hidden" name="resume_uid" value="{{ $resume->id }}">
                             @endif
 
-                            <dl class="dl-horizontal">
+                            <dl class="dl-horizontal form">
                                 <dt><strong>Your name </strong></dt>
                                 <dd>
                                     <span id="name" class="editing">{{ isset($student)?$student['name_latin']:'' }}</span>
@@ -191,6 +192,7 @@
                                 <dt><strong>Date of birth </strong></dt>
                                 <dd>
                                     <span id="dob" class="editing">{{ (isset($student)?(new \Carbon\Carbon($student['dob']))->toDateString():'') }}</span>
+                                    <input type="hidden" name="dob" value="{{ (isset($student)?$student['dob']:'') }}">
                                     <span>
 												<a class="pull-right">
 													<i class="fa fa-info dob-info"></i>
@@ -214,8 +216,10 @@
                                 <hr>
                                 <dt><strong>Marital Status </strong></dt>
                                 <dd>
-                                    <span id="status_id" class="editing"></span>
-                                    <input type="hidden" name="status_id" value="">
+                                    <span id="status_id" class="editing">
+                                        <input type="hidden" name="status_id" value="">
+                                    </span>
+
                                     <span>
 												<a class="pull-right">
 													<i class="fa fa-pencil edit_create_status"></i>
@@ -226,8 +230,10 @@
                                 <hr>
                                 <dt><strong>Job </strong></dt>
                                 <dd>
-                                    <span id="job" class="editing"></span>
-                                    <input type="hidden" name="job" value="">
+                                    <span id="job" class="editing">
+                                        <input type="hidden" name="job" value="">
+                                    </span>
+
                                     <span>
 												<a class="pull-right">
 													<i class="fa fa-pencil edit_new"></i>
@@ -238,8 +244,10 @@
                                 <hr>
                                 <dt><strong>Phone Number </strong></dt>
                                 <dd>
-                                    <span id="phone" class="editing"></span>
-                                    <input type="hidden" name="phone" value="">
+                                    <span id="phone" class="editing">
+                                        <input type="hidden" name="phone" value="">
+                                    </span>
+
                                     <span>
 												<a class="pull-right">
 													<i class="fa fa-pencil edit_new"></i>
@@ -250,8 +258,10 @@
                                 <hr>
                                 <dt><strong>Email </strong></dt>
                                 <dd>
-                                    <span id="email" class="editing"></span>
-                                    <input type="hidden" name="email" value="">
+                                    <span id="email" class="editing">
+                                        <input type="hidden" name="email" value="">
+                                    </span>
+
                                     <span>
 												<a class="pull-right">
 													<i class="fa fa-pencil edit_new"></i>
@@ -262,8 +272,10 @@
                                 <hr>
                                 <dt><strong>Address </strong></dt>
                                 <dd>
-                                    <span id="address" class="editing"></span>
-                                    <input type="hidden" name="address" value="">
+                                    <span id="address" class="editing">
+                                        <input type="hidden" name="address" value="">
+                                    </span>
+
                                     <span>
 												<a class="pull-right">
 													<i class="fa fa-pencil edit_new"></i>
@@ -273,7 +285,7 @@
                                 <hr>
                             </dl>
                             <button type="button" class="btn-u btn-u-default">Cancel</button>
-                            <button type="submit" class="btn-u">Save Changes</button>
+                            <button type="submit" class="btn-u save">Save</button>
                         </form>
                     @endif
 
@@ -459,8 +471,9 @@
 
     <script>
         $(document).ready(function () {
-            validate_personal_info($('.add_personal_info'));
-        })
+
+            //validate_personal_info($('.add_personal_info'));
+        });
 
         $(document).on('click', '.edit', function () {
             var dom = $(this).parent().parent().parent();
@@ -578,8 +591,89 @@
                 text: "If you want to edit, please go to administration office!",
                 type: "info"
             });
-
         });
+
+        $(document).on('click', '.save', function (e) {
+            e.preventDefault();
+
+            var dom = $(this).siblings();
+
+            var status_name = dom.find('select option:selected').text();
+            var resume = $(this).siblings('input[name=resume_uid]').val();
+            var birth_place = dom.find('input[name=birth_place]').val();
+            var status_id = dom.find('input[name=status_id]').val();
+            console.log(status_id);
+            var job = dom.find('input[name=job]').val();
+            var phone = dom.find('input[name=phone]').val();
+            var email = dom.find('input[name=email]').val();
+            var address = dom.find('input[name=address]').val();
+
+            if( birth_place == ""){
+                notify('error','Place of birth cannot be null!', 'Please input your place of birth');
+            }else if( status_id == ""){
+                notify('error','Marital status cannot be null!', 'Please choose your marital status');
+            }else if( job == ""){
+                notify('error', 'Job cannot be null!', 'Please input your job');
+            }else if( phone == ""){
+                notify('error', 'Phone cannot be null!', 'Please input your phone number');
+            }else if( email == ""){
+                notify('error', 'Email cannot be null!', 'Please input your phone email');
+            }else if( address == ""){
+                notify('error', 'Adress cannot be null!', 'Please input your address');
+            }else{
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('frontend.resume.store_user_info') }}',
+                    data: {
+                        _token: '{!! csrf_token() !!}',
+                        'resume_uid': resume,
+                        'name': dom.find('input[name=name]').val(),
+                        'dob': dom.find('input[name=dob]').val(),
+                        'birth_place': birth_place,
+                        'status_id': dom.find('select[name=status_id]').val(),
+                        'status_name': status_name,
+                        'job': job,
+                        'phone': phone,
+                        'email': email,
+                        'address': address
+                    },
+                    success: function (response) {
+                        if(response.status == true){
+                            var birth_place = '<input type="hidden" name="birth_place" value="' +response.birth_place+ '">';
+                            birth_place += '<span class="old">'+ response.birth_place + '</span>';
+                            $('#birth_place').html(birth_place);
+
+                            var marital_status = '<input type="hidden" name="status_id" value="' + response.status_id +'">'
+                            marital_status += '<span class="old">' +status_name+ '</span>'
+                            $('#status_id').html(marital_status);
+
+                            var job = '<input type="hidden" name="job" value="' +response.job+ '">';
+                            job += '<span class="old">' +response.job+ '</span>';
+                            $('#job').html(job);
+
+                            var phone = '<input type="hidden" name="phone" value="' +response.phone+ '">';
+                            phone += '<span class="old">' +response.phone+ '</span>';
+                            $('#phone').html(phone);
+
+                            var email = '<input type="hidden" name="email" value="' +response.email+ '">';
+                            email += '<span class="old">' +response.email+ '</span>';
+                            $('#email').html(email);
+
+                            var address = '<input type="hidden" name="address" value="' +response.address+ '">';
+                            address += '<span class="old">' +response.address+ '</span>';
+                            $('#address').html(address);
+
+                            var id = '<input type="hidden" name="personal_info_id" value="' +response.id+ '">';
+                            $('.form').prepend(id);
+
+                        }
+                    }
+                })
+            }
+
+        })
+
+
 
     </script>
 

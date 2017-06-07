@@ -58,8 +58,8 @@
 
 
 {{ Html::style('bower_components/form.validation/dist/css/formValidation.min.css') }}
-
 <!-- Full Calendar --!>
-
+{{--toastr js--}}
+{{ Html::style('bower_components/toastr/toastr.min.css') }}
 
 

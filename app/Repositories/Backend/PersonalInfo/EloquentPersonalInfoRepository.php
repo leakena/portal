@@ -34,7 +34,7 @@ class EloquentPersonalInfoRepository implements PersonalInfoContract
 
     /**
      * @param $input
-     * @return bool
+     * @return mixed
      */
     public function create($input)
     {
@@ -80,7 +80,7 @@ class EloquentPersonalInfoRepository implements PersonalInfoContract
         }
 
         if ($personalInfo->save()) {
-            return true;
+            return array('true', $personalInfo->id);
         }
     }
 
