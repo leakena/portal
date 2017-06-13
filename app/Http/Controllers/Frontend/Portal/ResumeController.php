@@ -103,7 +103,7 @@ class ResumeController extends Controller
 
             /*---check if personal-info hase already created ---*/
             if (isset($request->personal_info_id)) {
-                dd($request->all());
+                //dd($request->all());
                 /*--update personal info --*/
                 $update = $this->personalInfos->update($resume->personalInfo->id, $request->all());
 

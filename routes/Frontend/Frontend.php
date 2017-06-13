@@ -60,7 +60,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/blog-post/load-more-post', 'PortalController@loadMorePost')->name('load_more_post');
 
 
-
         /*---end new post route -----*/
 
         Route::group(['as' => 'resume.'], function () {
@@ -85,7 +84,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/posts/edit/{post}', 'PortalController@edit');
         Route::post('/posts/update/{post}', 'PortalController@update');
         Route::get('/posts/publish/{post}', 'PortalController@publish')->name('publish');
-        Route::get('/score/{year}', 'PortalController@score')->name('show_score');
+        Route::post('/score', 'PortalController@score')->name('show_score');
 
     });
 
@@ -126,8 +125,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/resume/experiences/{id}/remove-experience', 'ResumeController@removeExperience')->name('remove_experience');
 
         /**
-        *	Project
-        */
+         *    Project
+         */
         Route::get('/resume/projects', 'ResumeController@projectContent')->name('get_project_content');
         Route::post('/resume/projects/save-project', 'ResumeController@saveProject');
         Route::get('/resume/projects/edit-project', 'ResumeController@editProject');

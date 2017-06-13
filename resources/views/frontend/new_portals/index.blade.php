@@ -80,8 +80,34 @@
     <hr>
     <!--Table Score Annual -->
     <div class="table-search-v1">
-        @include('frontend.new_portals.includes.partials.table_score')
+        <div class="panel panel-profile">
+            <div class="panel-heading overflow-h">
+                <h2 class="panel-title heading-sm pull-left"><i class="fa fa-calendar"></i> Score</h2>
+                <div class="pull-right form-inline" style="float: right">
+
+                    <select id="score_year" name="score_year" class="form-control">
+                        <option disabled>Academic Year</option>
+
+                        @foreach($academic_years as $academic_year)
+
+                            @if($academic_year['name_latin'] == $current_year['name_latin'])
+                                <option selected
+                                        value="{{$academic_year['id']}}">{{ $academic_year['name_latin'] }}</option>
+                            @else
+                                <option value="{{ $academic_year['id'] }}">{{ $academic_year['name_latin'] }}</option>
+                            @endif
+
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="panel-body">
+                @include('frontend.new_portals.includes.partials.table_score')
+            </div>
+        </div>
     </div>
+    <hr>
+
     <!--End Table Search v1-->
 
     <!-- Full Callendar (TimeTable) -->
@@ -464,9 +490,99 @@
                 }
             });
         }
+        function score() {
+            $('select[name=score_year]').on('change', function () {
+                var dom = $(this).val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/score/',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        'year': dom
+                    },
+                    success: function (response) {
+                        if (response.status == true) {
+                            var td = '';
+                            var gpa = '';
+                            var absence;
+                            var level;
+
+                            if (response.data.course_score.absence == null) {
+                                absence = 0;
+                            } else {
+                                absence = response.data.course_score.absence;
+                            }
+
+                            $.each(response.data.course_score, function (key, val) {
+
+                                if (key > key - 3) {
+                                    td += '<tr><td>' + val.name_en + '</td>';
+                                    td += '<td>' + absence + '</td>';
+                                    td += '<td>' + val.credit + '</td>';
+                                    td += '<td>' + val.score + '</td>';
+                                    td += '<td>';
+                                    if (val.score < 50) {
+                                        td += '<button class="btn-u btn-block btn-u-aqua btn-u-xs"><i class="fa fa-level-down margin-right-5"></i> Low</button>';
+                                    } else if (val.score < 60) {
+                                        td += '<button class="btn-u btn-block btn-u-yellow btn-u-xs"><i class="fa fa-arrows-v margin-right-5"></i> Middle</button>';
+                                    } else if (val.score < 80) {
+                                        td += '<button class="btn-u btn-block btn-u-dark btn-u-xs"><i class="icon-graph margin-right-5"></i> Fairly good</button>';
+                                    } else {
+                                        td += '<button class="btn-u btn-block btn-u-green btn-u-xs"><i class="fa fa-level-up margin-right-5"></i> High</button>';
+                                    }
+
+                                    td += '</td></tr>';
+                                }
+                            });
+
+                            if (response.data.course_score.final_score < 50) {
+                                gpa = '1.5';
+                                level = '<button class="btn-u btn-block btn-u-aqua btn-u-xs"><i class="fa fa-level-down margin-right-5"></i> Low</button>';
+                            } else if (response.data.course_score.final_score < 60) {
+                                gpa = '2.0';
+                                level = '<button class="btn-u btn-block btn-u-yellow btn-u-xs"><i class="fa fa-arrows-v margin-right-5"></i> Middle</button>';
+                            } else if (response.data.course_score.final_score < 65) {
+                                gpa = '2.5'
+                            } else if (response.data.course_score.final_score < 70) {
+                                gpa = '3.0'
+                            } else if (response.data.course_score.final_score < 80) {
+                                level = '<button class="btn-u btn-block btn-u-dark btn-u-xs"><i class="icon-graph margin-right-5"></i> Fairly good</button>';
+
+                            } else if (response.data.course_score.final_score < 85) {
+                                gpa = '3.5'
+                            } else if (response.data.course_score.final_score >= 85) {
+                                gpa = '4.0'
+                                level = '<button class="btn-u btn-block btn-u-green btn-u-xs"><i class="fa fa-level-up margin-right-5"></i> High</button>';
+                            }
+                            td += '<tr>' +
+                                '<td></td>' +
+                                '<td></td>' +
+                                '<td rowspan="2">Average <br>GPA</td>' +
+                                '<td>' + response.data.course_score.final_score + '<br>' + gpa + '</td>' +
+                                '<td>' + level + '</td>' +
+                                '</tr>';
+
+                            $('#head').show();
+                            $('#score').html(td);
+                        } else if (response.status == false) {
+                            $('#head').hide();
+                            $('#score').html("No score to view for this academic year");
+                            $('table[id=table_score]').removeClass('table-bordered');
+                        }
+                    },
+                    error: function () {
+
+                    }
+                })
+            });
+        }
         $(function () {
             get_timetable(eventData);
-        })
+            score();
+        });
+
+
     </script>
 
 @endsection
