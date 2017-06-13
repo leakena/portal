@@ -2,23 +2,20 @@
 
 namespace App\Http\Controllers\Frontend\Portal;
 
-use App\Helpers\Auth\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\Portal\HelperTrait\BlogPostTrait;
+use App\Http\Controllers\Frontend\Portal\HelperTrait\PortalMenuTrait;
 use App\Models\Access\User\Profile;
 use App\Models\Portal\Post\Post;
 use App\Models\Portal\Post\View;
-use App\Models\Portal\Resume\PersonalInfo;
 use App\Models\Portal\Resume\Resume;
 use App\Repositories\Backend\Post\PostContract;
 use App\Repositories\Backend\User\UserContract;
+use App\Utils\Http\Facades\ApiRequestManager;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Frontend\Portal\HelperTrait\PortalMenuTrait;
-use App\Utils\Http\Facades\ApiRequestManager;
 
 
 class PortalController extends Controller
@@ -38,7 +35,7 @@ class PortalController extends Controller
     use PortalMenuTrait;
     use BlogPostTrait;
 
-    public function __construct(Controller $cont, UserContract $userRepo, ApiRequestManager $apiRequestManager,PostContract $postContract)
+    public function __construct(Controller $cont, UserContract $userRepo, ApiRequestManager $apiRequestManager, PostContract $postContract)
     {
         $this->middleware('auth');
         $this->requestManager = $apiRequestManager;
@@ -57,15 +54,37 @@ class PortalController extends Controller
 
     public function index(Request $request)
     {
-//        $studentData = $this->controller->getElementByApi($this->studentPrefix . '/program', ['student_id_card', 'academic_year_id'], ['e20150415', ''], []);
+//        $studentData = $this->controller->getElementByApi($this->studentPrefix . '/program', ['student_id_card', 'academic_year_id'], ['e20121147', ''], []);
 //        dd($studentData);
+        $user = auth()->user();
+        $studentScore = $this->controller->getElementByApi($this->studentPrefix . '/score', ['student_id_card'], [$user->email], []);
+        $years = $this->controller->getElementByApi($this->academic . '/all', [], [], []);
+        $studentScore = $studentScore['course_score'];
 
+        foreach ($years as $year) {
+            if (isset ($studentScore[$year['id']])) {
+                $academic_years[] = $year;
+            }
+        }
 
-        return view('frontend.new_portals.index');
+        foreach ($academic_years as $academic_year) {
+            if ($academic_year == end($academic_years)) {
+                $current_year = $academic_year;
+            }
+        }
+
+        if (count($studentScore[$current_year['id']]) > 0) {
+            $scores = $studentScore[$current_year['id']];
+        } else {
+            $scores = null;
+        }
+
+        return view('frontend.new_portals.index', compact('years', 'current_year', 'academic_years', 'scores'));
 
     }
 
-    public function myPosts(Request $request) {
+    public function myPosts(Request $request)
+    {
 
 
         $dataToLoads = $this->loadPosts(date("n", strtotime("first day of previous month")));
@@ -87,25 +106,25 @@ class PortalController extends Controller
         $thirdPriority = [];
         $fourthPriority = [];
 
-        foreach ($posts as $index =>  $post) {
+        foreach ($posts as $index => $post) {
 
-           if($post->degree_id == $studentData['degree_id']) {
+            if ($post->degree_id == $studentData['degree_id']) {
 
-               if($post->department_id == $studentData['department_id']) {
+                if ($post->department_id == $studentData['department_id']) {
 
-                   if($post->grade_id == $studentData['grade_id']) {
+                    if ($post->grade_id == $studentData['grade_id']) {
 
-                       $firstPriority[] = $post;
-                   } else {
-                       $secondPriority[] = $post;
-                   }
-               } else {
-                   $thirdPriority[] = $post;
-               }
+                        $firstPriority[] = $post;
+                    } else {
+                        $secondPriority[] = $post;
+                    }
+                } else {
+                    $thirdPriority[] = $post;
+                }
 
-           } else {
-               $fourthPriority[] = $post;
-           }
+            } else {
+                $fourthPriority[] = $post;
+            }
         }
         $priority_to_post = array_merge($priority_to_post, $firstPriority);
         $priority_to_post = array_merge($priority_to_post, $secondPriority);
@@ -114,6 +133,7 @@ class PortalController extends Controller
 
         return $priority_to_post;
     }
+
     public function index_()
     {
 
@@ -186,11 +206,11 @@ class PortalController extends Controller
      * @param $year
      * @return mixed
      */
-    public function score($year)
+    public function score(Request $request)
     {
         $user = auth()->user();
 
-        $studentScore = $this->controller->getElementByApi($this->studentPrefix . '/score', ['student_id_card', 'academic_year_id'], [$user->email, $year], []);
+        $studentScore = $this->controller->getElementByApi($this->studentPrefix . '/score', ['student_id_card', 'academic_year_id'], [$user->email, $request->year], []);
         $academic_years = $this->controller->getElementByApi($this->academic . '/all', [], [], []);
 
 
@@ -403,7 +423,6 @@ class PortalController extends Controller
         $studentData = $this->controller->getElementByApi($this->studentPrefix . '/annual-object', ['student_id_card', 'academic_year_id'], [auth()->user()->email, 2017], []);
 
 
-
         $posts_ = Post::where('published', true)
             ->whereMonth('created_at', '>=', date("n", strtotime("first day of previous month")))//dd(date("Y-n-j", strtotime("first day of previous month")));
             ->orderBy('created_at', 'ASCE')->get();
@@ -428,8 +447,7 @@ class PortalController extends Controller
 
             $level_degree = $array_key_post[$studentData['degree_id']];
 
-           // dd($posts);
-
+            // dd($posts);
 
 
             if (isset($level_degree[$studentData['department_id']])) {
@@ -448,23 +466,22 @@ class PortalController extends Controller
 
             } else {
 
-                foreach($level_degree as $post_level_degree) {
+                foreach ($level_degree as $post_level_degree) {
 
-                    if($this->isAssoc($post_level_degree)) {
-                        foreach($post_level_degree as $post_de) {
+                    if ($this->isAssoc($post_level_degree)) {
+                        foreach ($post_level_degree as $post_de) {
                             $priority_to_post = array_merge($priority_to_post, $post_de);
                         }
                     }
                 }
 
-               // dd('no-dept');
+                // dd('no-dept');
             }
         } else {
 
             //dd('no-degree');
             $priority_to_post = [];
         }
-
 
 
         if (isset($priority_to_post)) {
@@ -489,7 +506,7 @@ class PortalController extends Controller
 
         $posts = $posts_;
 
-       // dd((array)$priority_to_post);
+        // dd((array)$priority_to_post);
 
 
         return view('frontend.portals.blog', compact('posts', 'posts_', 'unpublished_post'));
