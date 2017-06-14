@@ -15,144 +15,15 @@
                     <p>Below are the name and email addresses on file for your account.</p>
                     <br>
 
-                    @if(isset($resume->personalInfo))
-                        <form action="{{ route('frontend.resume.store_user_info') }}" method="POST">
-                            {{ csrf_field() }}
-
-                            @if(isset($resume))
-                                <input type="hidden" name="resume_uid" value="{{ $resume->id }}">
-                            @endif
-                            <input type="hidden" name="personal_info_id" value="{{ $resume->personalInfo->id }}">
-                            <dl class="dl-horizontal">
-                                <dt><strong>Your name </strong></dt>
-                                <dd>
-                                    <span id="name" class="editing">
-                                        <input type="hidden" name="name" value="{{ $resume->personalInfo->name }}">
-                                        <span class="old">{{ $resume->personalInfo->name }}</span>
-                                    </span>
-
-                                    <span>
-												<a class="pull-right">
-													<i class="fa fa-pencil edit"></i>
-												</a>
-											</span>
-                                </dd>
-                                <hr>
-                                <dt><strong>Your ID </strong></dt>
-                                <dd>
-                                    <span id="email" class="editing">
-                                        <input type="hidden" name="email" value="{{ $resume->personalInfo->email }}">
-                                        <span class="old">{{ $resume->personalInfo->email }}</span>
-                                    </span>
-
-                                    <span>
-												<a class="pull-right">
-													<i class="fa fa-pencil edit"></i>
-												</a>
-											</span>
-                                </dd>
-
-                                <hr>
-                                <dt><strong>Date of birth </strong></dt>
-                                <dd>
-                                    <span id="dob" class="editing">
-                                        <input type="hidden" name="dob" value="{{ $resume->personalInfo->dob }}">
-                                        <span class="old">{{ $resume->personalInfo->dob }}</span>
-                                    </span>
-                                    <span>
-												<a class="pull-right">
-													<i class="fa fa-pencil edit"></i>
-												</a>
-											</span>
-                                </dd>
-
-                                <hr>
-                                <dt><strong>Place of birth </strong></dt>
-                                <dd>
-                                    <span id="birth_place" class="editing">
-                                        <input type="hidden" name="birth_place"
-                                               value="{{ $resume->personalInfo->birth_place }}">
-                                        <span class="old"> {{ $resume->personalInfo->birth_place }} </span>
-                                    </span>
-                                    <span>
-												<a class="pull-right">
-													<i class="fa fa-pencil edit"></i>
-												</a>
-											</span>
-                                </dd>
-
-
-                                <hr>
-                                <dt><strong>Marital Status </strong></dt>
-                                <dd>
-                                    <span id="status_id" class="editing"></span>
-                                    <input type="hidden" name="status_id"
-                                           value="{{ $resume->personalInfo->status_id}}">
-                                    <span class="old">{{ $resume->personalInfo->status->name }}</span>
-                                    <span>
-												<a class="pull-right">
-													<i class="fa fa-pencil edit_status"></i>
-												</a>
-											</span>
-                                </dd>
-
-                                <hr>
-                                <dt><strong>Job </strong></dt>
-                                <dd>
-                                    <span id="job" class="editing">
-                                        <input type="hidden" name="job" value="{{ $resume->personalInfo->job }}">
-                                        <span class="old">{{ $resume->personalInfo->job }}</span>
-                                    </span>
-
-                                    <span>
-												<a class="pull-right">
-													<i class="fa fa-pencil edit"></i>
-												</a>
-											</span>
-                                </dd>
-
-                                <hr>
-                                <dt><strong>Phone Number </strong></dt>
-                                <dd>
-                                    <span id="phone" class="editing">
-                                        <input type="hidden" name="phone" value="{{ $resume->personalInfo->phone }}">
-                                        <span class="old">{{ $resume->personalInfo->phone }}</span>
-                                    </span>
-
-                                    <span>
-												<a class="pull-right">
-													<i class="fa fa-pencil edit"></i>
-												</a>
-											</span>
-                                </dd>
-
-                                <hr>
-                                <dt><strong>Address </strong></dt>
-                                <dd>
-                                    <span id="address" class="editing">
-                                        <input type="hidden" name="address"
-                                               value="{{ $resume->personalInfo->address }}">
-                                        <span class="old">{{ $resume->personalInfo->address }}</span>
-                                    </span>
-
-                                    <span>
-												<a class="pull-right">
-													<i class="fa fa-pencil edit"></i>
-												</a>
-											</span>
-                                </dd>
-                                <hr>
-                            </dl>
-                            <button type="button" class="btn-u btn-u-default">Cancel</button>
-                            <button type="submit" class="btn-u">Save Changes</button>
-                        </form>
-                    @else
                         <form action="{{ route('frontend.resume.store_user_info') }}" method="POST" class="add_personal_info">
 
                             {{ csrf_field() }}
 
                             @if(isset($resume))
                                 <input type="hidden" name="resume_uid" value="{{ $resume->id }}">
+                                @if(isset($resume->personalInfo))
+                                    <input type="hidden" name="personalInfo_id" value="{{ $resume->personalInfo->id }}">
+                                @endif
                             @endif
 
                             <dl class="dl-horizontal form">
@@ -162,7 +33,7 @@
                                     <input type="hidden" name="name" value="{{ isset($student)?$student['name_latin']:'' }}">
                                     <span>
 												<a class="pull-right">
-													<i class="fa fa-pencil edit_new"></i>
+													<i class="fa fa-info name-info"></i>
 												</a>
 											</span>
                                 </dd>
@@ -173,7 +44,7 @@
 
                                     <span>
 												<a class="pull-right">
-													<i class="fa fa-pencil"></i>
+													<i class="fa fa-info id-info"></i>
 												</a>
 											</span>
                                 </dd>
@@ -184,7 +55,7 @@
 
                                     <span>
 												<a class="pull-right">
-													<i class="fa fa-pencil"></i>
+													<i class="fa fa-info gender-info"></i>
 												</a>
 											</span>
                                 </dd>
@@ -203,11 +74,11 @@
                                 <hr>
                                 <dt><strong>Place of birth </strong></dt>
                                 <dd>
-                                    <span id="birth_place" class="editing"></span>
-                                    <input type="hidden" name="birth_place" value="">
+                                    <span id="birth_place" class="editing old">{{ isset($resume->personalInfo)?$resume->personalInfo->birth_place:'' }}</span>
+                                    <input type="hidden" name="birth_place" value="{{ isset($resume->personalInfo)?$resume->personalInfo->birth_place:'' }}">
                                     <span>
 												<a class="pull-right">
-													<i class="fa fa-pencil edit_new"></i>
+													<i class="fa fa-pencil edit"></i>
 												</a>
 											</span>
                                 </dd>
@@ -216,13 +87,14 @@
                                 <hr>
                                 <dt><strong>Marital Status </strong></dt>
                                 <dd>
-                                    <span id="status_id" class="editing">
-                                        <input type="hidden" name="status_id" value="">
+                                    {{--{{ dd($resume->personalInfo->status) }}--}}
+                                    <span id="status_id" class="editing old">{{ isset($resume->personalInfo->status)?$resume->personalInfo->status->name:'' }}
+                                        <input type="hidden" name="status_id" value="{{ isset($resume->personalInfo->status)?$resume->personalInfo->status->name:'' }}">
                                     </span>
 
                                     <span>
 												<a class="pull-right">
-													<i class="fa fa-pencil edit_create_status"></i>
+													<i class="fa fa-pencil edit_status"></i>
 												</a>
 											</span>
                                 </dd>
@@ -230,7 +102,7 @@
                                 <hr>
                                 <dt><strong>Job </strong></dt>
                                 <dd>
-                                    <span id="job" class="editing">
+                                    <span id="job" class="editing">{{ isset($resume->personalInfo)?$resume->personalInfo->job:'' }}
                                         <input type="hidden" name="job" value="">
                                     </span>
 
@@ -244,7 +116,7 @@
                                 <hr>
                                 <dt><strong>Phone Number </strong></dt>
                                 <dd>
-                                    <span id="phone" class="editing">
+                                    <span id="phone" class="editing">{{ isset($resume->personalInfo)?$resume->personalInfo->phone:'' }}
                                         <input type="hidden" name="phone" value="">
                                     </span>
 
@@ -258,7 +130,7 @@
                                 <hr>
                                 <dt><strong>Email </strong></dt>
                                 <dd>
-                                    <span id="email" class="editing">
+                                    <span id="email" class="editing">{{ isset($resume->personalInfo)?$resume->personalInfo->email:'' }}
                                         <input type="hidden" name="email" value="">
                                     </span>
 
@@ -272,7 +144,7 @@
                                 <hr>
                                 <dt><strong>Address </strong></dt>
                                 <dd>
-                                    <span id="address" class="editing">
+                                    <span id="address" class="editing">{{ isset($resume->personalInfo)?$resume->personalInfo->address:'' }}
                                         <input type="hidden" name="address" value="">
                                     </span>
 
@@ -287,7 +159,6 @@
                             <button type="button" class="btn-u btn-u-default">Cancel</button>
                             <button type="submit" class="btn-u save">Save</button>
                         </form>
-                    @endif
 
 
                 </div>
@@ -511,7 +382,9 @@
             var temp = $(this);
 
             if (temp.parent().parent().parent().find('.old').is(":visible")) {
+                console.log(temp.parent().parent().parent().find('.old').is(":visible"));
                 temp.parent().parent().parent().find('input[name=status_id]').prop('name', 'not_status');
+                console.log(temp.parent().parent().parent());
                 $.ajax({
                     type: 'POST',
                     url: '{{ route('frontend.resume.get_marital_status') }}',
@@ -533,7 +406,7 @@
                             });
 
                             dom.html(edit);
-                            temp.parent().parent().parent().find('.old').hide();
+                            //temp.parent().parent().parent().find('.old').hide();
 
                         }
 
@@ -542,6 +415,7 @@
                 });
 
             } else {
+                console.log(temp.parent().parent().parent().find('.old'));
                 temp.parent().parent().parent().find('#status').remove();
                 temp.parent().parent().parent().find('input[name=not_status]').prop('name', 'status_id');
 
@@ -586,11 +460,19 @@
 
         $(document).on('click', '.dob-info', function (event) {
             event.preventDefault();
-            swal({
-                title: "You cannot edit date of birth",
-                text: "If you want to edit, please go to administration office!",
-                type: "info"
-            });
+            notify('info', 'You cannot edit date of birth!', 'If you want to edit please contact to administration office');
+        });
+        $(document).on('click', '.name-info', function (event) {
+            event.preventDefault();
+            notify('info', 'You cannot edit name!', 'If you want to edit please contact to administration office');
+        });
+        $(document).on('click', '.id-info', function (event) {
+            event.preventDefault();
+            notify('info', 'You cannot edit id card!', 'If you want to edit please contact to administration office');
+        });
+        $(document).on('click', '.gender-info', function (event) {
+            event.preventDefault();
+            notify('info', 'You cannot edit gender!', 'If you want to edit please contact to administration office');
         });
 
         $(document).on('click', '.save', function (e) {

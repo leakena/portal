@@ -43,7 +43,7 @@ class EloquentPersonalInfoRepository implements PersonalInfoContract
 
         $personalInfo->name = isset($input['name'])?$input['name']:null;
         $personalInfo->email = isset($input['email'])?$input['email']:null;
-        $personalInfo->status_id = $input['status_id'];
+        $personalInfo->status_id = isset($input['status_id'])?$input['status_id']:null;
         if (!isset($input['resume_uid'])) {
             $resume = Resume::where('user_uid', auth()->user()->id)->first();
             $personalInfo->resume_uid = $resume->id;
@@ -63,8 +63,8 @@ class EloquentPersonalInfoRepository implements PersonalInfoContract
             $image = $input['profile'];
             $newfilename = auth()->id() . Carbon::now()->getTimestamp();
             $filename  = $newfilename . '.' . $image->getClientOriginalExtension();
-            $path = public_path('img/backend/resume/profile/' . $filename);
-            Image::make($image->getRealPath())->resize(150, 200)->save($path);
+            $path = public_path('img/backend/profile/' . $filename);
+            Image::make($image->getRealPath())->save($path);
 
             $personalInfo->profile = $filename;
 
@@ -112,15 +112,15 @@ class EloquentPersonalInfoRepository implements PersonalInfoContract
             if ($personalInfo->profile) {
 
                 $old_profile = $personalInfo->profile;
-                if(file_exists('img/backend/resume/profile/' . $old_profile)) {
-                    if (unlink('img/backend/resume/profile/' . $old_profile)) {
+                if(file_exists('img/backend/profile/' . $old_profile)) {
+                    if (unlink('img/backend/profile/' . $old_profile)) {
                         if (Input::file()) {
 
                             $image = $input['profile'];
                             $newfilename = auth()->id() . Carbon::now()->getTimestamp();
                             $filename  = $newfilename . '.' . $image->getClientOriginalExtension();
-                            $path = public_path('img/backend/resume/profile/' . $filename);
-                            Image::make($image->getRealPath())->resize(180, 200)->save($path);
+                            $path = public_path('img/backend/profile/' . $filename);
+                            Image::make($image->getRealPath())->save($path);
                             $personalInfo->profile = $filename;
                         }
                     }
@@ -129,8 +129,8 @@ class EloquentPersonalInfoRepository implements PersonalInfoContract
                         $image = $input['profile'];
                         $newfilename = auth()->id() . Carbon::now()->getTimestamp();
                         $filename  = $newfilename . '.' . $image->getClientOriginalExtension();
-                        $path = public_path('img/backend/resume/profile/' . $filename);
-                        Image::make($image->getRealPath())->resize(150, 200)->save($path);
+                        $path = public_path('img/backend/profile/' . $filename);
+                        Image::make($image->getRealPath())->save($path);
                         $personalInfo->profile = $filename;
                     }
                 }
@@ -139,8 +139,8 @@ class EloquentPersonalInfoRepository implements PersonalInfoContract
                     $image = $input['profile'];
                     $newfilename = auth()->id() . Carbon::now()->getTimestamp();
                     $filename  = $newfilename . '.' . $image->getClientOriginalExtension();
-                    $path = public_path('img/backend/resume/profile/' . $filename);
-                    Image::make($image->getRealPath())->resize(150, 200)->save($path);
+                    $path = public_path('img/backend/profile/' . $filename);
+                    Image::make($image->getRealPath())->save($path);
                     $personalInfo->profile = $filename;
                 }
             }

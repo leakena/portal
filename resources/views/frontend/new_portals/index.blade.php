@@ -565,6 +565,9 @@
 
                             $('#head').show();
                             $('#score').html(td);
+                            if(!$('table[id=table_score]').hasClass('table-bordered')){
+                                $('table[id=table_score]').addClass('table-bordered');
+                            }
                         } else if (response.status == false) {
                             $('#head').hide();
                             $('#score').html("No score to view for this academic year");

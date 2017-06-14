@@ -7,17 +7,19 @@
     <div class="profile-body">
         <div class="profile-bio">
             <div class="row">
-                {!! Form::open(['enctype'=> 'multipart/form-data', 'files' => true, 'route' => 'frontend.portal.resume.upload_profile', 'class' => 'form-horizontal create_user_info', 'role' => 'form', 'method' => 'post', 'id' => 'create-user-info']) !!}
+                {!! Form::open(['enctype'=> 'multipart/form-data', 'files' => true, 'route' => 'frontend.portal.resume.upload_profile', 'class' => 'form-horizontal create_user_info', 'role' => 'form', 'method' => 'post', 'id' => 'create-profile-pic']) !!}
 
-
+                    @if(isset($resume))
+                        <input type="hidden" name="resume_uid"  value="{{ $resume->id }}">
+                    @endif
+                    @if(isset($profile))
+                        <input type="hidden" name="personalInfo_id" value="{{ $profile->id }}">
+                    @endif
                     <div class="col-md-5">
-                        <div class="image-frame"
-                             style="width: 163px;height: 213px; border: 2px solid #f1f1f1; padding: 5px; box-sizing: border-box;">
-                            <img class="img-responsive profile-img margin-bottom-20 img" src="{{ isset($profile->profile)?url('img/backend/profile/'.$profile->profile):url('portals/assets/img/team/img32-md.jpg') }}" alt="" style="width: 100%" >
-                        </div>
+                            <img class="img-responsive profile-img margin-bottom-20 img" src="{{ isset($profile->profile)?url('img/backend/profile/'.$profile->profile):url('portals/assets/img/team/img32-md.jpg') }}" alt="" >
                         {{--<label class="control-label">Chose your profile</label>--}}
                         <input type="file" class="filestyle" id="image" name="profile" accept="image/*" data-input="false" data-icon="false" data-badge="false">
-                        <input type="submit" class="btn btn-primary" value="Upload" style="margin-top: -55px; margin-left: 100px; ">
+                        <input type="submit" class="btn btn-primary btn-u upload" value="Upload" style="margin-top: -55px; margin-left: 100px; ">
 
                         {{--<a class="btn-u btn-u-sm upload-image">Change Picture</a>--}}
                     </div>
@@ -93,6 +95,16 @@
         $(document).ready(function (e) {
             //show_language();
             getCircleLanguages();
+            $('.upload').on('click', function (e) {
+                e.preventDefault();
+                var dom = $(this).siblings('#image').val();
+                if(dom == ''){
+                    notify('error', 'File has not chosen!', 'Please choose file before upload');
+                }else{
+                    $('#create-profile-pic').submit();
+                }
+
+            });
 
         });
 
@@ -208,6 +220,10 @@
         $("input[name=profile]").change(function(){
             readURL(this);
         });
+
+
+
+
 
 
     </script>
