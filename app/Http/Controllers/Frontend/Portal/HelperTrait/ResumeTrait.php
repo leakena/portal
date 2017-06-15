@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use Intervention\Image\Facades\Image;
+use App\Models\Portal\Resume\Resume;
 
 /**
  * Class ResumeTrait
@@ -291,52 +292,84 @@ trait ResumeTrait
     /**
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function upload_profile()
+    public function upload_profile(Request $request)
     {
-        $userResume = $this->getUserResume(auth()->id());
+        if(Input::file()){
+            if(isset($request->resume_uid)){
+                $userResume = $this->getUserResume(auth()->id());
 
-        $profile = PersonalInfo::where('resume_uid', $userResume->id)->first();
-        // dd(request()->all());
+                if(isset($request->personalInfo_id)){
+                    $profile = PersonalInfo::where('resume_uid', $userResume->id)->first();
 
-        if ($profile->profile) {
+                    if ($profile->profile) {
+                        $old_profile = $profile->profile;
 
-            $old_profile = $profile->profile;
-            if (file_exists('img/backend/profile/' . $old_profile)) {
-                if (unlink('img/backend/profile/' . $old_profile)) {
-                    if (Input::file()) {
+                        if (file_exists('img/backend/profile/' . $old_profile)) {
+                            if (unlink('img/backend/profile/' . $old_profile)) {
 
-                        $image = Input::file('profile');
-                        $newfilename = auth()->id() . Carbon::now()->getTimestamp();
-                        $filename = $newfilename . '.' . $image->getClientOriginalExtension();
-                        $path = public_path('img/backend/profile/' . $filename);
-                        Image::make($image->getRealPath())->save($path);
-                        $profile->profile = $filename;
+                                $image = Input::file('profile');
+                                $newfilename = auth()->id() . Carbon::now()->getTimestamp();
+                                $filename = $newfilename . '.' . $image->getClientOriginalExtension();
+                                $path = public_path('img/backend/profile/' . $filename);
+                                Image::make($image->getRealPath())->save($path);
+                                $profile->profile = $filename;
+                            }
+                        }else {
+
+                            if (Input::file()) {
+                                $image = Input::file('profile');
+                                $newfilename = auth()->id() . Carbon::now()->getTimestamp();
+                                $filename = $newfilename . '.' . $image->getClientOriginalExtension();
+                                $path = public_path('img/backend/profile/' . $filename);
+                                Image::make($image->getRealPath())->save($path);
+                                $profile->profile = $filename;
+                            }
+                        }
+
+                    } else {
+                        if (Input::file('profile')) {
+
+                            $image = Input::file('profile');
+                            $newfilename = auth()->id() . Carbon::now()->getTimestamp();
+                            $filename = $newfilename . '.' . $image->getClientOriginalExtension();
+                            $path = public_path('img/backend/profile/' . $filename);
+                            Image::make($image->getRealPath())->save($path);
+                            $profile->profile = $filename;
+                        }
+                    }
+                    if ($profile->save()) {
+                        return redirect()->route('frontend.portal.profile');
+                    }
+                }else{
+                    if (Input::file('profile')) {
+                        $create = $this->personalInfos->create($request->all());
+                        if ($create) {
+                            return redirect()->route('frontend.portal.profile');
+                        }
                     }
                 }
-            } else {
-                if (Input::file()) {
-                    $image = Input::file('profile');
-                    $newfilename = auth()->id() . Carbon::now()->getTimestamp();
-                    $filename = $newfilename . '.' . $image->getClientOriginalExtension();
-                    $path = public_path('img/backend/profile/' . $filename);
-                    Image::make($image->getRealPath())->save($path);
-                    $profile->profile = $filename;
+
+            }else{
+
+                $resume = new Resume();
+                $resume->career_profile = null;
+                $resume->user_uid = auth()->id();
+
+                if ($resume->save()) {
+                    /*---upload profile ---*/
+
+                    $create = $this->personalInfos->create($request->all());
+                    if($create){
+                        return redirect()->route('frontend.portal.profile');
+                    }
+
                 }
             }
-        } else {
-            if (Input::file('profile')) {
+        }else{
+            return redirect()->back();
+        }
 
-                $image = Input::file('profile');
-                $newfilename = auth()->id() . Carbon::now()->getTimestamp();
-                $filename = $newfilename . '.' . $image->getClientOriginalExtension();
-                $path = public_path('img/backend/profile/' . $filename);
-                Image::make($image->getRealPath())->save($path);
-                $profile->profile = $filename;
-            }
-        }
-        if ($profile->save()) {
-            return redirect()->route('frontend.portal.profile');
-        }
+
     }
 
 }

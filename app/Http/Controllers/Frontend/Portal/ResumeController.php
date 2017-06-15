@@ -6,9 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\Portal\HelperTrait\ResumeTrait;
 use App\Http\Requests\Backend\Resume\CareerProfile\StoreCareerProfileRequest;
 use App\Http\Requests\Backend\Resume\Education\StoreEducation;
-use App\Http\Requests\Backend\Resume\Experience\StoreExperience;
 use App\Http\Requests\Backend\Resume\Interest\StoreInterest;
-use App\Http\Requests\Backend\Resume\PersonalInfo\StorePersonalInfoRequest;
 use App\Models\Portal\Resume\Contact;
 use App\Models\Portal\Resume\Degree;
 use App\Models\Portal\Resume\Education;
@@ -96,10 +94,73 @@ class ResumeController extends Controller
     {
         //dd($request->all());
 
-        if (isset($request->resume_uid)) {
-            /*--there is a resume id so we need to create user information --*/
+        if (isset($request->user_uid)) {
+            /*--check if user have resume--*/
 
-            $resume = Resume::where('id', $request->resume_uid)->first();
+            $resume = Resume::where('user_uid', $request->user_uid)->first();
+            if (isset($resume)) {
+                $personal_info = PersonalInfo::where('resume_uid', $resume->id)->first();
+                if (isset($personal_info)) {
+//                    dd($request->all());
+                    $update = $this->personalInfos->update($resume->personalInfo->id, $request->all());
+                    $resume->career_profile = $request->career_profile;
+
+                    if ($update) {
+                        $resume->save();
+                        return Response::json([
+                            'status' => true,
+                            'birth_place' => $request->birth_place,
+                            'career_profile' => $request->career_profile,
+                            'status_id' => $request->status_id,
+                            'job' => $request->job,
+                            'phone' => $request->phone,
+                            'address' => $request->address,
+                            'email' => $request->email
+                        ]);
+                    }
+                } else {
+                    $create = $this->personalInfos->create($request->all());
+                    $resume->career_profile = $request->career_profile;
+
+                    if ($create) {
+                        $resume->save();
+                        return Response::json([
+                            'status' => true,
+                            'birth_place' => $request->birth_place,
+                            'career_profile' => $request->career_profile,
+                            'status_id' => $request->status_id,
+                            'job' => $request->job,
+                            'phone' => $request->phone,
+                            'address' => $request->address,
+                            'email' => $request->email
+                        ]);
+                    }
+                }
+            } else {
+                $resume = new Resume();
+                $resume->career_profile = $request->career_profile;
+                $resume->user_uid = $request->user_uid;
+
+                if ($resume->save()) {
+                    /*---create personal information ---*/
+                    $create = $this->personalInfos->create($request->all());
+
+                    if ($create) {
+                        return Response::json([
+                            'status' => true,
+                            'birth_place' => $request->birth_place,
+                            'career_profile' => $request->career_profile,
+                            'status_id' => $request->status_id,
+                            'job' => $request->job,
+                            'phone' => $request->phone,
+                            'address' => $request->address,
+                            'email' => $request->email
+                        ]);
+                    }
+
+                }
+            }
+
 
             /*---check if personal-info hase already created ---*/
             if (isset($request->personal_info_id)) {
@@ -115,36 +176,22 @@ class ResumeController extends Controller
 
                 $create = $this->personalInfos->create($request->all());
 
-                if ($create[0]) {
+                if ($create) {
                     return Response::json([
-                       'status'=> true,
-                        'id'=> $create[1],
-                        'birth_place'=> $request->birth_place,
+                        'status' => true,
+                        'id' => $create[1],
+                        'birth_place' => $request->birth_place,
                         'status_id' => $request->status_id,
-                        'job'=>$request->job,
-                        'phone'=> $request->phone,
-                        'address'=> $request->address,
-                        'email'=> $request->email
+                        'job' => $request->job,
+                        'phone' => $request->phone,
+                        'address' => $request->address,
+                        'email' => $request->email
                     ]);
                 }
             }
 
         } else {
-            /*--if the request has no resume id then we have to create Resume first */
-            $resume = new Resume();
-            $resume->career_profile = null;
-            $resume->user_uid = auth()->id();
-
-            if ($resume->save()) {
-                /*---create personal information ---*/
-                $create = $this->personalInfos->create($request->all());
-
-                if ($create) {
-                    return redirect()->route('frontend.resume.user_info')->with(['status' => 'Information Created!']);
-                }
-
-            }
-
+            return false;
         }
     }
 
@@ -615,7 +662,7 @@ class ResumeController extends Controller
             return Response::json([
                 'status' => true,
                 'message' => 'Deleted!',
-                'rest_skill'=> count($rest_skill)
+                'rest_skill' => count($rest_skill)
             ]);
         } else {
             return Response::json(['status' => false, 'message' => 'Not Deleted!']);
@@ -1008,7 +1055,7 @@ class ResumeController extends Controller
             return Response::json([
                 'status' => true,
                 'message' => 'Deleted!',
-                'rest_language'=> count($rest_language)
+                'rest_language' => count($rest_language)
             ]);
         } else {
             return Response::json(['status' => false, 'message' => 'Not Deleted!']);
@@ -1108,7 +1155,7 @@ class ResumeController extends Controller
                 $newInterest->description = $request->description;
                 // Save new education
                 if ($newInterest->save()) {
-                   /* return redirect()->route('frontend.resume.get_interest');*/
+                    /* return redirect()->route('frontend.resume.get_interest');*/
 
                     return redirect()->back()->with(['status' => 'Interest Created']);
                 }
