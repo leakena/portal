@@ -80,7 +80,7 @@ class EloquentPersonalInfoRepository implements PersonalInfoContract
         }
 
         if ($personalInfo->save()) {
-            return array('true', $personalInfo->id);
+            return true;
         }
     }
 
@@ -99,7 +99,6 @@ class EloquentPersonalInfoRepository implements PersonalInfoContract
         $personalInfo->name = isset($input['name'])?$input['name']:null;
         $personalInfo->email = isset($input['email'])?$input['email']:null;
         $personalInfo->status_id = isset($input['status_id'])?$input['status_id']:null;
-        $personalInfo->resume_uid = $input['resume_uid'];
         $personalInfo->dob = isset($input['dob'])?$input['dob']:null;
         $personalInfo->birth_place = isset($input['birth_place'])?$input['birth_place']:null;
         $personalInfo->phone = isset($input['phone'])?$input['phone']:null;

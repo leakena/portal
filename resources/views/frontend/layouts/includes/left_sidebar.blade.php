@@ -1,7 +1,7 @@
 <div class="col-md-3 md-margin-bottom-40">
 
     <img class="img-responsive profile-img margin-bottom-20" style="width: 100% !important;"
-         src="{{isset($personal_info)?url('img/backend/profile/'.$personal_info->profile):url('portals/assets/img/team/img32-md.jpg')}}"
+         src="{{ isset($personal_info)?( ($personal_info->profile)? url('img/backend/profile/'.$personal_info->profile): url('portals/assets/img/team/img32-md.jpg') ): url('portals/assets/img/team/img32-md.jpg')}}"
          alt="">
 
     <ul class="list-group sidebar-nav-v1 margin-bottom-40" id="sidebar-nav-1">
