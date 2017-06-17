@@ -368,7 +368,41 @@ trait ResumeTrait
         }else{
             return redirect()->back();
         }
+    }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function print_resume($id){
+        $resume = Resume::where('id', $id)->first();
+        $student = $this->requestManager->getElementsFromApi($this->prefix . '/prop', ['student_id_card'], [$resume->user->email], []);
+        return view('frontend.new_portals.resumes.popup.print', compact('resume', 'student'));
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function publish(Request $request){
+        $resume = Resume::where('id', $request->resume_id)->first();
+        if($resume->publish == false){
+            $resume->publish = true;
+        }else{
+            $resume->publish = false;
+        }
+
+        $resume->save();
+        if($resume->publish == true){
+            return Response::json([
+                'status' => true,
+                'url' => route('frontend.preview.resume', $resume->user->email)
+            ]);
+        }else{
+            return Response::json([
+                'status' => false
+            ]);
+        }
 
     }
 
