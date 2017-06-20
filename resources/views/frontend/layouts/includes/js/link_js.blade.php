@@ -34,6 +34,8 @@
 {!! Html::script('bower_components/select2/dist/js/select2.js') !!}
 
 {!! Html::script('portals/js/validate_field.js') !!}
+{{--toastr js--}}
+{!! Html::script('bower_components/toastr/toastr.js') !!}
 
 
 
@@ -46,9 +48,35 @@
         CirclesMaster.initCirclesMaster1();
         StyleSwitcher.initStyleSwitcher();
     });
+
+    function notify(type, title, description) {
+        toastr[type](description, title);
+    }
+
+    $(function () {
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": true,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+    })
 </script>
 <!--[if lt IE 9]>
 {!! Html::script('portals/assets/plugins/respond.js') !!}
 {!! Html::script('portals/assets/plugins/html5shiv.js') !!}
 {!! Html::script('portals/assets/plugins/placeholder-IE-fixes.js') !!}
+{!! Html::script('portals/assets/plugins/jquery/jquery.min.js') !!}
+{!! Html::script('portals/assets/plugins/bootstrap/js/bootstrap.min.js') !!}
 <![endif]-->

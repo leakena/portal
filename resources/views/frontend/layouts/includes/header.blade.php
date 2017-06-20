@@ -2,8 +2,8 @@
 <div class="header">
     <div class="container">
         <!-- Logo -->
-        <a class="logo" href="index.html">
-            <img src="{{asset('portals/assets/img/logo1-default.png')}}" alt="Logo">
+        <a class="logo" href="index.html" style="height: 80px;">
+            <h2>Portal</h2>
         </a>
         <!-- End Logo -->
 
@@ -27,30 +27,30 @@
             <ul class="nav navbar-nav">
                 <!-- Home -->
                 <li class="{{\App\Utils\Http\Facades\ActiveClassManager::areActiveRoutes($homeActiveRoutes)}}">
-                    <a href="{{route('frontend.portal.index')}}" >
+                    <a href="{{route('frontend.portal.index')}}">
                         Home
                     </a>
                 </li>
                 <!-- End Home -->
 
                 <!-- Pages -->
-                {{--<li class="">
-                    <a href="#">
-                        Pages
-                    </a>
+            {{--<li class="">
+                <a href="#">
+                    Pages
+                </a>
 
-                </li>--}}
-                <!-- End Pages -->
+            </li>--}}
+            <!-- End Pages -->
 
                 <!-- Blog -->
                 <li class="{{\App\Utils\Http\Facades\ActiveClassManager::areActiveRoutes($blockActiveRoutes)}}">
-                    <a href="{{route('frontend.portal.my_post')}}" >
+                    <a href="{{route('frontend.portal.my_post')}}">
                         Blog
                     </a>
-                   {{-- <ul class="dropdown-menu">
-                        <li><a href="{{route('frontend.portal.my_post')}}">My Posts</a></li>
-                        <li><a href="blog_timeline.html">Timelines</a></li>
-                    </ul>--}}
+                    {{-- <ul class="dropdown-menu">
+                         <li><a href="{{route('frontend.portal.my_post')}}">My Posts</a></li>
+                         <li><a href="blog_timeline.html">Timelines</a></li>
+                     </ul>--}}
                 </li>
                 <!-- End Blog -->
 
@@ -62,18 +62,18 @@
                 <!-- End Portfolio -->
 
                 <!-- Search Block -->
-                {{--<li>
-                    <i class="search fa fa-search search-btn"></i>
-                    <div class="search-open">
-                        <div class="input-group animated fadeInDown">
-                            <input type="text" class="form-control" placeholder="Search">
-                            <span class="input-group-btn">
-										<button class="btn-u" type="button">Go</button>
-									</span>
-                        </div>
+            {{--<li>
+                <i class="search fa fa-search search-btn"></i>
+                <div class="search-open">
+                    <div class="input-group animated fadeInDown">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <span class="input-group-btn">
+                                    <button class="btn-u" type="button">Go</button>
+                                </span>
                     </div>
-                </li>--}}
-                <!-- End Search Block -->
+                </div>
+            </li>--}}
+            <!-- End Search Block -->
             </ul>
         </div><!--/end container-->
     </div><!--/navbar-collapse-->

@@ -113,11 +113,15 @@ trait PortalMenuTrait
         $user = auth()->user();
         $resume = $this->getUserResume(auth()->id());
         $student = $this->requestManager->getElementsFromApi($this->studentPrefix . '/prop', ['student_id_card'], [$user->email], []);
-       // dd($student['name_latin']);
+
 
         return view('frontend.new_portals.includes.setting', compact('resume','student'));
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function timetable(Request $request){
         $year = $request->year;
         $semester = $request->semester;
