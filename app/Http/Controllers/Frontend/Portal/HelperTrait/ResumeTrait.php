@@ -396,7 +396,7 @@ trait ResumeTrait
         if($resume->publish == true){
             return Response::json([
                 'status' => true,
-                'url' => route('frontend.preview.resume', $resume->user->email)
+                'url' => route('frontend.preview.resume', [$resume->personalInfo->name, $resume->user->email])
             ]);
         }else{
             return Response::json([
