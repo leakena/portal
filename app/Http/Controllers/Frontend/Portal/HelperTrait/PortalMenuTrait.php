@@ -79,6 +79,7 @@ trait PortalMenuTrait
 
         $userResumes = collect($usersResumes)->keyBy('id_card')->toArray();
         $classmates = $collection->forPage($page, 5);
+        
 
         return view('frontend.new_portals.includes.classmate', compact('classmates', 'page', 'url', 'userResumes'));
     }
