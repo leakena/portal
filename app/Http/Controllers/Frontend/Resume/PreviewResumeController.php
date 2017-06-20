@@ -28,7 +28,8 @@ class PreviewResumeController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function preview($id, PreviewResumeRequest $request){
+    public function preview($name, $id, PreviewResumeRequest $request){
+//        dd($id);
         $user = User::where('email', $id)->first();
         $resume = Resume::where('user_uid', $user->id)->first();
         $student = $this->requestManager->getElementsFromApi($this->prefix . '/prop', ['student_id_card'], [$resume->user->email], []);

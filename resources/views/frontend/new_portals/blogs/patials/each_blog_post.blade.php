@@ -1,7 +1,6 @@
 @if(isset($posts))
-
     @foreach($posts as $post)
-
+        
         <div class="col-md-1 pull-right no-padding">
             @if($post->create_uid == auth()->id())
                 @include('frontend.new_portals.blogs.patials.dropdown_action')

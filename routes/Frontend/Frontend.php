@@ -9,7 +9,7 @@ Route::get('macros', 'FrontendController@macros')->name('macros');
 Route::get('macros', 'FrontendController@test')->name('index');
 
 Route::group(['namespace' => 'Resume'], function (){
-    Route::get('/resume/{id}/public_link', 'PreviewResumeController@preview')->name('preview.resume');
+    Route::get('/resume/{name}/{id}/public_link', 'PreviewResumeController@preview')->name('preview.resume');
 });
 /*
  * These frontend controllers require the user to be logged in
