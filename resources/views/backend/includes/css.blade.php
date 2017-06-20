@@ -30,11 +30,7 @@
 <!-- bootstrap-progressbar -->
 <link href="{{ url('vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css') }}" rel="stylesheet">
 <!-- JQVMap -->
-
-<link href="{{ url('bower_components/jqvmap/dist/jqvmap.css') }}" rel="stylesheet"/>
-
 <link href="{{ url('vendors/jqvmap/dist/jqvmap.min.css') }}" rel="stylesheet"/>
-
 <!-- bootstrap-daterangepicker -->
 
 <!-- Custom Theme Style -->

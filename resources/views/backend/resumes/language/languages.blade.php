@@ -4,6 +4,15 @@
     <div role="main">
         <div class="clearfix"></div>
         <div class="row">
+            @if (count($errors) > 0)
+                <div class="alert alert-danger error_message_alert">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="col-md-12 col-sm-12 col-xs-12">
                 @if(count($selectedLanguages)>0)
                     @foreach($selectedLanguages as $selectedLanguage)
@@ -55,13 +64,10 @@
 
 
                                     @if( $selectedLanguage->proficiency == 'Mother Tongue')
-
-
                                         <div class="col-md-43 col-offset-3">
                                             <input name="language_resume_id" class="hidden"
                                                    value="{{ $selectedLanguage->language_resume_id }}">
                                             <div class="form-group">
-
 
                                                 <div class="col-md-2 col-sm-3 col-xs-12" for="name">
                                                     <b><p>Name </p>
@@ -70,15 +76,8 @@
                                                 <div class="col-md-9 col-sm-6 col-xs-12">
                                                     <p>{{ $selectedLanguage->name }}</p>
 
-                                                        @if( $language->id == $selectedLanguage->language_id)
-                                                            <option selected value="{{ $language->id }}" class="old_value">{{ $language->name }}</option>
-                                                        @else
-                                                            <option value="{{ $language->id }}">{{ $language->name }}</option>
-                                                        @endif
-
                                                 </div>
                                             </div>
-
 
                                             <div class="form-group">
                                                 <div class="col-md-2 col-sm-3 col-xs-12"
@@ -96,30 +95,6 @@
 
 
                                     @else
-                                        <input name="id" class="hidden" value="{{ $selectedLanguage->language_resume_id }}">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span
-                                                        class="required">*</span>
-                                            </label>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <select name="language_id" class="form-control">
-
-                                                    @foreach( $languages as $language)
-
-                                                        @if( $language->id == $selectedLanguage->language_id)
-                                                            <option selected value="{{ $language->id }}" class="old_value">{{ $language->name }}</option>
-                                                        @else
-                                                            <option value="{{ $language->id }}">{{ $language->name }}</option>
-                                                        @endif
-
-                                                    @endforeach
-
-                                                </select>
-                                            </div>
-                                        </div>
-
-
-                                    @else
                                         <input name="language_resume_id" class="hidden"
                                                value="{{ $selectedLanguage->language_resume_id }}">
                                         <div class="form-group">
@@ -129,19 +104,16 @@
                                             </div>
                                             <div class="col-md-9 col-sm-6 col-xs-12">
                                                 {{$selectedLanguage->name}}
-
                                             </div>
                                         </div>
 
                                         <div class="form-group">
-
                                             <div class="col-md-2 col-sm-3 col-xs-12"
                                                    for="name">
                                                 <b><p>Proficiency</p>
                                                 </b></div>
                                             <div class="col-md-9 col-sm-6 col-xs-12">
                                                 {{ $selectedLanguage->proficiency }}
-
 
                                             </div>
                                         </div>
@@ -204,7 +176,7 @@
                                                        for="name">Proficiency</label>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <input type="hidden" name="proficiency" value="Mother Tongue">
-                                                    <input type="text" id="name" required="required"
+                                                    <input type="text" id="name"
                                                            class="form-control col-md-7 col-xs-12"
                                                            disabled
                                                            value="Mother tongue">
@@ -214,9 +186,7 @@
 
                                             <div class="ln_solid"></div>
                                             <div class="form-group">
-                                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                                    <button class="btn btn-primary" type="button">Cancel</button>
-                                                    <button class="btn btn-primary" type="reset">Reset</button>
+                                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-8">
                                                     <button type="submit" class="btn btn-primary">Submit</button>
                                                 </div>
                                             </div>
@@ -234,7 +204,7 @@
         </div>
     </div>
 
-    <div role="main" class="add_language" style="display: none">
+    <div role="main" class="add_language">
         <div class="clearfix"></div>
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -282,7 +252,7 @@
 
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input name="proficiency" type="text" id="proficiency" required="required"
+                                    <input name="proficiency" type="text" id="proficiency"
                                            class="form-control col-md-7 col-xs-12">
                                 </div>
 
@@ -290,10 +260,9 @@
 
                             <div class="ln_solid"></div>
                             <div class="form-group">
-                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                    <button class="btn btn-primary" type="button">Cancel</button>
-                                    <button class="btn btn-primary" type="reset">Reset</button>
-                                    <button type="submit" class="btn btn-success">Submit</button>
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-7">
+                                    <button class="btn btn-default" type="reset">Reset</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
 
@@ -342,13 +311,13 @@
                         $.ajax({
                             method: 'POST',
                             url: var_url,
-                            data: {_token: '{{csrf_token()}}'},
+                            data: {_token: '{{csrf_token()}}' },
                             dataType: 'JSON',
-                            success: function (result) {
+                            success: function(result) {
 
-                                if (result.status == true) {
+                                if(result.status == true) {
                                     swal("Deleted!", "Your experience has been deleted.", "success");
-                                    setTimeout(function () {// wait for 3 secs(2)
+                                    setTimeout(function(){// wait for 3 secs(2)
                                         location.reload(); // then reload the page.(3)
                                     }, 3000);
                                 }
@@ -360,44 +329,9 @@
                     }
                 });
         });
-//        $(document).on('change', 'select[name="language_id"]', function () {
-//            event.preventDefault();
-//            var dom = $(this);
-//            dom.find('.old_value').removeAttr('selected');
-//            dom.find('.test').removeClass('test');
-//            $('select[name="language_id"] option:selected').addClass('test');
-//            var selectLanguage = dom.find('.test').val();
-//            var old_selectLanguage = $(this).find('.old_value').val();
-//
-//            console.log(old_selectLanguage+''+selectLanguage);
-//
-//            if(selectLanguage != old_selectLanguage)
-//            {
-//                $.ajax({
-//                    url: '/resume/languages',
-//                    data: {
-//                        'selectLanguage' : selectLanguage
-//                    },
-//                    dataType: 'JSON',
-//                    success: function (result) {
-//                        if(result.status == true ){
-//                            swal({
-//                                title: "Please choose another language!",
-//                                text: "Your choosen languge already have in your language list!",
-//                                type: "warning"
-//                            });
-//                            dom.find('.test').removeClass('test');
-//                            dom.find('.old_value').attr('selected', 'selected').addClass('test');
-//                        }
-//                    }
-//
-//                });
-//            }
-//        })
 
-
-        setTimeout(function () {
-            if ($('.error_message_alert').is(':visible')) {
+        setTimeout(function(){
+            if($('.error_message_alert').is(':visible')) {
                 $('.error_message_alert').fadeOut();
             }
 
