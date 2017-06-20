@@ -8,6 +8,9 @@
 Route::get('macros', 'FrontendController@macros')->name('macros');
 Route::get('macros', 'FrontendController@test')->name('index');
 
+Route::group(['namespace' => 'Resume'], function (){
+    Route::get('/resume/{id}/public_link', 'PreviewResumeController@preview')->name('preview.resume');
+});
 /*
  * These frontend controllers require the user to be logged in
  * All route names are prefixed with 'frontend.'
@@ -93,6 +96,7 @@ Route::group(['middleware' => 'auth'], function () {
          * Resume Index
          */
         Route::get('/resume-index', 'ResumeController@index')->name('index');
+        Route::post('/resume/publish', 'ResumeController@publish')->name('publish_resume');
 
         /**
          * User Information
@@ -105,6 +109,7 @@ Route::group(['middleware' => 'auth'], function () {
         /**
          * Resumes
          */
+        Route::get('/resume/print-resume/{id}', 'ResumeController@print_resume')->name('print');
         Route::post('/resume/save-career-profile', 'ResumeController@saveCareerProfile')->name('resumes.career-profile');
         Route::get('/resume/go_back', 'ResumeController@go_back');
         Route::get('/resume/career-profile', 'ResumeController@getCareerProfile')->name('career_profile');

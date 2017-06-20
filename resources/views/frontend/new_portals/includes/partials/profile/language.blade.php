@@ -1,6 +1,6 @@
 <div class="panel panel-profile">
     <div class="panel-heading overflow-h">
-        <h2 class="panel-title heading-sm pull-left"><i class="fa fa-pencil"></i> Language Skills</h2>
+        <h2 class="panel-title heading-sm pull-left"><i class="fa fa-pencil"></i> Language</h2>
         <a href="#"><i class="fa fa-cog pull-right"></i></a>
     </div>
     <div class="panel-body">

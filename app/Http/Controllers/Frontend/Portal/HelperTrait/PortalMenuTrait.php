@@ -117,6 +117,10 @@ trait PortalMenuTrait
         return view('frontend.new_portals.includes.setting', compact('resume','student'));
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function timetable(Request $request){
         $year = $request->year;
         $semester = $request->semester;

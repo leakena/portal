@@ -77,4 +77,6 @@
 {!! Html::script('portals/assets/plugins/respond.js') !!}
 {!! Html::script('portals/assets/plugins/html5shiv.js') !!}
 {!! Html::script('portals/assets/plugins/placeholder-IE-fixes.js') !!}
+{!! Html::script('portals/assets/plugins/jquery/jquery.min.js') !!}
+{!! Html::script('portals/assets/plugins/bootstrap/js/bootstrap.min.js') !!}
 <![endif]-->

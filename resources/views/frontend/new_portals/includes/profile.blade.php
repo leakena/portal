@@ -3,14 +3,13 @@
 @section('content')
 
     <!--=== Profile ===-->
-
     <div class="profile-body">
         <div class="profile-bio">
             <div class="row">
                 {!! Form::open(['enctype'=> 'multipart/form-data', 'files' => true, 'route' => 'frontend.portal.resume.upload_profile', 'class' => 'form-horizontal create_user_info', 'role' => 'form', 'method' => 'post', 'id' => 'create-profile-pic']) !!}
 
                 @if(isset($resume))
-                    <input type="hidden" name="resume_uid" value="{{ $resume->id }}">
+                    <input type="hidden" name="resume_uid" class="resume" value="{{ $resume->id }}">
                 @endif
                 @if(isset($profile))
                     <input type="hidden" name="personalInfo_id" value="{{ $profile->id }}">
@@ -46,12 +45,56 @@
                 </div>
                 {!! Form::close() !!}
 
-
                 <div class="col-md-7">
+                    @if(isset($resume))
+                        @if($resume->publish == true)
+                            <button class="btn btn-warning btn-sm pull-right publish"><i
+                                        href="{{ route('frontend.resume.print', $resume->id) }}"
+                                        class="fa fa-eye fa-lg"></i> Unpublish CV
+                            </button>
+                        @else
+                            <button class="btn btn-sm btn-warning pull-right publish" data-toggle="modal"
+                                    data-target=".publish_resume"><i class="fa fa-eye fa-lg"></i> Publish CV
+                            </button>
+
+                            {{--<button class="btn btn-warning pull-right publish" title="Here is your resume link" data-toggle="popover" data-placement="bottom" data-content="">Publish CV</button>--}}
+                        @endif
+                        <button class="btn btn-primary btn-sm pull-right print "><i
+                                    href="{{ route('frontend.resume.print', $resume->id) }}"
+                                    class="fa fa-print fa-lg"></i></button>
+                        <div class="modal fade publish_resume" id="myModal" tabindex="-1" role="dialog"
+                             aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="input-group" style="width: 86%;">
+                                                    <input type="text" id="foo" class="form-control"/>
+                                                    <span class="input-group-btn">
+                                                    <button class="btn btn-default" data-clipboard-target="#foo"
+                                                            type="button" id="btn_copied">Copy</button>
+                                                  </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    @endif
+
                     <h2>{{$authUser->name}}</h2>
+                    <span><strong>Gender:</strong>{{ isset($student)?$student['name_en']:'' }}</span>
+                    <span><strong>Date of birth:</strong> {{ isset($profile)?$profile->dob:'' }} </span>
+                    <span><strong>Place of birth:</strong> {{ isset($profile)?$profile->birth_place:'' }} </span>
+                    <span><strong>Marital status:</strong> {{ isset($profile)?$profile->status->name:'' }} </span>
                     <span><strong>Job:</strong> {{ isset($profile)?$profile->job:'' }} </span>
+                    <span><strong>Phone number:</strong> {{ isset($profile)?$profile->phone:'' }} </span>
+                    <span><strong>Email:</strong> {{ isset($profile)?$profile->email:'' }} </span>
                     <hr>
-                    {!! isset($resume)?$resume->career_profile: ''  !!}
+                    <span><strong>{!! isset($resume)?$resume->career_profile: ''  !!} </strong></span>
                 </div>
             </div>
         </div><!--/end row-->
@@ -111,10 +154,16 @@
 
 @section('after-script-end')
     <script type="text/javascript"
-            src="{{ url('bower_components/bootstrap-filestyle/src/bootstrap-filestyle.js') }}"></script>
-    <script>
+            src="{{ asset('bower_components/bootstrap-filestyle/src/bootstrap-filestyle.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('node_modules/clipboard/dist/clipboard.js') }}"></script>
+    <script type="text/javascript">
 
         $(document).ready(function (e) {
+            $('#btn_copied').click(function () {
+                var self = $(this);
+                self.text('Copied');
+            });
+            new Clipboard('.btn');
             //$(":file").filestyle('width', '1000%');
             //show_language();
             getCircleLanguages();
@@ -133,6 +182,45 @@
                 e.preventDefault();
                 $('#image').click();
             });
+
+            $(document).on('click', '.print', function () {
+                event.preventDefault();
+                var left = ($(window).width() / 2) - (980 / 2),
+                    top = ($(window).height() / 2) - (400 / 2),
+                    popup = window.open($(this).children().attr("href"), "popup", "width=980, height=400, top=" + top + ", left=" + left);
+                popup.print();
+
+            });
+
+            $(document).on('click', '.publish', function () {
+                var resume_id = $(this).parent().parent().find('.resume').val();
+                var dom = $(this);
+                $.ajax({
+                    type: 'POST',
+                    url: '{!! route('frontend.resume.publish_resume') !!}',
+                    data: {
+                        _token: '{!! csrf_token() !!}',
+                        'resume_id': resume_id
+                    },
+                    success: function (Response) {
+                        if (Response.status === true) {
+                            var unpublish = '<button class="btn btn-sm btn-warning pull-right publish"><i class="fa fa-eye fa-lg"></i> Unpublish CV </button>'
+                            dom.after(unpublish);
+                            console.log(dom.siblings('.publish_resume').find('input'));
+                            dom.siblings('.publish_resume').find('input').val(Response.url);
+                            dom.remove();
+
+
+                        }
+                        else {
+                            var publish = '<button class="btn btn-sm btn-warning pull-right publish" data-toggle="modal" data-target=".publish_resume"><i class="fa fa-eye fa-lg"></i> Publish CV </button>'
+                            dom.after(publish);
+                            dom.remove();
+
+                        }
+                    }
+                });
+            })
 
         });
 
