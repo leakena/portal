@@ -162,8 +162,24 @@ trait BlogPostTrait
 
     public function getMyPost(Request $request)
     {
-        $posts = Post::whereMonth('created_at', '>=', date("n", strtotime("first day of previous month")))
-            ->orderBy('created_at', 'ASCE');
+
+        $thisYear = date("Y");
+
+//        $posts = Post::whereMonth('created_at', '>=', date("n", strtotime("first day of previous month")))
+//            ->orderBy('created_at', 'ASCE');
+
+        if(isset($request->last_post)){
+            $posts = Post::whereYear('created_at', '=', $thisYear)
+                ->where('created_at', '<' , $request->last_post)
+                ->orderBy('created_at', 'ASCE');
+
+        }else{
+            $posts = Post::whereYear('created_at', '=', $thisYear)
+                ->where('created_at', '<=' , Carbon::now())
+                ->orderBy('created_at', 'ASCE');
+        }
+
+
         if(isset($request->type)) {
             $posts->where('create_uid', auth()->id());
         }
@@ -183,9 +199,20 @@ trait BlogPostTrait
 
         $collectionTags = collect($tags)->keyBy('category_tag_id')->toArray();
 
-        $posts = $posts->get();
+        $posts = $posts->limit(2)->get();
+        //dd($posts);
+        $last_post = $posts->last()->created_at;
+        $rest_post = Post::where([
+            ['created_at','<', $last_post],
+            ['create_uid', auth()->user()->id]
+        ])->get();
+        //dd($rest_post);
 
-        return view('frontend.new_portals.blogs.patials.each_blog_post', compact('posts','tagBypostIds', 'collectionTags' ));
+        if($rest_post->isEmpty()){
+            $last_post = '0';
+        }
+
+        return view('frontend.new_portals.blogs.patials.each_blog_post', compact('posts','tagBypostIds', 'collectionTags', 'last_post' ));
 
     }
 

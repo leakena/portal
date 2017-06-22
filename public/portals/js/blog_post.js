@@ -168,36 +168,46 @@ $(document).on('click', '.btn_tag_list', function (e) {
 $(document).on('click', '#btn_load_more_post', function (e) {
     var dom = $(this);
 
-    $.ajax({
-        method: 'GET',
-        url: '/blog-post/load-more-post',
-        data:{'last_post' :$('input#last_post_id').val()},
-        dataType: 'HTML',
-        success:function(result) {
+    if($('input[name=my_post]').is(':checked')){
+        //alert(100023434);
+        $.ajax({
+            method: 'GET',
+            url: '/blog-post/my-post',
+            data:{
+                type:'filter_my_post',
+                'last_post': $('input#last_post_id').val()
+            },
+            dataType: 'HTML',
+            success:function(result) {
+                $('input#last_post_id').remove();
+                $('.render_post ').append(result);
+                if($('input#last_post_id').val() == 0){
+                    dom.remove();
+                }
+            }
 
-            $('input#last_post_id').remove();
+        });
+    }else{
+        $.ajax({
+            method: 'GET',
+            url: '/blog-post/load-more-post',
+            data:{'last_post' :$('input#last_post_id').val()},
+            dataType: 'HTML',
+            success:function(result) {
+                $('input#last_post_id').remove();
+
+                $('.render_post ').append(result);
+
+                if($('input#last_post_id').val() == 0){
+                    dom.remove();
+                }
 
 
-            // var oldVal = $('input[name=month]').val();
-            // console.log(result);
-            //
-            // if($('input[name=last_post]').val() < 1) {
-            //     $('#btn_load_more_post').hide();
-            //     $('input[name=last_post]').val(result.last_post);
-            // } else {
-            //
-            //     $('input[name=month]').val(result.last_post);
-            // }
+            }
+        });
+
+    }
 
 
-           $('.render_post ').append(result);
-           console.log($('input#last_post_id').val());
-           if($('input#last_post_id').val() == 0){
-               dom.remove();
-           }
-
-
-        }
-    });
 })
 
