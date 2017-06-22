@@ -180,39 +180,54 @@ trait BlogPostTrait
         }
 
 
+
         if(isset($request->type)) {
-            $posts->where('create_uid', auth()->id());
+
+            $posts = $posts->where('create_uid', auth()->id());
+        }
+        //dd($posts->get());
+        if(count($posts->get())>0){
+            $postIds = $posts->pluck('id');
+            $categoryPostTags = DB::table('category_post_tags')->whereIn('post_id', $postIds);
+            $categoryTagIds = $categoryPostTags->pluck('category_tag_id');
+            $tagBypostIds = collect($categoryPostTags->get())->groupBy('post_id')->toArray();
+
+            $tags = DB::table('tags')
+                ->join('category_tags', function ($query) use($categoryTagIds) {
+                    $query->on('category_tags.tag_id', '=', 'tags.id')
+                        ->whereIn('category_tags.id',$categoryTagIds );
+                })
+                ->select('tags.name', 'tags.id as tag_id', 'category_tags.id as category_tag_id')
+                ->get();
+
+            $collectionTags = collect($tags)->keyBy('category_tag_id')->toArray();
+
+            $posts = $posts->limit(2)->get();
+            //dd($posts);
+            $last_post = $posts->last()->created_at;
+            $rest_post = Post::where([
+                ['created_at','<', $last_post],
+                ['create_uid', auth()->user()->id]
+            ])->get();
+            //dd($rest_post);
+
+            if($rest_post->isEmpty()){
+                $last_post = '0';
+            }
+            return view('frontend.new_portals.blogs.patials.each_blog_post', compact('posts','tagBypostIds', 'collectionTags', 'last_post' ));
+        }else{
+            $posts = [];
+            $tagBypostIds = [];
+            $collectionTags = [];
+            $last_post = 0;
+
+
+            return view('frontend.new_portals.blogs.patials.each_blog_post', compact('posts','tagBypostIds', 'collectionTags', 'last_post' ));
         }
 
-        $postIds = $posts->pluck('id');
-        $categoryPostTags = DB::table('category_post_tags')->whereIn('post_id', $postIds);
-        $categoryTagIds = $categoryPostTags->pluck('category_tag_id');
-        $tagBypostIds = collect($categoryPostTags->get())->groupBy('post_id')->toArray();
 
-        $tags = DB::table('tags')
-            ->join('category_tags', function ($query) use($categoryTagIds) {
-                $query->on('category_tags.tag_id', '=', 'tags.id')
-                    ->whereIn('category_tags.id',$categoryTagIds );
-            })
-            ->select('tags.name', 'tags.id as tag_id', 'category_tags.id as category_tag_id')
-            ->get();
 
-        $collectionTags = collect($tags)->keyBy('category_tag_id')->toArray();
 
-        $posts = $posts->limit(2)->get();
-        //dd($posts);
-        $last_post = $posts->last()->created_at;
-        $rest_post = Post::where([
-            ['created_at','<', $last_post],
-            ['create_uid', auth()->user()->id]
-        ])->get();
-        //dd($rest_post);
-
-        if($rest_post->isEmpty()){
-            $last_post = '0';
-        }
-
-        return view('frontend.new_portals.blogs.patials.each_blog_post', compact('posts','tagBypostIds', 'collectionTags', 'last_post' ));
 
     }
 

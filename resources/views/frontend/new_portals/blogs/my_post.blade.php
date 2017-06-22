@@ -311,27 +311,31 @@
 
         /*---end option select2----*/
 
+        function my_post() {
+            $.ajax({
+                method: 'GET',
+                url: '{{route('frontend.portal.get_my_post')}}',
+                data:{type:'filter_my_post'},
+                dataType: 'HTML',
+                success:function(result) {
+                    $('input#last_post_id').remove();
+                    $('.load_more_post').remove();
+                    $('.render_post ').html(result)
+                    if($('input#last_post_id').val() != 0){
+                        var loadMore = '<button type="button" class="btn-u btn-u-default btn-block text-center load_more_post" id="btn_load_more_post">Load More</button>';
+                        $('.render_post').after(loadMore);
+                    }else {
+                        $('.load_more_post').remove();
+                    }
+                },
+
+            })
+        }
+
 
         $('input[name=my_post]').on('change', function() {
             if($(this).is(':checked')) {
-                $.ajax({
-                    method: 'GET',
-                    url: '{{route('frontend.portal.get_my_post')}}',
-                    data:{type:'filter_my_post'},
-                    dataType: 'HTML',
-                    success:function(result) {
-                        $('input#last_post_id').remove();
-                        $('.load_more_post').remove();
-                       $('.render_post ').html(result)
-                        if($('input#last_post_id').val() != 0){
-                            var loadMore = '<button type="button" class="btn-u btn-u-default btn-block text-center load_more_post" id="btn_load_more_post">Load More</button>';
-                            $('.render_post').after(loadMore);
-                        }else {
-                            $('.load_more_post').remove();
-                        }
-                    },
-
-                })
+                my_post();
             } else {
                 ajaxRefreshPost()
 
@@ -387,7 +391,7 @@
                         success: function(resultData) {
                             if(resultData.status == true) {
                                 swal("Deleted", "Your post is deleted :)", "success");
-                                ajaxRefreshPost();
+                                my_post();
                             }
                         }
                     });
