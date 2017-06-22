@@ -160,35 +160,6 @@ class ResumeController extends Controller
                 }
             }
 
-
-            /*---check if personal-info hase already created ---*/
-            if (isset($request->personal_info_id)) {
-                //dd($request->all());
-                /*--update personal info --*/
-                $update = $this->personalInfos->update($resume->personalInfo->id, $request->all());
-
-                if ($update) {
-                    return redirect()->back()->with(['status' => 'Information Updated!']);
-                }
-            } else {
-                /*---create personal-info--*/
-
-                $create = $this->personalInfos->create($request->all());
-
-                if ($create) {
-                    return Response::json([
-                        'status' => true,
-                        'id' => $create[1],
-                        'birth_place' => $request->birth_place,
-                        'status_id' => $request->status_id,
-                        'job' => $request->job,
-                        'phone' => $request->phone,
-                        'address' => $request->address,
-                        'email' => $request->email
-                    ]);
-                }
-            }
-
         } else {
             return false;
         }
@@ -403,10 +374,7 @@ class ResumeController extends Controller
     public function editExperience($id)
     {
         $userResume = $this->getUserResume(auth()->id());
-
-        $experience = DB::table('experiences')->where('id', $id)->first();
-
-
+        $experience = DB::table('experiences')->where('id',$id)->first();
         return view('backend.resumes.experience.partial.edit_experiences', compact('experience', 'userResume'));
     }
 
@@ -1381,8 +1349,7 @@ class ResumeController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function editReference($id)
-    {
+    public function editReference($id){
         $userResume = Resume::where('user_uid', auth()->id())->first();
 
         $reference = Reference::where('id', $id)->first();

@@ -54,7 +54,7 @@ class PortalController extends Controller
 
     public function index(Request $request)
     {
-//        $studentData = $this->controller->getElementByApi($this->studentPrefix . '/program', ['student_id_card', 'academic_year_id'], ['e20121147', ''], []);
+//        $studentData = $this->controller->getElementByApi($this->studentPrefix . '/program', ['student_id_card', 'academic_year_id'], ['e20150498', ''], []);
 //        dd($studentData);
         $user = auth()->user();
         $studentScore = $this->controller->getElementByApi($this->studentPrefix . '/score', ['student_id_card'], [$user->email], []);
@@ -86,14 +86,16 @@ class PortalController extends Controller
     public function myPosts(Request $request)
     {
 
+        $dataToLoads = $this->loadPosts(Carbon::now());
 
-        $dataToLoads = $this->loadPosts(date("n", strtotime("first day of previous month")));
+//        $dataToLoads = $this->loadPosts(date("n", strtotime("first day of previous month")));
 
         $posts = $this->setPriority($dataToLoads['post'], $dataToLoads['student_data']);
         $tagBypostIds = $dataToLoads['tag_by_post_id'];
         $collectionTags = $dataToLoads['collection_tag'];
-        $lastMonth = $dataToLoads['last_month'];
-        return view('frontend.new_portals.blogs.my_post', compact('posts', 'tagBypostIds', 'collectionTags', 'lastMonth'));
+        //$lastMonth = $dataToLoads['last_month'];
+        $last_post = $dataToLoads['last_post'];
+        return view('frontend.new_portals.blogs.my_post', compact('posts', 'tagBypostIds', 'collectionTags', 'last_post'));
 
     }
 
@@ -446,9 +448,6 @@ class PortalController extends Controller
 
 
             $level_degree = $array_key_post[$studentData['degree_id']];
-
-            // dd($posts);
-
 
             if (isset($level_degree[$studentData['department_id']])) {
 

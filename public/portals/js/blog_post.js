@@ -91,7 +91,7 @@ function onChangeSelectedFile(
 
         if(!$('form#form_edit_post').find('div.each_blog_file_edit')[0]) {
 
-            console.log($('form#form_edit_post').find('input#post_change_file').val());
+            //console.log($('form#form_edit_post').find('input#post_change_file').val());
             //$('#blog_file').html(blog_file_edit)
         }
 
@@ -166,25 +166,37 @@ $(document).on('click', '.btn_tag_list', function (e) {
 
 
 $(document).on('click', '#btn_load_more_post', function (e) {
+    var dom = $(this);
 
     $.ajax({
         method: 'GET',
         url: '/blog-post/load-more-post',
-        data:{month:$('input[name=month]').val()},
+        data:{'last_post' :$('input#last_post_id').val()},
         dataType: 'HTML',
         success:function(result) {
 
-            var oldVal = $('input[name=month]').val();
-
-            if(oldVal > 2) {
-                $('input[name=month]').val(oldVal-1);
-            } else {
-                $('#btn_load_more_post').hide();
-                $('input[name=month]').val(oldVal-1);
-            }
+            $('input#last_post_id').remove();
 
 
-            $('.render_post ').html(result)
+            // var oldVal = $('input[name=month]').val();
+            // console.log(result);
+            //
+            // if($('input[name=last_post]').val() < 1) {
+            //     $('#btn_load_more_post').hide();
+            //     $('input[name=last_post]').val(result.last_post);
+            // } else {
+            //
+            //     $('input[name=month]').val(result.last_post);
+            // }
+
+
+           $('.render_post ').append(result);
+           console.log($('input#last_post_id').val());
+           if($('input#last_post_id').val() == 0){
+               dom.remove();
+           }
+
+
         }
     });
 })
