@@ -143,7 +143,7 @@ Route::group(['middleware' => 'auth'], function () {
          */
         Route::get('/resume/skills', 'ResumeController@skillContent')->name('get_skill_content');
         Route::get('/resume/get-skills', 'ResumeController@skill')->name('get_skill');
-        Route::post('/resume/skills/save-skill', 'ResumeController@saveSkill');
+        Route::post('/resume/skills/save-skill', 'ResumeController@saveSkill')->name('store_skill');
         Route::get('/resume/skills/edit-skill/{id}', 'ResumeController@editSkill')->name('edit_skill');
         Route::post('/resume/skills/update-skill', 'ResumeController@updateSkill');
         Route::post('/resume/skills/{id}/delete-skill', 'ResumeController@deleteSkill')->name('remove_skill');
@@ -162,7 +162,7 @@ Route::group(['middleware' => 'auth'], function () {
          */
         Route::get('/resume/educations', 'ResumeController@educationContent')->name('get_education_content');
         Route::get('/resume/get-educations', 'ResumeController@education')->name('get_education');
-        Route::post('/resume/educations/save-education', 'ResumeController@saveEducation');
+        Route::post('/resume/educations/save-education', 'ResumeController@saveEducation')->name('store_education');
         Route::get('/resume/educations/edit-education/{id}', 'ResumeController@editEducation')->name('edit_education');
         Route::post('/resume/educations/update-education', 'ResumeController@updateEducation');
         Route::post('/resume/educations/{id}/delete-education', 'ResumeController@deleteEducation')->name('remove_education');
@@ -197,7 +197,7 @@ Route::group(['middleware' => 'auth'], function () {
          * Reference
          */
         Route::get('/resume/references', 'ResumeController@reference')->name('get_reference');
-        Route::post('/resume/references/save-reference', 'ResumeController@saveReference');
+        Route::post('/resume/references/save-reference', 'ResumeController@saveReference')->name('store_reference');
         Route::get('/resume/references/{id}/edit-reference', 'ResumeController@editReference')->name('edit_reference');
         Route::post('/resume/references/{id}/delete-reference', 'ResumeController@deleteReference')->name('remove_reference');
     });

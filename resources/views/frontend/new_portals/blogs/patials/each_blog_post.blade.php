@@ -80,7 +80,6 @@
 
     @endforeach
 
-
         <input type="hidden" class="last_post" id="last_post_id" value="{{ $last_post }}">
 
 @endif

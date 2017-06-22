@@ -77,6 +77,31 @@
             margin-right: 0px !important;
             margin-left:0px !important;
         }
+
+        .sky-form .toggle {
+            margin-bottom: 4px;
+            padding-right: 61px;
+            font-size: 15px;
+            line-height: 27px;
+            color: #404040;
+            cursor: pointer;
+        }
+
+        .sky-form .toggle i {
+            width: 54px;
+            height: 21px;
+            border-width: 1px;
+        }
+
+
+        .sky-form .toggle {
+            font-weight: normal;
+        }
+
+        .toggle, .sky-form .button {
+            position: relative;
+            display: block;
+        }
     </style>
 @endsection
 
@@ -88,29 +113,32 @@
     {{--block create post--}}
 
     <div class="row new_row no-padding">
-        <div class="col-md-7 " style="padding-left: 0px; padding-right: 1px">
+        <div id="new_post" class="pull-left" style="padding-left: 1px; padding-right: 2px" data-toggle="tooltip" title="Add new post" >
+            <a style="font-size: 12pt; " class="btn btn-u btn-u-aqua pull-right accordion-toggle collapsed" id="icon_toggle" href="#id_form" data-toggle="collapse" aria-expanded="false">
+
+                <i class="fa fa-plus-square" id="add"></i>
+
+            </a>
+            {{--<a href="#" data-toggle="tooltip" title="Hooray!">Hover over me</a>--}}
+        </div>
+        <div class="no-padding pull-left" >
+            <label id="my_post" data-toggle="tooltip" title="My post" for="my_post" class="btn btn-u pull-right" style="font-size: 12pt;">
+                <input type="checkbox" name="my_post" id="my_post" value="my_post">
+                {{--<i class="fa fa-user" aria-hidden="true"></i>--}}
+            </label>
+            {{--<label class="toggle toggle-change">--}}
+                {{--<input type="checkbox" checked="" name="checkbox-toggle-1"><i class="no-rounded"></i>--}}
+            {{--</label>--}}
+        </div>
+        <div class="pull-right " style="padding-left: 2px; padding-right: 1px">
             <div class="input-group">
                 <input type="text" class="form-control" name="search_post" placeholder="Search">
-                <span class="input-group-btn">
 
-							<button class="btn-u" type="button">Go</button>
-                </span>
             </div>
             <!-- End Search Bar -->
         </div>
-        <div class="col-md-3 no-padding" >
-            <label for="my_post" class="btn btn-u pull-right" style="font-size: 12pt; width: 100%;">
-                <input type="checkbox" name="my_post" id="my_post" value="my_post">
-                My Posts
-            </label>
-        </div>
 
-        <div class="col-md-2" style="padding-left: 1px; padding-right: 0px">
-            <a style="font-size: 12pt; width: 100%;" class="btn btn-u btn-u-aqua pull-right accordion-toggle collapsed" id="icon_toggle" href="#id_form" data-toggle="collapse" aria-expanded="false">
-                <i class="fa fa-plus-square" id="add"></i>
-                Posts
-            </a>
-        </div>
+
     </div>
 
     <div class="row new_row blog blog-medium collapse" id="id_form"  aria-expanded="false">
@@ -133,7 +161,7 @@
         @include('frontend.new_portals.blogs.patials.each_blog_post')
     </div>
 
-    <button type="button" class="btn-u btn-u-default btn-block text-center" id="btn_load_more_post">Load More</button>
+    <button type="button" class="btn-u btn-u-default btn-block text-center load_more_post" id="btn_load_more_post">Load More</button>
     {{--<input type="hidden" name="last_post" value="{{isset($last_post)?$last_post:''}}">--}}
     <!--End Blog Post-->
 
@@ -169,9 +197,15 @@
     <script>
         $(document).ready(function () {
 
+
             if($('input#last_post_id').val() == 0 ){
                 $('#btn_load_more_post').remove();
             }
+
+            $('#new_post').tooltip();
+
+
+            $('#my_post').tooltip();
         });
 
         var btn = '<i class="fa fa fa-unlink btn btn-xs pull-right btn-u btn-brd rounded btn-u-green btn-u-sm" id="change_file">'+ ' Choose File'+ '</i>';
@@ -286,7 +320,15 @@
                     data:{type:'filter_my_post'},
                     dataType: 'HTML',
                     success:function(result) {
+                        $('input#last_post_id').remove();
+                        $('.load_more_post').remove();
                        $('.render_post ').html(result)
+                        if($('input#last_post_id').val() != 0){
+                            var loadMore = '<button type="button" class="btn-u btn-u-default btn-block text-center load_more_post" id="btn_load_more_post">Load More</button>';
+                            $('.render_post').after(loadMore);
+                        }else {
+                            $('.load_more_post').remove();
+                        }
                     },
 
                 })
@@ -308,7 +350,8 @@
                    data:{text: $(this).val()},
                    dataType: 'HTML',
                    success:function(result) {
-                       $('.render_post ').html(result)
+                       $('.render_post ').html(result);
+
                    },
 
                })
@@ -358,13 +401,26 @@
 
         function ajaxRefreshPost()
         {
+
+            var now = Date($.now());
             $.ajax({
                 method: 'GET',
-                url: '{{route('frontend.portal.get_my_post')}}',
-                data:{},
+                url: '{{route('frontend.portal.load_more_post')}}',
+                data:{
+                    'last_post': now
+                },
                 dataType: 'HTML',
                 success:function(result) {
+                    $('input#last_post_id').remove();
+                    $('.load_more_post').remove();
                     $('.render_post ').html(result)
+                    if($('input#last_post_id').val() != 0){
+                        var loadMore = '<button type="button" class="btn-u btn-u-default btn-block text-center load_more_post" id="btn_load_more_post">Load More</button>';
+                        $('.render_post').after(loadMore);
+                    }else {
+                        $('.load_more_post').remove();
+                    }
+
                 }
             })
         }

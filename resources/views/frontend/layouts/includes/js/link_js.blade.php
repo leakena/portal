@@ -47,6 +47,7 @@
         Datepicker.initDatepicker();
         CirclesMaster.initCirclesMaster1();
         StyleSwitcher.initStyleSwitcher();
+
     });
 
     function notify(type, title, description) {
