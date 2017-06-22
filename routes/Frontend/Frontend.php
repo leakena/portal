@@ -181,7 +181,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/resume/languages/compare_language', 'ResumeController@compare_language')->name('compare_language');
         Route::post('/resume/languages/get_circle_language', 'ResumeController@get_circle_language')->name('getCircleLanguages');
         Route::post('/resume/languages/update-language', 'ResumeController@updateLanguage');
-        Route::post('/resume/languages/{id}/delete-language', 'ResumeController@deleteLanguage')->name('remove_language');
 
 
         /**

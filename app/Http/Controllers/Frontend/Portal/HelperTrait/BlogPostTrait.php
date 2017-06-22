@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers\Frontend\Portal\HelperTrait;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Portal\Post\Post;
@@ -421,32 +422,43 @@ trait BlogPostTrait
     public function loadMorePost(Request $request)
     {
 
-        $dataToLoads = $this->loadPosts($request->month -1);
-
+        $dataToLoads = $this->loadPosts($request->last_post);
+       // dd($request->last_post);
         $posts = $this->setPriority($dataToLoads['post'], $dataToLoads['student_data']);
         $tagBypostIds = $dataToLoads['tag_by_post_id'];
         $collectionTags = $dataToLoads['collection_tag'];
-        $lastMonth = $dataToLoads['last_month'];
+        //$lastMonth = $dataToLoads['last_month'];
+        $last_post = $dataToLoads['last_post'];
 
-        return view('frontend.new_portals.blogs.patials.each_blog_post', compact('posts','tagBypostIds', 'collectionTags','lastMonth' ));
+        return view('frontend.new_portals.blogs.patials.each_blog_post', compact('posts','tagBypostIds', 'collectionTags','last_post' ));
 
     }
 
 
-    private function loadPosts($month)
+    private function loadPosts($today)
     {
 
         //dd( date("Y",strtotime("-1 year")));
 
-        if($month >= 1) {
+        if($today) {
+
 
             $thisYear = date("Y");
             $studentData = $this->controller->getElementByApi($this->studentPrefix . '/annual-object', ['student_id_card', 'academic_year_id'], [auth()->user()->email, $thisYear], []);
 
-            $posts = Post::whereYear('created_at', '=', $thisYear)
-                ->whereMonth('created_at', '>=', $month )//dd(date("Y-n-j", strtotime("first day of previous month")));
-                ->whereNotIn('create_uid', [auth()->id()])
-                ->orderBy('created_at', 'ASCE');
+            if( $today == Carbon::now()){
+                $posts = Post::whereYear('created_at', '=', $thisYear)
+                    ->where('created_at', '<=', $today )//dd(date("Y-n-j", strtotime("first day of previous month")));
+                    ->whereNotIn('create_uid', [auth()->id()])
+                    ->orderBy('created_at', 'ASCE');
+
+            }else{
+                $posts = Post::whereYear('created_at', '=', $thisYear)
+                    ->where('created_at', '<', $today )//dd(date("Y-n-j", strtotime("first day of previous month")));
+                    ->whereNotIn('create_uid', [auth()->id()])
+                    ->orderBy('created_at', 'ASCE');
+            }
+
 
             $postIds = $posts->pluck('id');
 
@@ -465,13 +477,25 @@ trait BlogPostTrait
                 ->get();
             $collectionTags = collect($tags)->keyBy('category_tag_id')->toArray();
 
-            $posts = $posts->limit(100)->get();
+            $posts = $posts->limit(2)->get();
+
+
+            $last_post = $posts->last()->created_at;
+            $rest_post = Post::where('created_at', '<', $last_post)->get();
+
+            if($rest_post->isEmpty()){
+                $last_post = '0';
+            }
+
+
+
             $posts = $this->setPriority($posts, $studentData);
+
             return [
                 'post' => $posts,
                 'tag_by_post_id' => $tagBypostIds,
                 'collection_tag' => $collectionTags,
-                'last_month' => $month,
+                'last_post' => $last_post,
                 'student_data' => $studentData
             ];
 

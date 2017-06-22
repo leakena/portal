@@ -134,7 +134,7 @@
     </div>
 
     <button type="button" class="btn-u btn-u-default btn-block text-center" id="btn_load_more_post">Load More</button>
-    <input type="hidden" name="month" value="{{isset($lastMonth)?$lastMonth:''}}">
+    {{--<input type="hidden" name="last_post" value="{{isset($last_post)?$last_post:''}}">--}}
     <!--End Blog Post-->
 
 
@@ -167,6 +167,12 @@
     {!! Html::script('portals/js/blog_post.js') !!}
 
     <script>
+        $(document).ready(function () {
+
+            if($('input#last_post_id').val() == 0 ){
+                $('#btn_load_more_post').remove();
+            }
+        });
 
         var btn = '<i class="fa fa fa-unlink btn btn-xs pull-right btn-u btn-brd rounded btn-u-green btn-u-sm" id="change_file">'+ ' Choose File'+ '</i>';
         var inputFile = '<input type="file" class="btn btn-u " style="display: none" id="post_change_file" name="file" accept="image/*, .doc, .docx,.ppt, .pptx,.txt,.pdf">';

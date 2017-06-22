@@ -9,7 +9,7 @@
             </ul>
             <div class="tab-content">
                 <!--=== Profile ===-->
-                <div class="profile-body profile-edit tab-pane fade in active" id="profile">
+                <div class="profile-body tab-pane fade in active" id="profile">
                     <div class="profile-bio">
                         <div class="row">
                             {!! Form::open(['enctype'=> 'multipart/form-data', 'files' => true, 'route' => 'frontend.portal.resume.upload_profile', 'class' => 'form-horizontal create_user_info', 'role' => 'form', 'method' => 'post', 'id' => 'create-profile-pic']) !!}
@@ -54,18 +54,18 @@
                             <div class="col-md-7">
                                 @if(isset($resume))
                                     @if($resume->publish == true)
-                                        <button class="btn btn-warning btn-sm pull-right publish"><i
+                                        <button class="btn btn-u btn-sm pull-right publish"><i
                                                     href="{{ route('frontend.resume.print', $resume->id) }}"
                                                     class="fa fa-eye fa-lg"></i> Unpublish CV
                                         </button>
                                     @else
-                                        <button class="btn btn-sm btn-warning pull-right publish" data-toggle="modal"
+                                        <button class="btn btn-sm btn-u pull-right publish" data-toggle="modal"
                                                 data-target=".publish_resume"><i class="fa fa-eye fa-lg"></i> Publish CV
                                         </button>
 
                                         {{--<button class="btn btn-warning pull-right publish" title="Here is your resume link" data-toggle="popover" data-placement="bottom" data-content="">Publish CV</button>--}}
                                     @endif
-                                    <button class="btn btn-primary btn-sm pull-right print "><i
+                                    <button class="btn btn-u btn-u-default btn-sm pull-right print "><i
                                                 href="{{ route('frontend.resume.print', $resume->id) }}"
                                                 class="fa fa-print fa-lg"></i></button>
                                     <div class="modal fade publish_resume" id="myModal" tabindex="-1" role="dialog"
@@ -115,6 +115,7 @@
                         @include('frontend.new_portals.includes.partials.profile.experience')
                         {{--End Experience Panel--}}
                     </div>
+                    <hr>
                     <!--End Timeline-->
 
                     <!--Timeline-->
@@ -218,7 +219,7 @@
                     },
                     success: function (Response) {
                         if (Response.status === true) {
-                            var unpublish = '<button class="btn btn-sm btn-warning pull-right publish"><i class="fa fa-eye fa-lg"></i> Unpublish CV </button>'
+                            var unpublish = '<button class="btn btn-sm btn-u pull-right publish"><i class="fa fa-eye fa-lg"></i> Unpublish CV </button>'
                             dom.after(unpublish);
                             console.log(dom.siblings('.publish_resume').find('input'));
                             dom.siblings('.publish_resume').find('input').val(Response.url);
@@ -227,7 +228,7 @@
 
                         }
                         else {
-                            var publish = '<button class="btn btn-sm btn-warning pull-right publish" data-toggle="modal" data-target=".publish_resume"><i class="fa fa-eye fa-lg"></i> Publish CV </button>'
+                            var publish = '<button class="btn btn-sm btn-u pull-right publish" data-toggle="modal" data-target=".publish_resume"><i class="fa fa-eye fa-lg"></i> Publish CV </button>'
                             dom.after(publish);
                             dom.remove();
 
