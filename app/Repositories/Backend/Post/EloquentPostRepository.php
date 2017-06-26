@@ -35,6 +35,7 @@ class EloquentPostRepository implements PostContract
     {
 
         $post = new Post();
+        $post->title = $input['title'];
         $post->body = $input['body'];
         $post->department_id = $input['department_id'];
         $post->degree_id = $input['degree_id'];

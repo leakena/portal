@@ -3,6 +3,7 @@
 namespace App\Models\Access\User;
 
 use App\Models\Access\User\Traits\PostUser;
+use App\Models\Portal\Resume\Resume;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Access\User\Traits\UserAccess;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -25,7 +26,6 @@ class User extends Authenticatable
         UserRelationship,
         UserSendPasswordReset,
         PostUser;
-
 
 
     /**
@@ -61,5 +61,10 @@ class User extends Authenticatable
     {
         parent::__construct($attributes);
         $this->table = config('access.users_table');
+    }
+
+    public function resume()
+    {
+        return $this->hasOne(Resume::class, 'user_uid');
     }
 }

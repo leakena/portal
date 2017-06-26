@@ -61,6 +61,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/blog-post/{id}/post-by-category', 'PortalController@postByCategory')->name('post_by_category');
         Route::get('/blog-post/{id}/post-by-tag', 'PortalController@postByTag')->name('post_by_tag');
         Route::get('/blog-post/load-more-post', 'PortalController@loadMorePost')->name('load_more_post');
+        Route::get('/blog-post/show_post', 'PortalController@show_post')->name('show_post');
 
 
         /*---end new post route -----*/
