@@ -131,6 +131,16 @@ function onChangeSelectedFile(asset_img_file,
 /*---post by category---*/
 $(document).on('click', '.btn_category_list', function (e) {
     e.preventDefault();
+    var dom = $(this).parent().parent().parent().parent();
+    if(dom.find('.active') ){
+        dom.find('.active').removeClass('active').css('background-color', '');
+    }
+    $(this).css("background-color", "#72c02c");
+    $(this).addClass('active');
+    $('input[name=search_post]').val('');
+
+
+
     var category_url = $(this).attr('href');
     $.ajax({
         method: 'GET',
@@ -138,7 +148,9 @@ $(document).on('click', '.btn_category_list', function (e) {
         data: {},
         dataType: 'HTML',
         success: function (result) {
-            $('.render_post ').html(result)
+            $('.render_post ').html(result);
+            $('.user_post_profile').tooltip();
+            $('.load_more_post').remove();
         }
     })
 })
@@ -146,6 +158,15 @@ $(document).on('click', '.btn_category_list', function (e) {
 
 $(document).on('click', '.btn_tag_list', function (e) {
     e.preventDefault();
+
+    var dom = $(this).parent().parent().parent().parent();
+    if(dom.find('.active') ){
+        dom.find('.active').removeClass('active').css('background-color', '');
+    }
+    $(this).css("background-color", "#72c02c");
+    $(this).addClass('active');
+    $('input[name=search_post]').val('');
+
     var tag_url = $(this).attr('href');
     $.ajax({
         method: 'GET',
@@ -153,7 +174,9 @@ $(document).on('click', '.btn_tag_list', function (e) {
         data: {},
         dataType: 'HTML',
         success: function (result) {
-            $('.render_post ').html(result)
+            $('.render_post ').html(result);
+            $('.user_post_profile').tooltip();
+            $('.load_more_post').remove();
         }
     });
 });

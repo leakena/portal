@@ -10,9 +10,11 @@ namespace App\Http\Controllers\Frontend\Portal\HelperTrait;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use App\Models\Portal\Post\Post;
 use Illuminate\Support\Facades\Response;
+use App\Models\Access\User\User;
 
 trait BlogPostTrait
 {
@@ -270,12 +272,14 @@ trait BlogPostTrait
 
         $category_tag_ids = $searchResult->pluck('category_tag_id')->toArray();
 
+
         $posts = DB::table('posts')->join('category_post_tags', function ($query) use ($category_tag_ids) {
             $query->on('category_post_tags.post_id', '=', 'posts.id')
                 ->whereIn('category_post_tags.category_tag_id', $category_tag_ids);
         })
             ->select(
                 'posts.id',
+                'posts.title',
                 'posts.body',
                 'posts.file',
                 'posts.created_at',
@@ -287,6 +291,13 @@ trait BlogPostTrait
                 'posts.grade_id'
             )
             ->orderBy('posts.created_at', 'ASCE')->get();
+
+        if(count($posts) == 0){
+
+            $posts = Post::where('title', 'like' , '%' . $request->text . '%')->orderBy('posts.created_at', 'ASCE')->get();
+           // dd($posts);
+        }
+
 
         $tagBypostIds = collect($posts)->groupBy('post_id')->toArray();
 
@@ -406,8 +417,7 @@ trait BlogPostTrait
     public function postByCategory($categoryId, Request $request)
     {
 
-        $posts = DB::table('posts')
-            ->join('category_post_tags', function ($query) use ($categoryId) {
+        $posts = Post::join('category_post_tags', function ($query) use ($categoryId) {
 
                 $categoryTagIds = DB::table('categories')->join('category_tags', function ($subQuery) use ($categoryId) {
                     $subQuery->on('category_tags.category_id', '=', 'categories.id')
@@ -419,6 +429,7 @@ trait BlogPostTrait
 
             })->select(
                 'posts.id',
+                'posts.title',
                 'posts.body',
                 'posts.file',
                 'posts.created_at',
@@ -431,19 +442,35 @@ trait BlogPostTrait
             )
             ->orderBy('posts.created_at', 'ASCE')->get();
 
+        foreach ($posts as $post){
+           // dd($post);
+        }
+
+
+
+
         $tags = DB::table('tags')
             ->join('category_tags', function ($query) use ($categoryId) {
                 $query->on('category_tags.tag_id', '=', 'tags.id')
                     ->whereIn('category_tags.category_id', [$categoryId]);
             })->select('tags.name', 'tags.id as tag_id', 'category_tags.id as category_tag_id');
 
+
+        $newPosts = [];
         $collectionTags = collect($tags->get())->keyBy('category_tag_id')->toArray();
-        $tagBypostIds = collect($posts)->groupBy('id')->toArray();
+
+        $tagBypostIds = collect($posts)->mapWithKeys(function($item_post) use(&$newPosts){
+            $item_post = (object)collect($item_post)->toArray();
+            $newPosts[$item_post->id][] = $item_post;
+            return $newPosts;
+        })->toArray();
 
 
         $posts = collect($posts)->mapWithKeys(function ($item) {
-            return ([$item->post_id => $item]);
+            return [$item->post_id => (object)collect($item)->toArray()];
         })->toArray();
+
+
 
         return view('frontend.new_portals.blogs.patials.each_blog_post', compact('posts', 'tagBypostIds', 'collectionTags'));
 
@@ -592,6 +619,10 @@ trait BlogPostTrait
         }
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show_post(Request $request)
     {
 

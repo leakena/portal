@@ -217,9 +217,13 @@
 @section('after-script-end')
 
     {!! Html::script('portals/js/blog_post.js') !!}
+    {!! Html::script('bower_components/sticky-kit/jquery.sticky-kit.min.js') !!}
 
     <script>
         $(document).ready(function () {
+
+            $("#right_sidebar").stick_in_parent();
+            $('#left_sidebar').stick_in_parent();
 
             if ($('input[name=my_post]').is(':checked')) {
                 my_post();
@@ -234,6 +238,7 @@
             $('#new_post').tooltip();
             $('#my_post').tooltip();
             $('.user_post_profile').tooltip();
+            $('.recent_post_profile').tooltip();
         });
 
         var btn = '<i class="fa fa fa-unlink btn btn-xs pull-right btn-u btn-brd rounded btn-u-green btn-u-sm" id="change_file">' + ' Choose File' + '</i>';
@@ -377,6 +382,11 @@
 
 
         $('input[name=search_post]').on('keyup', function (e) {
+            var dom = $('#right_sidebar');
+            if(dom.find('.active')){
+                dom.find('.active').removeClass('active').css('background-color', '');
+            }
+
 
             if ($(this).val() != '') {
                 $.ajax({
@@ -386,6 +396,8 @@
                     dataType: 'HTML',
                     success: function (result) {
                         $('.render_post ').html(result);
+                        $('.user_post_profile').tooltip();
+                        $('.load_more_post').remove();
 
                     },
 
@@ -473,6 +485,7 @@
 
                     $('form#form_edit_post').find('input[name=is_crosed]').val(0);
                     $('textarea.edit_textarea').val(result.post.body);
+                    $('form#form_edit_post').find('input[name=title]').val(result.post.title);
                     if (!$('form#form_edit_post').find('input[name=post_id]')[0]) {
                         $('form#form_edit_post').append('<input type="hidden", name="post_id" value="' + result.post.id + '">')
                     } else {
@@ -576,6 +589,8 @@
                 $(this).children('i').prop('class', 'fa  fa-plus-square')
             }
         });
+
+
     </script>
 
 @endsection

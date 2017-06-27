@@ -6,6 +6,7 @@
         <img class="img-responsive" src="{{asset('portals/icons').'/'.$post->file}}" alt="">
     </a>--}}
 
+    <input type="text" class="form-control margin-bottom-10" name="title" value="">
     <section class=" col-md-6 " style="padding-left: 0px">
         <select class="form-control input-sm category_edit" multiple  id="edit_select2_category" name="category[]" data-placeholder=" Select Category" style="width: 100%; ">
             <option value="hello">Hello</option>

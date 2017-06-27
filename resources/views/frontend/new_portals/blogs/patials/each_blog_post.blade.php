@@ -11,7 +11,7 @@
 
             @if($post->file)
 
-                <div class="col-md-3" style="padding-left: 0px">
+                <div class="col-md-2" style="padding-left: 0px">
                     @php
                         $split_str = explode('.', $post->file);
                         if (isset($split_str)){
@@ -40,6 +40,7 @@
                         @if($extention == 'docx')
                             <a href="{{ asset('docs') }}/{{ $post->file }}" download="{{ $post->file }}">
                                 <img class="img-responsive" src="{{asset('portals/icons/docx.png')}}" alt="">
+                                {{--<img class="img-responsive" src="{{asset('portals/icons/new_docx.png')}}" alt="" style="margin: auto; ">--}}
                             </a>
                         @endif
 
@@ -64,7 +65,7 @@
                     {{--<img class="img-responsive" src="{{ asset('img/frontend/uploads/images').'/'.$post->file }}" alt="">--}}
 
                 </div>
-                <div class="col-md-8 sm-margin-bottom-20 profile">
+                <div class="col-md-9 sm-margin-bottom-20 profile">
                     @include('frontend.new_portals.blogs.includes.post_contend')
                 </div>
             @else
@@ -81,7 +82,9 @@
 
     @endforeach
 
-    <input type="hidden" class="last_post" id="last_post_id" value="{{ $last_post }}">
+    @if(isset($last_post))
+        <input type="hidden" class="last_post" id="last_post_id" value="{{ $last_post }}">
+    @endif
 
 @endif
 

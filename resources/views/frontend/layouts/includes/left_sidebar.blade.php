@@ -1,4 +1,4 @@
-<div class="col-md-3 md-margin-bottom-40">
+<div class="col-md-3 md-margin-bottom-40" id="left_sidebar">
 
     <img class="img-responsive profile-img margin-bottom-20" style="width: 100% !important;"
          src="{{ isset($personal_info)?( ($personal_info->profile)? url('img/backend/profile/'.$personal_info->profile): url('portals/assets/img/team/img32-md.jpg') ): url('portals/assets/img/team/img32-md.jpg')}}"

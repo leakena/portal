@@ -2,8 +2,10 @@
 
     <img class="rounded-x user_post_profile" data-placement="right" data-toggle="tooltip"
          title="{{ strtoupper(User::iPosted($post->create_uid)->name) }}"
-         src="{{isset($post->user->resume->personalInfo->profile)?asset('img/backend/profile'.'/'. $post->user->resume->personalInfo->profile):asset('portals/assets/img/team/img32-md.jpg')}}"
+         src="{{isset(User::iPosted($post->create_uid)->resume->personalInfo->profile)?asset('img/backend/profile'.'/'. User::iPosted($post->create_uid)->resume->personalInfo->profile):asset('portals/assets/img/team/img32-md.jpg')}}"
          alt="">
+
+    {{--{{ dd(User::iPosted($post->create_uid)->resume) }}--}}
 
 
     <h2 style="margin-top: -15px; margin-bottom: 0px"><a
