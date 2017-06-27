@@ -25,6 +25,7 @@
     "toastr": "^2.1.3",
     "select2": "^4.0.3",
     "moment": "*",
-    "jquery": "*"
+    "jquery": "*",
+    "sticky-kit": "^1.1.2"
   }
 }

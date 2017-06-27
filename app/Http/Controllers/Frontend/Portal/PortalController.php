@@ -95,7 +95,9 @@ class PortalController extends Controller
         $collectionTags = $dataToLoads['collection_tag'];
         //$lastMonth = $dataToLoads['last_month'];
         $last_post = $dataToLoads['last_post'];
-        return view('frontend.new_portals.blogs.my_post', compact('posts', 'tagBypostIds', 'collectionTags', 'last_post'));
+        $recent_posts = Post::latest()->limit(3)->get();
+
+        return view('frontend.new_portals.blogs.my_post', compact('posts', 'tagBypostIds', 'collectionTags', 'last_post', 'recent_posts'));
 
     }
 
@@ -315,6 +317,10 @@ class PortalController extends Controller
     }
 
 
+    /**
+     * @param Post $post
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show(Post $post)
     {
         $newView = new View();

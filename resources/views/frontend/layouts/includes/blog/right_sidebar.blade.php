@@ -98,31 +98,46 @@
 </div>--}}
 
 
+<div class="col-md-3 magazine-page" id="right_sidebar">
 
-
-<div class="col-md-3 magazine-page">
 
     <!-- Posts -->
     <div class="posts margin-bottom-40">
         <div class="headline headline-md"><h2>Recent Posts</h2></div>
-        <dl class="dl-horizontal">
-            <dt><a href="#"><img src="{{asset('portals/assets/img/sliders/elastislide/6.jpg')}}" alt="" /></a></dt>
-            <dd>
-                <p><a href="#">Responsive Bootstrap 3 Template placerat idelo alac eratamet.</a></p>
-            </dd>
-        </dl>
-        <dl class="dl-horizontal">
-            <dt><a href="#"><img src="{{asset('portals/assets/img/sliders/elastislide/10.jpg')}}" alt="" /></a></dt>
-            <dd>
-                <p><a href="#">100+ Amazing Features Layer Slider, Layer Slider, Icons, 60+ Pages etc.</a></p>
-            </dd>
-        </dl>
-        <dl class="dl-horizontal">
-            <dt><a href="#"><img src="{{asset('portals/assets/img/sliders/elastislide/10.jpg')}}" alt="" /></a></dt>
-            <dd>
-                <p><a href="#">Developer Friendly Code imperdiet condime ntumi mperdiet condim.</a></p>
-            </dd>
-        </dl>
+        @if(isset($recent_posts))
+            @foreach($recent_posts as $recent_post)
+                <dl class="dl-horizontal">
+                    <dt><a href="#"><img class="recent_post_profile" data-placement="right" data-toggle="tooltip"
+                                         title="{{ strtoupper(User::iPosted($recent_post->create_uid)->name) }}"
+                                         src="{{isset($recent_post->user->resume)?(isset($recent_post->user->resume->personalInfo)?(isset($recent_post->user->resume->personalInfo->profile)?url('img/backend/profile/'.$recent_post->user->resume->personalInfo->profile):url('portals/assets/img/team/img32-md.jpg')):url('portals/assets/img/team/img32-md.jpg')):url('portals/assets/img/team/img32-md.jpg')}}"
+                                         alt=""/></a></dt>
+                    <dd>
+                        <p>
+                            <a href="#"><strong>{{ isset($recent_post->body)?str_limit($recent_post->title, 20):'' }}</strong></a>
+                        </p>
+                        <p><a href="#">{{ isset($recent_post->body)?str_limit($recent_post->body, 30):'' }}</a></p>
+                    </dd>
+                </dl>
+            @endforeach
+        @endif
+        {{--<dl class="dl-horizontal">--}}
+        {{--<dt><a href="#"><img src="{{asset('portals/assets/img/sliders/elastislide/6.jpg')}}" alt="" /></a></dt>--}}
+        {{--<dd>--}}
+        {{--<p><a href="#">Responsive Bootstrap 3 Template placerat idelo alac eratamet.</a></p>--}}
+        {{--</dd>--}}
+        {{--</dl>--}}
+        {{--<dl class="dl-horizontal">--}}
+        {{--<dt><a href="#"><img src="{{asset('portals/assets/img/sliders/elastislide/10.jpg')}}" alt="" /></a></dt>--}}
+        {{--<dd>--}}
+        {{--<p><a href="#">100+ Amazing Features Layer Slider, Layer Slider, Icons, 60+ Pages etc.</a></p>--}}
+        {{--</dd>--}}
+        {{--</dl>--}}
+        {{--<dl class="dl-horizontal">--}}
+        {{--<dt><a href="#"><img src="{{asset('portals/assets/img/sliders/elastislide/10.jpg')}}" alt="" /></a></dt>--}}
+        {{--<dd>--}}
+        {{--<p><a href="#">Developer Friendly Code imperdiet condime ntumi mperdiet condim.</a></p>--}}
+        {{--</dd>--}}
+        {{--</dl>--}}
     </div><!--/posts-->
     <!-- End Posts -->
 
@@ -135,18 +150,18 @@
     <!-- End Blog Category -->
 
     <!-- Photo Stream -->
-    {{--<div class="headline headline-md"><h2>Photo Stream</h2></div>
-    <ul class="list-unstyled blog-photos margin-bottom-30">
-        <li><a href="#"><img class="hover-effect" alt="" src="assets/img/sliders/elastislide/5.jpg"></a></li>
-        <li><a href="#"><img class="hover-effect" alt="" src="assets/img/sliders/elastislide/6.jpg"></a></li>
-        <li><a href="#"><img class="hover-effect" alt="" src="assets/img/sliders/elastislide/8.jpg"></a></li>
-        <li><a href="#"><img class="hover-effect" alt="" src="assets/img/sliders/elastislide/10.jpg"></a></li>
-        <li><a href="#"><img class="hover-effect" alt="" src="assets/img/sliders/elastislide/11.jpg"></a></li>
-        <li><a href="#"><img class="hover-effect" alt="" src="assets/img/sliders/elastislide/1.jpg"></a></li>
-        <li><a href="#"><img class="hover-effect" alt="" src="assets/img/sliders/elastislide/2.jpg"></a></li>
-        <li><a href="#"><img class="hover-effect" alt="" src="assets/img/sliders/elastislide/7.jpg"></a></li>
-    </ul>--}}
-    <!-- End Photo Stream -->
+{{--<div class="headline headline-md"><h2>Photo Stream</h2></div>
+<ul class="list-unstyled blog-photos margin-bottom-30">
+    <li><a href="#"><img class="hover-effect" alt="" src="assets/img/sliders/elastislide/5.jpg"></a></li>
+    <li><a href="#"><img class="hover-effect" alt="" src="assets/img/sliders/elastislide/6.jpg"></a></li>
+    <li><a href="#"><img class="hover-effect" alt="" src="assets/img/sliders/elastislide/8.jpg"></a></li>
+    <li><a href="#"><img class="hover-effect" alt="" src="assets/img/sliders/elastislide/10.jpg"></a></li>
+    <li><a href="#"><img class="hover-effect" alt="" src="assets/img/sliders/elastislide/11.jpg"></a></li>
+    <li><a href="#"><img class="hover-effect" alt="" src="assets/img/sliders/elastislide/1.jpg"></a></li>
+    <li><a href="#"><img class="hover-effect" alt="" src="assets/img/sliders/elastislide/2.jpg"></a></li>
+    <li><a href="#"><img class="hover-effect" alt="" src="assets/img/sliders/elastislide/7.jpg"></a></li>
+</ul>--}}
+<!-- End Photo Stream -->
 
     <!-- Blog Tags -->
     <div class="headline headline-md"><h2>Blog Tags</h2></div>
@@ -157,36 +172,36 @@
     <!-- End Blog Tags -->
 
     <!-- Blog Latest Tweets -->
-    {{--<div class="blog-twitter margin-bottom-30">
-        <div class="headline headline-md"><h2>Latest Tweets</h2></div>
-        <div class="blog-twitter-inner">
-            <i class="fa fa-twitter"></i>
-            <a href="#">@htmlstream</a>
-            At vero eos et accusamus et iusto odio dignissimos.
-            <a href="#">http://t.co/sBav7dm</a>
-            <span>5 hours ago</span>
-        </div>
-        <div class="blog-twitter-inner">
-            <i class="fa fa-twitter"></i>
-            <a href="#">@htmlstream</a>
-            At vero eos et accusamus et iusto odio dignissimos.
-            <a href="#">http://t.co/sBav7dm</a>
-            <span>5 hours ago</span>
-        </div>
-        <div class="blog-twitter-inner">
-            <i class="fa fa-twitter"></i>
-            <a href="#">@htmlstream</a>
-            At vero eos et accusamus et iusto odio dignissimos.
-            <a href="#">http://t.co/sBav7dm</a>
-            <span>5 hours ago</span>
-        </div>
-        <div class="blog-twitter-inner">
-            <i class="fa fa-twitter"></i>
-            <a href="#">@htmlstream</a>
-            At vero eos et accusamus et iusto odio dignissimos.
-            <a href="#">http://t.co/sBav7dm</a>
-            <span>5 hours ago</span>
-        </div>
-    </div>--}}
-    <!-- End Blog Latest Tweets -->
+{{--<div class="blog-twitter margin-bottom-30">
+    <div class="headline headline-md"><h2>Latest Tweets</h2></div>
+    <div class="blog-twitter-inner">
+        <i class="fa fa-twitter"></i>
+        <a href="#">@htmlstream</a>
+        At vero eos et accusamus et iusto odio dignissimos.
+        <a href="#">http://t.co/sBav7dm</a>
+        <span>5 hours ago</span>
+    </div>
+    <div class="blog-twitter-inner">
+        <i class="fa fa-twitter"></i>
+        <a href="#">@htmlstream</a>
+        At vero eos et accusamus et iusto odio dignissimos.
+        <a href="#">http://t.co/sBav7dm</a>
+        <span>5 hours ago</span>
+    </div>
+    <div class="blog-twitter-inner">
+        <i class="fa fa-twitter"></i>
+        <a href="#">@htmlstream</a>
+        At vero eos et accusamus et iusto odio dignissimos.
+        <a href="#">http://t.co/sBav7dm</a>
+        <span>5 hours ago</span>
+    </div>
+    <div class="blog-twitter-inner">
+        <i class="fa fa-twitter"></i>
+        <a href="#">@htmlstream</a>
+        At vero eos et accusamus et iusto odio dignissimos.
+        <a href="#">http://t.co/sBav7dm</a>
+        <span>5 hours ago</span>
+    </div>
+</div>--}}
+<!-- End Blog Latest Tweets -->
 </div>

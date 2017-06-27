@@ -4,9 +4,17 @@
             <div class="row">
                 <!-- About -->
                 <div class="col-md-3 md-margin-bottom-40">
-                    <a href="index.html"><img id="logo-footer" class="footer-logo" src="{{asset('portals/assets/img/logo2-default.png')}}" alt=""></a>
-                    <p>About Unify dolor sit amet, consectetur adipiscing elit. Maecenas eget nisl id libero tincidunt sodales.</p>
-                    <p>Duis eleifend fermentum ante ut aliquam. Cras mi risus, dignissim sed adipiscing ut, placerat non arcu.</p>
+                    <a href="/">
+                        <h2>Portal</h2>
+                    </a>
+                    <p>
+                        ITC student Portal is a web application to facilitate all students of Institute of Technology of
+                        Cambodia (ITC) to get information quickly via internet such as, viewing student’s weekly
+                        attendance, viewing student’s score by their academic year ,viewing weekly timetable ,viewing
+                        school event (seminar, company’s presentation, conference …) ,managing student’s resume for
+                        applying jobs or internship ,sharing document
+
+                    </p>
                 </div><!--/col-md-3-->
                 <!-- End About -->
 
@@ -49,10 +57,10 @@
                 <div class="col-md-3 map-img md-margin-bottom-40">
                     <div class="headline"><h2>Contact Us</h2></div>
                     <address class="md-margin-bottom-40">
-                        25, Lorem Lis Street, Orange <br />
-                        California, US <br />
-                        Phone: 800 123 3456 <br />
-                        Fax: 800 123 3456 <br />
+                        25, Lorem Lis Street, Orange <br/>
+                        California, US <br/>
+                        Phone: 800 123 3456 <br/>
+                        Fax: 800 123 3456 <br/>
                         Email: <a href="mailto:info@anybiz.com" class="">info@anybiz.com</a>
                     </address>
                 </div><!--/col-md-3-->
@@ -75,37 +83,44 @@
                 <div class="col-md-6">
                     <ul class="footer-socials list-inline">
                         <li>
-                            <a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title="" data-original-title="Facebook">
+                            <a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title=""
+                               data-original-title="Facebook">
                                 <i class="fa fa-facebook"></i>
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title="" data-original-title="Skype">
+                            <a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title=""
+                               data-original-title="Skype">
                                 <i class="fa fa-skype"></i>
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title="" data-original-title="Google Plus">
+                            <a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title=""
+                               data-original-title="Google Plus">
                                 <i class="fa fa-google-plus"></i>
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title="" data-original-title="Linkedin">
+                            <a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title=""
+                               data-original-title="Linkedin">
                                 <i class="fa fa-linkedin"></i>
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title="" data-original-title="Pinterest">
+                            <a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title=""
+                               data-original-title="Pinterest">
                                 <i class="fa fa-pinterest"></i>
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title="" data-original-title="Twitter">
+                            <a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title=""
+                               data-original-title="Twitter">
                                 <i class="fa fa-twitter"></i>
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title="" data-original-title="Dribbble">
+                            <a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title=""
+                               data-original-title="Dribbble">
                                 <i class="fa fa-dribbble"></i>
                             </a>
                         </li>

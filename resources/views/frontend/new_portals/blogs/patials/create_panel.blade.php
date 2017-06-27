@@ -1,4 +1,17 @@
+
+<div class="row">
+    <div class="form-group">
+
+        <div class="col-md-12">
+            {{--<i class="icon-append fa fa-comment green"></i>--}}
+            <input type="text" class="form-control" name="title" placeholder="Title of your post">
+        </div>
+    </div>
+
+</div>
+
 <div class="row" style="margin-top: 0px">
+
     <section class=" col-md-6 " style="padding-left: 0px">
 
         <select class="form-control input-sm category" multiple id="select2_category" name="category[]" data-placeholder=" Select Category" style="width: 100%; ">
@@ -15,6 +28,7 @@
 
     </section>
 </div>
+
 
 <div class="row">
     <div class="form-group">

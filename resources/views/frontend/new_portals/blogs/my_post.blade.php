@@ -53,13 +53,13 @@
             display: table-cell;
         }
 
-
         textarea {
             display: inline-block;
             min-width: 100%;
             margin-bottom: 5px;
             font-weight: 700;
         }
+
         .edit_textarea {
             min-width: 80% !important;
         }
@@ -71,11 +71,12 @@
 
         .render_post > .row {
             margin-right: 0px;
-            margin-left:0px;
+            margin-left: 0px;
         }
+
         .new_row {
             margin-right: 0px !important;
-            margin-left:0px !important;
+            margin-left: 0px !important;
         }
 
         .sky-form .toggle {
@@ -93,7 +94,6 @@
             border-width: 1px;
         }
 
-
         .sky-form .toggle {
             font-weight: normal;
         }
@@ -108,48 +108,70 @@
 
 @section('content')
 
-    <a href="#" class="clone_btn_modal" style="display: none" data-toggle="modal" data-target="#edit_form_post" ></a>
+    <a href="#" class="clone_btn_modal" style="display: none" data-toggle="modal" data-target="#edit_form_post"></a>
 
     {{--block create post--}}
 
     <div class="row new_row no-padding">
-        <div id="new_post" class="pull-left" style="padding-left: 1px; padding-right: 2px" data-toggle="tooltip" title="Add new post" >
-            <a style="font-size: 12pt; " class="btn btn-u btn-u-aqua pull-right accordion-toggle collapsed" id="icon_toggle" href="#id_form" data-toggle="collapse" aria-expanded="false">
+
+        <div id="new_post" class="pull-left" style="padding-left: 1px; padding-right: 2px" data-toggle="tooltip"
+             title="Add new post">
+            <a style="font-size: 12pt; " class="btn btn-u btn-u-aqua pull-right accordion-toggle collapsed"
+               id="icon_toggle" href="#id_form" data-toggle="collapse" aria-expanded="false">
 
                 <i class="fa fa-plus-square" id="add"></i>
 
             </a>
             {{--<a href="#" data-toggle="tooltip" title="Hooray!">Hover over me</a>--}}
         </div>
-        <div class="no-padding pull-left" >
-            <label id="my_post" data-toggle="tooltip" title="My post" for="my_post" class="btn btn-u pull-right" style="font-size: 12pt;">
-                <input type="checkbox" name="my_post" id="my_post" value="my_post">
-                {{--<i class="fa fa-user" aria-hidden="true"></i>--}}
-            </label>
+        <div class="no-padding pull-left">
+            @if(session('status'))
+                <label id="my_post" data-placement="right" data-toggle="tooltip" title="My post" for="my_post" class="btn btn-u pull-right"
+                       style="font-size: 12pt;">
+                    <input checked type="checkbox" name="my_post" id="my_post" value="my_post">
+                    {{--<i class="fa fa-user" aria-hidden="true"></i>--}}
+                </label>
+            @else
+                <label id="my_post" data-placement="right" data-toggle="tooltip" title="My post" for="my_post" class="btn btn-u pull-right"
+                       style="font-size: 12pt;">
+                    <input type="checkbox" name="my_post" id="my_post" value="my_post">
+                    {{--<i class="fa fa-user" aria-hidden="true"></i>--}}
+                </label>
+            @endif
+
             {{--<label class="toggle toggle-change">--}}
-                {{--<input type="checkbox" checked="" name="checkbox-toggle-1"><i class="no-rounded"></i>--}}
+            {{--<input type="checkbox" checked="" name="checkbox-toggle-1"><i class="no-rounded"></i>--}}
             {{--</label>--}}
         </div>
-        <div class="pull-right " style="padding-left: 2px; padding-right: 1px">
-            <div class="input-group">
-                <input type="text" class="form-control" name="search_post" placeholder="Search">
 
-            </div>
-            <!-- End Search Bar -->
+        <div class="input-group" style="padding-left: 2px; ">
+            <span class="input-group-addon" id="sizing-addon2">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </span>
+            <input type="text" name="search_post" class="form-control" placeholder="Search for..."
+                   aria-describedby="sizing-addon2">
         </div>
+
+        {{--<div class="pull-right " style="padding-left: 2px; padding-right: 1px;">--}}
+        {{--<div class="input-group">--}}
+        {{--<input type="text" class="form-control input-group" name="search_post" placeholder="Search" style="width:100%;">--}}
+
+        {{--</div>--}}
+        {{--<!-- End Search Bar -->--}}
+        {{--</div>--}}
 
 
     </div>
 
-    <div class="row new_row blog blog-medium collapse" id="id_form"  aria-expanded="false">
+    <div class="row new_row blog blog-medium collapse" id="id_form" aria-expanded="false">
         {{--<form action="{{route('')}}" method="post" enctype="multipart/form-data" class="sky-form form-horizontal form_create_post" files>--}}
-            {!! Form::open(['route' => 'frontend.portal.store_post','class' => 'form-horizontal sky-form','role' => 'form','method' => 'post', 'files'=>true, 'enctype'=>'multipart/form-data']) !!}
-            <fieldset>
-                {{csrf_field()}}
-                @include('frontend.new_portals.blogs.patials.create_panel')
+        {!! Form::open(['route' => 'frontend.portal.store_post','class' => 'form-horizontal sky-form','role' => 'form','method' => 'post', 'files'=>true, 'enctype'=>'multipart/form-data']) !!}
+        <fieldset>
+            {{csrf_field()}}
+            @include('frontend.new_portals.blogs.patials.create_panel')
 
-            </fieldset>
-            {!! Form::close() !!}
+        </fieldset>
+        {!! Form::close() !!}
         {{--</form>--}}
     </div>
 
@@ -161,7 +183,9 @@
         @include('frontend.new_portals.blogs.patials.each_blog_post')
     </div>
 
-    <button type="button" class="btn-u btn-u-default btn-block text-center load_more_post" id="btn_load_more_post">Load More</button>
+    <button type="button" class="btn-u btn-u-default btn-block text-center load_more_post" id="btn_load_more_post">Load
+        More
+    </button>
     {{--<input type="hidden" name="last_post" value="{{isset($last_post)?$last_post:''}}">--}}
     <!--End Blog Post-->
 
@@ -193,32 +217,41 @@
 @section('after-script-end')
 
     {!! Html::script('portals/js/blog_post.js') !!}
+    {!! Html::script('bower_components/sticky-kit/jquery.sticky-kit.min.js') !!}
 
     <script>
         $(document).ready(function () {
 
+            $("#right_sidebar").stick_in_parent();
+            $('#left_sidebar').stick_in_parent();
 
-            if($('input#last_post_id').val() == 0 ){
+            if ($('input[name=my_post]').is(':checked')) {
+                my_post();
+            }
+
+
+            if ($('input#last_post_id').val() == 0) {
                 $('#btn_load_more_post').remove();
             }
 
+
             $('#new_post').tooltip();
-
-
             $('#my_post').tooltip();
+            $('.user_post_profile').tooltip();
+            $('.recent_post_profile').tooltip();
         });
 
-        var btn = '<i class="fa fa fa-unlink btn btn-xs pull-right btn-u btn-brd rounded btn-u-green btn-u-sm" id="change_file">'+ ' Choose File'+ '</i>';
+        var btn = '<i class="fa fa fa-unlink btn btn-xs pull-right btn-u btn-brd rounded btn-u-green btn-u-sm" id="change_file">' + ' Choose File' + '</i>';
         var inputFile = '<input type="file" class="btn btn-u " style="display: none" id="post_change_file" name="file" accept="image/*, .doc, .docx,.ppt, .pptx,.txt,.pdf">';
 
-        var blog_file_edit = '<div class="col-md-12 each_blog_file_edit" style=" padding-left: 0px; padding-right: 0px; border: solid 2px #eee; ">'+
-                '<i class="fa fa-times btn btn-xs pull-right" id="cros_out" style="padding-right: 0px !important;"></i>'+
-                '<a href="#" {{--target="_blank"--}} data-event-key="attachment:click" data-event-resource-type="file" data-event-action="open" data-bypass="true">'+
-                '<img class="img-responsive" src="{{asset('portals/icons/new_pdf.png')}}" id="edit_post_icon" alt="">'+ '</a>'+
-                '<div  class="col-md-6" id="change_uploaded_file" style="padding-left: 8px; padding-right: 0px"> </div>'+
-                '<i class="fa fa fa-unlink btn btn-xs pull-right btn-u btn-brd rounded btn-u-green btn-u-sm" id="change_file"> change File</i>'+
+        var blog_file_edit = '<div class="col-md-12 each_blog_file_edit" style=" padding-left: 0px; padding-right: 0px; border: solid 2px #eee; ">' +
+            '<i class="fa fa-times btn btn-xs pull-right" id="cros_out" style="padding-right: 0px !important;"></i>' +
+            '<a href="#" {{--target="_blank"--}} data-event-key="attachment:click" data-event-resource-type="file" data-event-action="open" data-bypass="true">' +
+            '<img class="img-responsive" src="{{asset('portals/icons/new_pdf.png')}}" id="edit_post_icon" alt="">' + '</a>' +
+            '<div  class="col-md-6" id="change_uploaded_file" style="padding-left: 8px; padding-right: 0px"> </div>' +
+            '<i class="fa fa fa-unlink btn btn-xs pull-right btn-u btn-brd rounded btn-u-green btn-u-sm" id="change_file"> change File</i>' +
                 /*'<input type="file" class="btn btn-u " style="display: none" id="post_change_file" name="file" accept="image/!*, .doc, .docx,.ppt, .pptx,.txt,.pdf">'+*/
-                '</div>';
+            '</div>';
 
         /*---option select2 ----*/
         $("select.category").select2({
@@ -311,27 +344,36 @@
 
         /*---end option select2----*/
 
+        function my_post() {
+            $.ajax({
+                method: 'GET',
+                url: '{{route('frontend.portal.get_my_post')}}',
+                data: {type: 'filter_my_post'},
+                dataType: 'HTML',
+                success: function (result) {
 
-        $('input[name=my_post]').on('change', function() {
-            if($(this).is(':checked')) {
-                $.ajax({
-                    method: 'GET',
-                    url: '{{route('frontend.portal.get_my_post')}}',
-                    data:{type:'filter_my_post'},
-                    dataType: 'HTML',
-                    success:function(result) {
-                        $('input#last_post_id').remove();
+                    $('input#last_post_id').remove();
+                    $('.load_more_post').remove();
+                    $('.render_post ').html(result);
+                    $('.user_post_profile').tooltip();
+                    if ($('input#last_post_id').val() != 0) {
+                        var loadMore = '<button type="button" class="btn-u btn-u-default btn-block text-center load_more_post" id="btn_load_more_post">Load More</button>';
+                        $('.render_post').after(loadMore);
+
+                    } else {
+
                         $('.load_more_post').remove();
-                       $('.render_post ').html(result)
-                        if($('input#last_post_id').val() != 0){
-                            var loadMore = '<button type="button" class="btn-u btn-u-default btn-block text-center load_more_post" id="btn_load_more_post">Load More</button>';
-                            $('.render_post').after(loadMore);
-                        }else {
-                            $('.load_more_post').remove();
-                        }
-                    },
 
-                })
+                    }
+                },
+
+            })
+        }
+
+
+        $('input[name=my_post]').on('change', function () {
+            if ($(this).is(':checked')) {
+                my_post();
             } else {
                 ajaxRefreshPost()
 
@@ -339,85 +381,91 @@
         });
 
 
-
-
         $('input[name=search_post]').on('keyup', function (e) {
+            var dom = $('#right_sidebar');
+            if(dom.find('.active')){
+                dom.find('.active').removeClass('active').css('background-color', '');
+            }
 
-           if($(this).val() != '') {
-               $.ajax({
-                   method: 'GET',
-                   url: '{{route('frontend.portal.search_post')}}',
-                   data:{text: $(this).val()},
-                   dataType: 'HTML',
-                   success:function(result) {
-                       $('.render_post ').html(result);
 
-                   },
+            if ($(this).val() != '') {
+                $.ajax({
+                    method: 'GET',
+                    url: '{{route('frontend.portal.search_post')}}',
+                    data: {text: $(this).val()},
+                    dataType: 'HTML',
+                    success: function (result) {
+                        $('.render_post ').html(result);
+                        $('.user_post_profile').tooltip();
+                        $('.load_more_post').remove();
 
-               })
-           }
+                    },
+
+                })
+            }
         })
 
 
-        $(document).on('click', '.btn_delete_post', function(e) {
+        $(document).on('click', '.btn_delete_post', function (e) {
             e.preventDefault();
 
             var url_delete = $(this).attr('href');
 
             swal({
-                title: "Are you sure?",
-                text: "Do you want to delete this Post?",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonClass: "btn-danger",
-                confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel!",
-                closeOnConfirm: false,
-                closeOnCancel: false
-            },
-            function (isConfirm) {
+                    title: "Are you sure?",
+                    text: "Do you want to delete this Post?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Yes, delete it!",
+                    cancelButtonText: "No, cancel!",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                },
+                function (isConfirm) {
 
-                if (isConfirm) {
+                    if (isConfirm) {
 
-                    $.ajax({
-                        type: 'POST',
-                        url: url_delete,
-                        data: {_token:'{{csrf_token()}}'},
-                        dataType: "json",
-                        success: function(resultData) {
-                            if(resultData.status == true) {
-                                swal("Deleted", "Your post is deleted :)", "success");
-                                ajaxRefreshPost();
+                        $.ajax({
+                            type: 'POST',
+                            url: url_delete,
+                            data: {_token: '{{csrf_token()}}'},
+                            dataType: "json",
+                            success: function (resultData) {
+                                if (resultData.status == true) {
+                                    swal("Deleted", "Your post is deleted :)", "success");
+                                    my_post();
+                                }
                             }
-                        }
-                    });
+                        });
 
-                } else {
-                    swal("Cancelled", "Your post is safe :)", "error");
-                }
-            });
+                    } else {
+                        swal("Cancelled", "Your post is safe :)", "error");
+                    }
+                });
         });
 
 
-        function ajaxRefreshPost()
-        {
+        function ajaxRefreshPost() {
 
             var now = Date($.now());
             $.ajax({
                 method: 'GET',
                 url: '{{route('frontend.portal.load_more_post')}}',
-                data:{
+                data: {
                     'last_post': now
                 },
                 dataType: 'HTML',
-                success:function(result) {
+                success: function (result) {
+
                     $('input#last_post_id').remove();
                     $('.load_more_post').remove();
                     $('.render_post ').html(result)
-                    if($('input#last_post_id').val() != 0){
+                    if ($('input#last_post_id').val() != 0) {
                         var loadMore = '<button type="button" class="btn-u btn-u-default btn-block text-center load_more_post" id="btn_load_more_post">Load More</button>';
                         $('.render_post').after(loadMore);
-                    }else {
+                        $('.user_post_profile').tooltip();
+                    } else {
                         $('.load_more_post').remove();
                     }
 
@@ -425,53 +473,54 @@
             })
         }
 
-        $(document).on('click','.btn_edit_post', function(e) {
+        $(document).on('click', '.btn_edit_post', function (e) {
             e.preventDefault();
             var url_edit = $(this).attr('href');
             $.ajax({
                 method: 'GET',
                 url: url_edit,
-                data:{},
+                data: {},
                 dataType: 'Json',
-                success:function(result) {
+                success: function (result) {
 
                     $('form#form_edit_post').find('input[name=is_crosed]').val(0);
                     $('textarea.edit_textarea').val(result.post.body);
-                    if(!$('form#form_edit_post').find('input[name=post_id]')[0]) {
-                        $('form#form_edit_post').append('<input type="hidden", name="post_id" value="'+ result.post.id +'">')
+                    $('form#form_edit_post').find('input[name=title]').val(result.post.title);
+                    if (!$('form#form_edit_post').find('input[name=post_id]')[0]) {
+                        $('form#form_edit_post').append('<input type="hidden", name="post_id" value="' + result.post.id + '">')
                     } else {
                         $('form#form_edit_post').find('input[name=post_id]').val(result.post.id)
                     }
                     $('form#form_edit_post').find('input#post_change_file').val('');
 
-                    if(result.post.file) {
+                    if (result.post.file) {
 
                         var extension = result.post.file.split('.');
                         extension = extension[1];
 
-                        if( extension == 'png' || extension == 'jpg') {
+                        if (extension == 'png' || extension == 'jpg') {
 
-                            if(!$('form#form_edit_post').find('div.each_blog_file_edit')[0]) {
+                            if (!$('form#form_edit_post').find('div.each_blog_file_edit')[0]) {
 
                                 $('#blog_file').html(blog_file_edit)
                             }
-                            $('#edit_post_icon').prop('src', '{{asset('img/frontend/uploads/images')}}'+ '/' + result.post.file)
+                            $('#edit_post_icon').prop('src', '{{asset('img/frontend/uploads/images')}}' + '/' + result.post.file)
                             $('#edit_post_icon').css('max-width', '50%')
                             $('#change_file').text(' Change Image')
 
                         }
-                        if(extension == 'pdf') {
+                        if (extension == 'pdf') {
 
-                            if(!$('form#form_edit_post').find('div.each_blog_file_edit')[0]) {
+                            if (!$('form#form_edit_post').find('div.each_blog_file_edit')[0]) {
 
                                 $('#blog_file').html(blog_file_edit)
                             }
                             $('#edit_post_icon').prop('src', '{{asset('portals/icons/new_pdf.png')}}')
 
                         }
-                        if(extension == 'doc' || extension == 'docx') {
+                        if (extension == 'doc' || extension == 'docx') {
 
-                            if(!$('form#form_edit_post').find('div.each_blog_file_edit')[0]) {
+                            if (!$('form#form_edit_post').find('div.each_blog_file_edit')[0]) {
                                 $('#blog_file').html(blog_file_edit)
                             }
 
@@ -479,26 +528,26 @@
 
                         }
 
-                        if(extension == 'ppt' || extension == 'pptx') {
+                        if (extension == 'ppt' || extension == 'pptx') {
 
-                            if(!$('form#form_edit_post').find('div.each_blog_file_edit')[0]) {
+                            if (!$('form#form_edit_post').find('div.each_blog_file_edit')[0]) {
                                 $('#blog_file').html(blog_file_edit)
                             }
                             $('#edit_post_icon').prop('src', '{{asset('portals/icons/new_pptx.png')}}')
 
                         }
-                        if(extension == 'xls' || extension == 'xlsx') {
+                        if (extension == 'xls' || extension == 'xlsx') {
 
-                            if(!$('form#form_edit_post').find('div.each_blog_file_edit')[0]) {
+                            if (!$('form#form_edit_post').find('div.each_blog_file_edit')[0]) {
                                 $('#blog_file').html(blog_file_edit)
                             }
                             $('#edit_post_icon').prop('src', '{{asset('portals/icons/new_xlsx.png')}}')
                         }
 
-                        var split  = result.post.file.split('_');
+                        var split = result.post.file.split('_');
                         var filename = split[split.length - 1];
 
-                        $('#change_uploaded_file').replaceWith('<div  class="col-md-6" id="change_uploaded_file" style="padding-left: 8px; padding-right: 0px">'+ filename + '</div>')
+                        $('#change_uploaded_file').replaceWith('<div  class="col-md-6" id="change_uploaded_file" style="padding-left: 8px; padding-right: 0px">' + filename + '</div>')
 
                     } else {
                         $('#blog_file').html(btn)
@@ -506,11 +555,11 @@
 
                     var option_categories = '';
                     var option_tags = '';
-                    $.each(result.category, function(key, value){
-                        option_categories += '<option selected value="'+ key +'">'+value+ '</option>';
+                    $.each(result.category, function (key, value) {
+                        option_categories += '<option selected value="' + key + '">' + value + '</option>';
                     });
-                    $.each(result.tag, function(key, value){
-                        option_tags +='<option selected value="'+ key +'">'+value+ '</option>';
+                    $.each(result.tag, function (key, value) {
+                        option_tags += '<option selected value="' + key + '">' + value + '</option>';
                     });
                     $("select.category_edit").html((option_categories));
 
@@ -523,10 +572,11 @@
 
         });
 
-        $(document).on('click','#btn_save_edit_post',  function (e) {
+        $(document).on('click', '#btn_save_edit_post', function (e) {
 
-            if($('form#form_edit_post').find('input#post_change_file')[0]) {
+            if ($('form#form_edit_post').find('input#post_change_file')[0]) {
                 $('form#form_edit_post').submit();
+
             }
         });
 
@@ -539,6 +589,8 @@
                 $(this).children('i').prop('class', 'fa  fa-plus-square')
             }
         });
+
+
     </script>
 
 @endsection
