@@ -149,8 +149,8 @@ trait BlogPostTrait
 
             $filenameWithExtention = $filename->getClientOriginalName();
 
-            $change = $filename->getClientOriginalExtension();
-            $newFilename = auth()->id() . strtotime(Carbon::now()) . '.' . $change;
+//            $change = $filename->getClientOriginalExtension();
+            $newFilename = auth()->id() . strtotime(Carbon::now()) . '_'.$filenameWithExtention;
 
             if ($filename->getMimeType() == 'image/jpeg' || $filename->getMimeType() == 'image/png' || $filename->getMimeType() == 'image/jpg') {
                 $filename->move('img/frontend/uploads/images', "{$newFilename}");
@@ -224,7 +224,7 @@ trait BlogPostTrait
 
             $collectionTags = collect($tags)->keyBy('category_tag_id')->toArray();
 
-            $posts = $posts->limit(2)->get();
+            $posts = $posts->limit(5)->get();
             //dd($posts);
             $last_post = $posts->last()->created_at;
             $rest_post = Post::where([
@@ -593,26 +593,30 @@ trait BlogPostTrait
                 ->get();
             $collectionTags = collect($tags)->keyBy('category_tag_id')->toArray();
 
-            $posts = $posts->limit(2)->get();
+            if(count($posts)>0){
+                $posts = $posts->limit(5)->get();
+
+                $last_post = $posts->last()->created_at;
+                $rest_post = Post::where('created_at', '<', $last_post)->get();
+
+                if ($rest_post->isEmpty()) {
+                    $last_post = '0';
+                }
 
 
-            $last_post = $posts->last()->created_at;
-            $rest_post = Post::where('created_at', '<', $last_post)->get();
+                $posts = $this->setPriority($posts, $studentData);
 
-            if ($rest_post->isEmpty()) {
-                $last_post = '0';
+                return [
+                    'post' => $posts,
+                    'tag_by_post_id' => $tagBypostIds,
+                    'collection_tag' => $collectionTags,
+                    'last_post' => $last_post,
+                    'student_data' => $studentData
+                ];
+            }else{
+                return [];
             }
 
-
-            $posts = $this->setPriority($posts, $studentData);
-
-            return [
-                'post' => $posts,
-                'tag_by_post_id' => $tagBypostIds,
-                'collection_tag' => $collectionTags,
-                'last_post' => $last_post,
-                'student_data' => $studentData
-            ];
 
         } else {
             return [];

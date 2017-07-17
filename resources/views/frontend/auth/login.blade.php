@@ -11,7 +11,7 @@
                 <li><a class="rounded-x social_googleplus" data-original-title="Google Plus" href="#"></a></li>
                 <li><a class="rounded-x social_linkedin" data-original-title="Linkedin" href="#"></a></li>
             </ul>
-            <p> Sign up with your Identification and birth date as password!</p>
+            <p> Sign in with your Identification and birth date as password!</p>
         </div>
 
         {{ Form::open(['route' => 'frontend.auth.login', 'id'=> 'login_form' ,'class' => 'form-horizontal ']) }}
@@ -32,14 +32,14 @@
                     {{ Form::checkbox('remember') }}
                     <p>{{ trans('labels.frontend.auth.remember_me') }}</p>
                 </label>
-                <label for="">
-                    {{ link_to_route('frontend.auth.password.reset', trans('labels.frontend.passwords.forgot_password')) }}
-                </label>
+                {{--<label for="">--}}
+                    {{--{{ link_to_route('frontend.auth.password.reset', trans('labels.frontend.passwords.forgot_password')) }}--}}
+                {{--</label>--}}
             </div>
 
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
-                    {{ Form::submit(trans('labels.frontend.auth.login_button'), ['class' => 'btn-u btn-block']) }}
+                    {{ Form::submit(trans('labels.frontend.auth.login_button'), ['class' => 'btn-u btn-block btn-u-dark-blue']) }}
                 </div>
 
             </div>

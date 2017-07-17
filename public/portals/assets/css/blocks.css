@@ -4329,7 +4329,7 @@
 
 .blog-thumb .blog-thumb-hover:hover .hover-grad {
   opacity: 1;
-  transform 0.55s;
+  transform: 0.55s;
   transition: opacity 0.55s,
 }
 
@@ -5480,7 +5480,7 @@
 .tab-v1 .nav-tabs {
 	border: none;
 	background: none;
-	border-bottom: solid 2px #72c02c;
+	border-bottom: solid 2px #4765a0;
 }
 
 .tab-v1 .nav-tabs a {
@@ -5493,7 +5493,7 @@
 .tab-v1 .nav-tabs > .active > a:focus {
 	color: #fff;
 	border: none;
-	background: #72c02c;
+	background: #4765a0;
 }
 
 .tab-v1 .nav-tabs > li > a {
@@ -5501,7 +5501,7 @@
 }
 .tab-v1 .nav-tabs > li > a:hover {
 	color: #fff;
-	background: #72c02c;
+	background: #4765a0;
 }
 
 .tab-v1 .tab-content {
@@ -5901,7 +5901,7 @@
 
 .sidebar-nav-v1 ul li:hover a,
 .sidebar-nav-v1 ul li.active a {
-	color: #72c02c;
+	color: #4765a0;
 }
 
 /*Sidebar Badges*/
@@ -6092,7 +6092,7 @@
 
 .content-boxes-v5:hover i {
 	color: #fff;
-	background: #72c02c;
+	background: #4765a0;
 }
 
 /*Content Boxes v6*/
@@ -6132,11 +6132,11 @@
 }
 
 .content-boxes-v6:hover i {
-	background: #72c02c;
+	background: #4765a0;
 }
 
 .content-boxes-v6:hover i:after {
-	border-color: #72c02c;
+	border-color: #4765a0;
 }
 
 /*--------------------------------------------------

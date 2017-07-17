@@ -39,14 +39,14 @@
 
         {!! Form::label('start_date', 'Start Date', ['class' => 'col-md-1 control-label required input']) !!}
         <div class="col-md-5 div_start_date  ">
-            {{--<i class="icon-append fa fa-calendar green"></i>--}}
+            <i class="icon-append fa fa-calendar "></i>
             {!! Form::input('text', 'start_date', null, ['class' => 'form-control  ', 'placeholder' => 'StartDate', 'id' => 'start_date', 'required']) !!}
         </div><!--col-md-6-->
 
 
         {!! Form::label('end_date', 'End Date', ['class' => 'col-md-1 control-label input']) !!}
         <div class="col-md-5 div_end_date ">
-           {{-- <i class="icon-append fa fa-calendar green"></i>--}}
+             <i class="icon-append fa fa-calendar "></i>
             {!! Form::input('text', 'end_date', null, ['class' => 'form-control  ', 'placeholder' => 'EndDate', 'id' => 'end_date']) !!}
         </div><!--col-md-6-->
 
@@ -63,6 +63,7 @@
             <div class="slider round"></div>
         </label>
     </div>
+    <label class="pull-right margin-right-20">Till today</label>
 
 </div>
 
@@ -79,7 +80,7 @@
 
 </div>
 
-<button type="submit" class="btn-u pull-left">Save</button>
+<button type="submit" class="btn-u btn-u-dark-blue pull-left">Save</button>
 <div class="progress"></div>
 
 

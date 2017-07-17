@@ -217,13 +217,13 @@
 @section('after-script-end')
 
     {!! Html::script('portals/js/blog_post.js') !!}
-    {!! Html::script('bower_components/sticky-kit/jquery.sticky-kit.min.js') !!}
+    {{--{!! Html::script('bower_components/sticky-kit/jquery.sticky-kit.min.js') !!}--}}
 
     <script>
         $(document).ready(function () {
 
-            $("#right_sidebar").stick_in_parent();
-            $('#left_sidebar').stick_in_parent();
+//            $("#right_sidebar").stick_in_parent();
+//            $('#left_sidebar').stick_in_parent();
 
             if ($('input[name=my_post]').is(':checked')) {
                 my_post();

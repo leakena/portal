@@ -3,7 +3,7 @@
 @section('after-style-end')
     <style>
         .panel-yellow {
-            border-color: #56e71b;
+            border-color: #4765a0;
         }
 
         body {
@@ -15,12 +15,12 @@
         }
 
         .panel-yellow > .panel-heading {
-            background: #72c02c;
+            background: #4765a0;
             color: white;
         }
 
         .panel-u > .panel-heading {
-            background: #72c02c;
+            background: #4765a0;
         }
 
         .each_top_row {
@@ -100,19 +100,19 @@
                             </fieldset>
                         </form>
                     </div>
-                    <div class="col-md-12" style="border-color: #27d7e7 !important;">
-                        <div class="tag-box tag-box-v3 margin-bottom-10 ">
-                            @if(count($skills)>0)
+                    @if(count($skills)>0)
+                        <div class="col-md-12" style="border-color: #27d7e7 !important;">
+                            <div class="tag-box tag-box-v3 margin-bottom-10 ">
                                 @foreach($skills as $skill)
                                     @include('frontend.new_portals.resumes.skill.partials.action')
 
                                     @include('frontend.new_portals.resumes.skill.partials.fields')
-
-
                                 @endforeach
-                            @endif
+                            </div>
                         </div>
-                    </div>
+
+                    @endif
+
 
                 </div>
 
@@ -135,6 +135,7 @@
     {{--{!! JsValidator::formRequest('App\Http\Requests\Backend\Resume\Skill\StoreSkill') !!}--}}
     <script>
         validate_skill($('.form_create_skill'));
+        validate_skill($('#form_edit_skill'));
 
         $('a#icon_toggle').on('click', function (e) {
 
@@ -147,15 +148,19 @@
 
         $(document).on('click', '.btn_edit_skill', function (e) {
             e.preventDefault();
+            var now = $(this);
 
-            var dom = $(this).parent().parent().parent().parent();
-            var obj = $('form#form_edit_skill input[class=description]');
+            var dom = $(this).parent().parent().parent().nextAll('.each_skill').first();
+            var obj = $('form#form_edit_skill').children().find('input.description');
+
 
 
             $('form#form_edit_skill input[name=name]').val(dom.find('.name').val());
             $('form#form_edit_skill input[name=skill_id]').val(dom.find('.skill_id').val());
 
+
             obj.each(function () {
+
                 if ($(this).val() == dom.find('.description').text()) {
                     $(this).prop('checked', true);
                 }
@@ -168,6 +173,7 @@
             event.preventDefault();
             var var_url = $(this).attr('href');
             var dom = $(this);
+            console.log(dom.parent().parent().parent().nextAll('.each_skill'))
             swal({
                     title: "Are you sure?",
                     text: "Do you want to delete this skill?",
@@ -191,7 +197,9 @@
 
                                 if (result.status == true) {
                                     swal("Deleted!", "Your skill has been deleted.", "success");
-                                    dom.parent().parent().parent().parent().remove();
+                                    dom.parent().parent().parent().nextAll('.each_skill').first().remove();
+                                    dom.parent().parent().parent().remove();
+
                                 }
 
                                 if (result.rest_skill <= 0) {
@@ -220,6 +228,7 @@
         $(document).ready(function (e) {
             //show_language();
             validate_language($('.form_create_language'));
+            validate_language($('#form_edit_language'));
             getCircleLanguages();
             $('[data-toggle="tooltip"]').tooltip();
             reloadLanguage();
@@ -305,7 +314,7 @@
             newLanguage += '<div class="p-chart col-sm-6 col-xs-4 sm-margin-bottom-10">';
             newLanguage += '<div class="btn-group pull-right">';
             newLanguage += '<span class="btn btn-box-tool dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" title="" data-widget="chat-pane-toggle" data-original-title="Setting">'
-            newLanguage += '<i class="icon-custom rounded-x icon-sm icon-color-u fa fa-lightbulb-o"></i>'
+            newLanguage += '<i class="icon-color-dark-blue fa fa-cog" style="border: hidden"></i>'
             newLanguage += '</span>'
             newLanguage += '<ul class="dropdown-menu" role="menu">'
             newLanguage += '<li><a href="#" class="btn_edit_language" data-toggle="modal" data-target="#edit_form"><i class="fa fa-edit "></i> Edit Language</a></li>'
@@ -318,7 +327,7 @@
             newLanguage += '<div class="circle margin-bottom-20" id="' + id + '"></div>';
             newLanguage += '<h3 class="heading-xs name"><span class="language_name">' + name + '</span><span class="subfix_name"></span>';
             if (proficiency === 'Mother Tongue') {
-                newLanguage += ' (Mother Tongue)';
+                newLanguage += ' (MT)';
             }
             newLanguage += '</h3></div>';
             $('.clearfix').prepend(newLanguage);
@@ -340,7 +349,8 @@
 
             var dom = $(this).parent().parent().parent().parent();
             // console.log(dom.parent())
-            var obj = $('form#form_edit_language input[class=proficiency]');
+            var obj = $('form#form_edit_language input[name=proficiency]');
+//            console.log(obj)
             var old_language_id = dom.find('.language_id').val();
             dom.parent().find('.editing').removeClass('editing');
             dom.addClass('editing');
@@ -373,7 +383,9 @@
             $('form#form_edit_language input[name=language_resume_id]').val(dom.find('.language_resume_id').val());
 
 
+
             obj.each(function () {
+                console.log(obj)
 
                 if ($(this).val() == dom.find('.proficiency1').val()) {
                     $(this).prop('checked', true);
@@ -465,7 +477,7 @@
                         var updatedLanguage = '';
                         updatedLanguage += '<div class="btn-group pull-right">';
                         updatedLanguage += '<span class="btn btn-box-tool dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" title="" data-widget="chat-pane-toggle" data-original-title="Setting">'
-                        updatedLanguage += '<i class="icon-custom rounded-x icon-sm icon-color-u fa fa-lightbulb-o"></i>'
+                        updatedLanguage += '<i class="icon-color-dark-blue fa fa-cog" style="border: hidden"></i>'
                         updatedLanguage += '</span>'
                         updatedLanguage += '<ul class="dropdown-menu" role="menu">'
                         updatedLanguage += '<li><a href="#" class="btn_edit_language" data-toggle="modal" data-target="#edit_language_form"><i class="fa fa-edit "></i> Edit Language</a></li>'
@@ -585,7 +597,7 @@
                                                 width: 4,
                                                 number: 90,
                                                 text: '%',
-                                                colors: ['#eee', '#72c02c'],
+                                                colors: ['#eee', '#4765a0'],
                                                 duration: 2000
                                             })
                                         }
@@ -610,7 +622,7 @@
                                                 width: 4,
                                                 number: parseInt(value),
                                                 text: '%',
-                                                colors: ['#eee', '#72c02c'],
+                                                colors: ['#eee', '#4765a0'],
                                                 duration: 2000
                                             })
                                         }

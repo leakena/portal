@@ -88,6 +88,62 @@
             border-radius: 50%;
         }
 
+        .input-group {
+            position: relative;
+            display: table;
+            border-collapse: separate;
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            height: 34px;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .input-group-addon, .input-group-btn {
+            width: 1%;
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+
+        .sky-form .icon-append {
+            right: 17px;
+            padding: 1px 3px;
+            min-width: 34px;
+        }
+
+        .panel-yellow {
+            border-color: #4765a0;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #333;
+            background-color: #fff;
+        }
+
+        .panel-yellow > .panel-heading {
+            background: #4765a0;
+            color: white;
+        }
+
+        .panel-u > .panel-heading {
+            background: #72c02c;
+        }
+
+        .each_top_row {
+            margin-top: 2px;
+        }
 
         .input-group {
             position: relative;
@@ -121,47 +177,104 @@
             min-width: 34px;
         }
 
+        .panel-body {
+            padding: 15px !important;
+            padding-top: 15px !important;
+            padding-right: 15px !important;
+            padding-bottom: 15px !important;
+            padding-left: 15px !important;
+        }
     </style>
 @endsection
 @section('content')
 
-    <div class="profile-bio margin-bottom-30">
-        <form action="{{ route('frontend.resume.store_education') }}" method="post" enctype="multipart/form-data"
-               class="sky-form form-horizontal form_create_ecducation" novalidate="novalidate">
-            <header><a style="position: sticky;" class="accordion-toggle collapsed pull-right" id="icon_toggle"
-                       href="#id_form" data-toggle="collapse" aria-expanded="false"> <i class="fa fa-plus-square"
-                                                                                        id="add"> </i> </a> Create Your
-                Education
-            </header>
-            <div id="id_form" class="collapse " aria-expanded="false">
-                <fieldset>
-                    @include('frontend.new_portals.resumes.education.partials.create_edit_fields')
-                </fieldset>
-            </div>
-        </form>
-    </div>
+    <div class="row margin-bottom-20">
+        <div class="col-md-12">
+            <!-- Yellow Panel -->
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-tasks"></i> Education
+                        <a style="position: sticky;" class="accordion-toggle collapsed pull-right" id="icon_toggle"
+                           href="#id_form" data-toggle="collapse" aria-expanded="false">
+                            <i class="fa fa-plus-square" id="add"></i>
+                        </a>
+                    </h3>
 
+                </div>
+                <div class="panel-body no-padding">
 
-    <div class="panel panel-profile">
-        <div class="panel-body">
-            <div class="row education">
-                @if(count($educations)>0)
-                    @foreach($educations as $education)
-                        <div class="col-md-6">
-                            <div class="tag-box tag-box-v3 margin-bottom-40 no-padding">
-                                @include('frontend.new_portals.resumes.education.partials.action')
-                                <div id="" class="profile-edit blog_experience tab-pane fade in active">
-                                    @include('frontend.new_portals.resumes.education.partials.fields')
+                    <div id="id_form" class="collapse " aria-expanded="false">
+                        <form action="{{ route('frontend.resume.store_education') }}" method="post"
+                              enctype="multipart/form-data"
+                              class="sky-form form-horizontal form_create_ecducation" novalidate="novalidate">
+                            <header style="font-size: 8pt"> Create Your Education</header>
+
+                            <fieldset>
+                                @include('frontend.new_portals.resumes.education.partials.create_edit_fields')
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="education no-padding">
+                        @if(count($educations)>0)
+                            @foreach($educations as $education)
+                                <div class="col-md-6 no-padding" style="border-color: #27d7e7 !important;">
+                                    <div class="tag-box-v3 margin-bottom-10 no-padding">
+                                        @include('frontend.new_portals.resumes.education.partials.action')
+                                        <div id="" class="profile-edit blog_reference tab-pane fade in active">
+                                            @include('frontend.new_portals.resumes.education.partials.fields')
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    @endforeach
-                @else
-                    There is no education please click on button add to add education
-                @endif
+                            @endforeach
+                        @endif
+                    </div>
+
+
+                </div>
+
             </div>
+            <!-- End Yellow Panel -->
         </div>
     </div>
+
+    {{--<div class="profile-bio margin-bottom-30">--}}
+    {{--<form action="{{ route('frontend.resume.store_education') }}" method="post" enctype="multipart/form-data"--}}
+    {{--class="sky-form form-horizontal form_create_ecducation" novalidate="novalidate">--}}
+    {{--<header><a style="position: sticky;" class="accordion-toggle collapsed pull-right" id="icon_toggle"--}}
+    {{--href="#id_form" data-toggle="collapse" aria-expanded="false"> <i class="fa fa-plus-square"--}}
+    {{--id="add"> </i> </a> Create Your--}}
+    {{--Education--}}
+    {{--</header>--}}
+    {{--<div id="id_form" class="collapse " aria-expanded="false">--}}
+    {{--<fieldset>--}}
+    {{--@include('frontend.new_portals.resumes.education.partials.create_edit_fields')--}}
+    {{--</fieldset>--}}
+    {{--</div>--}}
+    {{--</form>--}}
+    {{--</div>--}}
+
+
+    {{--<div class="panel panel-profile">--}}
+    {{--<div class="panel-body no-padding">--}}
+    {{--<div class="row education">--}}
+    {{--@if(count($educations)>0)--}}
+    {{--@foreach($educations as $education)--}}
+    {{--<div class="col-md-6">--}}
+    {{--<div class="tag-box tag-box-v3 margin-bottom-40 no-padding">--}}
+    {{--@include('frontend.new_portals.resumes.education.partials.action')--}}
+    {{--<div id="" class="profile-edit blog_experience tab-pane fade in active">--}}
+    {{--@include('frontend.new_portals.resumes.education.partials.fields')--}}
+    {{--</div>--}}
+    {{--</div>--}}
+    {{--</div>--}}
+    {{--@endforeach--}}
+    {{--@else--}}
+    {{--There is no education please click on button add to add education--}}
+    {{--@endif--}}
+    {{--</div>--}}
+    {{--</div>--}}
+    {{--</div>--}}
 
     @include('frontend.new_portals.resumes.education.partials.modal')
 
@@ -198,7 +311,7 @@
             var selectedDegreeId = dom.find('input[name=hidden_degree_id]').val();
 
             $('form#form_edit_education select[name=degree] option').each(function (key, option) {
-                if($(option).attr('value') == selectedDegreeId ) {
+                if ($(option).attr('value') == selectedDegreeId) {
                     $(this).prop('selected', true);
                 }
             });
@@ -270,7 +383,7 @@
                                     swal("Deleted!", "Your experience has been deleted.", "success");
                                     dom.parent().parent().parent().parent().parent().remove();
                                 }
-                                if(result.rest_education<=0){
+                                if (result.rest_education <= 0) {
                                     var no_education = '<span class="no_education"> There is no education please click on button add to add education </span>'
                                     $('div.education').append(no_education);
 
@@ -291,8 +404,7 @@
         });
 
 
-
-        validate_education( $('.form_create_ecducation'))
+        validate_education($('.form_create_ecducation'))
         validate_education($('#form_edit_education'))
 
         function validate_education(object) {
@@ -351,7 +463,7 @@
                     },
 
                     start_date: {
-                        verbose:false,
+                        verbose: false,
                         validators: {
                             notEmpty: {
                                 message: 'The start date is required'
@@ -362,19 +474,19 @@
                             },
                             callback: {
                                 message: 'The start date must be earlier then the Present',
-                                callback: function(value, validator, $field) {
+                                callback: function (value, validator, $field) {
 
                                     var get_today = new Date();
                                     var selectedDate = validator.getFieldElements('start_date').val();
-                                    var split  = selectedDate.split('-');
+                                    var split = selectedDate.split('-');
                                     var new_selecteddate = new Date(split[2], split[1] - 1, split[0]);
 
 
                                     var check = object.find('input[name=is_present]').val();
 
-                                    if(check == 1) {
+                                    if (check == 1) {
                                         object.formValidation('enableFieldValidators', 'end_date', false)
-                                        if(new_selecteddate.getTime() > get_today.getTime()) {
+                                        if (new_selecteddate.getTime() > get_today.getTime()) {
                                             return false;
                                         } else {
                                             validator.updateStatus('start_date', validator.STATUS_VALID, 'callback');
@@ -399,7 +511,7 @@
                             },
                             date: {
                                 format: 'DD-MM-YYYY',
-                                min:'start_date',
+                                min: 'start_date',
                                 message: 'The start date is not a valid'
                             }
 
@@ -419,23 +531,23 @@
                         }
                     }
                 }
-            }).on('change', 'input[name=start_date]', function(e, data) {
+            }).on('change', 'input[name=start_date]', function (e, data) {
 
                 object.formValidation('revalidateField', 'start_date');
 
-            }).on('change', '[name=end_date]', function(e, data) {
+            }).on('change', '[name=end_date]', function (e, data) {
 
                 object.formValidation('enableFieldValidators', 'end_date', true)
-                        .formValidation('revalidateField', 'start_date')
-                        .formValidation('revalidateField', 'end_date');
+                    .formValidation('revalidateField', 'start_date')
+                    .formValidation('revalidateField', 'end_date');
 
-            }).on('change', '[name="slider_date"]', function(e) {
+            }).on('change', '[name="slider_date"]', function (e) {
 
                 var end_date = object.find('input[name="end_date"]').val(),
-                        start_date = object.find('input[name="start_date"]').val(),
-                        fv         = object.data('formValidation');
+                    start_date = object.find('input[name="start_date"]').val(),
+                    fv = object.data('formValidation');
 
-                if($(this).is(':checked')) {
+                if ($(this).is(':checked')) {
                     fv.enableFieldValidators('end_date', false);
                     fv.revalidateField('start_date');
                 } else {

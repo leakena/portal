@@ -21,7 +21,7 @@
                     <fieldset>
                         @include('frontend.new_portals.resumes.language.partials.create_edit_fields')
                         <footer>
-                            <button type="submit" class="btn-u pull-left save" style="margin-left: -50px">Save</button>
+                            <button type="submit" class="btn-u btn-u-dark-blue pull-left save" style="margin-left: -50px">Save</button>
 
                         </footer>
                     </fieldset>

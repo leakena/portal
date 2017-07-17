@@ -15,7 +15,7 @@
                     @foreach($mates as $mate)
                         <div class="col-sm-6 sm-margin-bottom-20">
                             <div class="profile-blog">
-                                <img class="rounded-x" src="{{isset($userResumes[$mate['id_card']])?asset('img/backend/profile'.'/'. $userResumes[$mate['id_card']]['profile']):asset('portals/assets/img/testimonials/img1.jpg')}}" alt="">
+                                <img class="rounded-x" src="{{isset($userResumes[$mate['id_card']])?asset('img/backend/profile'.'/'. $userResumes[$mate['id_card']]['profile']):asset('portals/assets/img/avatar.png')}}" alt="">
                                 <div class="name-location">
                                     <strong>{{$mate['name_latin']}}</strong>
                                     <span><i class="fa fa-map-marker"></i><a href="#">Cambodia,</a> <a href="#">{!! isset($userResumes[$mate['id_card']])?$userResumes[$mate['id_card']]['birth_place']: 'Phnom Penh' !!}</a></span>

@@ -50,7 +50,7 @@
 <div class="row">
     <div class="form-group">
         <div class="col-md-3 col-md-offest2">
-            <button type="submit" class="btn-u pull-left">Save</button>
+            <button type="submit" class="btn-u btn-u-dark-blue pull-left">Save</button>
         </div>
 
     </div>

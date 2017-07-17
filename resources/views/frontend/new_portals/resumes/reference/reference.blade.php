@@ -89,7 +89,7 @@
         }
 
         .panel-yellow {
-            border-color: #56e71b;
+            border-color: #4765a0;
         }
 
         body {
@@ -101,12 +101,12 @@
         }
 
         .panel-yellow > .panel-heading {
-            background: #72c02c;
+            background: #4765a0;
             color: white;
         }
 
         .panel-u > .panel-heading {
-            background: #72c02c;
+            background: #4765a0;
         }
 
         .each_top_row {
@@ -252,8 +252,8 @@
                                 <div class="faq-add">
                                     <div class="top-part">
                                         <h3 class="new-title">
-                                            <i class="icon-support"></i>
-                                            <a href="#">{{$interest->name}}</a>
+                                            <i class="icon-support icon-color-dark-blue" style="border: hidden"></i>
+                                            {{$interest->name}}
 
                                         </h3>
                                     </div>
@@ -323,7 +323,8 @@
             e.preventDefault();
             var dom = $(this).parent().parent().parent().parent().children().eq(1);
 
-            $('form#form_edit_reference input[name=reference_id]').val(dom.find('input[name=hidden_reference_id]').val());
+
+            $('form#form_edit_reference input[name=reference_id]').val(dom.find('input[name=hidden_id]').val());
             $('form#form_edit_reference input[name=name]').val((dom.find('.name').text()).trim());
             $('form#form_edit_reference input[name=position]').val((dom.find('.position').text()).trim());
             $('form#form_edit_reference input[name=phone]').val((dom.find('.phone').text()).trim());

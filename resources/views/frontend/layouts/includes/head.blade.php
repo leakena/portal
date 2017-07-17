@@ -9,7 +9,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <!-- Favicon -->
-<link rel="shortcut icon" href="{{url('portals/favicon.ico')}}">
+{{--<link rel="shortcut icon" href="{{url('portals/favicons.ico')}}">--}}
 
 <!-- Web Fonts -->
 <link rel="shortcut" type="text/css"
