@@ -8,7 +8,7 @@
           id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="true" data-toggle="tooltip" title=""
           data-widget="chat-pane-toggle" data-original-title="Setting">
-                        <i class="icon-custom rounded-x icon-sm icon-color-u fa fa-lightbulb-o"></i>
+                        <i class="fa fa-cog icon-color-dark-blue" style="border: hidden"></i>
     </span>
     <ul class="dropdown-menu" role="menu">
         <li><a href="#" class="btn_edit_language" data-toggle="modal" data-target="#edit_language_form"><i

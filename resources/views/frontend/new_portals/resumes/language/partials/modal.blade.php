@@ -13,7 +13,7 @@
                         <fieldset>
                             @include('frontend.new_portals.resumes.language.partials.create_edit_fields')
                             <footer>
-                                <button type="submit" class="btn-u pull-left update">Update</button>
+                                <button type="submit" class="btn-u btn-u-dark-blue pull-left update">Update</button>
                                 <div class="progress"></div>
                             </footer>
                         </fieldset>

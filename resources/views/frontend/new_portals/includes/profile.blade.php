@@ -38,14 +38,14 @@
                                 {{--<input type="file" class="filestyle" id="image" name="profile" accept="image/*" data-input="false" data-icon="false" data-badge="false" style="width: 100% !important;">--}}
                                 <input type="file" class="btn btn-u " style="display: none" id="image" name="profile"
                                        accept="image/*">
-                                <button class="btn-u btn-brd btn-u-green btn-u-sm" id="choose_profile"
+                                <button class="btn-u btn-brd btn-u-dark-blue btn-u-sm" id="choose_profile"
                                         style="width: 49%; margin-top: -10px">
                                     <i class="fa fa fa-unlink"></i>
                                     Attach File
                                 </button>
 
-                                <input type="submit" class="btn-md btn-primary btn-u upload" value="Upload"
-                                       style="margin-top: -09px; width: 49%; float: right ">
+                                <input type="submit" class="btn-md btn-primary btn-u btn-u-dark-blue upload" value="Upload"
+                                       style="margin-top: -07px; width: 49%; float: right ">
 
                                 {{--<a class="btn-u btn-u-sm upload-image">Change Picture</a>--}}
                             </div>
@@ -54,12 +54,12 @@
                             <div class="col-md-7">
                                 @if(isset($resume))
                                     @if($resume->publish == true)
-                                        <button class="btn btn-u btn-sm pull-right publish"><i
+                                        <button class="btn btn-u btn-u-dark-blue btn-sm pull-right publish"><i
                                                     href="{{ route('frontend.resume.print', $resume->id) }}"
                                                     class="fa fa-eye fa-lg"></i> Unpublish CV
                                         </button>
                                     @else
-                                        <button class="btn btn-sm btn-u pull-right publish" data-toggle="modal"
+                                        <button class="btn btn-sm btn-u btn-u-dark-blue pull-right publish" data-toggle="modal"
                                                 data-target=".publish_resume"><i class="fa fa-eye fa-lg"></i> Publish CV
                                         </button>
 
@@ -93,7 +93,7 @@
 
                                 <h2>{{$authUser->name}}</h2>
                                 <span><strong>Gender:</strong>{{ isset($student)?$student['name_en']:'' }}</span>
-                                <span><strong>Date of birth:</strong> {{ isset($profile)?$profile->dob:'' }} </span>
+                                <span><strong>Date of birth:</strong> {{ isset($student)?(new \Carbon\Carbon($student['dob']))->toDateString():'' }} </span>
                                 <span><strong>Place of birth:</strong> {{ isset($profile)?$profile->birth_place:'' }} </span>
                                 <span><strong>Marital status:</strong> {{ isset($profile)?$profile->status->name:'' }} </span>
                                 <span><strong>Job:</strong> {{ isset($profile)?$profile->job:'' }} </span>
@@ -219,16 +219,15 @@
                     },
                     success: function (Response) {
                         if (Response.status === true) {
-                            var unpublish = '<button class="btn btn-sm btn-u pull-right publish"><i class="fa fa-eye fa-lg"></i> Unpublish CV </button>'
+                            var unpublish = '<button class="btn btn-sm btn-u btn-u-dark-blue pull-right publish"><i class="fa fa-eye fa-lg"></i> Unpublish CV </button>'
                             dom.after(unpublish);
-                            console.log(dom.siblings('.publish_resume').find('input'));
                             dom.siblings('.publish_resume').find('input').val(Response.url);
                             dom.remove();
 
 
                         }
                         else {
-                            var publish = '<button class="btn btn-sm btn-u pull-right publish" data-toggle="modal" data-target=".publish_resume"><i class="fa fa-eye fa-lg"></i> Publish CV </button>'
+                            var publish = '<button class="btn btn-sm btn-u btn-u-dark-blue pull-right publish" data-toggle="modal" data-target=".publish_resume"><i class="fa fa-eye fa-lg"></i> Publish CV </button>'
                             dom.after(publish);
                             dom.remove();
 
@@ -265,7 +264,7 @@
                                                     width: 4,
                                                     number: 90,
                                                     text: '%',
-                                                    colors: ['#eee', '#72c02c'],
+                                                    colors: ['#eee', '#4765a0'],
                                                     duration: 2000
                                                 })
                                             }
@@ -290,7 +289,7 @@
                                                     width: 4,
                                                     number: parseInt(value),
                                                     text: '%',
-                                                    colors: ['#eee', '#72c02c'],
+                                                    colors: ['#eee', '#4765a0'],
                                                     duration: 2000
                                                 })
                                             }

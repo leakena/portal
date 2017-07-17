@@ -10,7 +10,7 @@
                     <small>{{ $skill->name }}</small>
                     <small>{{ $skill->description }}</small>
                     <div class="progress progress-u progress-xxs">
-                        <div style="width: {{ $skill->description }}" aria-valuemax="100" aria-valuemin="0" aria-valuenow="{{(int)$skill->description}}" role="progressbar" class="progress-bar progress-bar-u">
+                        <div style="width: {{ $skill->description }}" aria-valuemax="100" aria-valuemin="0" aria-valuenow="{{(int)$skill->description}}" role="progressbar" class="progress-bar progress-bar-dark-blue">
                         </div>
                     </div>
                 @endforeach

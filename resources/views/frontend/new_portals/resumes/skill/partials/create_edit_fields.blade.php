@@ -3,7 +3,7 @@
     <input type="hidden" name="resume_uid" value="{{$userResume->id}}">
 @endif
 <input type="hidden" name="skill_id" value="">
-<div class="row">
+
     <div class="form-group">
         {!! Form::label('skill_name', 'Name', ['class' => 'col-md-2 control-label required']) !!}
         <div class="col-md-10 ">
@@ -16,18 +16,18 @@
     {{--<input type="text" name="name" placeholder="Skill Name">--}}
     {{--</label>--}}
     {{--</section>--}}
-</div>
+
 
 <div class="row">
     <div class="form-group">
         <div class="col-md-12">
-            {!! Form::input('radio', 'description', '25%', ['class' => 'radio-inline ', 'id' => 'description', 'required']) !!}
+            {!! Form::input('radio', 'description', '25%', ['class' => 'radio-inline description ',  'required']) !!}
             Beginner
-            {!! Form::input('radio', 'description', '50%', ['class' => 'radio-inline ', 'id' => 'description', 'required']) !!}
+            {!! Form::input('radio', 'description', '50%', ['class' => 'radio-inline description ',  'required']) !!}
             Medium
-            {!! Form::input('radio', 'description', '75%', ['class' => 'radio-inline ', 'id' => 'description', 'required']) !!}
+            {!! Form::input('radio', 'description', '75%', ['class' => 'radio-inline description ',  'required']) !!}
             Good
-            {!! Form::input('radio', 'description', '100%', ['class' => 'radio-inline ', 'id' => 'description', 'required']) !!}
+            {!! Form::input('radio', 'description', '100%', ['class' => 'radio-inline description ',  'required']) !!}
             Excellence
         </div>
 
@@ -51,6 +51,6 @@
 </div>
 
 <footer>
-    <button type="submit" class="btn-u pull-left" style="margin-left: -50px">Save</button>
+    <button type="submit" class="btn-u btn-u-dark-blue pull-left" style="margin-left: -50px">Save</button>
     <div class="progress"></div>
 </footer>

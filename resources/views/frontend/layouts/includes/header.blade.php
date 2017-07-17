@@ -2,7 +2,7 @@
 <div class="header">
     <div class="container">
         <!-- Logo -->
-        <a class="logo" href="index.html" style="height: 80px;">
+        <a class="logo" href="/" style="height: 80px;">
             <h2>Portal</h2>
         </a>
         <!-- End Logo -->

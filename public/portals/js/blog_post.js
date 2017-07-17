@@ -131,11 +131,12 @@ function onChangeSelectedFile(asset_img_file,
 /*---post by category---*/
 $(document).on('click', '.btn_category_list', function (e) {
     e.preventDefault();
+    $('input[name=my_post]').prop('checked', false);
     var dom = $(this).parent().parent().parent().parent();
     if(dom.find('.active') ){
-        dom.find('.active').removeClass('active').css('background-color', '');
+        dom.find('.active').removeClass('active').css({'background-color': '', 'color':'black'});
     }
-    $(this).css("background-color", "#72c02c");
+    $(this).css({"background-color": "#4765a0", 'color': 'white'});
     $(this).addClass('active');
     $('input[name=search_post]').val('');
 
@@ -158,12 +159,13 @@ $(document).on('click', '.btn_category_list', function (e) {
 
 $(document).on('click', '.btn_tag_list', function (e) {
     e.preventDefault();
+    $('input[name=my_post]').prop('checked', false);
 
     var dom = $(this).parent().parent().parent().parent();
     if(dom.find('.active') ){
-        dom.find('.active').removeClass('active').css('background-color', '');
+        dom.find('.active').removeClass('active').css({'background-color': '', 'color':'black'});
     }
-    $(this).css("background-color", "#72c02c");
+    $(this).css({"background-color": "#4765a0", 'color': 'white'});
     $(this).addClass('active');
     $('input[name=search_post]').val('');
 

@@ -24,7 +24,7 @@
 
 <div class="row">
     <div class="form-group">
-        <div class="col-md-12">
+        <div class="col-md-12" style="padding: 1px">
             {!! Form::input('radio', 'proficiency', 'Mother Tongue', ['class' => 'radio-inline ', 'id' => 'is_mother_tongue', 'required']) !!}
              Mother Tongue
             {!! Form::input('radio', 'proficiency', '25%', ['class' => 'radio-inline ', 'id' => 'proficiency', 'required']) !!}

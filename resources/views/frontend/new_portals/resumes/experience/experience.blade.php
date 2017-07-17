@@ -132,49 +132,168 @@
             font-weight: 700;
         }
 
+
+        .panel-yellow {
+            border-color: #4765a0;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #333;
+            background-color: #fff;
+        }
+
+        .panel-yellow > .panel-heading {
+            background: #4765a0;
+            color: white;
+        }
+
+        .panel-u > .panel-heading {
+            background: #72c02c;
+        }
+
+        .each_top_row {
+            margin-top: 2px;
+        }
+
+
+        .input-group {
+            position: relative;
+            display: table;
+            border-collapse: separate;
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            height: 34px;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .input-group-addon, .input-group-btn {
+            width: 1%;
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+
+        .sky-form .icon-append {
+            right: 17px;
+            padding: 1px 3px;
+            min-width: 34px;
+        }
+
+        .panel-body{
+            padding: 15px !important;
+            padding-top: 15px !important;
+            padding-right: 15px !important;
+            padding-bottom: 15px !important;
+            padding-left: 15px !important;
+        }
+
     </style>
 @endsection
 @section('content')
 
-    <div class="profile-bio margin-bottom-30">
-        <form action="{{ route('frontend.portal.resume.store_experience') }}" method="post"
-              enctype="multipart/form-data" class="sky-form form-horizontal form_create_experience">
-            <header>
-                <a style="position: sticky;" class="accordion-toggle collapsed pull-right" id="icon_toggle"
-                       href="#id_form" data-toggle="collapse" aria-expanded="false">
-                    <i class="fa fa-plus-square" id="add"> </i>
-                </a>
-                Create Your Experiences
-            </header>
-            <div id="id_form" class="collapse " aria-expanded="false">
-                <fieldset>
-                    @include('frontend.new_portals.resumes.experience.partials.create_edit_fields')
-                </fieldset>
-            </div>
-        </form>
-    </div>
+    <div class="row margin-bottom-20">
+        <div class="col-md-12">
+            <!-- Yellow Panel -->
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-tasks"></i> Experience
+                        <a style="position: sticky;" class="accordion-toggle collapsed pull-right" id="icon_toggle"
+                           href="#id_form" data-toggle="collapse" aria-expanded="false">
+                            <i class="fa fa-plus-square" id="add"></i>
+                        </a>
+                    </h3>
 
-    <div class="panel panel-profile">
-        <div class="panel-body">
-            <div class="row experience">
-                @if(count($experiences)>0)
-                    @foreach($experiences as $experience)
-                        <div class="col-md-6">
-                            <div class="tag-box tag-box-v3 margin-bottom-40 no-padding">
-                                @include('frontend.new_portals.resumes.experience.partials.action')
-                                <div id="" class="profile-edit blog_experience tab-pane fade in active">
-                                    @include('frontend.new_portals.resumes.experience.partials.fields')
+                </div>
+                <div class="panel-body no-padding">
+
+                    <div id="id_form" class="collapse " aria-expanded="false">
+                        <form action="{{ route('frontend.portal.resume.store_experience') }}" method="post"
+                              enctype="multipart/form-data" class="sky-form form-horizontal form_create_experience">
+                            <header style="font-size: 8pt">   Create Your Education </header>
+
+                            <fieldset>
+                                @include('frontend.new_portals.resumes.experience.partials.create_edit_fields')
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="experience no-padding">
+                        @if(count($experiences)>0)
+                            @foreach($experiences as $experience)
+                                <div class="col-md-6 no-padding" style="border-color: #27d7e7 !important;">
+                                    <div class="tag-box-v3 margin-bottom-10 no-padding">
+                                        @include('frontend.new_portals.resumes.experience.partials.action')
+                                        <div id="" class="profile-edit blog_reference tab-pane fade in active">
+                                            @include('frontend.new_portals.resumes.experience.partials.fields')
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    @endforeach
-                @else
-                    <span class="no_experience"> There is no experience please click on button add to add experience</span>
+                            @endforeach
+                        @endif
+                    </div>
 
-                @endif
+
+                </div>
+
             </div>
+            <!-- End Yellow Panel -->
         </div>
     </div>
+
+
+
+
+    {{--<div class="profile-bio margin-bottom-30">--}}
+        {{--<form action="{{ route('frontend.portal.resume.store_experience') }}" method="post"--}}
+              {{--enctype="multipart/form-data" class="sky-form form-horizontal form_create_experience">--}}
+            {{--<header>--}}
+                {{--<a style="position: sticky;" class="accordion-toggle collapsed pull-right" id="icon_toggle"--}}
+                       {{--href="#id_form" data-toggle="collapse" aria-expanded="false">--}}
+                    {{--<i class="fa fa-plus-square" id="add"> </i>--}}
+                {{--</a>--}}
+                {{--Create Your Experiences--}}
+            {{--</header>--}}
+            {{--<div id="id_form" class="collapse " aria-expanded="false">--}}
+                {{--<fieldset>--}}
+                    {{--@include('frontend.new_portals.resumes.experience.partials.create_edit_fields')--}}
+                {{--</fieldset>--}}
+            {{--</div>--}}
+        {{--</form>--}}
+    {{--</div>--}}
+
+    {{--<div class="panel panel-profile">--}}
+        {{--<div class="panel-body">--}}
+            {{--<div class="row experience">--}}
+                {{--@if(count($experiences)>0)--}}
+                    {{--@foreach($experiences as $experience)--}}
+                        {{--<div class="col-md-6">--}}
+                            {{--<div class="tag-box tag-box-v3 margin-bottom-40 no-padding">--}}
+                                {{--@include('frontend.new_portals.resumes.experience.partials.action')--}}
+                                {{--<div id="" class="profile-edit blog_experience tab-pane fade in active">--}}
+                                    {{--@include('frontend.new_portals.resumes.experience.partials.fields')--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--@endforeach--}}
+                {{--@else--}}
+                    {{--<span class="no_experience"> There is no experience please click on button add to add experience</span>--}}
+
+                {{--@endif--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</div>--}}
 
 
     @include('frontend.new_portals.resumes.experience.partials.modal')
