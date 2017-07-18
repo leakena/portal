@@ -207,7 +207,7 @@ class PortalController extends Controller
     }
 
     /**
-     * @param $year
+     * @param Request $request
      * @return mixed
      */
     public function score(Request $request)

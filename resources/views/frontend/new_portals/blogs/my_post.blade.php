@@ -126,13 +126,15 @@
         </div>
         <div class="no-padding pull-left">
             @if(session('status'))
-                <label id="my_post" data-placement="right" data-toggle="tooltip" title="My post" for="my_post" class="btn btn-u pull-right"
+                <label id="my_post" data-placement="right" data-toggle="tooltip" title="My post" for="my_post"
+                       class="btn btn-u pull-right"
                        style="font-size: 12pt;">
                     <input checked type="checkbox" name="my_post" id="my_post" value="my_post">
                     {{--<i class="fa fa-user" aria-hidden="true"></i>--}}
                 </label>
             @else
-                <label id="my_post" data-placement="right" data-toggle="tooltip" title="My post" for="my_post" class="btn btn-u pull-right"
+                <label id="my_post" data-placement="right" data-toggle="tooltip" title="My post" for="my_post"
+                       class="btn btn-u pull-right"
                        style="font-size: 12pt;">
                     <input type="checkbox" name="my_post" id="my_post" value="my_post">
                     {{--<i class="fa fa-user" aria-hidden="true"></i>--}}
@@ -380,26 +382,63 @@
             }
         });
 
+        function search_post(text, last_post) {
+            $.ajax({
+                method: 'GET',
+                url: '{{route('frontend.portal.search_post')}}',
+                data: {
+                    text: text,
+                    last_post: last_post
+                },
+                dataType: 'HTML',
+                success: function (result) {
+                    $('.render_post ').append(result);
+                    $('.user_post_profile').tooltip();
+                    if ($('input[class=last_post]').val() == '0') {
+                        $('.load_more_post').remove();
+                    } else {
+                        if (!$('button').hasClass('load_more_post')) {
+                            var load_post = '<button type="button" class="btn-u btn-u-default btn-block text-center load_more_post" id="btn_load_more_post">LoadMore </button>';
+                            $('.render_post').after(load_post);
+                        }
+                    }
+
+                }
+
+            })
+        }
+
 
         $('input[name=search_post]').on('keyup', function (e) {
             var dom = $('#right_sidebar');
-            if(dom.find('.active')){
+            if (dom.find('.active')) {
                 dom.find('.active').removeClass('active').css('background-color', '');
             }
 
-
             if ($(this).val() != '') {
+                var text = $(this).val();
                 $.ajax({
                     method: 'GET',
                     url: '{{route('frontend.portal.search_post')}}',
-                    data: {text: $(this).val()},
+                    data: {
+                        text: text,
+                    },
                     dataType: 'HTML',
                     success: function (result) {
                         $('.render_post ').html(result);
                         $('.user_post_profile').tooltip();
-                        $('.load_more_post').remove();
+                        if ($('input[class=last_post]').val() == '0') {
+                            $('#btn_load_more_post').remove();
+                        } else if (!$('input').hasClass('last_post')) {
+                            $('#btn_load_more_post').remove();
+                        } else {
+                            if (!$('button').hasClass('load_more_post')) {
+                                var load_post = '<button type="button" class="btn-u btn-u-default btn-block text-center load_more_post" id="btn_load_more_post">LoadMore </button>';
+                                $('.render_post').after(load_post);
+                            }
+                        }
 
-                    },
+                    }
 
                 })
             }

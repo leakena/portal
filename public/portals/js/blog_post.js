@@ -133,13 +133,12 @@ $(document).on('click', '.btn_category_list', function (e) {
     e.preventDefault();
     $('input[name=my_post]').prop('checked', false);
     var dom = $(this).parent().parent().parent().parent();
-    if(dom.find('.active') ){
-        dom.find('.active').removeClass('active').css({'background-color': '', 'color':'black'});
+    if (dom.find('.active')) {
+        dom.find('.active').removeClass('active').css({'background-color': '', 'color': 'black'});
     }
     $(this).css({"background-color": "#4765a0", 'color': 'white'});
     $(this).addClass('active');
     $('input[name=search_post]').val('');
-
 
 
     var category_url = $(this).attr('href');
@@ -162,8 +161,8 @@ $(document).on('click', '.btn_tag_list', function (e) {
     $('input[name=my_post]').prop('checked', false);
 
     var dom = $(this).parent().parent().parent().parent();
-    if(dom.find('.active') ){
-        dom.find('.active').removeClass('active').css({'background-color': '', 'color':'black'});
+    if (dom.find('.active')) {
+        dom.find('.active').removeClass('active').css({'background-color': '', 'color': 'black'});
     }
     $(this).css({"background-color": "#4765a0", 'color': 'white'});
     $(this).addClass('active');
@@ -186,8 +185,13 @@ $(document).on('click', '.btn_tag_list', function (e) {
 
 $(document).on('click', '#btn_load_more_post', function (e) {
     var dom = $(this);
-
-    if ($('input[name=my_post]').is(':checked')) {
+    // console.log($(this).siblings('.render_post').find('.searched'));
+    if ($(this).siblings('.render_post').hasClass('.searched')) {
+        var text = $(this).siblings('.render_post').find('.searched').val();
+        var last_post = $(this).siblings('.render_post').find('.last_post').val();
+        search_post(text, last_post);
+        // console.log(dom.)
+    } else if ($('input[name=my_post]').is(':checked')) {
         //alert(100023434);
         $.ajax({
             method: 'GET',
@@ -208,7 +212,7 @@ $(document).on('click', '#btn_load_more_post', function (e) {
             }
 
         });
-    } else {
+    } else if (!$('input[name=my_post]').is(':checked')) {
         $.ajax({
             method: 'GET',
             url: '/blog-post/load-more-post',
@@ -237,16 +241,16 @@ $(document).on('click', '.see_more', function (e) {
     e.preventDefault();
     var dom = $(this);
 
-   $.ajax({
-       type: 'GET',
-       url: '/blog-post/show_post',
-       data: {
-           post_id: dom.siblings('input').val()
-       },
-       success: function (response) {
-           $('.render_post').html(response);
-           $('.load_more_post').remove();
-       }
-   });
+    $.ajax({
+        type: 'GET',
+        url: '/blog-post/show_post',
+        data: {
+            post_id: dom.siblings('input').val()
+        },
+        success: function (response) {
+            $('.render_post').html(response);
+            $('.load_more_post').remove();
+        }
+    });
 });
 
