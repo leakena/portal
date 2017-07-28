@@ -357,3 +357,52 @@ function validate_personal_info(object) {
         }
     });
 }
+
+function validate_post(object) {
+    object.formValidation({
+        framework: 'bootstrap',
+        icon: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            title: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please input your post title !'
+                    }
+                }
+            },
+            'category[]': {
+                validators: {
+                    notEmpty: {
+                        message: 'Please choose category of your post !'
+                    }
+                }
+            },
+            'tag[]': {
+                validators: {
+                    notEmpty: {
+                        message: 'Please choose tag of your post !'
+                    }
+                }
+            },
+            'body': {
+                validators: {
+                    notEmpty: {
+                        message: 'Please input contents of your post !'
+                    }
+                }
+            },
+            'file': {
+                validators: {
+                    notEmpty: {
+                        message: 'Please choose file for your post !'
+                    }
+                }
+            },
+
+        }
+    });
+}

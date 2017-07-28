@@ -103,14 +103,71 @@
 
     <!-- Posts -->
     <div class="posts margin-bottom-40">
-        <div class="headline headline-md"><h2>Recent Posts</h2></div>
+        <div class="headline headline-md"><h2>Latest Posts</h2></div>
         @if(isset($recent_posts))
             @foreach($recent_posts as $recent_post)
+
                 <dl class="dl-horizontal">
-                    <dt><a href="#"><img class="recent_post_profile" data-placement="right" data-toggle="tooltip"
-                                         title="{{ strtoupper(User::iPosted($recent_post->create_uid)->name) }}"
-                                         src="{{isset($recent_post->user->resume)?(isset($recent_post->user->resume->personalInfo)?(isset($recent_post->user->resume->personalInfo->profile)?url('img/backend/profile/'.$recent_post->user->resume->personalInfo->profile):url('portals/assets/img/team/img32-md.jpg')):url('portals/assets/img/team/img32-md.jpg')):url('portals/assets/img/team/img32-md.jpg')}}"
-                                         alt=""/></a></dt>
+                    <dt><a class="detail_post" href="">
+                            <input type="hidden" class="post_id" name="post_id" value="{{ $recent_post->id }}">
+                            {{--<img class="recent_post_profile" data-placement="right" data-toggle="tooltip"--}}
+                                         {{--title="{{ strtoupper(User::iPosted($recent_post->create_uid)->name) }}"--}}
+                                         {{--src="{{isset($recent_post->user->resume)?(isset($recent_post->user->resume->personalInfo)?(isset($recent_post->user->resume->personalInfo->profile)?url('img/backend/profile/'.$recent_post->user->resume->personalInfo->profile):url('portals/assets/img/team/img32-md.jpg')):url('portals/assets/img/team/img32-md.jpg')):url('portals/assets/img/team/img32-md.jpg')}}"--}}
+                                         {{--alt=""/>--}}
+
+                            @if($recent_post->file)
+                                @php
+                                    $split_strs = explode('.', $recent_post->file);
+                                    if (isset($split_strs)){
+                                        foreach ($split_strs as $split_str){
+                                            if($split_str == end($split_strs)){
+                                                $extention = $split_str;
+                                            }
+                                        }
+                                    }else{
+                                        $extention = '';
+                                    }
+                                @endphp
+                                @if($extention != 'png' && $extention != 'jpg' && $extention != 'jpeg')
+
+                                    @if($extention == 'pdf')
+
+
+                                            {{--{{ $post->file }}--}}
+                                            {{--<a href="{{ asset('docs') }}/{{ $post->file }}" target="_blank">--}}
+                                            {{--<button class="btn btn-default btn-xs">Preview</button>--}}
+                                            {{--</a>--}}
+                                            <img class="img-responsive" src="{{asset('portals/icons/pdf.png')}}" alt="">
+
+                                    @endif
+
+                                    @if($extention == 'docx')
+                                        <a href="{{ asset('docs') }}/{{ $recent_post->file }}" download="{{ $recent_post->file }}">
+                                            {{--<img class="img-responsive" src="{{asset('portals/icons/docx.png')}}" alt="">--}}
+                                            <img class="img-responsive" src="{{asset('portals/icons/word.png')}}" alt="">
+                                        </a>
+                                    @endif
+
+                                    @if($extention == 'pptx' || $extention == 'ppt')
+                                        <a href="{{ asset('docs') }}/{{ $recent_post->file }}" download="{{ $recent_post->file }}">
+
+                                            <img class="img-responsive" src="{{asset('portals/icons/pptx.png')}}" alt="">
+                                        </a>
+                                    @endif
+
+
+                                    @if($extention == 'xlsx' || $extention == 'xls')
+                                        <a href="#" target="_blank" data-event-key="attachment:click"
+                                           data-event-resource-type="file" data-event-action="open" data-bypass="true">
+                                            <img class="img-responsive" src="{{asset('portals/icons/xlsx.png')}}" alt="">
+                                        </a>
+                                    @endif
+                                @else
+                                    <img class="img-responsive" src="{{ asset('img/frontend/uploads/images').'/'.$recent_post->file }}"
+                                         alt="">
+                                @endif
+                            @endif
+                        </a></dt>
                     <dd>
                         <p>
                             <a href="#"><strong>{{ isset($recent_post->body)?str_limit($recent_post->title, 20):'' }}</strong></a>

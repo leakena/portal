@@ -259,7 +259,7 @@ trait BlogPostTrait
     {
 
         if (isset($request->last_post)) {
-            dd($request->last_post);
+//            dd($request->last_post);
             $searchResult = DB::table('categories')
                 ->join('category_tags', 'category_tags.category_id', '=', 'categories.id')
                 ->join('tags', 'tags.id', '=', 'category_tags.tag_id')
@@ -547,11 +547,8 @@ trait BlogPostTrait
             'posts.department_id',
             'posts.grade_id'
         )
-            ->orderBy('posts.created_at', 'ASCE')->get();
+            ->orderBy('posts.created_at', 'ASCE')->limit(5)->get();
 
-        foreach ($posts as $post) {
-            // dd($post);
-        }
 
 
         $tags = DB::table('tags')
@@ -574,9 +571,29 @@ trait BlogPostTrait
         $posts = collect($posts)->mapWithKeys(function ($item) {
             return [$item->post_id => (object)collect($item)->toArray()];
         })->toArray();
+        if(count($posts)>0){
+            foreach ($posts as $post){
+
+                if($post == end($posts)){
+                    $last_post = $post->created_at;
+                }
+            }
 
 
-        return view('frontend.new_portals.blogs.patials.each_blog_post', compact('posts', 'tagBypostIds', 'collectionTags'));
+
+            $rest_post = Post::where([
+                ['created_at', '<', $last_post]
+            ])->get();
+            //dd($rest_post);
+
+            if ($rest_post->isEmpty()) {
+                $last_post = '0';
+            }
+        }
+
+
+
+        return view('frontend.new_portals.blogs.patials.each_blog_post', compact('posts', 'tagBypostIds', 'collectionTags', 'last_post'));
 
 
     }
@@ -588,47 +605,114 @@ trait BlogPostTrait
      */
     public function postByTag($tagId, Request $request)
     {
+        if(isset($request->last_post)){
+            $posts = DB::table('posts')
+                ->join('category_post_tags', function ($query) use ($tagId) {
 
-        $posts = DB::table('posts')
-            ->join('category_post_tags', function ($query) use ($tagId) {
+                    $categoryTagIds = DB::table('tags')->join('category_tags', function ($subQuery) use ($tagId) {
+                        $subQuery->on('category_tags.tag_id', '=', 'tags.id')
+                            ->where('tags.id', '=', $tagId);
+                    })->pluck('category_tags.id')->toArray();
 
-                $categoryTagIds = DB::table('tags')->join('category_tags', function ($subQuery) use ($tagId) {
-                    $subQuery->on('category_tags.tag_id', '=', 'tags.id')
-                        ->where('tags.id', '=', $tagId);
-                })->pluck('category_tags.id')->toArray();
+                    $query->on('category_post_tags.post_id', '=', 'posts.id')
+                        ->whereIn('category_post_tags.category_tag_id', $categoryTagIds);
 
-                $query->on('category_post_tags.post_id', '=', 'posts.id')
-                    ->whereIn('category_post_tags.category_tag_id', $categoryTagIds);
+                })->where('posts.created_at', '<', $request->last_post)
+                ->select(
+                    'posts.id',
+                    'posts.body',
+                    'posts.file',
+                    'posts.created_at',
+                    'posts.create_uid',
+                    'category_post_tags.post_id',
+                    'category_post_tags.category_tag_id',
+                    'posts.degree_id',
+                    'posts.department_id',
+                    'posts.grade_id'
+                )
+                ->orderBy('posts.created_at', 'ASCE')->get();
 
-            })->select(
-                'posts.id',
-                'posts.body',
-                'posts.file',
-                'posts.created_at',
-                'posts.create_uid',
-                'category_post_tags.post_id',
-                'category_post_tags.category_tag_id',
-                'posts.degree_id',
-                'posts.department_id',
-                'posts.grade_id'
-            )
-            ->orderBy('posts.created_at', 'ASCE')->get();
+            $tags = DB::table('tags')
+                ->join('category_tags', function ($query) use ($tagId) {
+                    $query->on('category_tags.tag_id', '=', 'tags.id')
+                        ->whereIn('category_tags.tag_id', [$tagId]);
+                })->select('tags.name', 'tags.id as tag_id', 'category_tags.id as category_tag_id');
 
-        $tags = DB::table('tags')
-            ->join('category_tags', function ($query) use ($tagId) {
-                $query->on('category_tags.tag_id', '=', 'tags.id')
-                    ->whereIn('category_tags.tag_id', [$tagId]);
-            })->select('tags.name', 'tags.id as tag_id', 'category_tags.id as category_tag_id');
-
-        $collectionTags = collect($tags->get())->keyBy('category_tag_id')->toArray();
-        $tagBypostIds = collect($posts)->groupBy('id')->toArray();
+            $collectionTags = collect($tags->get())->keyBy('category_tag_id')->toArray();
+            $tagBypostIds = collect($posts)->groupBy('id')->toArray();
 
 
-        $posts = collect($posts)->mapWithKeys(function ($item) {
-            return ([$item->post_id => $item]);
-        })->toArray();
+            $posts = collect($posts)->mapWithKeys(function ($item) {
+                return ([$item->post_id => $item]);
+            })->toArray();
 
-        return view('frontend.new_portals.blogs.patials.each_blog_post', compact('posts', 'tagBypostIds', 'collectionTags'));
+            $rest_post = array_slice($posts,5 );
+            $posts = array_slice($posts,0,5);
+
+            if (empty($rest_post)) {
+                $last_post = '0';
+            }else{
+                $last_post = array_slice($posts, 4, 1);
+                $last_post = $last_post[0]->created_at;
+            }
+
+
+            return view('frontend.new_portals.blogs.patials.each_blog_post', compact('posts', 'tagBypostIds', 'collectionTags', 'last_post'));
+        }else{
+            $posts = DB::table('posts')
+                ->join('category_post_tags', function ($query) use ($tagId) {
+
+                    $categoryTagIds = DB::table('tags')->join('category_tags', function ($subQuery) use ($tagId) {
+                        $subQuery->on('category_tags.tag_id', '=', 'tags.id')
+                            ->where('tags.id', '=', $tagId);
+                    })->pluck('category_tags.id')->toArray();
+
+                    $query->on('category_post_tags.post_id', '=', 'posts.id')
+                        ->whereIn('category_post_tags.category_tag_id', $categoryTagIds);
+
+                })->select(
+                    'posts.id',
+                    'posts.body',
+                    'posts.file',
+                    'posts.created_at',
+                    'posts.create_uid',
+                    'category_post_tags.post_id',
+                    'category_post_tags.category_tag_id',
+                    'posts.degree_id',
+                    'posts.department_id',
+                    'posts.grade_id'
+                )
+                ->orderBy('posts.created_at', 'ASCE')->get();
+
+            $tags = DB::table('tags')
+                ->join('category_tags', function ($query) use ($tagId) {
+                    $query->on('category_tags.tag_id', '=', 'tags.id')
+                        ->whereIn('category_tags.tag_id', [$tagId]);
+                })->select('tags.name', 'tags.id as tag_id', 'category_tags.id as category_tag_id');
+
+            $collectionTags = collect($tags->get())->keyBy('category_tag_id')->toArray();
+            $tagBypostIds = collect($posts)->groupBy('id')->toArray();
+
+
+            $posts = collect($posts)->mapWithKeys(function ($item) {
+                return ([$item->post_id => $item]);
+            })->toArray();
+
+            $rest_post = array_slice($posts,5 );
+            $posts = array_slice($posts,0,5);
+
+            if (empty($rest_post)) {
+                $last_post = '0';
+            }else{
+                $last_post = array_slice($posts, 4, 1);
+                $last_post = $last_post[0]->created_at;
+            }
+
+
+            return view('frontend.new_portals.blogs.patials.each_blog_post', compact('posts', 'tagBypostIds', 'collectionTags', 'last_post'));
+        }
+
+
 
     }
 
@@ -734,23 +818,37 @@ trait BlogPostTrait
     public function show_post(Request $request)
     {
 
-        $post = Post::find($request->post_id);
 
-        $categoryPostTags = DB::table('category_post_tags')->where('post_id', $request->post_id);
-        //dd($categoryPostTags);
-        $categoryTagIds = $categoryPostTags->pluck('category_tag_id');
-        $tagBypostIds = collect($categoryPostTags->get())->groupBy('post_id')->toArray();
+        $post = Post::where('id', $request->post_id)->first();
 
 
-        $tags = DB::table('tags')
-            ->join('category_tags', function ($query) use ($categoryTagIds) {
-                $query->on('category_tags.tag_id', '=', 'tags.id')
-                    ->whereIn('category_tags.id', $categoryTagIds);
-            })
-            ->select('tags.name', 'tags.id as tag_id', 'category_tags.id as category_tag_id')
-            ->get();
-        $collectionTags = collect($tags)->keyBy('category_tag_id')->toArray();
+//        $categoryPostTags = DB::table('category_post_tags')->where('post_id', $request->post_id);
+//        //dd($categoryPostTags);
+//        $categoryTagIds = $categoryPostTags->pluck('category_tag_id');
+//        $tagBypostIds = collect($categoryPostTags->get())->groupBy('post_id')->toArray();
+//
+//
+//        $tags = DB::table('tags')
+//            ->join('category_tags', function ($query) use ($categoryTagIds) {
+//                $query->on('category_tags.tag_id', '=', 'tags.id')
+//                    ->whereIn('category_tags.id', $categoryTagIds);
+//            })
+//            ->select('tags.name', 'tags.id as tag_id', 'category_tags.id as category_tag_id')
+//            ->get();
+//        $collectionTags = collect($tags)->keyBy('category_tag_id')->toArray();
 
-        return view('frontend.new_portals.blogs.patials.show', compact('post', 'tagBypostIds', 'collectionTags'));
+        return Response::json([
+            'status'=> true,
+            'body' => $post->body
+            ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function detail_post(Request $request){
+        $post = Post::where('id', $request->post_id)->first();
+        return view('frontend.new_portals.blogs.patials.detail_post', compact('post'));
     }
 }

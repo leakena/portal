@@ -54,9 +54,11 @@ class PortalController extends Controller
 
     public function index(Request $request)
     {
-//        $studentData = $this->controller->getElementByApi($this->studentPrefix . '/program', ['student_id_card', 'academic_year_id'], ['e20150498', ''], []);
+//        $studentData = $this->controller->getElementByApi($this->studentPrefix . '/annual-object', ['student_id_card', 'academic_year_id'], ['e20150498', ''], []);
 //        dd($studentData);
+
         $user = auth()->user();
+
         $studentScore = $this->controller->getElementByApi($this->studentPrefix . '/score', ['student_id_card'], [$user->email], []);
         $years = $this->controller->getElementByApi($this->academic . '/all', [], [], []);
         $studentScore = $studentScore['course_score'];
@@ -83,6 +85,32 @@ class PortalController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function reload_post(Request $request)
+    {
+
+        $dataToLoads = $this->loadPosts(Carbon::now());
+
+//        $dataToLoads = $this->loadPosts(date("n", strtotime("first day of previous month")));
+
+        $posts = $this->setPriority($dataToLoads['post'], $dataToLoads['student_data']);
+        $tagBypostIds = $dataToLoads['tag_by_post_id'];
+        $collectionTags = $dataToLoads['collection_tag'];
+        //$lastMonth = $dataToLoads['last_month'];
+        $last_post = $dataToLoads['last_post'];
+        $recent_posts = Post::latest()->limit(3)->get();
+
+        return view('frontend.new_portals.blogs.patials.each_blog_post', compact('posts', 'tagBypostIds', 'collectionTags', 'last_post', 'recent_posts'));
+
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function myPosts(Request $request)
     {
 
@@ -101,6 +129,11 @@ class PortalController extends Controller
 
     }
 
+    /**
+     * @param $posts
+     * @param $studentData
+     * @return array
+     */
     private function setPriority($posts, $studentData)
     {
 
@@ -138,6 +171,9 @@ class PortalController extends Controller
         return $priority_to_post;
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index_()
     {
 

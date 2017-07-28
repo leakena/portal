@@ -33,7 +33,15 @@ trait PortalMenuTrait
     public function profile(Request $request)
     {
         $user = auth()->user();
+        $studentData = $this->controller->getElementByApi($this->studentPrefix . '/program', ['student_id_card'], [$user->email], []);
+        $studentGrades = $this->controller->getElementByApi($this->studentPrefix . '/annual-object', ['student_id_card'], [$user->email], []);
         $student = $this->requestManager->getElementsFromApi($this->studentPrefix . '/prop', ['student_id_card'], [$user->email], []);
+        foreach ($studentGrades as $studentGrade){
+            if($studentGrade == end($studentGrades)){
+                $studentGrade = $studentGrade;
+            }
+        }
+
         $resume = $this->getUserResume(auth()->id());
         if ($resume){
             $profile = PersonalInfo::where('resume_uid', $resume->id)->first();
@@ -41,7 +49,7 @@ trait PortalMenuTrait
             $profile = null;
         }
 
-        return view('frontend.new_portals.includes.profile', compact('resume', 'profile', 'student'));
+        return view('frontend.new_portals.includes.profile', compact('resume', 'profile', 'student', 'studentData', 'studentGrade'));
     }
 
 
@@ -131,6 +139,13 @@ trait PortalMenuTrait
             'semester' => $semester,
             'week' => $week
         ]);
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function about_us(){
+        return view('frontend.new_portals.about_us');
     }
 
 }

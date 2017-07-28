@@ -55,8 +55,9 @@
                 <!-- End Blog -->
 
                 <!-- Portfolio -->
-                <li class="">
-                    <a href="#"> About-us</a>
+                <li class="{{ \App\Utils\Http\Facades\ActiveClassManager::isActiveRoute('frontend.portal.about_us') }}">
+                    <a href="{{ route('frontend.portal.about_us') }}"> About-us</a>
+                    {{--{{ dd($homeActiveRoutes) }}--}}
 
                 </li>
                 <!-- End Portfolio -->

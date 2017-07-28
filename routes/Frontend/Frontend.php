@@ -42,6 +42,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/involve-project', 'PortalController@involveProject')->name('involve_project');
         Route::get('/history', 'PortalController@history')->name('history');
         Route::get('/setting', 'PortalController@setting')->name('setting');
+        Route::get('/about-us', 'PortalController@about_us')->name('about_us');
 
         Route::post('/profile/timetable', 'PortalController@timetable')->name('timetable');
 
@@ -62,6 +63,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/blog-post/{id}/post-by-tag', 'PortalController@postByTag')->name('post_by_tag');
         Route::get('/blog-post/load-more-post', 'PortalController@loadMorePost')->name('load_more_post');
         Route::get('/blog-post/show_post', 'PortalController@show_post')->name('show_post');
+        Route::get('/blog-post/reload_post', 'PortalController@reload_post')->name('reload_post');
+        Route::get('/blog-post/detail_post', 'PortalController@detail_post')->name('detail_latest_post');
 
 
         /*---end new post route -----*/

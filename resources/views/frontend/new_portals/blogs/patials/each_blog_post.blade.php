@@ -15,7 +15,7 @@
                 </div>
 
 
-                <div class="col-md-12" style="padding-left: 0px; margin-left: 90px">
+                <div class="col-md-12 margin-left-10">
                     @php
                         $split_strs = explode('.', $post->file);
                         if (isset($split_strs)){
