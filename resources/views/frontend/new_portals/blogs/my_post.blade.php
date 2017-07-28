@@ -126,13 +126,15 @@
         </div>
         <div class="no-padding pull-left">
             @if(session('status'))
-                <label id="my_post" data-placement="right" data-toggle="tooltip" title="My post" for="my_post" class="btn btn-u pull-right"
+                <label id="my_post" data-placement="right" data-toggle="tooltip" title="My post" for="my_post"
+                       class="btn btn-u pull-right"
                        style="font-size: 12pt;">
                     <input checked type="checkbox" name="my_post" id="my_post" value="my_post">
                     {{--<i class="fa fa-user" aria-hidden="true"></i>--}}
                 </label>
             @else
-                <label id="my_post" data-placement="right" data-toggle="tooltip" title="My post" for="my_post" class="btn btn-u pull-right"
+                <label id="my_post" data-placement="right" data-toggle="tooltip" title="My post" for="my_post"
+                       class="btn btn-u pull-right"
                        style="font-size: 12pt;">
                     <input type="checkbox" name="my_post" id="my_post" value="my_post">
                     {{--<i class="fa fa-user" aria-hidden="true"></i>--}}
@@ -144,12 +146,12 @@
             {{--</label>--}}
         </div>
 
-        <div class="input-group" style="padding-left: 2px; ">
+        <div class="input-group search" style="padding-left: 2px; ">
             <span class="input-group-addon" id="sizing-addon2">
                 <i class="fa fa-search" aria-hidden="true"></i>
             </span>
             <input type="text" name="search_post" class="form-control" placeholder="Search for..."
-                   aria-describedby="sizing-addon2">
+                   aria-describedby="sizing-addon2" style="height: 35px ;">
         </div>
 
         {{--<div class="pull-right " style="padding-left: 2px; padding-right: 1px;">--}}
@@ -165,7 +167,7 @@
 
     <div class="row new_row blog blog-medium collapse" id="id_form" aria-expanded="false">
         {{--<form action="{{route('')}}" method="post" enctype="multipart/form-data" class="sky-form form-horizontal form_create_post" files>--}}
-        {!! Form::open(['route' => 'frontend.portal.store_post','class' => 'form-horizontal sky-form','role' => 'form','method' => 'post', 'files'=>true, 'enctype'=>'multipart/form-data']) !!}
+        {!! Form::open(['route' => 'frontend.portal.store_post','class' => 'form-horizontal sky-form', 'id' => 'create_post_form', 'role' => 'form','method' => 'post', 'files'=>true, 'enctype'=>'multipart/form-data']) !!}
         <fieldset>
             {{csrf_field()}}
             @include('frontend.new_portals.blogs.patials.create_panel')
@@ -224,6 +226,7 @@
 
 //            $("#right_sidebar").stick_in_parent();
 //            $('#left_sidebar').stick_in_parent();
+            validate_post($('#create_post_form'));
 
             if ($('input[name=my_post]').is(':checked')) {
                 my_post();
@@ -372,6 +375,8 @@
 
 
         $('input[name=my_post]').on('change', function () {
+            $(this).parent().parent().siblings('.search').find('input[name=search_post]').val('');
+
             if ($(this).is(':checked')) {
                 my_post();
             } else {
@@ -380,30 +385,90 @@
             }
         });
 
+        function search_post(text, last_post) {
+            $.ajax({
+                method: 'GET',
+                url: '{{route('frontend.portal.search_post')}}',
+                data: {
+                    text: text,
+                    last_post: last_post
+                },
+                dataType: 'HTML',
+                success: function (result) {
+                    $('input[class=last_post]').remove();
+                    $('input[class=searched]').remove();
+                    $('.render_post ').append(result);
+                    $('.user_post_profile').tooltip();
+                    console.log($('input[class=last_post]').val())
+                    if ($('input[class=last_post]').val() == '0') {
+                        $('#btn_load_more_post').remove();
+                    } else {
+                        if (!$('button').hasClass('load_more_post')) {
+                            var load_post = '<button type="button" class="btn-u btn-u-default btn-block text-center load_more_post" id="btn_load_more_post">LoadMore </button>';
+                            $('.render_post').after(load_post);
+                        }
+                    }
 
-        $('input[name=search_post]').on('keyup', function (e) {
-            var dom = $('#right_sidebar');
-            if(dom.find('.active')){
-                dom.find('.active').removeClass('active').css('background-color', '');
+                }
+
+            })
+        }
+
+
+        $('input[name=search_post]').keypress(function (e) {
+            $(this).parent().parent().parent().find('input[name=my_post]').attr('checked', false);
+            if(e.which === 13){
+                toggleLoading(true);
+                var dom = $('#right_sidebar');
+                if (dom.find('.active')) {
+                    dom.find('.active').removeClass('active').css('background-color', '');
+                }
+
+                if ($(this).val() != '') {
+                    var text = $(this).val();
+                    $.ajax({
+                        method: 'GET',
+                        url: '{{route('frontend.portal.search_post')}}',
+                        data: {
+                            text: text,
+                        },
+                        dataType: 'HTML',
+                        success: function (result) {
+                            $('.render_post ').html(result);
+                            $('.user_post_profile').tooltip();
+                            if ($('input[class=last_post]').val() == '0') {
+                                $('#btn_load_more_post').remove();
+                            } else if (!$('input').hasClass('last_post')) {
+                                $('#btn_load_more_post').remove();
+                            } else {
+                                if (!$('button').hasClass('load_more_post')) {
+                                    var load_post = '<button type="button" class="btn-u btn-u-default btn-block text-center load_more_post" id="btn_load_more_post">LoadMore </button>';
+                                    $('.render_post').after(load_post);
+                                }
+                            }
+
+                        },
+                        complete: function () {
+                            toggleLoading(false);
+                        }
+
+                    })
+                }else{
+
+                    $.ajax({
+                        method: 'GET',
+                        url: '{{route('frontend.portal.reload_post')}}',
+                        data:{},
+                        success: function(result){
+                            $('.render_post').html(result);
+                        },
+                        complete : function () {
+                            toggleLoading(false);
+                        }
+                    });
+                }
             }
-
-
-            if ($(this).val() != '') {
-                $.ajax({
-                    method: 'GET',
-                    url: '{{route('frontend.portal.search_post')}}',
-                    data: {text: $(this).val()},
-                    dataType: 'HTML',
-                    success: function (result) {
-                        $('.render_post ').html(result);
-                        $('.user_post_profile').tooltip();
-                        $('.load_more_post').remove();
-
-                    },
-
-                })
-            }
-        })
+        });
 
 
         $(document).on('click', '.btn_delete_post', function (e) {

@@ -15,7 +15,7 @@
                 </div>
 
 
-                <div class="col-md-12" style="padding-left: 0px; margin-left: 90px">
+                <div class="col-md-12 margin-left-10">
                     @php
                         $split_strs = explode('.', $post->file);
                         if (isset($split_strs)){
@@ -76,8 +76,8 @@
                         @if($extention == 'png' || $extention == 'jpg' || $extention == 'jpeg')
 
                             {{--<a href="{{route('frontend.portal.view_pdf', $post->file)}}" target="_blank"--}}
-                               {{--data-event-key="attachment:click" data-event-resource-type="file"--}}
-                               {{--data-event-action="open" data-bypass="true">--}}
+                            {{--data-event-key="attachment:click" data-event-resource-type="file"--}}
+                            {{--data-event-action="open" data-bypass="true">--}}
                             <a href="#" target="_blank" data-event-key="attachment:click"
                                data-event-resource-type="file" data-event-action="open" data-bypass="true">
                                 @php
@@ -91,12 +91,14 @@
 
                                 <p>{{ $file }}</p>
                                 <div class="btn-group">
-                                    <a href="{{ asset('img/frontend/uploads/images') }}/{{ $post->file }}" download="{{ $post->file }}">
+                                    <a href="{{ asset('img/frontend/uploads/images') }}/{{ $post->file }}"
+                                       download="{{ $post->file }}">
                                         <button class="btn btn-default btn-xs">
                                             Download
                                         </button>
                                     </a>
-                                    <a href="{{ asset('img/frontend/uploads/images') }}/{{ $post->file }}" target="_blank">
+                                    <a href="{{ asset('img/frontend/uploads/images') }}/{{ $post->file }}"
+                                       target="_blank">
                                         <button class="btn btn-default btn-xs">Preview</button>
                                     </a>
                                 </div>
@@ -169,7 +171,11 @@
 
     @if(isset($last_post))
         <input type="hidden" class="last_post" id="last_post_id" value="{{ $last_post }}">
+        @if(isset($searchPost))
+            <input type="hidden" class="searched" value="{{ $searchPost }}">
+        @endif
     @endif
+
 
 @endif
 

@@ -152,7 +152,7 @@
 
     <!--Datepicker-->
     <form action="#" id="sky-form2" class="sky-form">
-        <div id="inline-start" style="margin-left: -10px">
+        <div id="inline-start" style="padding-left: 30px">
 
         </div>
     </form>

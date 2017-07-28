@@ -26,7 +26,7 @@
                                 <ul class="list-inline share-list">
                                     <li><i class="fa fa-id-card"></i><a href="#">ID: {{$mate['id_card']}}</a></li>
                                     <?php $dob = explode(' ', $mate['dob']) ;?>
-                                    <li><i class="fa fa-birthday-cake"></i><a href="#"> {{ DateManager::fullDate($dob[0]) }}</a></li>
+                                    {{--<li><i class="fa fa-birthday-cake"></i><a href="#"> {{ DateManager::fullDate($dob[0]) }}</a></li>--}}
                                     {{--<li><i class="fa fa-share"></i><a href="#">Share</a></li>--}}
                                 </ul>
                             </div>

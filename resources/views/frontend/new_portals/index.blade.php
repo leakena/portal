@@ -351,7 +351,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: '{{ route('frontend.portal.timetable') }}',
+                url: 'http://localhost:8090/api/timetable/' + year + '/e20140385/' + semester + '/' + week,
                 dataType: 'JSON',
                 data: {
                     _token: '{!! csrf_token() !!}',
@@ -565,7 +565,7 @@
 
                             $('#head').show();
                             $('#score').html(td);
-                            if(!$('table[id=table_score]').hasClass('table-bordered')){
+                            if (!$('table[id=table_score]').hasClass('table-bordered')) {
                                 $('table[id=table_score]').addClass('table-bordered');
                             }
                         } else if (response.status == false) {

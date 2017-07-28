@@ -1,11 +1,119 @@
 @extends('frontend.layouts.master_portal')
 
+<style type="text/css">
+    .detail{
+        /*position: relative;*/
+        left: 0px;
+        top: 0px;
+        z-index: -1;
+    }
+    .department{
+        /*font-family: "khmersantepheap";*/
+        width: 100%;
+        /* font-weight: bold; */
+        text-align: center;
+        top: 1.13in;
+        font-size: 14.5px !important;
+        color: #ffffff !important;
+        position: absolute;
+    }
+    .avatar{
+        position: absolute;
+        top: 1.8in;
+        width: 100%;
+    }
+    .avatar .crop {
+        width: 1.5in;
+        height: 1.55in;
+        display: block;
+        /* border: 1px solid white; */
+        overflow: hidden;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .name_kh {
+        position: absolute;
+        /*font-family: "khmersantepheap";*/
+        top: 3.45in;
+        font-weight: bold;
+        font-size: 20px;
+        text-align: center;
+        width: 100%;
+    }
+    .name_latin {
+        position: absolute;
+        font-family: "Calibri";
+        text-align: center;
+        font-weight: bold;
+        font-size: 15px;
+        line-height: 14px;
+        top: 3.85in;
+        width: 100%;
+    }
+    .address_title {
+        width: 100%;
+        font-weight: bold;
+        text-align: center;
+        font-family: khmersantepheap;
+        font-size: 20px;
+        color: #0c4da2 !important;
+        top: 0.7in;
+        position: absolute;
+    }
+    .address {
+        width: 100%;
+        text-align: center;
+        font-family: khmersantepheap;
+        font-size: 15px;
+        top: 1.1in;
+        position: absolute;
+    }
+    .expired_date {
+        font-family: khmersantepheap;
+        width: 100%;
+        text-align: center;
+        font-size: 14px;
+        position: absolute;
+        top: 3.53in;
+    }
+    .barcode {
+        position: absolute;
+        top: 3.7in;
+        width: 100%;
+    }
+    .barcode_value {
+        width: 100%;
+        font-size: 13px;
+        text-align: right;
+        position: absolute;
+        top: 4.04in;
+        right: 0.65in;
+    }
+    .barcode img {
+        width: 1.9in;
+        height: 0.8cm;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        image-orientation: from-image;
+    }
+    .message {
+        width: 100%;
+        text-align: center;
+        font-family: khmersantepheap;
+        /* font-weight: bold; */
+        font-size: 14px;
+        top: 4.2in;
+        position: absolute;
+    }
+</style>
 @section('content')
     <div class="profile-body margin-bottom-20">
         <div class="tab-v1">
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#profile">Personal Information</a></li>
                 <li><a data-toggle="tab" href="#edit_profile">Edit Personal Information</a></li>
+                <li><a data-toggle="tab" href="#id_card"> ID Card </a></li>
             </ul>
             <div class="tab-content">
                 <!--=== Profile ===-->
@@ -45,7 +153,7 @@
                                 </button>
 
                                 <input type="submit" class="btn-md btn-primary btn-u btn-u-dark-blue upload" value="Upload"
-                                       style="margin-top: -07px; width: 49%; float: right ">
+                                       style="margin-top: -10px; width: 49%; float: right ">
 
                                 {{--<a class="btn-u btn-u-sm upload-image">Change Picture</a>--}}
                             </div>
@@ -54,20 +162,22 @@
                             <div class="col-md-7">
                                 @if(isset($resume))
                                     @if($resume->publish == true)
-                                        <button class="btn btn-u btn-u-dark-blue btn-sm pull-right publish"><i
-                                                    href="{{ route('frontend.resume.print', $resume->id) }}"
-                                                    class="fa fa-eye fa-lg"></i> Unpublish CV
+                                        <button class="btn btn-u btn-u-dark-blue btn-sm pull-right publish"><a
+                                                    href="{{ route('frontend.resume.print', $resume->id) }}"></a> Unpublish CV
                                         </button>
                                     @else
                                         <button class="btn btn-sm btn-u btn-u-dark-blue pull-right publish" data-toggle="modal"
-                                                data-target=".publish_resume"><i class="fa fa-eye fa-lg"></i> Publish CV
+                                                data-target=".publish_resume"> Publish CV
                                         </button>
 
                                         {{--<button class="btn btn-warning pull-right publish" title="Here is your resume link" data-toggle="popover" data-placement="bottom" data-content="">Publish CV</button>--}}
                                     @endif
-                                    <button class="btn btn-u btn-u-default btn-sm pull-right print "><i
-                                                href="{{ route('frontend.resume.print', $resume->id) }}"
-                                                class="fa fa-print fa-lg"></i></button>
+                                    <button class="btn btn-sm btn-u btn-u-blue pull-right print" >
+                                        <a href="{{ route('frontend.resume.print', $resume->id) }}"></a> Print CV
+                                    </button>
+                                    {{--<button class="btn btn-u btn-u-default btn-sm pull-right print "><i--}}
+                                                {{--href="{{ route('frontend.resume.print', $resume->id) }}"--}}
+                                                {{--class="fa fa-print fa-lg"></i></button>--}}
                                     <div class="modal fade publish_resume" id="myModal" tabindex="-1" role="dialog"
                                          aria-labelledby="myModalLabel">
                                         <div class="modal-dialog" role="document">
@@ -156,7 +266,17 @@
                     </div>
                 </div>
                 <!--=== End Profile ===-->
+
+                <!--=== Edit Profile ===-->
                 @include('frontend.new_portals.includes.partials.profile.tab.edit_profile')
+                <!--=== End edit Profile ===-->
+
+                <!--=== Id Card ===-->
+
+                @include('frontend.new_portals.includes.partials.profile.tab.id_card')
+
+
+            <!--=== End Id Card ===-->
 
             </div>
         </div>

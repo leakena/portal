@@ -7,18 +7,44 @@
 <html lang="en"> <!--<![endif]-->
 <head>
 
-
 @yield('before-style-end')
 
 @include('frontend.layouts.includes.head')
 <!-- CSS Page Style -->
     <link rel="stylesheet" href="{{asset('portals/assets/css/pages/blog.css')}}">
+    <style type="text/css">
+        .loading {
+            background-color: rgba(0, 0, 0, 0.5);
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+        }
 
+        .hide {
+            display: none !important;
+        }
+
+        .loading > .fa, .overlay-wrapper .overlay > .fa {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -15px;
+            margin-top: -15px;
+            color: #000;
+            font-size: 50px;
+        }
+    </style>
     @yield('after-style-end')
 
 </head>
 
 <body>
+<div class="loading">
+    <i class="fa fa-refresh fa-spin"></i>
+</div>
 <div class="wrapper">
     <!--=== Header ===-->
 @include('frontend.layouts.includes.header')
@@ -48,7 +74,7 @@
 
             {{--section content--}}
 
-            <div class="col-md-6 md-margin-bottom-40">
+            <div class="col-md-6 md-margin-bottom-40 post_content">
 
                 {{--section content post --}}
                 @yield('content')
@@ -74,6 +100,18 @@
 <!--=== End Style Switcher ===-->
 @yield('before-script-end')
 @include('frontend.layouts.includes.js.link_js')
+<script type="text/javascript">
+    function toggleLoading(isLoading){
+        if(isLoading){
+            $('.loading').removeClass('hide');
+        } else {
+            $('.loading').addClass('hide');
+        }
+    }
+    $(document).ready(function(){
+        toggleLoading(false);
+    });
+</script>
 @yield('after-script-end')
 
 </body>
